@@ -11,4 +11,18 @@ require('../css/app.css');
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 // var $ = require('jquery');
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+//console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+import App from './src/App'
+
+import 'vuetify/dist/vuetify.min.css'
+
+Vue.use(Vuetify)
+
+window.app = new Vue({
+    el: '#app',
+    template: '<App/>',
+    components: { App }
+})
