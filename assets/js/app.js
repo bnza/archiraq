@@ -15,6 +15,7 @@ require('../css/app.css');
 
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import store from './src/store'
 import App from './src/App'
 
 import 'vuetify/dist/vuetify.min.css'
@@ -23,6 +24,7 @@ Vue.use(Vuetify)
 
 window.app = new Vue({
     el: '#app',
+    store,
     template: '<App/>',
     components: { App }
 })

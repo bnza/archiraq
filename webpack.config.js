@@ -1,4 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
+const path = require('path')
 
 Encore
     // directory where compiled assets will be stored
@@ -53,4 +54,8 @@ Encore
     .enableVueLoader()
 ;
 
-module.exports = Encore.getWebpackConfig();
+let config = Encore.getWebpackConfig()
+
+// config.resolve.alias['vue$'] = 'vue/dist/vue.runtime.esm.js'
+
+module.exports = config
