@@ -10,22 +10,22 @@
 import '../css/app.scss'
 import '../css/app.styl'
 
-// Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// var $ = require('jquery');
-
-//console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
-
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import store from './src/store'
+import router from './src/router'
+import { sync } from 'vuex-router-sync'
 import App from './src/App'
 
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
 
+sync(store, router)
+
 window.app = new Vue({
     el: '#app',
+    router,
     store,
     template: '<App/>',
     components: { App }
