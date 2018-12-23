@@ -9,13 +9,15 @@
         >
         </the-main-top-toolbar>
         <v-content>
-            <v-container fluid fill-height>
-                <router-view/>
-                <transition>
-                    <keep-alive>
-                        <router-view name="map"/>
-                    </keep-alive>
-                </transition>
+            <v-container fluid>
+                <v-layout align-space-between justify-center column>
+                        <router-view/>
+                        <transition>
+                            <keep-alive>
+                                <router-view name="map" cid-p="the-map-container"/>
+                            </keep-alive>
+                        </transition>
+                </v-layout>
             </v-container>
         </v-content>
         <the-main-footer/>
@@ -27,6 +29,7 @@
     import TheMainFooter from './components/TheMainFooter'
     import TheMainNavigationDrawer from './components/TheMainNavigationDrawer'
     import TheMainTopToolbar from './components/TheMainTopToolbar'
+    import STORE from './store/store-funcs'
 
     export default {
         name: "App",
@@ -35,6 +38,11 @@
             TheMainFooter,
             TheMainNavigationDrawer,
             TheMainTopToolbar
+        },
+        beforeCreate: function () {
+            this.$store.commit(STORE.MUTATIONS.SET_BING_API_KEY, window.envData.bingApiKey)
+            delete window.envData
+            document.getElementById('env-data').remove()
         }
     }
 </script>

@@ -1,0 +1,3 @@
+twig:
+    globals:
+        bing_api_key: '%env(BING_API_KEY)%'
