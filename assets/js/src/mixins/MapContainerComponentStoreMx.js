@@ -1,7 +1,7 @@
 import ComponentsStoreMx from './ComponentsStoreMx'
 
-const MAP_COMPONENT_CID = 'the-map-container'
-const PROPS = {
+export const MAP_COMPONENT_CID = 'the-map-container'
+export const PROPS = {
     CURRENT_BASE_MAP: 'currentBaseMap',
     CURRENT_BING_IMAGERY_SET: 'currentBingImagerySet'
 }

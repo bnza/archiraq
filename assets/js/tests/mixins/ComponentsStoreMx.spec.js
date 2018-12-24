@@ -1,87 +1,90 @@
-/* global describe, it, expect */
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex'
-import components from '../../src/store/components'
 import ComponentsStoreMx from '../../src/mixins/ComponentsStoreMx'
+import {cid, getNamespacedStoreFunc, getWrapper, moduleFuncs} from "./utils";
+import {propName, propIntValue} from "../store/utils";
+
+let componentOptions
+
+beforeEach(() => {
+    componentOptions = {
+        mixins: [ComponentsStoreMx],
+        data: function () {
+            return {
+                $_ComponentStoreMx_cid: cid
+            }
+        }
+    }
+})
 
 describe('ComponentsStoreMx', () => {
-    const cid = 'dummy-component-id'
+    describe('lifecycle', () => {
+        const testWrapper = (mountFn, componentOptions, mountOptions, times) => {
+            const wrapper = getWrapper(mountFn, componentOptions, mountOptions)
+            expect(wrapper.vm.$store.commit).toHaveBeenCalledTimes(times)
+            if (times) {
+                expect(wrapper.vm.$store.commit).toHaveBeenCalledWith(getNamespacedStoreFunc(moduleFuncs.MUTATIONS.CREATE), cid, undefined)
+            }
 
-    const setupStore = (state) => {
-        return new Vuex.Store({
-            strict: true,
-            state: {},
-            modules: {
-                components: {
-                    namespaced: true,
-                    state: state,
-                    mutations: components.mutations,
-                    getters: components.getters
+        }
+
+        it('calls created hook wit data cid', () => {
+            testWrapper('shallowMount', componentOptions, {}, 1)
+        })
+
+        it('calls created hook with cidP', () => {
+            delete componentOptions.data
+            const mountOptions = {
+                propsData: {
+                    cidP: cid
                 }
             }
-        })
-    }
-
-    const setupWrapper = (state) => {
-        const localVue = createLocalVue();
-        localVue.use(Vuex)
-        const store = setupStore(state)
-        const dummy = localVue.component('dummy-component', {
-            mixins: [ComponentsStoreMx],
-            template: '<div></div>'
-        })
-        return shallowMount(dummy, {
-            store,
-            localVue,
-            propsData: {
-                cidP: cid
-            }
-        })
-    }
-
-    describe('lifecycle', () => {
-        it('calls created hook', () => {
-            const state = {
-                all: {}
-            }
-            const wvm = setupWrapper(state)
-            expect(wvm.vm.$store.state.components.all).toHaveProperty(cid, {});
+            testWrapper('shallowMount', componentOptions, mountOptions, 1)
         })
 
+        it('not calls created hook when no cid', () => {
+            delete componentOptions.data
+            testWrapper('shallowMount', componentOptions, {}, 0)
+        })
     })
 
     describe('methods', () => {
-        const prop = 'dummyProp'
-        const value = 56
-
-        it('$_ComponentStoreMx_setStoreProp', () => {
-            const state = {
-                all: {}
-            }
-            const wvm = setupWrapper(state)
-            wvm.vm.$_ComponentStoreMx_setStoreProp(prop, value)
-            expect(wvm.vm.$store.state.components.all[cid][prop]).toBe(value)
+        it(`$_ComponentStoreMx_setStoreProp`, () => {
+            const wrapper = getWrapper('shallowMount', componentOptions, {})
+            wrapper.vm.$_ComponentStoreMx_setStoreProp(propName, propIntValue)
+            expect(wrapper.vm.$store.commit).toHaveBeenLastCalledWith(
+                getNamespacedStoreFunc(moduleFuncs.MUTATIONS.PROP.SET),
+                {
+                    cid: cid,
+                    prop: propName,
+                    value: propIntValue
+                },
+                undefined
+            )
         })
 
-        it('$_ComponentStoreMx_getStoreProp', () => {
-            const state = {
-                all: {}
-            }
-            const wvm = setupWrapper(state)
-            wvm.vm.$store.state.components.all[cid][prop] = value
-            expect(wvm.vm.$_ComponentStoreMx_getStoreProp(prop)).toBe(value)
+        it(`$_ComponentStoreMx_getStoreProp`, () => {
+            const wrapper = getWrapper('shallowMount', componentOptions, {})
+            wrapper.vm.$_ComponentStoreMx_getStoreProp(propName)
+            let jestFn = wrapper.vm[moduleFuncs.GETTERS.PROP.GET]
+            expect(jestFn).toHaveBeenCalledTimes(1)
+            expect(jestFn).toHaveBeenLastCalledWith(
+                cid,
+                propName
+            )
         })
 
         it('$_ComponentStoreMx_toggleStoreProp', () => {
-            const state = {
-                all: {}
-            }
-            const wvm = setupWrapper(state)
-            wvm.vm.$store.state.components.all[cid][prop] = false
-            wvm.vm.$_ComponentStoreMx_toggleStoreProp(prop)
-            expect(wvm.vm.$store.state.components.all[cid][prop]).toBe(true)
-            wvm.vm.$_ComponentStoreMx_toggleStoreProp(prop)
-            expect(wvm.vm.$store.state.components.all[cid][prop]).toBe(false)
+            const wrapper = getWrapper('shallowMount', componentOptions, {})
+            wrapper.vm.$_ComponentStoreMx_toggleStoreProp(propName)
+            expect(wrapper.vm.$store.commit).toHaveBeenLastCalledWith(
+                getNamespacedStoreFunc(moduleFuncs.MUTATIONS.PROP.TOGGLE),
+                {
+                    cid: cid,
+                    prop: propName
+                },
+                undefined
+            )
         })
     })
+
+
 })

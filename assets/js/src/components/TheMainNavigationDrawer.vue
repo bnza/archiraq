@@ -13,6 +13,11 @@
 
     export default {
         name: "TheMainNavigationDrawer",
+        data() {
+            return {
+                $_ComponentStoreMx_cid: 'the-main-navigation-drawer'
+            }
+        },
         mixins: [
             ComponentsStoreMx
         ],
@@ -28,7 +33,6 @@
         },
         created() {
             this.visible = false
-            // console.log("TheMainNavigationDrawer")
         },
     }
 </script>

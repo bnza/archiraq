@@ -1,14 +1,6 @@
 <template>
     <v-card flat>
-        <v-toolbar
-                flat
-                dense
-        >
-            <v-toolbar-side-icon
-                    @click.stop="$_ComponentStoreMx_mutation($_ComponentStoreMx_STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE,{cid: 'the-map-layers-drawer', prop: 'visible'})"/>
-            <v-toolbar-title>Title</v-toolbar-title>
-        </v-toolbar>
-
+        <the-map-toolbar/>
         <vl-map
                 :load-tiles-while-animating="true"
                 :load-tiles-while-interacting="true"
@@ -28,21 +20,21 @@
             >
                 <vl-source-osm/>
             </vl-layer-tile>
-            <the-map-layers-drawer
-                    cid-p="the-map-layers-drawer"
-            />
+            <the-map-layers-drawer/>
         </vl-map>
     </v-card>
 </template>
 
 <script>
     import TheMapLayersDrawer from './TheMapLayersDrawer'
+    import TheMapToolbar from './TheMapToolbar'
     import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx'
 
     export default {
         name: "TheMapContainer",
         components: {
-            TheMapLayersDrawer
+            TheMapLayersDrawer,
+            TheMapToolbar
         },
         mixins: [
             MapContainerComponentStoreMx
@@ -53,6 +45,7 @@
                 center: [0,0],
                 rotation: 0,
                 apiKey: this.$store.state.bingApiKey,
+                $_ComponentStoreMx_cid: 'the-map-container'
             }
         },
         created() {

@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <the-main-navigation-drawer
-                cid-p="the-main-navigation-drawer"
+
         >
         </the-main-navigation-drawer>
         <the-main-top-toolbar
@@ -14,7 +14,7 @@
                         <router-view/>
                         <transition>
                             <keep-alive>
-                                <router-view name="map" cid-p="the-map-container"/>
+                                <router-view name="map"/>
                             </keep-alive>
                         </transition>
                 </v-layout>

@@ -1,4 +1,4 @@
-import TheMainTopToolbar from '../../src/components/TheMainTopToolbar'
+import TheMapToolbar from '../../src/components/TheMapToolbar'
 import {getWrapper, silenziateLocalVueDuplicateVueBug, resetConsoleError} from "./utils";
 import {getNamespacedStoreFunc, moduleFuncs} from "../mixins/utils";
 
@@ -10,15 +10,15 @@ afterAll(() => {
     resetConsoleError();
 });
 
-describe('TheMainTopToolbar', () => {
+describe('TheMapToolbar', () => {
     describe('interaction', () => {
-        it(`<v-toolbar-side-icon> @click toggle "the-main-navigation-drawer"."visible" prop`, () => {
-            const wrapper = getWrapper('mount', TheMainTopToolbar, {})
+        it(`<v-toolbar-side-icon> @click toggle "the-map-layers-drawer"."visible" prop`, () => {
+            const wrapper = getWrapper('mount', TheMapToolbar, {})
             wrapper.find('button.v-toolbar__side-icon').trigger('click')
             expect(wrapper.vm.$store.commit).toHaveBeenLastCalledWith(
                 getNamespacedStoreFunc(moduleFuncs.MUTATIONS.PROP.TOGGLE),
                 {
-                    cid: 'the-main-navigation-drawer',
+                    cid: 'the-map-layers-drawer',
                     prop: 'visible',
                 },
                 undefined

@@ -1,92 +1,90 @@
-import {STORE} from '../../src/store/store-funcs'
-import {state, getters} from '../../src/store'
+import merge from 'lodash/merge'
 import Vuex from 'vuex'
+import {options as appStoreOptions} from '../../src/store/options'
 
-export const ROOT_KEY = '__root__'
+const randomMax = 1000
 
-var merge = require('lodash/merge')
-var clone = require('lodash/clone')
+export const propIntValue = (() => Math.floor(Math.random() * (randomMax)))()
+export const propName = (() => `dummyProp${propIntValue}`)()
+export const propStringValue = (() => `dummy prop string ${propIntValue}`)()
+export const propBooleanValue = (() => !!(propIntValue > (randomMax/2)))()
+export const propArrayValue = (() => [propIntValue])()
+export const propObjectValue = (() => {return {[propName]: propIntValue}})()
 
-/*
-export const getModuleMockedStoreOptions = (state, mutations, getter, actions, namespace) => {
-    const ns = Object.keys(namespace)[0]
-
-    let options = {
-        state: state || {},
-        mutations: getMockedMutations(mutations, ns)
+const getAppStoreModuleOptions = (namespace) => {
+    if (!namespace) {
+        return appStoreOptions
+    } else if (appStoreOptions.hasOwnProperty('modules') && appStoreOptions.modules.hasOwnProperty(namespace)) {
+        return appStoreOptions.modules[namespace]
     }
-    if (namespace[ns]) {
-        options.namespaced = true
-    }
-    return options
+    throw new ReferenceError(`No "${namespace}" in store`)
 }
 
-const getObjectProperty = (obj, namespace, defaultValue) => {
-    return 'object' === typeof obj && obj.hasOwnProperty(namespace)
-        ? obj[namespace]
-        : defaultValue
-}
-
-export const getMockedStoreOptions = (state, mutations, getter, actions, modules) => {
-    const rootState = getObjectProperty(state, ROOT_KEY, default_root_state)
-
-    let options = {
-        state: rootState
+const getMutationsOptions = (module, mutations) => {
+    const mockedMutations = {}
+    mutations = mutations || {}
+    for (let key in module.mutations) {
+        mockedMutations[key] = mutations[key] || jest.fn()
     }
-    if (modules) {
-        let mockedModules = {}
-        for (let namespace in modules) {
-            let ns = {}
-            ns[namespace] = modules[namespace]
-            mockedModules[namespace] = getModuleMockedStoreOptions(
-                getObjectProperty(state, namespace, {}),
-                getObjectProperty(mutations, namespace, {}),
-                getObjectProperty(getter, namespace, {}),
-                getObjectProperty(actions, namespace, {}),
-            )
-        }
-        options.modules = mockedModules
-    }
-    return options
+    return mockedMutations
 }
 
-export const getMockedStore = (state, mutations, getter, actions, modules) => {
-    return new Vuex.Store(getMockedStoreOptions(state, mutations, getter, actions));
-
-}
-
-const mergeObject = (source, mocked, dest) => {
-    for (let key in source) {
-        if ('string' === typeof source[key]) {
-            dest[key] = mocked.hasOwnProperty(key) ? mocked[key] : jest.fn()
+const getGettersOptions = (module, getters) => {
+    const mockedGetters = {}
+    getters = getters || {}
+    for (let key in module.getters) {
+        if (getters[key]) {
+            mockedGetters[key] = jest.fn(() => getters[key])
         } else {
-            dest[key] = copyMutation(source[key], mocked.hasOwnProperty(key) ? mocked[key] : {}, {})
+            let getter = () => jest.fn()
+            mockedGetters[key] = getter
         }
     }
-    return dest
+    return mockedGetters
 }
 
-export const getMockedMutations = (mockedMutations, namespace) => {
-    let mutations = namespace ? $_ComponentStoreMx_STORE[namespace].MUTATIONS : $_ComponentStoreMx_STORE.MUTATIONS
-    return copyMutation(mutations, mockedMutations, {})
-}*/
-
-/*
-const getObjProp = (obj, prop, defaultValue) => {
-    return 'object' === typeof obj && obj.hasOwnProperty(prop)
-        ? obj[prop]
-        : defaultValue
+const getStateOptions = (module, state) => {
+    return merge({},state || {}, module.state)
 }
 
-export const getMockedStoreOptions = (mokedOptions) => {
-    const rootState = merge(clone(store.state), clone(getObjProp(mokedOptions, 'state', {})))
-    let options = {
-        state: rootState
+export const getStoreModuleOptions = ({state, mutations, getters, actions}, namespace) => {
+    const module = getAppStoreModuleOptions(namespace)
+    return {
+        namespaced: !!namespace && !!module.namespaced,
+        state: getStateOptions(module, state),
+        getters: getGettersOptions(module, getters),
+        mutations: getMutationsOptions(module, mutations),
     }
-
+    return module
 }
 
-export const getMockedStore = (mokedOptions, modules) => {
-    return new Vuex.Store(getMockedStoreOptions(mokedOptions));
+export const getStoreOption = (options) => {
+    let mockedOptions = getStoreModuleOptions(options)
+    if (appStoreOptions.hasOwnProperty('modules')) {
+        mockedOptions.modules = {}
+        for (module in appStoreOptions.modules) {
+            mockedOptions.modules[module] = getStoreModuleOptions(options, module)
+        }
+    }
+    return mockedOptions
+}
 
-}*/
+export const getStore = (localVue, options, namespace) => {
+    let mockedOptions
+
+    if (namespace) {
+        mockedOptions = {
+            modules: {
+                [namespace]: getStoreModuleOptions(options, namespace)
+            }
+        }
+    } else {
+        mockedOptions = getStoreOption(options)
+    }
+    localVue.use(Vuex)
+    let store = new Vuex.Store(mockedOptions)
+    store.commit = jest.fn()
+    store.dispatch = jest.fn()
+    return store
+}
+

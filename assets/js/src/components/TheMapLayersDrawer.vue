@@ -85,11 +85,7 @@
         name: "TheMapLayersDrawer",
         data() {
             return {
-                items: [
-                    {title: 'Home', icon: 'dashboard'},
-                    {title: 'About', icon: 'question_answer'}
-                ],
-                right: null
+                $_ComponentStoreMx_cid: 'the-map-layers-drawer'
             }
         },
         mixins: [

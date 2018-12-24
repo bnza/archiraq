@@ -14,6 +14,11 @@
 
     export default {
         name: "TheMainTopToolbar",
+        data() {
+            return {
+                $_ComponentStoreMx_cid: 'the-main-top-toolbar'
+            }
+        },
         mixins: [
             ComponentsStoreMx
         ],
