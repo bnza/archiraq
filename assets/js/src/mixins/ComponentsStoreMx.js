@@ -7,7 +7,6 @@ export default {
     props: {
         cidP: {
             type: String,
-            required: true,
             validator: (value) => {
                 return /^[\w-]+$/.test(value)
             }
@@ -22,7 +21,9 @@ export default {
         ]),
     },
     created() {
-        this[STORE.COMPONENTS.MUTATIONS.CREATE](this.cidP)
+        if (this.cidP) {
+            this[STORE.COMPONENTS.MUTATIONS.CREATE](this.cidP)
+        }
     },
     methods: {
         ...mapMutations(NAMESPACE, [
