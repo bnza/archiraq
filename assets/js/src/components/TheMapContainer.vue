@@ -5,7 +5,7 @@
                 dense
         >
             <v-toolbar-side-icon
-                    @click.stop="mutation(STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE,{cid: 'the-map-layers-drawer', prop: 'visible'})"/>
+                    @click.stop="$_ComponentStoreMx_mutation($_ComponentStoreMx_STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE,{cid: 'the-map-layers-drawer', prop: 'visible'})"/>
             <v-toolbar-title>Title</v-toolbar-title>
         </v-toolbar>
 
@@ -17,13 +17,13 @@
         >
             <vl-view :zoom.sync="zoom" :center.sync="center" :rotation.sync="rotation" projection="EPSG:4326"/>
             <vl-layer-tile
-                    :visible="'bing'===currentBaseMap"
+                    :visible="'bing'===$_MapContainerComponentStoreMx_currentBaseMap"
                     id="bingmaps"
             >
-                <vl-source-bingmaps :api-key="apiKey" :imagery-set="currentBingImagerySet"/>
+                <vl-source-bingmaps :api-key="apiKey" :imagery-set="$_MapContainerComponentStoreMx_currentBingImagerySet"/>
             </vl-layer-tile>
             <vl-layer-tile
-                    :visible="'osm'===currentBaseMap"
+                    :visible="'osm'===$_MapContainerComponentStoreMx_currentBaseMap"
                     id="osm"
             >
                 <vl-source-osm/>
@@ -56,8 +56,8 @@
             }
         },
         created() {
-            this.currentBaseMap = this.$store.state.default.baseMap
-            this.currentBingImagerySet =  this.$store.state.default.bingImagerySet
+            this.$_MapContainerComponentStoreMx_currentBaseMap = this.$store.state.default.baseMap
+            this.$_MapContainerComponentStoreMx_currentBingImagerySet =  this.$store.state.default.bingImagerySet
         },
     }
 </script>

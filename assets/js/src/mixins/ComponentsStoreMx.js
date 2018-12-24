@@ -14,7 +14,7 @@ export default {
         }
     },
     computed: {
-        STORE() {
+        $_ComponentStoreMx_STORE() {
           return STORE
         },
         ...mapGetters(NAMESPACE, [
@@ -30,26 +30,26 @@ export default {
             STORE.COMPONENTS.MUTATIONS.PROP.SET,
             STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE
         ]),
-        getStoreProp(prop) {
+        $_ComponentStoreMx_getStoreProp(prop) {
             return this[STORE.COMPONENTS.GETTERS.PROP.GET](this.cidP, prop)
         },
-        setStoreProp(prop, value) {
+        $_ComponentStoreMx_setStoreProp(prop, value) {
             this[STORE.COMPONENTS.MUTATIONS.PROP.SET]({
                 cid: this.cidP,
                 prop: prop,
                 value: value
             })
         },
-        toggleStoreProp(prop) {
+        $_ComponentStoreMx_toggleStoreProp(prop) {
             this[STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE]({
                 cid: this.cidP,
                 prop: prop
             })
         },
-        getter(name) {
+        $_ComponentStoreMx_getter(name) {
             return this[name]
         },
-        mutation(name, payload) {
+        $_ComponentStoreMx_mutation(name, payload) {
             this[name](payload)
         }
     }

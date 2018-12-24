@@ -67,7 +67,7 @@ const mergeObject = (source, mocked, dest) => {
 }
 
 export const getMockedMutations = (mockedMutations, namespace) => {
-    let mutations = namespace ? STORE[namespace].MUTATIONS : STORE.MUTATIONS
+    let mutations = namespace ? $_ComponentStoreMx_STORE[namespace].MUTATIONS : $_ComponentStoreMx_STORE.MUTATIONS
     return copyMutation(mutations, mockedMutations, {})
 }*/
 

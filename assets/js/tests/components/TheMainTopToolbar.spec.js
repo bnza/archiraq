@@ -42,10 +42,10 @@ describe('TheMainTopToolbar', () => {
         })
 
         it('v-toolbar-side-icon @click toggle "the-main-navigation-drawer"."visible" prop', () => {
-            wrapper.vm.mutation = jest.fn()
+            wrapper.vm.$_ComponentStoreMx_mutation = jest.fn()
             wrapper.find('button.v-toolbar__side-icon').trigger('click')
-            expect(wrapper.vm.mutation).toHaveBeenCalledTimes(1)
-            expect(wrapper.vm.mutation).toHaveBeenCalledWith(MUTATIONS.PROP.TOGGLE, {
+            expect(wrapper.vm.$_ComponentStoreMx_mutation).toHaveBeenCalledTimes(1)
+            expect(wrapper.vm.$_ComponentStoreMx_mutation).toHaveBeenCalledWith(MUTATIONS.PROP.TOGGLE, {
                 "cid": "the-main-navigation-drawer",
                 "prop": "visible"
             })

@@ -11,24 +11,24 @@ export default {
         ComponentsStoreMx
     ],
     computed: {
-        currentBaseMap: {
+        $_MapContainerComponentStoreMx_currentBaseMap: {
             get() {
-                return this[this.STORE.COMPONENTS.GETTERS.PROP.GET](MAP_COMPONENT_CID, PROPS.CURRENT_BASE_MAP)
+                return this[this.$_ComponentStoreMx_STORE.COMPONENTS.GETTERS.PROP.GET](MAP_COMPONENT_CID, PROPS.CURRENT_BASE_MAP)
             },
             set(value) {
-                this.mutation(this.STORE.COMPONENTS.MUTATIONS.PROP.SET, {
+                this.$_ComponentStoreMx_mutation(this.$_ComponentStoreMx_STORE.COMPONENTS.MUTATIONS.PROP.SET, {
                     cid: MAP_COMPONENT_CID,
                     prop: PROPS.CURRENT_BASE_MAP,
                     value: value
                 })
             }
         },
-        currentBingImagerySet: {
+        $_MapContainerComponentStoreMx_currentBingImagerySet: {
             get() {
-                return this[this.STORE.COMPONENTS.GETTERS.PROP.GET](MAP_COMPONENT_CID, PROPS.CURRENT_BING_IMAGERY_SET)
+                return this[this.$_ComponentStoreMx_STORE.COMPONENTS.GETTERS.PROP.GET](MAP_COMPONENT_CID, PROPS.CURRENT_BING_IMAGERY_SET)
             },
             set(value) {
-                this.mutation(this.STORE.COMPONENTS.MUTATIONS.PROP.SET, {
+                this.$_ComponentStoreMx_mutation(this.$_ComponentStoreMx_STORE.COMPONENTS.MUTATIONS.PROP.SET, {
                     cid: MAP_COMPONENT_CID,
                     prop: PROPS.CURRENT_BING_IMAGERY_SET,
                     value: value

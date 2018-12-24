@@ -19,10 +19,10 @@
         computed: {
             visible: {
                 get() {
-                    return this.getStoreProp('visible')
+                    return this.$_ComponentStoreMx_getStoreProp('visible')
                 },
                 set(value) {
-                    this.setStoreProp('visible', value)
+                    this.$_ComponentStoreMx_setStoreProp('visible', value)
                 }
             }
         },

@@ -54,33 +54,33 @@ describe('ComponentsStoreMx', () => {
         const prop = 'dummyProp'
         const value = 56
 
-        it('setStoreProp', () => {
+        it('$_ComponentStoreMx_setStoreProp', () => {
             const state = {
                 all: {}
             }
             const wvm = setupWrapper(state)
-            wvm.vm.setStoreProp(prop, value)
+            wvm.vm.$_ComponentStoreMx_setStoreProp(prop, value)
             expect(wvm.vm.$store.state.components.all[cid][prop]).toBe(value)
         })
 
-        it('getStoreProp', () => {
+        it('$_ComponentStoreMx_getStoreProp', () => {
             const state = {
                 all: {}
             }
             const wvm = setupWrapper(state)
             wvm.vm.$store.state.components.all[cid][prop] = value
-            expect(wvm.vm.getStoreProp(prop)).toBe(value)
+            expect(wvm.vm.$_ComponentStoreMx_getStoreProp(prop)).toBe(value)
         })
 
-        it('toggleStoreProp', () => {
+        it('$_ComponentStoreMx_toggleStoreProp', () => {
             const state = {
                 all: {}
             }
             const wvm = setupWrapper(state)
             wvm.vm.$store.state.components.all[cid][prop] = false
-            wvm.vm.toggleStoreProp(prop)
+            wvm.vm.$_ComponentStoreMx_toggleStoreProp(prop)
             expect(wvm.vm.$store.state.components.all[cid][prop]).toBe(true)
-            wvm.vm.toggleStoreProp(prop)
+            wvm.vm.$_ComponentStoreMx_toggleStoreProp(prop)
             expect(wvm.vm.$store.state.components.all[cid][prop]).toBe(false)
         })
     })
