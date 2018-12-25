@@ -9,6 +9,8 @@
         "@symfony/webpack-encore": "^0.22.0",
         "@vue/test-utils": "^1.0.0-beta.27",
         "babel-jest": "^23.6.0",
+        "eslint": "^5.11.0",
+        "eslint-plugin-vue": "^5.0.0",
         "jest": "^23.6.0",
         "jest-vue": "^0.8.2",
         "lodash": "^4.17.11",

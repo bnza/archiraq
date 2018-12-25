@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-import TheMapContainer from '../components/TheMapContainer'
-import TheHomepageContent from '../components/TheHomepageContent'
+import TheMapContainer from '../components/TheMapContainer';
+import TheHomepageContent from '../components/TheHomepageContent';
 
-Vue.use(Router)
+Vue.use(Router);
 
 let router = new Router({
     routes: [
@@ -17,6 +17,6 @@ let router = new Router({
             }
         }
     ]
-})
+});
 
-export default router
+export default router;

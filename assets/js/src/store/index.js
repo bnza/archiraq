@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import options from './options'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import options from './options';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-export default new Vuex.Store(options)
+export default new Vuex.Store(options);

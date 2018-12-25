@@ -1,18 +1,18 @@
 <template>
     <v-card
-            flat
+        flat
     >
         <v-navigation-drawer
-                floating
-                absolute
-                :value=visible
-                width="400"
-                style="min-height: 400px; z-index: 1;"
+            floating
+            absolute
+            :value="visible"
+            width="400"
+            style="min-height: 400px; z-index: 1;"
         >
             <v-list dense>
                 <v-list-group
-                        prepend-icon="map"
-                        no-action
+                    prepend-icon="map"
+                    no-action
                 >
                     <v-list-tile slot="activator">
                         <v-list-tile-content>
@@ -22,7 +22,10 @@
                     <v-list-tile>
                         <v-list-tile-action>
                             <v-list-tile-action>
-                                <v-checkbox v-model="$_MapContainerComponentStoreMx_currentBaseMap" value="bing"></v-checkbox>
+                                <v-checkbox
+                                    v-model="$_MapContainerComponentStoreMx_currentBaseMap"
+                                    value="bing"
+                                />
                             </v-list-tile-action>
                         </v-list-tile-action>
 
@@ -33,10 +36,10 @@
                         <v-list-tile-action>
                             <v-menu offset-y>
                                 <v-btn
-                                        slot="activator"
-                                        color="primary"
-                                        icon
-                                        flat
+                                    slot="activator"
+                                    color="primary"
+                                    icon
+                                    flat
                                 >
                                     <v-icon>more_vert</v-icon>
                                 </v-btn>
@@ -58,13 +61,15 @@
                                     </v-list-tile>
                                 </v-list>
                             </v-menu>
-
                         </v-list-tile-action>
                     </v-list-tile>
                     <v-list-tile>
                         <v-list-tile-action>
                             <v-list-tile-action>
-                                <v-checkbox v-model="$_MapContainerComponentStoreMx_currentBaseMap" value="osm"></v-checkbox>
+                                <v-checkbox
+                                    v-model="$_MapContainerComponentStoreMx_currentBaseMap"
+                                    value="osm"
+                                />
                             </v-list-tile-action>
                         </v-list-tile-action>
 
@@ -79,32 +84,32 @@
 </template>
 
 <script>
-    import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx'
+import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
 
-    export default {
-        name: "TheMapLayersDrawer",
-        data() {
-            return {
-                $_ComponentStoreMx_cid: 'the-map-layers-drawer'
+export default {
+    name: 'TheMapLayersDrawer',
+    mixins: [
+        MapContainerComponentStoreMx
+    ],
+    data() {
+        return {
+            $_ComponentStoreMx_cid: 'the-map-layers-drawer'
+        };
+    },
+    computed: {
+        visible: {
+            get() {
+                return this.$_ComponentStoreMx_getStoreProp('visible');
+            },
+            set(value) {
+                this.$_ComponentStoreMx_setStoreProp('visible', value);
             }
-        },
-        mixins: [
-            MapContainerComponentStoreMx
-        ],
-        computed: {
-            visible: {
-                get() {
-                    return this.$_ComponentStoreMx_getStoreProp('visible')
-                },
-                set(value) {
-                    this.$_ComponentStoreMx_setStoreProp('visible', value)
-                }
-            }
-        },
-        created() {
-            this.visible = false
-        },
-    }
+        }
+    },
+    created() {
+        this.visible = false;
+    },
+};
 </script>
 
 <style scoped>

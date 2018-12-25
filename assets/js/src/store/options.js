@@ -1,5 +1,7 @@
-import mutations from './mutations'
-import components from './components'
+/* global process */
+
+import mutations from './mutations';
+import components from './components';
 
 export const state = {
     bingApiKey: '',
@@ -7,9 +9,9 @@ export const state = {
         baseMap: 'bing',
         bingImagerySet: 'AerialWithLabels'
     }
-}
+};
 
-export const getters = {}
+export const getters = {};
 
 export const options = {
     strict: process.env.NODE_ENV !== 'production',
@@ -19,6 +21,6 @@ export const options = {
     modules: {
         components: components
     }
-}
+};
 
-export default options
+export default options;

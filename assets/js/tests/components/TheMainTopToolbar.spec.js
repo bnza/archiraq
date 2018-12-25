@@ -1,9 +1,9 @@
-import TheMainTopToolbar from '../../src/components/TheMainTopToolbar'
-import {getWrapper, silenziateLocalVueDuplicateVueBug, resetConsoleError} from "./utils";
-import {getNamespacedStoreFunc, moduleFuncs} from "../mixins/utils";
+import TheMainTopToolbar from '../../src/components/TheMainTopToolbar';
+import {getWrapper, catchLocalVueDuplicateVueBug, resetConsoleError} from './utils';
+import {getNamespacedStoreFunc, moduleFuncs} from '../mixins/utils';
 
 beforeAll(() => {
-    silenziateLocalVueDuplicateVueBug()
+    catchLocalVueDuplicateVueBug();
 });
 
 afterAll(() => {
@@ -12,9 +12,9 @@ afterAll(() => {
 
 describe('TheMainTopToolbar', () => {
     describe('interaction', () => {
-        it(`<v-toolbar-side-icon> @click toggle "the-main-navigation-drawer"."visible" prop`, () => {
-            const wrapper = getWrapper('mount', TheMainTopToolbar, {})
-            wrapper.find('button.v-toolbar__side-icon').trigger('click')
+        it('<v-toolbar-side-icon> @click toggle "the-main-navigation-drawer"."visible" prop', () => {
+            const wrapper = getWrapper('mount', TheMainTopToolbar, {});
+            wrapper.find('button.v-toolbar__side-icon').trigger('click');
             expect(wrapper.vm.$store.commit).toHaveBeenLastCalledWith(
                 getNamespacedStoreFunc(moduleFuncs.MUTATIONS.PROP.TOGGLE),
                 {
@@ -22,7 +22,7 @@ describe('TheMainTopToolbar', () => {
                     prop: 'visible',
                 },
                 undefined
-            )
-        })
-    })
-})
+            );
+        });
+    });
+});
