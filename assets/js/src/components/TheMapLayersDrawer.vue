@@ -19,64 +19,41 @@
                             <v-list-tile-title>Base maps</v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
-                    <v-list-tile>
-                        <v-list-tile-action>
-                            <v-list-tile-action>
-                                <v-checkbox
-                                    v-model="mapContainerComponentStoreMx_currentBaseMap"
-                                    value="bing"
-                                />
-                            </v-list-tile-action>
-                        </v-list-tile-action>
-
-                        <v-list-tile-content>
-                            <v-list-tile-title>Bing Maps</v-list-tile-title>
-                        </v-list-tile-content>
-
-                        <v-list-tile-action>
-                            <v-menu offset-y>
-                                <v-btn
-                                    slot="activator"
-                                    color="primary"
-                                    icon
-                                    flat
-                                >
-                                    <v-icon>more_vert</v-icon>
-                                </v-btn>
-                                <v-list>
-                                    <v-list-tile>
-                                        <v-list-tile-title>Choose imagery set</v-list-tile-title>
-                                    </v-list-tile>
-                                    <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='Aerial'">
-                                        <v-list-tile-title>Aerial</v-list-tile-title>
-                                    </v-list-tile>
-                                    <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='AerialWithLabels'">
-                                        <v-list-tile-title>Aerial with labels</v-list-tile-title>
-                                    </v-list-tile>
-                                    <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='RoadOnDemand'">
-                                        <v-list-tile-title>Road (dynamic)</v-list-tile-title>
-                                    </v-list-tile>
-                                    <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='Road'">
-                                        <v-list-tile-title>Road (static)</v-list-tile-title>
-                                    </v-list-tile>
-                                </v-list>
-                            </v-menu>
-                        </v-list-tile-action>
-                    </v-list-tile>
-                    <v-list-tile>
-                        <v-list-tile-action>
-                            <v-list-tile-action>
-                                <v-checkbox
-                                    v-model="mapContainerComponentStoreMx_currentBaseMap"
-                                    value="osm"
-                                />
-                            </v-list-tile-action>
-                        </v-list-tile-action>
-
-                        <v-list-tile-content>
-                            <v-list-tile-title>Open Street Map</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                    <map-layer-list-tile
+                        title="Bing Maps"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerComponentStoreMx_currentBaseMap"
+                            value="bing"
+                        />
+                        <v-list slot="action">
+                            <v-list-tile>
+                                <v-list-tile-title>Choose imagery set</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='Aerial'">
+                                <v-list-tile-title>Aerial</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='AerialWithLabels'">
+                                <v-list-tile-title>Aerial with labels</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='RoadOnDemand'">
+                                <v-list-tile-title>Road (dynamic)</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='Road'">
+                                <v-list-tile-title>Road (static)</v-list-tile-title>
+                            </v-list-tile>
+                        </v-list>
+                    </map-layer-list-tile>
+                    <map-layer-list-tile
+                        title="Open Street Map"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerComponentStoreMx_currentBaseMap"
+                            value="osm"
+                        />
+                    </map-layer-list-tile>
                 </v-list-group>
             </v-list>
         </v-navigation-drawer>
@@ -85,9 +62,13 @@
 
 <script>
 import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
+import MapLayerListTile from './MapLayerListTile';
 
 export default {
     name: 'TheMapLayersDrawer',
+    components: {
+        MapLayerListTile
+    },
     mixins: [
         MapContainerComponentStoreMx
     ],
