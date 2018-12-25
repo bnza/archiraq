@@ -4,7 +4,7 @@
         dense
     >
         <v-toolbar-side-icon
-            @click.stop="$_ComponentStoreMx_mutation($_ComponentStoreMx_STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE,{cid: 'the-map-layers-drawer', prop: 'visible'})"
+            @click.stop="componentStoreMx_mutation(componentStoreMx_STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE,{cid: 'the-map-layers-drawer', prop: 'visible'})"
         />
         <v-toolbar-title>Title</v-toolbar-title>
     </v-toolbar>

@@ -17,16 +17,16 @@ export default {
     ],
     data() {
         return {
-            $_ComponentStoreMx_cid: 'the-main-navigation-drawer'
+            componentStoreMx_cid: 'the-main-navigation-drawer'
         };
     },
     computed: {
         visible: {
             get() {
-                return this.$_ComponentStoreMx_getStoreProp('visible');
+                return this.componentStoreMx_getStoreProp('visible');
             },
             set(value) {
-                this.$_ComponentStoreMx_setStoreProp('visible', value);
+                this.componentStoreMx_setStoreProp('visible', value);
             }
         }
     },

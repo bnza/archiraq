@@ -16,17 +16,17 @@ beforeEach(() => {
 
 describe('MapContainerComponentStoreMx', () => {
     describe('computed', () => {
-        it('$_MapContainerComponentStoreMx_currentBaseMap', () => {
+        it('mapContainerComponentStoreMx_currentBaseMap', () => {
             const wrapper = getWrapper('shallowMount', componentOptions, {});
-            wrapper.vm.$_MapContainerComponentStoreMx_currentBaseMap;
+            wrapper.vm.mapContainerComponentStoreMx_currentBaseMap;
             expect(wrapper.vm[moduleFuncs.GETTERS.PROP.GET]).toHaveBeenLastCalledWith(
                 MAP_COMPONENT_CID,
                 PROPS.CURRENT_BASE_MAP
             );
         });
-        it('$_MapContainerComponentStoreMx_currentBingImagerySet', () => {
+        it('mapContainerComponentStoreMx_currentBingImagerySet', () => {
             const wrapper = getWrapper('shallowMount', componentOptions, {});
-            wrapper.vm.$_MapContainerComponentStoreMx_currentBingImagerySet;
+            wrapper.vm.mapContainerComponentStoreMx_currentBingImagerySet;
             expect(wrapper.vm[moduleFuncs.GETTERS.PROP.GET]).toHaveBeenLastCalledWith(
                 MAP_COMPONENT_CID,
                 PROPS.CURRENT_BING_IMAGERY_SET

@@ -80,7 +80,7 @@ describe('mutations', () => {
         it('Success', () => {
             // mock state
             const state = {all: {dummy: { drawer: 200}}};
-            // apply $_ComponentStoreMx_mutation
+            // apply componentStoreMx_mutation
             mutation(state, {
                 cid: 'dummy',
                 prop: 'drawer',

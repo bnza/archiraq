@@ -5,7 +5,7 @@
         fixed
         app
     >
-        <v-toolbar-side-icon @click.stop="$_ComponentStoreMx_mutation($_ComponentStoreMx_STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE,{cid: 'the-main-navigation-drawer', prop: 'visible'})" />
+        <v-toolbar-side-icon @click.stop="componentStoreMx_mutation(componentStoreMx_STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE,{cid: 'the-main-navigation-drawer', prop: 'visible'})" />
         <v-toolbar-title>Application</v-toolbar-title>
     </v-toolbar>
 </template>
@@ -20,7 +20,7 @@ export default {
     ],
     data() {
         return {
-            $_ComponentStoreMx_cid: 'the-main-top-toolbar'
+            componentStoreMx_cid: 'the-main-top-toolbar'
         };
     },
 };

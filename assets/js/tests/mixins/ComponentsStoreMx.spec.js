@@ -9,7 +9,7 @@ beforeEach(() => {
         mixins: [ComponentsStoreMx],
         data: function () {
             return {
-                $_ComponentStoreMx_cid: cid
+                componentStoreMx_cid: cid
             };
         }
     };
@@ -47,9 +47,9 @@ describe('ComponentsStoreMx', () => {
     });
 
     describe('methods', () => {
-        it('$_ComponentStoreMx_setStoreProp', () => {
+        it('componentStoreMx_setStoreProp', () => {
             const wrapper = getWrapper('shallowMount', componentOptions, {});
-            wrapper.vm.$_ComponentStoreMx_setStoreProp(propName, propIntValue);
+            wrapper.vm.componentStoreMx_setStoreProp(propName, propIntValue);
             expect(wrapper.vm.$store.commit).toHaveBeenLastCalledWith(
                 getNamespacedStoreFunc(moduleFuncs.MUTATIONS.PROP.SET),
                 {
@@ -61,9 +61,9 @@ describe('ComponentsStoreMx', () => {
             );
         });
 
-        it('$_ComponentStoreMx_getStoreProp', () => {
+        it('componentStoreMx_getStoreProp', () => {
             const wrapper = getWrapper('shallowMount', componentOptions, {});
-            wrapper.vm.$_ComponentStoreMx_getStoreProp(propName);
+            wrapper.vm.componentStoreMx_getStoreProp(propName);
             let jestFn = wrapper.vm[moduleFuncs.GETTERS.PROP.GET];
             expect(jestFn).toHaveBeenCalledTimes(1);
             expect(jestFn).toHaveBeenLastCalledWith(
@@ -72,9 +72,9 @@ describe('ComponentsStoreMx', () => {
             );
         });
 
-        it('$_ComponentStoreMx_toggleStoreProp', () => {
+        it('componentStoreMx_toggleStoreProp', () => {
             const wrapper = getWrapper('shallowMount', componentOptions, {});
-            wrapper.vm.$_ComponentStoreMx_toggleStoreProp(propName);
+            wrapper.vm.componentStoreMx_toggleStoreProp(propName);
             expect(wrapper.vm.$store.commit).toHaveBeenLastCalledWith(
                 getNamespacedStoreFunc(moduleFuncs.MUTATIONS.PROP.TOGGLE),
                 {

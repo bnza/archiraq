@@ -23,7 +23,7 @@
                         <v-list-tile-action>
                             <v-list-tile-action>
                                 <v-checkbox
-                                    v-model="$_MapContainerComponentStoreMx_currentBaseMap"
+                                    v-model="mapContainerComponentStoreMx_currentBaseMap"
                                     value="bing"
                                 />
                             </v-list-tile-action>
@@ -47,16 +47,16 @@
                                     <v-list-tile>
                                         <v-list-tile-title>Choose imagery set</v-list-tile-title>
                                     </v-list-tile>
-                                    <v-list-tile @click="$_MapContainerComponentStoreMx_currentBingImagerySet='Aerial'">
+                                    <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='Aerial'">
                                         <v-list-tile-title>Aerial</v-list-tile-title>
                                     </v-list-tile>
-                                    <v-list-tile @click="$_MapContainerComponentStoreMx_currentBingImagerySet='AerialWithLabels'">
+                                    <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='AerialWithLabels'">
                                         <v-list-tile-title>Aerial with labels</v-list-tile-title>
                                     </v-list-tile>
-                                    <v-list-tile @click="$_MapContainerComponentStoreMx_currentBingImagerySet='RoadOnDemand'">
+                                    <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='RoadOnDemand'">
                                         <v-list-tile-title>Road (dynamic)</v-list-tile-title>
                                     </v-list-tile>
-                                    <v-list-tile @click="$_MapContainerComponentStoreMx_currentBingImagerySet='Road'">
+                                    <v-list-tile @click="mapContainerComponentStoreMx_currentBingImagerySet='Road'">
                                         <v-list-tile-title>Road (static)</v-list-tile-title>
                                     </v-list-tile>
                                 </v-list>
@@ -67,7 +67,7 @@
                         <v-list-tile-action>
                             <v-list-tile-action>
                                 <v-checkbox
-                                    v-model="$_MapContainerComponentStoreMx_currentBaseMap"
+                                    v-model="mapContainerComponentStoreMx_currentBaseMap"
                                     value="osm"
                                 />
                             </v-list-tile-action>
@@ -93,16 +93,16 @@ export default {
     ],
     data() {
         return {
-            $_ComponentStoreMx_cid: 'the-map-layers-drawer'
+            componentStoreMx_cid: 'the-map-layers-drawer'
         };
     },
     computed: {
         visible: {
             get() {
-                return this.$_ComponentStoreMx_getStoreProp('visible');
+                return this.componentStoreMx_getStoreProp('visible');
             },
             set(value) {
-                this.$_ComponentStoreMx_setStoreProp('visible', value);
+                this.componentStoreMx_setStoreProp('visible', value);
             }
         }
     },

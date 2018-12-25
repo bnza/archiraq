@@ -6,7 +6,7 @@ const NAMESPACE = 'components';
 export default {
     data() {
         return {
-            $_ComponentStoreMx_cid: ''
+            componentStoreMx_cid: ''
         };
     },
     props: {
@@ -21,16 +21,16 @@ export default {
         ...mapGetters(NAMESPACE, [
             STORE.COMPONENTS.GETTERS.PROP.GET
         ]),
-        $_ComponentStoreMx_STORE() {
+        componentStoreMx_STORE() {
             return STORE;
         }
     },
     created() {
         if (this.cidP) {
-            this.$data.$_ComponentStoreMx_cid = this.cidP;
+            this.$data.componentStoreMx_cid = this.cidP;
         }
-        if (this.$data.$_ComponentStoreMx_cid) {
-            this[STORE.COMPONENTS.MUTATIONS.CREATE](this.$data.$_ComponentStoreMx_cid);
+        if (this.$data.componentStoreMx_cid) {
+            this[STORE.COMPONENTS.MUTATIONS.CREATE](this.$data.componentStoreMx_cid);
         }
     },
     methods: {
@@ -39,26 +39,26 @@ export default {
             STORE.COMPONENTS.MUTATIONS.PROP.SET,
             STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE
         ]),
-        $_ComponentStoreMx_getStoreProp(prop) {
-            return this[STORE.COMPONENTS.GETTERS.PROP.GET](this.$data.$_ComponentStoreMx_cid, prop);
+        componentStoreMx_getStoreProp(prop) {
+            return this[STORE.COMPONENTS.GETTERS.PROP.GET](this.$data.componentStoreMx_cid, prop);
         },
-        $_ComponentStoreMx_setStoreProp(prop, value) {
+        componentStoreMx_setStoreProp(prop, value) {
             this[STORE.COMPONENTS.MUTATIONS.PROP.SET]({
-                cid: this.$data.$_ComponentStoreMx_cid,
+                cid: this.$data.componentStoreMx_cid,
                 prop: prop,
                 value: value
             });
         },
-        $_ComponentStoreMx_toggleStoreProp(prop) {
+        componentStoreMx_toggleStoreProp(prop) {
             this[STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE]({
-                cid: this.$data.$_ComponentStoreMx_cid,
+                cid: this.$data.componentStoreMx_cid,
                 prop: prop
             });
         },
-        $_ComponentStoreMx_getter(name) {
+        componentStoreMx_getter(name) {
             return this[name];
         },
-        $_ComponentStoreMx_mutation(name, payload) {
+        componentStoreMx_mutation(name, payload) {
             this[name](payload);
         }
     }

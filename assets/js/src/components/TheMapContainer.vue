@@ -15,16 +15,16 @@
             />
             <vl-layer-tile
                 id="bingmaps"
-                :visible="'bing'===$_MapContainerComponentStoreMx_currentBaseMap"
+                :visible="'bing'===mapContainerComponentStoreMx_currentBaseMap"
             >
                 <vl-source-bingmaps
                     :api-key="apiKey"
-                    :imagery-set="$_MapContainerComponentStoreMx_currentBingImagerySet"
+                    :imagery-set="mapContainerComponentStoreMx_currentBingImagerySet"
                 />
             </vl-layer-tile>
             <vl-layer-tile
                 id="osm"
-                :visible="'osm'===$_MapContainerComponentStoreMx_currentBaseMap"
+                :visible="'osm'===mapContainerComponentStoreMx_currentBaseMap"
             >
                 <vl-source-osm />
             </vl-layer-tile>
@@ -53,12 +53,12 @@ export default {
             center: [0,0],
             rotation: 0,
             apiKey: this.$store.state.bingApiKey,
-            $_ComponentStoreMx_cid: 'the-map-container'
+            componentStoreMx_cid: 'the-map-container'
         };
     },
     created() {
-        this.$_MapContainerComponentStoreMx_currentBaseMap = this.$store.state.default.baseMap;
-        this.$_MapContainerComponentStoreMx_currentBingImagerySet =  this.$store.state.default.bingImagerySet;
+        this.mapContainerComponentStoreMx_currentBaseMap = this.$store.state.default.baseMap;
+        this.mapContainerComponentStoreMx_currentBingImagerySet =  this.$store.state.default.bingImagerySet;
     },
 };
 </script>
