@@ -19,7 +19,7 @@ export default {
     },
     computed: {
         ...mapGetters(NAMESPACE, [
-            STORE.COMPONENTS.GETTERS.PROP.GET
+            STORE.MODULES.COMPONENTS.GETTERS.PROP.GET
         ]),
         componentStoreMx_STORE() {
             return STORE;
@@ -30,27 +30,27 @@ export default {
             this.$data.componentStoreMx_cid = this.cidP;
         }
         if (this.$data.componentStoreMx_cid) {
-            this[STORE.COMPONENTS.MUTATIONS.CREATE](this.$data.componentStoreMx_cid);
+            this[STORE.MODULES.COMPONENTS.MUTATIONS.CREATE](this.$data.componentStoreMx_cid);
         }
     },
     methods: {
         ...mapMutations(NAMESPACE, [
-            STORE.COMPONENTS.MUTATIONS.CREATE,
-            STORE.COMPONENTS.MUTATIONS.PROP.SET,
-            STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE
+            STORE.MODULES.COMPONENTS.MUTATIONS.CREATE,
+            STORE.MODULES.COMPONENTS.MUTATIONS.PROP.SET,
+            STORE.MODULES.COMPONENTS.MUTATIONS.PROP.TOGGLE
         ]),
         componentStoreMx_getStoreProp(prop) {
-            return this[STORE.COMPONENTS.GETTERS.PROP.GET](this.$data.componentStoreMx_cid, prop);
+            return this[STORE.MODULES.COMPONENTS.GETTERS.PROP.GET](this.$data.componentStoreMx_cid, prop);
         },
         componentStoreMx_setStoreProp(prop, value) {
-            this[STORE.COMPONENTS.MUTATIONS.PROP.SET]({
+            this[STORE.MODULES.COMPONENTS.MUTATIONS.PROP.SET]({
                 cid: this.$data.componentStoreMx_cid,
                 prop: prop,
                 value: value
             });
         },
         componentStoreMx_toggleStoreProp(prop) {
-            this[STORE.COMPONENTS.MUTATIONS.PROP.TOGGLE]({
+            this[STORE.MODULES.COMPONENTS.MUTATIONS.PROP.TOGGLE]({
                 cid: this.$data.componentStoreMx_cid,
                 prop: prop
             });

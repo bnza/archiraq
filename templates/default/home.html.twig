@@ -7,7 +7,11 @@
 {% block javascriptEnvData %}
     <script id="env-data">
             window.envData = {
-                bingApiKey: '{{ bing_api_key }}'
+                bingApiKey: '{{ bing_api_key }}',
+                geoServer: {
+                    baseUrl: '{{ geoserver.base_url }}',
+                    guestAuth: '{{ geoserver.guest_auth|base64_encode }}'
+                }
             }
     </script>
 {% endblock %}

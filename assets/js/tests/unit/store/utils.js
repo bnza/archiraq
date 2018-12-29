@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import Vuex from 'vuex';
-import {options as appStoreOptions} from '../../src/store/options';
+import {options as appStoreOptions} from '../../../src/store/options';
 
 const randomMax = 1000;
 

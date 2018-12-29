@@ -1,4 +1,4 @@
-import MapContainerComponentStoreMx, {PROPS, MAP_COMPONENT_CID} from '../../src/mixins/MapContainerComponentStoreMx';
+import MapContainerComponentStoreMx, {PROPS, MAP_COMPONENT_CID} from '../../../src/mixins/MapContainerComponentStoreMx';
 import {cid, getWrapper, moduleFuncs} from './utils';
 
 let componentOptions;

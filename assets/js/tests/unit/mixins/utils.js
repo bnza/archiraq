@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import merge from 'lodash/merge';
-import MODULE_FUNCS from '../../src/store/components/module-funcs';
+import MODULE_FUNCS from '../../../src/store/components/module-funcs';
 import {propIntValue} from '../store/utils';
 import {getStore} from '../store/utils';
 

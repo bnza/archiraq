@@ -1,4 +1,4 @@
-import TheMapToolbar from '../../src/components/TheMapToolbar';
+import TheMapToolbar from '../../../src/components/TheMapToolbar';
 import {getWrapper, catchLocalVueDuplicateVueBug, resetConsoleError} from './utils';
 import {getNamespacedStoreFunc, moduleFuncs} from '../mixins/utils';
 

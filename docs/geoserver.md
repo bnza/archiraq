@@ -19,7 +19,7 @@ Default GeoServer comes with [Jetty](https://www.eclipse.org/jetty/) web server 
 
 Archiraq web app uses Cross-Origin Resource Sharing ([CORS](https://developer.mozilla.org/it/docs/Web/HTTP/CORS)) mechanism and [HTTP Basic authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#Basic_authentication_scheme) through GoeServer ```Basic``` [authentication filter](https://docs.geoserver.org/stable/en/user/security/webadmin/auth.html#authentication-filters)
 
-As stated in the official Jetty [docs](https://www.eclipse.org/jetty/documentation/current/cross-origin-filter.html) In order to to enable cross-site HTTP requests you should edit the ```webapps/geoserver/WEB-INF/web.xml``` in your ```$GEOSERVER_HOME``` this way:
+As stated in the official Jetty [docs](https://www.eclipse.org/jetty/documentation/current/cross-origin-filter.html) in order to to enable cross-site HTTP requests you should edit the ```webapps/geoserver/WEB-INF/web.xml``` in your ```$GEOSERVER_HOME``` this way:
 ```$xslt 
 <!-- Uncomment following filter to enable CORS -->
 <filter>

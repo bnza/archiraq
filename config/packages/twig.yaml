@@ -1,3 +1,6 @@
 twig:
     globals:
         bing_api_key: '%env(BING_API_KEY)%'
+        geoserver:
+            base_url: '%env(GEOSERVER_BASE_URL)%'
+            guest_auth: '%env(GEOSERVER_GUEST_AUTH)%'

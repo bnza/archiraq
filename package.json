@@ -4,10 +4,13 @@
     "description": "Archiraq webgis",
     "devDependencies": {
         "@babel/core": "^7.2.2",
+        "@babel/plugin-transform-runtime": "^7.2.0",
         "@babel/preset-env": "^7.2.3",
         "@babel/preset-stage-3": "^7.0.0",
+        "@babel/runtime": "^7.2.0",
         "@symfony/webpack-encore": "^0.22.0",
         "@vue/test-utils": "^1.0.0-beta.27",
+        "axios": "^0.18.0",
         "babel-jest": "^23.6.0",
         "eslint": "^5.11.0",
         "eslint-plugin-vue": "^5.0.0",
@@ -16,6 +19,7 @@
         "lodash": "^4.17.11",
         "material-icons": "^0.2.3",
         "node-sass": "^4.11.0",
+        "ol": "^5.3.0",
         "regenerator-runtime": "^0.13.1",
         "sass-loader": "^7.0.1",
         "style-loader": "^0.23.1",
@@ -31,7 +35,9 @@
         "vuex": "^3.0.1",
         "vuex-mock-store": "^0.0.5",
         "vuex-router-sync": "^5.0.0",
-        "webpack-notifier": "^1.6.0"
+        "webpack-notifier": "^1.6.0",
+        "whatwg-fetch": "^3.0.0",
+        "xml-js": "^1.6.8"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -40,7 +46,8 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress",
-        "test": "jest assets/js/tests/*.spec.js --watchAll"
+        "test-watch": "jest assets/js/tests/*.spec.js --watchAll",
+        "test": "jest"
     },
     "jest": {
         "moduleFileExtensions": [
@@ -52,7 +59,7 @@
             ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest",
             "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
         },
-        "setupTestFrameworkScriptFile": "<rootDir>/assets/js/tests/jest-setup.js"
+        "setupTestFrameworkScriptFile": "<rootDir>/assets/js/tests/unit/jest-setup.js"
     },
     "dependencies": {
         "@babel/polyfill": "^7.2.3",

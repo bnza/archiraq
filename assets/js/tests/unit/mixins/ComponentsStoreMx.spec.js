@@ -1,4 +1,4 @@
-import ComponentsStoreMx from '../../src/mixins/ComponentsStoreMx';
+import ComponentsStoreMx from '../../../src/mixins/ComponentsStoreMx';
 import {cid, getNamespacedStoreFunc, getWrapper, moduleFuncs} from './utils';
 import {propName, propIntValue} from '../store/utils';
 

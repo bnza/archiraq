@@ -1,8 +1,7 @@
-/* global describe, it, expect */
-import mutations from '../../../src/store/components/mutations';
-import {MUTATIONS} from '../../../src/store/components/mutations';
+import mutations from '../../../../src/store/components/mutations';
+import {MUTATIONS} from '../../../../src/store/components/mutations';
 
-describe('mutations', () => {
+describe('components mutations', () => {
 
     let mutation;
 
@@ -32,7 +31,7 @@ describe('mutations', () => {
         expect(t).toThrowError(TypeError);
     };
 
-    describe('MUTATIONS.CREATE', () => {
+    describe(MUTATIONS.CREATE, () => {
         it('Success', () => {
             const state = {all: {}};
             mutations[MUTATIONS.CREATE](state, 'dummy');
@@ -41,7 +40,7 @@ describe('mutations', () => {
 
     });
 
-    describe('MUTATIONS.PROP.TOGGLE', () => {
+    describe(MUTATIONS.PROP.TOGGLE, () => {
 
         beforeEach(() => {
             mutation = mutations[MUTATIONS.PROP.TOGGLE];
@@ -71,7 +70,7 @@ describe('mutations', () => {
         it('Throws when property is not boolean', throwsType);
     });
 
-    describe('MUTATIONS.PROP.SET', () => {
+    describe(MUTATIONS.PROP.SET, () => {
 
         beforeEach(() => {
             mutation = mutations[MUTATIONS.PROP.SET];

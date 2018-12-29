@@ -1,5 +1,4 @@
-var Encore = require('@symfony/webpack-encore');
-const path = require('path')
+const Encore = require('@symfony/webpack-encore');
 
 Encore
     // directory where compiled assets will be stored
@@ -46,11 +45,11 @@ Encore
         loader: 'style-loader!css-loader!stylus-loader'
     })
 
-    // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
+// uncomment if you use TypeScript
+//.enableTypeScriptLoader()
 
-    // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+// uncomment if you're having problems with a jQuery plugin
+//.autoProvidejQuery()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
@@ -58,8 +57,8 @@ Encore
     .enableVueLoader()
 ;
 
-let config = Encore.getWebpackConfig()
+let config = Encore.getWebpackConfig();
 
 // config.resolve.alias['vue$'] = 'vue/dist/vue.runtime.esm.js'
 
-module.exports = config
+module.exports = config;

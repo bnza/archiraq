@@ -1,7 +1,10 @@
 /* global process */
 
 import mutations from './mutations';
+import actions from './actions';
+import geoserver from './geoserver';
 import components from './components';
+
 
 export const state = {
     bingApiKey: '',
@@ -18,8 +21,10 @@ export const options = {
     state,
     mutations,
     getters,
+    actions,
     modules: {
-        components: components
+        components: components,
+        geoserver: geoserver
     }
 };
 
