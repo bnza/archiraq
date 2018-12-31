@@ -19,7 +19,7 @@
                             <v-list-tile-title>Base maps</v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
-                    <map-layer-list-tile
+                    <map-legend-layer-list-tile
                         title="Bing Maps"
                     >
                         <v-checkbox
@@ -44,8 +44,8 @@
                                 <v-list-tile-title>Road (static)</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
-                    </map-layer-list-tile>
-                    <map-layer-list-tile
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
                         title="Open Street Map"
                     >
                         <v-checkbox
@@ -53,7 +53,7 @@
                             v-model="mapContainerComponentStoreMx_currentBaseMap"
                             value="osm"
                         />
-                    </map-layer-list-tile>
+                    </map-legend-layer-list-tile>
                 </v-list-group>
             </v-list>
         </v-navigation-drawer>
@@ -62,12 +62,12 @@
 
 <script>
 import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
-import MapLayerListTile from './MapLayerListTile';
+import MapLegendLayerListTile from './MapLegendLayerListTile';
 
 export default {
     name: 'TheMapLayersDrawer',
     components: {
-        MapLayerListTile
+        MapLegendLayerListTile
     },
     mixins: [
         MapContainerComponentStoreMx
