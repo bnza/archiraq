@@ -1,6 +1,13 @@
-
-
 $material-icons-font-path: '~material-icons/iconfont/';
 
 @import '~material-icons/iconfont/material-icons.scss';
+
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,700');
+
+//$material-light.background: #FFF;
+$body-font-family: 'Work Sans', sans-serif;
+$alert-font-size: 18px;
+
+
+@import '~vuetify-scss';
 
