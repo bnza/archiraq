@@ -29,7 +29,10 @@ export default {
         if (this.cidP) {
             this.$data.componentStoreMx_cid = this.cidP;
         }
-        if (this.$data.componentStoreMx_cid) {
+        if (
+            this.$data.componentStoreMx_cid
+            && !this.$store.state.components.all.hasOwnProperty(this.$data.componentStoreMx_cid)
+        ) {
             this[STORE.MODULES.COMPONENTS.MUTATIONS.CREATE](this.$data.componentStoreMx_cid);
         }
     },

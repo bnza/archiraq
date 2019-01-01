@@ -14,6 +14,7 @@
                 :rotation.sync="rotation"
                 projection="EPSG:4326"
             />
+            <!-- Base Maps -->
             <vl-layer-tile
                 id="bingmaps"
                 :visible="'bing'===mapContainerComponentStoreMx_currentBaseMap"
@@ -29,33 +30,23 @@
             >
                 <vl-source-osm />
             </vl-layer-tile>
-            <vl-layer-vector
-                id="prova"
-                :visible="true"
-            >
-                <vl-source-vector
-                    :url="urlFunction"
-                    :strategy-factory="loadingStrategyFactory"
-                    :loader-factory="loaderFactory"
-                />
-            </vl-layer-vector>
+            <!--// Base Maps -->
+            <map-admin-bounds-layer-group />
             <the-map-layers-drawer />
         </vl-map>
     </v-card>
 </template>
 
 <script>
-import * as olExt from 'vuelayers/lib/ol-ext';
-import { fetch } from 'whatwg-fetch';
-import {headers} from '../utils/http';
-import {GETTERS as AUTH_GETTERS} from '../store/geoserver/auth/getters';
 import TheMapLayersDrawer from './TheMapLayersDrawer';
 import TheMapToolbar from './TheMapToolbar';
 import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
+import MapAdminBoundsLayerGroup from './MapAdminBoundsLayerGroup';
 
 export default {
     name: 'TheMapContainer',
     components: {
+        MapAdminBoundsLayerGroup,
         TheMapLayersDrawer,
         TheMapToolbar
     },
@@ -74,6 +65,7 @@ export default {
     created() {
         this.mapContainerComponentStoreMx_currentBaseMap = this.$store.state.default.baseMap;
         this.mapContainerComponentStoreMx_currentBingImagerySet =  this.$store.state.default.bingImagerySet;
+        this.mapContainerComponentStoreMx_currentLayer =  this.$store.state.default.currentLayer;
     },
     mounted () {
     // get vl-map by ref="map" and await ol.Map creation
@@ -82,41 +74,7 @@ export default {
         });
     },
     methods: {
-        urlFunction (extent, resolution, projection) {
-            return this.$store.state.geoserver.baseUrl + 'wfs?service=WFS&' +
-                'version=1.1.0&request=GetFeature&typename=archiraq:iraq_admbnda_adm0&' +
-                'outputFormat=application/json&srsname=' + projection + '&' +
-                'bbox=' + extent.join(',') + ',' + projection;
-        },
-        loadingStrategyFactory () {
-            // VueLayers.olExt available only in UMD build
-            // in ES build it should be imported explicitly from 'vuelayers/lib/ol-ext'
-            return olExt.loadingBBox;
-        },
-        loaderFactory(vm) {
-            return function (extent, resolution, projection) {
-                let url = vm.$source.getUrl();
-                url = url(extent, resolution, projection);
-                return fetch(url, {
-                    credentials: 'same-origin',
-                    mode: 'cors',
-                    headers: headers.setAuthorizationBasic(
-                        vm.$store.getters[`geoserver/auth/${AUTH_GETTERS.GET_GUEST_AUTH}`]
-                    )
-                }).then(function (response) {
-                    return response.text();
-                }).then(function (text) {
-                    if (!vm.$source) {
-                        return [];
-                    }
 
-                    return vm.$source.getFormat().readFeatures(text, {
-                        featureProjection: vm.viewProjection,
-                        dataProjection: vm.resolvedDataProjection
-                    });
-                });
-            };
-        }
     },
 };
 </script>

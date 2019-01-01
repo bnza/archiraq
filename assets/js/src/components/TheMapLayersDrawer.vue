@@ -11,6 +11,48 @@
         >
             <v-list dense>
                 <v-list-group
+                    prepend-icon="layers"
+                    no-action
+                >
+                    <v-list-tile slot="activator">
+                        <v-list-tile-content>
+                            <v-list-tile-title>Administrative boundaries</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+
+                    <map-legend-layer-list-tile
+                        layer-cid="archiraq_admbnd0_wfs"
+                        title="Nations"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerComponentStoreMx_currentAdminBoundsLayer"
+                            value="archiraq_admbnd0_wfs"
+                        />
+                    </map-legend-layer-list-tile>
+
+                    <map-legend-layer-list-tile
+                        layer-cid="archiraq_admbnd1_wfs"
+                        title="Governorates"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerComponentStoreMx_currentAdminBoundsLayer"
+                            value="archiraq_admbnd1_wfs"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        layer-cid="archiraq_admbnd2_wfs"
+                        title="Districts"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerComponentStoreMx_currentAdminBoundsLayer"
+                            value="archiraq_admbnd2_wfs"
+                        />
+                    </map-legend-layer-list-tile>
+                </v-list-group>
+                <v-list-group
                     prepend-icon="map"
                     no-action
                 >

@@ -1,5 +1,8 @@
 <template>
-    <v-list-tile>
+    <v-list-tile
+        :class="{ current: isCurrentLayer }"
+        @click="setCurrentLayer"
+    >
         <v-list-tile-action>
             <v-list-tile-action>
                 <slot name="visibility" />
@@ -31,17 +34,41 @@
 </template>
 
 <script>
+import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
+
 export default {
     name: 'MapLayerListTile',
+    mixins: [
+        MapContainerComponentStoreMx
+    ],
     props: {
+        layerCid: {
+            type: String,
+            default: ''
+        },
         title: {
             type: String,
             required: true
+        }
+    },
+    computed: {
+        isCurrentLayer() {
+            return !!this.layerCid
+          && this.mapContainerComponentStoreMx_currentLayer === this.layerCid;
+        }
+    },
+    methods: {
+        setCurrentLayer() {
+            if (this.layerCid !== '') {
+                this.mapContainerComponentStoreMx_currentLayer = this.layerCid;
+            }
         }
     }
 };
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .current {
+        background-color: rgba(#fdd835, .25);
+    }
 </style>

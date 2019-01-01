@@ -10,7 +10,8 @@ export const state = {
     bingApiKey: '',
     default: {
         baseMap: 'bing',
-        bingImagerySet: 'AerialWithLabels'
+        bingImagerySet: 'AerialWithLabels',
+        currentLayer: 'archiraq_admbnd2_wfs'
     }
 };
 
