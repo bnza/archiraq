@@ -1,7 +1,5 @@
 <template>
-    <vl-interaction-select
-        :features.sync="selectedFeatures"
-    >
+    <vl-layer-group>
         <map-layer-vector-wfs-admin-bounds
             cid-p="archiraq_admbnd0_wfs"
             typename="archiraq:admbnd0"
@@ -17,7 +15,7 @@
             typename="archiraq:admbnd2"
             :visible-p="true"
         />
-    </vl-interaction-select>
+    </vl-layer-group>
 </template>
 
 <script>

@@ -7,7 +7,7 @@ export default {
     computed: {
         visible: {
             get() {
-                return this.componentStoreMx_cid === this.mapContainerComponentStoreMx_currentAdminBoundsLayer;
+                return !!this.componentStoreMx_cid && this.componentStoreMx_cid === this.mapContainerComponentStoreMx_currentAdminBoundsLayer;
             },
             set(value) {
                 let currentAdminBoundsLayer;
@@ -31,6 +31,5 @@ export default {
             }
         }
     },
-
 };
 </script>

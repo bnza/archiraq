@@ -1,16 +1,23 @@
 <template>
-    <vl-layer-vector
-        :visible="visible"
+    <vl-interaction-select
+        :features.sync="selectedFeatures"
+        :condition="selectCondition"
+        :toggle-condition="toggleCondition"
     >
-        <vl-source-vector
-            :url="urlFunction"
-            :strategy-factory="loadingStrategyFactory"
-            :loader-factory="loaderFactory"
-        />
-    </vl-layer-vector>
+        <vl-layer-vector
+            :visible="visible"
+        >
+            <vl-source-vector
+                :url="urlFunction"
+                :strategy-factory="loadingStrategyFactory"
+                :loader-factory="loaderFactory"
+            />
+        </vl-layer-vector>
+    </vl-interaction-select>
 </template>
 
 <script>
+import { shiftKeyOnly, singleClick } from 'ol/events/condition';
 import * as olExt from 'vuelayers/lib/ol-ext';
 import { fetch } from 'whatwg-fetch';
 import {headers} from '../utils/http';
@@ -32,7 +39,16 @@ export default {
             default: true
         }
     },
+    data() {
+        return {
+            selectedFeatures: []
+        };
+    },
     computed: {
+        isCurrentLayer() {
+            return !!this.componentStoreMx_cid
+                    && this.mapContainerComponentStoreMx_currentLayer === this.componentStoreMx_cid;
+        },
         visible: {
             get() {
                 return this.componentStoreMx_getStoreProp('visible');
@@ -42,15 +58,35 @@ export default {
             }
         }
     },
+    watch: {
+        visible: function (flag) {
+            if (!flag) {
+                this.selectedFeatures = [];
+            }
+        },
+        selectedFeatures: function (features) {
+            if (this.isCurrentLayer) {
+                this.mapContainerComponentStoreMx_selectedFeatures = features;
+            }
+        }
+    },
     created() {
         this.visible = this.visibleP;
     },
     methods: {
+        selectCondition(olMapBrowserEvent)  {
+            return this.isCurrentLayer
+                    && singleClick(olMapBrowserEvent);
+        },
+        toggleCondition(olMapBrowserEvent)  {
+            return this.isCurrentLayer
+                    && shiftKeyOnly(olMapBrowserEvent);
+        },
         urlFunction (extent, resolution, projection) {
             return this.$store.state.geoserver.baseUrl + 'wfs?service=WFS&' +
-                'version=1.1.0&request=GetFeature&typename=' + this.typename + '&' +
-                'outputFormat=application/json&srsname=' + projection + '&' +
-                'bbox=' + extent.join(',') + ',' + projection;
+                    'version=1.1.0&request=GetFeature&typename=' + this.typename + '&' +
+                    'outputFormat=application/json&srsname=' + projection + '&' +
+                    'bbox=' + extent.join(',') + ',' + projection;
         },
         loadingStrategyFactory () {
             // VueLayers.olExt available only in UMD build
