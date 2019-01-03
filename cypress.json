@@ -1,0 +1,8 @@
+{
+  "fixturesFolder": "assets/js/tests/cypress/fixtures",
+  "integrationFolder": "assets/js/tests/cypress/integration",
+  "pluginsFile": "assets/js/tests/cypress/plugins/index.js",
+  "screenshotsFolder": "assets/js/tests/cypress/screenshots",
+  "supportFile": "assets/js/tests/cypress/support/index.js",
+  "videosFolder": "assets/js/tests/cypress/videos"
+}

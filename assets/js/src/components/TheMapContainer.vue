@@ -3,11 +3,18 @@
         <the-map-toolbar />
         <vl-map
             ref="map"
+            data-cy="ol-map-container"
             :load-tiles-while-animating="true"
             :load-tiles-while-interacting="true"
             data-projection="EPSG:4326"
             style="height: 400px"
         >
+            <input
+                data-cy="map-selected-features-num"
+                type="hidden"
+                :value="mapContainerComponentStoreMx_selectedFeatures.length"
+            >
+
             <vl-view
                 :zoom.sync="zoom"
                 :center.sync="center"
@@ -38,6 +45,7 @@
 </template>
 
 <script>
+//import ol from 'ol';
 import TheMapLayersDrawer from './TheMapLayersDrawer';
 import TheMapToolbar from './TheMapToolbar';
 import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
@@ -66,11 +74,16 @@ export default {
         this.mapContainerComponentStoreMx_currentBaseMap = this.$store.state.default.baseMap;
         this.mapContainerComponentStoreMx_currentBingImagerySet =  this.$store.state.default.bingImagerySet;
         this.mapContainerComponentStoreMx_currentLayer =  this.$store.state.default.currentLayer;
+        this.mapContainerComponentStoreMx_selectedFeatures =  [];
     },
     mounted () {
     // get vl-map by ref="map" and await ol.Map creation
         this.$refs.map.$createPromise.then(() => {
             this.center = [ 47.44, 33.37];
+            if (process.env.NODE_ENV !== 'production') {
+                window.map = this.$refs.map.$map;
+                //window.ol = ol;
+            }
         });
     },
     methods: {

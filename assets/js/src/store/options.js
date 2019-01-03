@@ -18,7 +18,7 @@ export const state = {
 export const getters = {};
 
 export const options = {
-    strict: process.env.NODE_ENV !== 'production',
+    strict: true, //process.env.NODE_ENV !== 'production',
     state,
     mutations,
     getters,

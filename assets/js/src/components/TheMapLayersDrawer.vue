@@ -1,5 +1,6 @@
 <template>
     <v-card
+        data-cy="the-map-layers-drawer"
         flat
     >
         <v-navigation-drawer
