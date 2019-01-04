@@ -3,3 +3,5 @@ sudo: false
 node_js:
     - "9"
     - "8"
+script:
+    - yarn test:unit
