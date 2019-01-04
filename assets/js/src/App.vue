@@ -28,7 +28,7 @@
 import TheMainFooter from './components/TheMainFooter';
 import TheMainNavigationDrawer from './components/TheMainNavigationDrawer';
 import TheMainTopToolbar from './components/TheMainTopToolbar';
-import STORE from './store/store-funcs';
+import {STORE_M_ROOT_A_ENV_DATA} from './utils/constants';
 
 export default {
     name: 'App',
@@ -38,9 +38,10 @@ export default {
         TheMainTopToolbar
     },
     beforeCreate: function () {
-        this.$store.dispatch(STORE.ACTIONS.SET_ENV_DATA, window.envData);
-        delete window.envData;
-        document.getElementById('env-data').remove();
+        this.$store.dispatch(STORE_M_ROOT_A_ENV_DATA, window.envData).then(() => {
+            delete window.envData;
+            document.getElementById('env-data').remove();
+        });
     }
 };
 </script>

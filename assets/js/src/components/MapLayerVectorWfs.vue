@@ -21,7 +21,7 @@ import { shiftKeyOnly, singleClick } from 'ol/events/condition';
 import * as olExt from 'vuelayers/lib/ol-ext';
 import { fetch } from 'whatwg-fetch';
 import {headers} from '../utils/http';
-import {GETTERS as AUTH_GETTERS} from '../store/geoserver/auth/getters';
+import {STORE_M_GS_AUTH_G_GUEST_AUTH} from '../utils/constants';
 import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
 
 export default {
@@ -101,7 +101,7 @@ export default {
                     credentials: 'same-origin',
                     mode: 'cors',
                     headers: headers.setAuthorizationBasic(
-                        vm.$store.getters[`geoserver/auth/${AUTH_GETTERS.GET_GUEST_AUTH}`]
+                        vm.$store.getters[`geoserver/auth/${STORE_M_GS_AUTH_G_GUEST_AUTH}`]
                     )
                 }).then(function (response) {
                     return response.text();

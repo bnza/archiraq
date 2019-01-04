@@ -57,6 +57,9 @@
             ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest",
             "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
         },
+        "roots": [
+            "<rootDir>/assets/js/tests/unit/"
+        ],
         "setupTestFrameworkScriptFile": "<rootDir>/assets/js/tests/unit/jest-setup.js"
     },
     "dependencies": {

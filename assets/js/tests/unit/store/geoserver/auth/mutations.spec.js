@@ -1,12 +1,12 @@
 import {state} from '../../../../../src/store/geoserver/auth';
-import mutations, {MUTATIONS} from '../../../../../src/store/geoserver/auth/mutations';
+import {STORE_M_GS_AUTH_M_GUEST_TOKEN} from '../../../../../src/utils/constants';
+import mutations from '../../../../../src/store/geoserver/auth/mutations';
 
-describe('geoserver mutations', () => {
-    describe(MUTATIONS.SET_GUEST_TOKEN, () => {
+describe('geoserver/auth mutations', () => {
+    describe(STORE_M_GS_AUTH_M_GUEST_TOKEN, () => {
         it('Success', () => {
-            mutations[MUTATIONS.SET_GUEST_TOKEN](state, {auth: 'authToken'});
+            mutations[STORE_M_GS_AUTH_M_GUEST_TOKEN](state, {auth: 'authToken'});
             expect(state.guestToken).toHaveProperty('auth', 'authToken');
         });
-
     });
 });

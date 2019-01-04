@@ -1,9 +1,7 @@
-export const MUTATIONS = {
-    SET_BASE_URL: 'setGuestTokenGeoServerStoreMutation'
-};
+import {STORE_M_GS_M_BASE_URL} from '../../utils/constants';
 
 export default {
-    [MUTATIONS.SET_BASE_URL](state, baseUrl) {
+    [STORE_M_GS_M_BASE_URL](state, baseUrl) {
         state.baseUrl = baseUrl;
     }
 };

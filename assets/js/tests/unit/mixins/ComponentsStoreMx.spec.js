@@ -1,5 +1,12 @@
+import {
+    STORE_M_COMPONENTS_M_CREATE_COMPONENT,
+    STORE_M_COMPONENTS_M_COMPONENT_PROP,
+    STORE_M_COMPONENTS_G_COMPONENT_PROP,
+    STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP
+
+} from '../../../src/utils/constants';
 import ComponentsStoreMx from '../../../src/mixins/ComponentsStoreMx';
-import {cid, getNamespacedStoreFunc, getWrapper, moduleFuncs} from './utils';
+import {cid, getNamespacedStoreFunc, getWrapper} from './utils';
 import {propName, propIntValue} from '../store/utils';
 
 let componentOptions;
@@ -21,7 +28,13 @@ describe('ComponentsStoreMx', () => {
             const wrapper = getWrapper(mountFn, componentOptions, mountOptions);
             expect(wrapper.vm.$store.commit).toHaveBeenCalledTimes(times);
             if (times) {
-                expect(wrapper.vm.$store.commit).toHaveBeenCalledWith(getNamespacedStoreFunc(moduleFuncs.MUTATIONS.CREATE), cid, undefined);
+                expect(
+                    wrapper.vm.$store.commit
+                ).toHaveBeenCalledWith(
+                    getNamespacedStoreFunc(STORE_M_COMPONENTS_M_CREATE_COMPONENT),
+                    {cid},
+                    undefined
+                );
             }
 
         };
@@ -51,7 +64,7 @@ describe('ComponentsStoreMx', () => {
             const wrapper = getWrapper('shallowMount', componentOptions, {});
             wrapper.vm.componentStoreMx_setStoreProp(propName, propIntValue);
             expect(wrapper.vm.$store.commit).toHaveBeenLastCalledWith(
-                getNamespacedStoreFunc(moduleFuncs.MUTATIONS.PROP.SET),
+                getNamespacedStoreFunc(STORE_M_COMPONENTS_M_COMPONENT_PROP),
                 {
                     cid: cid,
                     prop: propName,
@@ -64,7 +77,7 @@ describe('ComponentsStoreMx', () => {
         it('componentStoreMx_getStoreProp', () => {
             const wrapper = getWrapper('shallowMount', componentOptions, {});
             wrapper.vm.componentStoreMx_getStoreProp(propName);
-            let jestFn = wrapper.vm[moduleFuncs.GETTERS.PROP.GET];
+            let jestFn = wrapper.vm[STORE_M_COMPONENTS_G_COMPONENT_PROP];
             expect(jestFn).toHaveBeenCalledTimes(1);
             expect(jestFn).toHaveBeenLastCalledWith(
                 cid,
@@ -76,7 +89,7 @@ describe('ComponentsStoreMx', () => {
             const wrapper = getWrapper('shallowMount', componentOptions, {});
             wrapper.vm.componentStoreMx_toggleStoreProp(propName);
             expect(wrapper.vm.$store.commit).toHaveBeenLastCalledWith(
-                getNamespacedStoreFunc(moduleFuncs.MUTATIONS.PROP.TOGGLE),
+                getNamespacedStoreFunc(STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP),
                 {
                     cid: cid,
                     prop: propName

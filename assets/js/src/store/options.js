@@ -1,5 +1,4 @@
-/* global process */
-
+import {CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2} from '../utils/constants';
 import mutations from './mutations';
 import actions from './actions';
 import geoserver from './geoserver';
@@ -11,7 +10,7 @@ export const state = {
     default: {
         baseMap: 'bing',
         bingImagerySet: 'AerialWithLabels',
-        currentLayer: 'archiraq_admbnd2_wfs'
+        currentLayer: CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2
     }
 };
 

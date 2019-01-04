@@ -1,13 +1,15 @@
 import ComponentsStoreMx from './ComponentsStoreMx';
 
-export const MAP_COMPONENT_CID = 'the-map-container';
-export const PROPS = {
-    CURRENT_BASE_MAP: 'currentBaseMap',
-    CURRENT_BING_IMAGERY_SET: 'currentBingImagerySet',
-    CURRENT_ADMIN_BOUNDS_LAYER: 'currentAdminBoundsLayer',
-    CURRENT_LAYER: 'currentLayer',
-    SELECTED_FEATURES: 'selectedFeatures'
-};
+import {
+    CID_THE_MAP_CONTAINER,
+    STORE_M_COMPONENTS_G_COMPONENT_PROP,
+    STORE_M_COMPONENTS_M_COMPONENT_PROP,
+    PK_CURRENT_ADMIN_BOUNDS_LAYER,
+    PK_CURRENT_BASE_MAP,
+    PK_CURRENT_BING_IMAGERY_SET,
+    PK_CURRENT_LAYER,
+    PK_SELECTED_FEATURES
+} from '../utils/constants';
 
 export default {
     mixins: [
@@ -16,63 +18,63 @@ export default {
     computed: {
         mapContainerComponentStoreMx_currentBaseMap: {
             get() {
-                return this[this.componentStoreMx_STORE.MODULES.COMPONENTS.GETTERS.PROP.GET](MAP_COMPONENT_CID, PROPS.CURRENT_BASE_MAP);
+                return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](CID_THE_MAP_CONTAINER, PK_CURRENT_BASE_MAP);
             },
             set(value) {
-                this.componentStoreMx_mutation(this.componentStoreMx_STORE.MODULES.COMPONENTS.MUTATIONS.PROP.SET, {
-                    cid: MAP_COMPONENT_CID,
-                    prop: PROPS.CURRENT_BASE_MAP,
+                this.componentStoreMx_mutation(STORE_M_COMPONENTS_M_COMPONENT_PROP, {
+                    cid: CID_THE_MAP_CONTAINER,
+                    prop: PK_CURRENT_BASE_MAP,
                     value: value
                 });
             }
         },
         mapContainerComponentStoreMx_currentBingImagerySet: {
             get() {
-                return this[this.componentStoreMx_STORE.MODULES.COMPONENTS.GETTERS.PROP.GET](MAP_COMPONENT_CID, PROPS.CURRENT_BING_IMAGERY_SET);
+                return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](CID_THE_MAP_CONTAINER, PK_CURRENT_BING_IMAGERY_SET);
             },
             set(value) {
-                this.componentStoreMx_mutation(this.componentStoreMx_STORE.MODULES.COMPONENTS.MUTATIONS.PROP.SET, {
-                    cid: MAP_COMPONENT_CID,
-                    prop: PROPS.CURRENT_BING_IMAGERY_SET,
+                this.componentStoreMx_mutation(STORE_M_COMPONENTS_M_COMPONENT_PROP, {
+                    cid: CID_THE_MAP_CONTAINER,
+                    prop: PK_CURRENT_BING_IMAGERY_SET,
                     value: value
                 });
             }
         },
         mapContainerComponentStoreMx_currentLayer: {
             get() {
-                return this[this.componentStoreMx_STORE.MODULES.COMPONENTS.GETTERS.PROP.GET](MAP_COMPONENT_CID, PROPS.CURRENT_LAYER);
+                return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](CID_THE_MAP_CONTAINER, PK_CURRENT_LAYER);
             },
             set(value) {
-                this.componentStoreMx_mutation(this.componentStoreMx_STORE.MODULES.COMPONENTS.MUTATIONS.PROP.SET, {
-                    cid: MAP_COMPONENT_CID,
-                    prop: PROPS.CURRENT_LAYER,
+                this.componentStoreMx_mutation(STORE_M_COMPONENTS_M_COMPONENT_PROP, {
+                    cid: CID_THE_MAP_CONTAINER,
+                    prop: PK_CURRENT_LAYER,
                     value: value
                 });
             }
         },
         mapContainerComponentStoreMx_currentAdminBoundsLayer: {
             get() {
-                return this[this.componentStoreMx_STORE.MODULES.COMPONENTS.GETTERS.PROP.GET](MAP_COMPONENT_CID, PROPS.CURRENT_ADMIN_BOUNDS_LAYER);
+                return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](CID_THE_MAP_CONTAINER, PK_CURRENT_ADMIN_BOUNDS_LAYER);
             },
             set(value) {
-                this.componentStoreMx_mutation(this.componentStoreMx_STORE.MODULES.COMPONENTS.MUTATIONS.PROP.SET, {
-                    cid: MAP_COMPONENT_CID,
-                    prop: PROPS.CURRENT_ADMIN_BOUNDS_LAYER,
+                this.componentStoreMx_mutation(STORE_M_COMPONENTS_M_COMPONENT_PROP, {
+                    cid: CID_THE_MAP_CONTAINER,
+                    prop: PK_CURRENT_ADMIN_BOUNDS_LAYER,
                     value: value
                 });
             }
         },
         mapContainerComponentStoreMx_selectedFeatures: {
             get() {
-                return this[this.componentStoreMx_STORE.MODULES.COMPONENTS.GETTERS.PROP.GET](MAP_COMPONENT_CID, PROPS.SELECTED_FEATURES);
+                return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](CID_THE_MAP_CONTAINER, PK_SELECTED_FEATURES);
             },
             set(value) {
-                this.componentStoreMx_mutation(this.componentStoreMx_STORE.MODULES.COMPONENTS.MUTATIONS.PROP.SET, {
-                    cid: MAP_COMPONENT_CID,
-                    prop: PROPS.SELECTED_FEATURES,
+                this.componentStoreMx_mutation(STORE_M_COMPONENTS_M_COMPONENT_PROP, {
+                    cid: CID_THE_MAP_CONTAINER,
+                    prop: PK_SELECTED_FEATURES,
                     value: value
                 });
             }
-        }
+        },
     }
 };

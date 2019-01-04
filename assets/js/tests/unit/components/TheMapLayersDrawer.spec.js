@@ -1,6 +1,7 @@
 import TheMapLayersDrawer from '../../../src/components/TheMapLayersDrawer';
+import {STORE_M_COMPONENTS_M_COMPONENT_PROP, CID_THE_MAP_LAYERS_DRAWER} from '../../../src/utils/constants';
 import {getWrapper, catchLocalVueDuplicateVueBug, resetConsoleError} from './utils';
-import {getNamespacedStoreFunc, moduleFuncs} from '../mixins/utils';
+import {getNamespacedStoreFunc} from '../mixins/utils';
 
 beforeAll(() => {
     catchLocalVueDuplicateVueBug();
@@ -16,16 +17,14 @@ describe('TheMapLayersDrawer', () => {
             const wrapper = getWrapper('shallowMount', TheMapLayersDrawer, {});
             wrapper.vm.visible = true;
             expect(wrapper.vm.$store.commit).toHaveBeenLastCalledWith(
-                getNamespacedStoreFunc(moduleFuncs.MUTATIONS.PROP.SET),
-                {cid: 'the-map-layers-drawer', prop: 'visible', value: true},
+                getNamespacedStoreFunc(STORE_M_COMPONENTS_M_COMPONENT_PROP),
+                {
+                    cid: CID_THE_MAP_LAYERS_DRAWER,
+                    prop: 'visible',
+                    value: true
+                },
                 undefined
             );
-            /*
-            expect(wrapper.vm[moduleFuncs.GETTERS.PROP.GET]).toHaveBeenCalledWith(
-                'the-map-layer-drawer',
-                'visible'
-            );
-            */
         });
     });
 });

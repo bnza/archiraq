@@ -1,6 +1,7 @@
 import TheMainTopToolbar from '../../../src/components/TheMainTopToolbar';
+import {STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP, CID_THE_MAIN_NAVIGATION_DRAWER} from '../../../src/utils/constants';
 import {getWrapper, catchLocalVueDuplicateVueBug, resetConsoleError} from './utils';
-import {getNamespacedStoreFunc, moduleFuncs} from '../mixins/utils';
+import {getNamespacedStoreFunc} from '../mixins/utils';
 
 beforeAll(() => {
     catchLocalVueDuplicateVueBug();
@@ -16,9 +17,9 @@ describe('TheMainTopToolbar', () => {
             const wrapper = getWrapper('mount', TheMainTopToolbar, {});
             wrapper.find('button.v-toolbar__side-icon').trigger('click');
             expect(wrapper.vm.$store.commit).toHaveBeenLastCalledWith(
-                getNamespacedStoreFunc(moduleFuncs.MUTATIONS.PROP.TOGGLE),
+                getNamespacedStoreFunc(STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP),
                 {
-                    cid: 'the-main-navigation-drawer',
+                    cid: CID_THE_MAIN_NAVIGATION_DRAWER,
                     prop: 'visible',
                 },
                 undefined

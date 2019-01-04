@@ -1,6 +1,7 @@
 import TheMapToolbar from '../../../src/components/TheMapToolbar';
 import {getWrapper, catchLocalVueDuplicateVueBug, resetConsoleError} from './utils';
-import {getNamespacedStoreFunc, moduleFuncs} from '../mixins/utils';
+import {STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP, CID_THE_MAP_LAYERS_DRAWER} from '../../../src/utils/constants';
+import {getNamespacedStoreFunc} from '../mixins/utils';
 
 beforeAll(() => {
     catchLocalVueDuplicateVueBug();
@@ -16,9 +17,9 @@ describe('TheMapToolbar', () => {
             const wrapper = getWrapper('mount', TheMapToolbar, {});
             wrapper.find('button.v-toolbar__side-icon').trigger('click');
             expect(wrapper.vm.$store.commit).toHaveBeenLastCalledWith(
-                getNamespacedStoreFunc(moduleFuncs.MUTATIONS.PROP.TOGGLE),
+                getNamespacedStoreFunc(STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP),
                 {
-                    cid: 'the-map-layers-drawer',
+                    cid: CID_THE_MAP_LAYERS_DRAWER,
                     prop: 'visible',
                 },
                 undefined

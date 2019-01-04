@@ -1,9 +1,7 @@
-export const MUTATIONS = {
-    SET_GUEST_TOKEN: 'setGuestTokenAuthStoreMutation'
-};
+import {STORE_M_GS_AUTH_M_GUEST_TOKEN} from '../../../utils/constants';
 
 export default {
-    [MUTATIONS.SET_GUEST_TOKEN](state, {auth}) {
+    [STORE_M_GS_AUTH_M_GUEST_TOKEN](state, {auth}) {
         state.guestToken.auth = auth;
     }
 };

@@ -1,16 +1,14 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import merge from 'lodash/merge';
-import MODULE_FUNCS from '../../../src/store/components/module-funcs';
 import {propIntValue} from '../store/utils';
 import {getStore} from '../store/utils';
-
-export const moduleFuncs = MODULE_FUNCS;
 
 const namespace = 'components';
 let localVue;
 
-export const getNamespacedStoreFunc = (func) => {
-    return `${namespace}/${func}`;
+export const getNamespacedStoreFunc = (func, ns = namespace) => {
+
+    return `${ns}/${func}`;
 };
 
 export const getLocalVue = () => {

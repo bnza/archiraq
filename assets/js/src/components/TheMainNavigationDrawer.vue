@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import {CID_THE_MAIN_NAVIGATION_DRAWER} from '../utils/constants';
 import ComponentsStoreMx from '../../src/mixins/ComponentsStoreMx';
 
 export default {
@@ -17,7 +18,7 @@ export default {
     ],
     data() {
         return {
-            componentStoreMx_cid: 'the-main-navigation-drawer'
+            componentStoreMx_cid: CID_THE_MAIN_NAVIGATION_DRAWER
         };
     },
     computed: {

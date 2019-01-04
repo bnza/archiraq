@@ -46,6 +46,7 @@
 
 <script>
 //import ol from 'ol';
+import {CID_THE_MAP_CONTAINER} from '../utils/constants';
 import TheMapLayersDrawer from './TheMapLayersDrawer';
 import TheMapToolbar from './TheMapToolbar';
 import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
@@ -67,7 +68,7 @@ export default {
             center: [0, 0],
             rotation: 0,
             apiKey: this.$store.state.bingApiKey,
-            componentStoreMx_cid: 'the-map-container'
+            componentStoreMx_cid: CID_THE_MAP_CONTAINER
         };
     },
     created() {
@@ -77,7 +78,7 @@ export default {
         this.mapContainerComponentStoreMx_selectedFeatures =  [];
     },
     mounted () {
-    // get vl-map by ref="map" and await ol.Map creation
+        // get vl-map by ref="map" and await ol.Map creation
         this.$refs.map.$createPromise.then(() => {
             this.center = [ 47.44, 33.37];
             if (process.env.NODE_ENV !== 'production') {

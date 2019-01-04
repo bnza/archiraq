@@ -22,34 +22,34 @@
                     </v-list-tile>
 
                     <map-legend-layer-list-tile
-                        layer-cid="archiraq_admbnd0_wfs"
+                        :layer-cid="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0"
                         title="Nations"
                     >
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerComponentStoreMx_currentAdminBoundsLayer"
-                            value="archiraq_admbnd0_wfs"
+                            :value="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0"
                         />
                     </map-legend-layer-list-tile>
 
                     <map-legend-layer-list-tile
-                        layer-cid="archiraq_admbnd1_wfs"
+                        :layer-cid="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1"
                         title="Governorates"
                     >
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerComponentStoreMx_currentAdminBoundsLayer"
-                            value="archiraq_admbnd1_wfs"
+                            :value="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1"
                         />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
-                        layer-cid="archiraq_admbnd2_wfs"
+                        :layer-cid="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2"
                         title="Districts"
                     >
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerComponentStoreMx_currentAdminBoundsLayer"
-                            value="archiraq_admbnd2_wfs"
+                            :value="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2"
                         />
                     </map-legend-layer-list-tile>
                 </v-list-group>
@@ -104,6 +104,12 @@
 </template>
 
 <script>
+import {
+    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
+    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
+    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
+    CID_THE_MAP_LAYERS_DRAWER
+} from '../utils/constants';
 import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
 import MapLegendLayerListTile from './MapLegendLayerListTile';
 
@@ -117,10 +123,13 @@ export default {
     ],
     data() {
         return {
-            componentStoreMx_cid: 'the-map-layers-drawer'
+            componentStoreMx_cid: CID_THE_MAP_LAYERS_DRAWER
         };
     },
     computed: {
+        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
+        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
+        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
         visible: {
             get() {
                 return this.componentStoreMx_getStoreProp('visible');

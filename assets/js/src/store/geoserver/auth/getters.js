@@ -1,9 +1,7 @@
-export const GETTERS = {
-    GET_GUEST_AUTH: 'getGuestAuthStoreGetter',
-};
+import {STORE_M_GS_AUTH_G_GUEST_AUTH} from '../../../utils/constants';
 
 export default {
-    [GETTERS.GET_GUEST_AUTH]: (state) => {
+    [STORE_M_GS_AUTH_G_GUEST_AUTH]: (state) => {
         return state.guestToken.auth;
     },
 };

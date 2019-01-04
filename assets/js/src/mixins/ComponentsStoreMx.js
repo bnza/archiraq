@@ -1,5 +1,11 @@
-import STORE from '../store/store-funcs';
+//import STORE from '../store/store-funcs';
 import {mapGetters, mapMutations} from 'vuex';
+import {
+    STORE_M_COMPONENTS_G_COMPONENT_PROP,
+    STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP,
+    STORE_M_COMPONENTS_M_CREATE_COMPONENT,
+    STORE_M_COMPONENTS_M_COMPONENT_PROP
+} from '../utils/constants';
 
 const NAMESPACE = 'components';
 
@@ -19,11 +25,8 @@ export default {
     },
     computed: {
         ...mapGetters(NAMESPACE, [
-            STORE.MODULES.COMPONENTS.GETTERS.PROP.GET
+            STORE_M_COMPONENTS_G_COMPONENT_PROP
         ]),
-        componentStoreMx_STORE() {
-            return STORE;
-        }
     },
     created() {
         if (this.cidP) {
@@ -33,27 +36,27 @@ export default {
             this.$data.componentStoreMx_cid
             && !this.$store.state.components.all.hasOwnProperty(this.$data.componentStoreMx_cid)
         ) {
-            this[STORE.MODULES.COMPONENTS.MUTATIONS.CREATE](this.$data.componentStoreMx_cid);
+            this[STORE_M_COMPONENTS_M_CREATE_COMPONENT]({cid: this.$data.componentStoreMx_cid});
         }
     },
     methods: {
         ...mapMutations(NAMESPACE, [
-            STORE.MODULES.COMPONENTS.MUTATIONS.CREATE,
-            STORE.MODULES.COMPONENTS.MUTATIONS.PROP.SET,
-            STORE.MODULES.COMPONENTS.MUTATIONS.PROP.TOGGLE
+            STORE_M_COMPONENTS_M_CREATE_COMPONENT,
+            STORE_M_COMPONENTS_M_COMPONENT_PROP,
+            STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP
         ]),
         componentStoreMx_getStoreProp(prop) {
-            return this[STORE.MODULES.COMPONENTS.GETTERS.PROP.GET](this.$data.componentStoreMx_cid, prop);
+            return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](this.$data.componentStoreMx_cid, prop);
         },
         componentStoreMx_setStoreProp(prop, value) {
-            this[STORE.MODULES.COMPONENTS.MUTATIONS.PROP.SET]({
+            this[STORE_M_COMPONENTS_M_COMPONENT_PROP]({
                 cid: this.$data.componentStoreMx_cid,
                 prop: prop,
                 value: value
             });
         },
         componentStoreMx_toggleStoreProp(prop) {
-            this[STORE.MODULES.COMPONENTS.MUTATIONS.PROP.TOGGLE]({
+            this[STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP]({
                 cid: this.$data.componentStoreMx_cid,
                 prop: prop
             });

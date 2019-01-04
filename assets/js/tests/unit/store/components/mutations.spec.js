@@ -1,5 +1,9 @@
 import mutations from '../../../../src/store/components/mutations';
-import {MUTATIONS} from '../../../../src/store/components/mutations';
+import {
+    STORE_M_COMPONENTS_M_COMPONENT_PROP,
+    STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP,
+    STORE_M_COMPONENTS_M_CREATE_COMPONENT
+} from '../../../../src/utils/constants';
 
 describe('components mutations', () => {
 
@@ -31,19 +35,19 @@ describe('components mutations', () => {
         expect(t).toThrowError(TypeError);
     };
 
-    describe(MUTATIONS.CREATE, () => {
+    describe(STORE_M_COMPONENTS_M_CREATE_COMPONENT, () => {
         it('Success', () => {
             const state = {all: {}};
-            mutations[MUTATIONS.CREATE](state, 'dummy');
+            mutations[STORE_M_COMPONENTS_M_CREATE_COMPONENT](state, {cid: 'dummy'});
             expect(state.all).toHaveProperty('dummy', {});
         });
 
     });
 
-    describe(MUTATIONS.PROP.TOGGLE, () => {
+    describe(STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP, () => {
 
         beforeEach(() => {
-            mutation = mutations[MUTATIONS.PROP.TOGGLE];
+            mutation = mutations[STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP];
         });
 
         it('Success', () => {
@@ -70,10 +74,10 @@ describe('components mutations', () => {
         it('Throws when property is not boolean', throwsType);
     });
 
-    describe(MUTATIONS.PROP.SET, () => {
+    describe(STORE_M_COMPONENTS_M_COMPONENT_PROP, () => {
 
         beforeEach(() => {
-            mutation = mutations[MUTATIONS.PROP.SET];
+            mutation = mutations[STORE_M_COMPONENTS_M_COMPONENT_PROP];
         });
 
         it('Success', () => {
