@@ -44,9 +44,15 @@ context('<TheMapContainer>', () => {
         cy.wait(200);
         cy.get('canvas').trigger('pointerdown',246,100);
         cy.get('canvas').trigger('pointerup',246,100);
-        cy.wait(1000);
-        cy.get('[data-cy="map-selected-features-num"]').then($input => {
+        cy.wait(500);
+        cy.get('[data-test="map-selected-features-num"]').then($input => {
             expect($input.val()).to.be.equal('1');
+        });
+        cy.get('canvas').trigger('pointerdown',1,1);
+        cy.get('canvas').trigger('pointerup',1,1);
+        cy.wait(500);
+        cy.get('[data-test="map-selected-features-num"]').then($input => {
+            expect($input.val()).to.be.equal('0');
         });
     });
 });

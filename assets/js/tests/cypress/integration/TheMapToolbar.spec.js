@@ -1,4 +1,12 @@
 /* global context, cy */
+import {dataTestSelector} from '../../../src/utils/http';
+import {
+    DT_THE_MAP_LAYERS_DRAWER,
+    DT_THE_MAP_PROPERTIES_DRAWER,
+    DT_THE_MAP_TOOLBAR_PROPERTIES_BUTTON,
+    DT_THE_MAP_TOOLBAR_LEFT_SIDE_ICON
+} from '../../../src/utils/constants';
+
 context('<TheMapToolbar>', () => {
     beforeEach(() => {
         cy.server();        // enable response stubbing
@@ -36,24 +44,51 @@ context('<TheMapToolbar>', () => {
     });
 
     it('click on left button show/hide <TheLayerDrawer>', () => {
-        cy.get('[data-cy="the-map-layers-drawer"] aside').then(($drawer) => {
+        const cyDrawerSelector = `${dataTestSelector(DT_THE_MAP_LAYERS_DRAWER)} aside`;
+        const cyButtonSelector = dataTestSelector(DT_THE_MAP_TOOLBAR_LEFT_SIDE_ICON);
+        cy.get(cyDrawerSelector).then(($drawer) => {
             expect($drawer.css('transform')).to.be.equal('matrix(1, 0, 0, 1, -400, 0)');
         });
 
-        cy.get('[data-cy="the-map-toolbar-left-side-icon"]').click();
+        cy.get(cyButtonSelector).click();
 
         cy.wait(200);
 
-        cy.get('[data-cy="the-map-layers-drawer"] aside').then(($drawer) => {
+        cy.get(cyDrawerSelector).then(($drawer) => {
             expect($drawer.css('transform')).to.be.equal('matrix(1, 0, 0, 1, 0, 0)');
         });
 
-        cy.get('[data-cy="the-map-toolbar-left-side-icon"]').click();
+        cy.get(cyButtonSelector).click();
 
         cy.wait(200);
 
-        cy.get('[data-cy="the-map-layers-drawer"] aside').then(($drawer) => {
+        cy.get(cyDrawerSelector).then(($drawer) => {
             expect($drawer.css('transform')).to.be.equal('matrix(1, 0, 0, 1, -400, 0)');
+        });
+    });
+
+    it('click on right button show/hide <TheMapPropertiesDrawer>', () => {
+        const cyDrawerSelector = `${dataTestSelector(DT_THE_MAP_PROPERTIES_DRAWER)} aside`;
+        const cyButtonSelector = dataTestSelector(DT_THE_MAP_TOOLBAR_PROPERTIES_BUTTON);
+
+        cy.get(cyDrawerSelector).then(($drawer) => {
+            expect($drawer.css('transform')).to.be.equal('matrix(1, 0, 0, 1, 400, 0)');
+        });
+
+        cy.get(cyButtonSelector).click();
+
+        cy.wait(200);
+
+        cy.get(cyDrawerSelector).then(($drawer) => {
+            expect($drawer.css('transform')).to.be.equal('matrix(1, 0, 0, 1, 0, 0)');
+        });
+
+        cy.get(cyButtonSelector).click();
+
+        cy.wait(200);
+
+        cy.get(cyDrawerSelector).then(($drawer) => {
+            expect($drawer.css('transform')).to.be.equal('matrix(1, 0, 0, 1, 400, 0)');
         });
     });
 

@@ -1,6 +1,6 @@
 <template>
     <v-card
-        data-cy="the-map-layers-drawer"
+        :data-test="DT_THE_MAP_LAYERS_DRAWER"
         flat
     >
         <v-navigation-drawer
@@ -108,7 +108,8 @@ import {
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
-    CID_THE_MAP_LAYERS_DRAWER
+    CID_THE_MAP_LAYERS_DRAWER,
+    DT_THE_MAP_LAYERS_DRAWER
 } from '../utils/constants';
 import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
 import MapLegendLayerListTile from './MapLegendLayerListTile';
@@ -130,6 +131,7 @@ export default {
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
+        DT_THE_MAP_LAYERS_DRAWER: () => DT_THE_MAP_LAYERS_DRAWER,
         visible: {
             get() {
                 return this.componentStoreMx_getStoreProp('visible');
@@ -141,7 +143,7 @@ export default {
     },
     created() {
         this.visible = false;
-    },
+    }
 };
 </script>
 

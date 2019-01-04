@@ -3,14 +3,14 @@
         <the-map-toolbar />
         <vl-map
             ref="map"
-            data-cy="ol-map-container"
+            :data-test="DT_THE_MAP_CONTAINER"
             :load-tiles-while-animating="true"
             :load-tiles-while-interacting="true"
             data-projection="EPSG:4326"
             style="height: 400px"
         >
             <input
-                data-cy="map-selected-features-num"
+                data-test="map-selected-features-num"
                 type="hidden"
                 :value="mapContainerComponentStoreMx_selectedFeatures.length"
             >
@@ -40,24 +40,30 @@
             <!--// Base Maps -->
             <map-admin-bounds-layer-group />
             <the-map-layers-drawer />
+            <the-map-properties-drawer />
         </vl-map>
     </v-card>
 </template>
 
 <script>
 //import ol from 'ol';
-import {CID_THE_MAP_CONTAINER} from '../utils/constants';
+import {
+    CID_THE_MAP_CONTAINER,
+    DT_THE_MAP_CONTAINER,
+} from '../utils/constants';
 import TheMapLayersDrawer from './TheMapLayersDrawer';
 import TheMapToolbar from './TheMapToolbar';
-import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
+import TheMapPropertiesDrawer from './TheMapPropertiesDrawer';
 import MapAdminBoundsLayerGroup from './MapAdminBoundsLayerGroup';
+import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
 
 export default {
     name: 'TheMapContainer',
     components: {
         MapAdminBoundsLayerGroup,
         TheMapLayersDrawer,
-        TheMapToolbar
+        TheMapToolbar,
+        TheMapPropertiesDrawer
     },
     mixins: [
         MapContainerComponentStoreMx
@@ -70,6 +76,9 @@ export default {
             apiKey: this.$store.state.bingApiKey,
             componentStoreMx_cid: CID_THE_MAP_CONTAINER
         };
+    },
+    computed: {
+      DT_THE_MAP_CONTAINER: () => DT_THE_MAP_CONTAINER
     },
     created() {
         this.mapContainerComponentStoreMx_currentBaseMap = this.$store.state.default.baseMap;

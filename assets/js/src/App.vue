@@ -5,7 +5,10 @@
             cid-p="the-main-top-toolbar"
         />
         <v-content>
-            <v-container fluid>
+            <v-container
+                    class="no-side-padding"
+                    fluid
+            >
                 <v-layout
                     align-space-between
                     justify-center
@@ -47,5 +50,7 @@ export default {
 </script>
 
 <style scoped>
-
+    .no-side-padding {
+        padding: 24px 0;
+    }
 </style>

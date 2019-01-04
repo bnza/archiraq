@@ -28,3 +28,5 @@ export const headers = {
         );
     }
 };
+
+export const dataTestSelector = (value) => `[data-test="${value}"]`;
