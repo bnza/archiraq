@@ -9,12 +9,6 @@
             data-projection="EPSG:4326"
             style="height: 400px"
         >
-            <input
-                data-test="map-selected-features-num"
-                type="hidden"
-                :value="mapContainerComponentStoreMx_selectedFeatures.length"
-            >
-
             <vl-view
                 :zoom.sync="zoom"
                 :center.sync="center"
@@ -78,7 +72,7 @@ export default {
         };
     },
     computed: {
-      DT_THE_MAP_CONTAINER: () => DT_THE_MAP_CONTAINER
+        DT_THE_MAP_CONTAINER: () => DT_THE_MAP_CONTAINER
     },
     created() {
         this.mapContainerComponentStoreMx_currentBaseMap = this.$store.state.default.baseMap;

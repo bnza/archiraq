@@ -76,5 +76,10 @@ export default {
                 });
             }
         },
+    },
+    methods: {
+        mapContainerComponentStoreMx_getLayerProperties(cid) {
+
+        }
     }
 };

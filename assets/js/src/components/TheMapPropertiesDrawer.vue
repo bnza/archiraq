@@ -10,7 +10,9 @@
             width="400"
             right=""
             style="min-height: 400px; z-index: 1;"
-        />
+        >
+            <map-layer-vector-properties-panel />
+        </v-navigation-drawer>
     </v-card>
 </template>
 
@@ -19,10 +21,14 @@ import {
     CID_THE_MAP_PROPERTIES_DRAWER,
     DT_THE_MAP_PROPERTIES_DRAWER
 } from '../utils/constants';
+import MapLayerVectorPropertiesPanel from './MapLayerVectorPropertiesPanel';
 import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
 
 export default {
     name: 'TheMapPropertiesDrawer',
+    components: {
+        MapLayerVectorPropertiesPanel
+    },
     mixins: [
         MapContainerComponentStoreMx
     ],

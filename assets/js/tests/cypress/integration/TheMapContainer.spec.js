@@ -1,4 +1,6 @@
 /* global context, cy */
+import {dataTestSelector} from '../../../src/utils/http';
+import {DT_THE_MAP_PROPERTIES_DRAWER_SELECTED_FEATURES_NUM} from '../../../src/utils/constants';
 
 context('<TheMapContainer>', () => {
     beforeEach(() => {
@@ -45,14 +47,14 @@ context('<TheMapContainer>', () => {
         cy.get('canvas').trigger('pointerdown',246,100);
         cy.get('canvas').trigger('pointerup',246,100);
         cy.wait(500);
-        cy.get('[data-test="map-selected-features-num"]').then($input => {
-            expect($input.val()).to.be.equal('1');
+        cy.get(dataTestSelector(DT_THE_MAP_PROPERTIES_DRAWER_SELECTED_FEATURES_NUM)).then($input => {
+            expect($input.text()).to.be.equal('1');
         });
         cy.get('canvas').trigger('pointerdown',1,1);
         cy.get('canvas').trigger('pointerup',1,1);
         cy.wait(500);
-        cy.get('[data-test="map-selected-features-num"]').then($input => {
-            expect($input.val()).to.be.equal('0');
+        cy.get(dataTestSelector(DT_THE_MAP_PROPERTIES_DRAWER_SELECTED_FEATURES_NUM)).then($span => {
+            expect($span.text()).to.be.equal('0');
         });
     });
 });
