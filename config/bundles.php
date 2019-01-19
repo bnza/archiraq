@@ -15,4 +15,5 @@ return [
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true, 'test' => true],
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true, 'test' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
+    Bnza\JobManagerBundle\BnzaJobManagerBundle::class => ['all' => true],
 ];
