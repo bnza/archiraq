@@ -8,6 +8,7 @@
         "plugin:vue/recommended"
     ],
     "parserOptions": {
+        "parser": "babel-eslint",
         "ecmaFeatures": {
             "jsx": true,
             "experimentalObjectRestSpread": true

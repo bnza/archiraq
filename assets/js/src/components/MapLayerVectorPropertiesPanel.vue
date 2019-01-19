@@ -37,8 +37,11 @@ import {DT_THE_MAP_PROPERTIES_DRAWER_SELECTED_FEATURES_NUM} from '../utils/const
 export default {
     name: 'MapLayerVectorPropertiesPanel',
     components: {
-        MapLayerVectorWfsAdminBounds2FeaturePropertiesPanel: function (resolve) {
-            require(['./MapLayerVectorWfsAdminBounds2FeaturePropertiesPanel'], resolve);
+        MapLayerVectorWfsAdminBounds2FeaturePropertiesPanel: async function () {
+            return await import(
+                /* webpackChunkName: "MapLayerVectorWfsAdminBounds2FeaturePropertiesPanel" */
+                './MapLayerVectorWfsAdminBounds2FeaturePropertiesPanel'
+            );
         }
     },
     mixins: [
