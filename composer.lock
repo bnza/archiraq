@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a69d50cad699df41c50b10565182a5d",
+    "content-hash": "3618068ab984dcdc1f5a6f78e23b2705",
     "packages": [
         {
             "name": "bnza/job-manager",
