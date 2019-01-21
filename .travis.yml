@@ -30,7 +30,6 @@ matrix:
                 -   "7.2"
             env:
                 -   COVERAGE=true PHPUNIT_FLAGS="--coverage-text"
-                -   COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
             cache:
                 directories:
                     -   $HOME/.composer/cache/files

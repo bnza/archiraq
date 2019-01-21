@@ -3,12 +3,6 @@
     "type": "project",
     "license": "MIT",
     "description": "Iraqi archaeological sites webGis",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/bnza/job-manager"
-        }
-    ],
     "require": {
         "php": "^7.1.3",
         "bnza/job-manager": "^0.1",
