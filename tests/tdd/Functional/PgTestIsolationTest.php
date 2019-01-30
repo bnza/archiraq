@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Functional;
 
 
 /**
@@ -30,7 +30,7 @@ class PgTestIsolationTest extends AbstractPgTestIsolation
      */
     public function testSetUpDatabaseSchemaWillCreateSchemata()
     {
-        $this->setUpDatabaseSchema();
+        self::setUpDatabaseSchema();
         $expected = ['pg_catalog','public','information_schema', 'geom', 'tmp', 'voc', 'admin'];
         $actual = $this->getDatabaseSchemata();
         $this->assertEquals(
@@ -41,6 +41,6 @@ class PgTestIsolationTest extends AbstractPgTestIsolation
 
     public function tearDown()
     {
-        $this->rollbackDatabaseSchema();
+        self::rollbackDatabaseSchema();
     }
 }

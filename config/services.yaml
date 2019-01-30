@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    work_dir: '%kernel.project_dir%/var/work/'
 
 services:
     # default configuration for services in *this* file
@@ -26,3 +27,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Command\ImportPublishesSitesZipShapefileCommand:
+        tags:
+            - name: 'console.command'
+        calls:
+            -   method: setWorkDir
+                arguments:
+                    - '%work_dir%'

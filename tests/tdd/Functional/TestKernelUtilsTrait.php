@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Functional;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 trait TestKernelUtilsTrait
 {
-    protected function getKernel(): KernelInterface
+    protected static function getKernel(): KernelInterface
     {
         if (!self::$kernel) {
             self::$kernel = self::bootKernel();
@@ -18,16 +18,16 @@ trait TestKernelUtilsTrait
         return self::$kernel;
     }
 
-    protected function getRootDir(): string
+    protected static function getRootDir(): string
     {
-        return $this->getKernel()->getProjectDir();
+        return self::getKernel()->getProjectDir();
     }
 
-    protected function getAbsolutePath(string $relativePath)
+    protected static function getAbsolutePath(string $relativePath)
     {
         $relativePath = DIRECTORY_SEPARATOR === substr($relativePath, 0, 1)
             ?: DIRECTORY_SEPARATOR.$relativePath;
 
-        return $this->getRootDir().DIRECTORY_SEPARATOR.$relativePath;
+        return self::getRootDir().DIRECTORY_SEPARATOR.$relativePath;
     }
 }

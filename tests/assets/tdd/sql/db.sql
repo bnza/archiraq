@@ -1,8 +1,3 @@
--- Archiraq database schema with no extensions nor data
--- Requires archiraq_admin
-
--- pg_dump --clean --if-exists --schema-only --quote-all-identifiers --no-password -d postgresql://archiraq_admin:password@localhost:5432/archiraq| grep -v -E '^(DROP|CREATE\ EXTENSION|COMMENT\ ON\ EXTENSION)'
-
 --
 -- PostgreSQL database dump
 --
@@ -24,6 +19,9 @@ ALTER TABLE IF EXISTS ONLY "geom"."admbnd1" DROP CONSTRAINT IF EXISTS "fk___admb
 ALTER TABLE IF EXISTS ONLY "voc"."chronology" DROP CONSTRAINT IF EXISTS "uq___voc__chronology___name";
 ALTER TABLE IF EXISTS ONLY "voc"."chronology" DROP CONSTRAINT IF EXISTS "uq___voc__chronology___code";
 ALTER TABLE IF EXISTS ONLY "voc"."chronology" DROP CONSTRAINT IF EXISTS "pk___voc__chronology";
+ALTER TABLE IF EXISTS ONLY "tmp"."draft" DROP CONSTRAINT IF EXISTS "pk___tmp__draft";
+ALTER TABLE IF EXISTS ONLY "public"."draft" DROP CONSTRAINT IF EXISTS "pk___public__draft";
+ALTER TABLE IF EXISTS ONLY "public"."contribute" DROP CONSTRAINT IF EXISTS "pk___public__contribute";
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd2" DROP CONSTRAINT IF EXISTS "uq___geom__admbnd2__admbnd1_id__name";
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd1" DROP CONSTRAINT IF EXISTS "uq___admbnd1__admbnd0_code__name";
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd0" DROP CONSTRAINT IF EXISTS "pk___geom__admbndo";
@@ -37,26 +35,6 @@ ALTER TABLE IF EXISTS ONLY "admin"."role_props" DROP CONSTRAINT IF EXISTS "role_
 ALTER TABLE IF EXISTS ONLY "admin"."groups" DROP CONSTRAINT IF EXISTS "groups_pk";
 ALTER TABLE IF EXISTS ONLY "admin"."group_roles" DROP CONSTRAINT IF EXISTS "group_roles_pk";
 ALTER TABLE IF EXISTS ONLY "admin"."group_members" DROP CONSTRAINT IF EXISTS "group_members_pk";
-DROP TABLE IF EXISTS "voc"."chronology";
-DROP SEQUENCE IF EXISTS "voc"."seq___chronology__id";
-DROP TABLE IF EXISTS "geom"."admbnd2";
-DROP SEQUENCE IF EXISTS "geom"."seq__admbnd2__id";
-DROP TABLE IF EXISTS "geom"."admbnd1";
-DROP SEQUENCE IF EXISTS "geom"."seq__admbnd1__id";
-DROP TABLE IF EXISTS "geom"."admbnd0";
-DROP TABLE IF EXISTS "admin"."users";
-DROP TABLE IF EXISTS "admin"."user_roles";
-DROP TABLE IF EXISTS "admin"."user_props";
-DROP TABLE IF EXISTS "admin"."roles";
-DROP TABLE IF EXISTS "admin"."role_props";
-DROP TABLE IF EXISTS "admin"."groups";
-DROP TABLE IF EXISTS "admin"."group_roles";
-DROP TABLE IF EXISTS "admin"."group_members";
-DROP SCHEMA IF EXISTS "voc";
-DROP SCHEMA IF EXISTS "tmp";
--- DROP SCHEMA IF EXISTS "public";
-DROP SCHEMA IF EXISTS "geom";
-DROP SCHEMA IF EXISTS "admin";
 --
 -- Name: admin; Type: SCHEMA; Schema: -; Owner: archiraq_admin
 --
@@ -70,7 +48,7 @@ ALTER SCHEMA "admin" OWNER TO "test_archiraq_admin";
 -- Name: SCHEMA "admin"; Type: COMMENT; Schema: -; Owner: archiraq_admin
 --
 
-COMMENT ON SCHEMA "admin" IS 'Administration schema';
+COMMENT ON SCHEMA "admin" IS 'Administratin schemao';
 
 
 --
@@ -93,10 +71,8 @@ COMMENT ON SCHEMA "geom" IS 'Geometry tables schema';
 -- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
--- CREATE SCHEMA "public";
 
 
--- ALTER SCHEMA "public" OWNER TO "postgres";
 
 --
 -- Name: SCHEMA "public"; Type: COMMENT; Schema: -; Owner: postgres
@@ -129,6 +105,31 @@ ALTER SCHEMA "voc" OWNER TO "test_archiraq_admin";
 
 COMMENT ON SCHEMA "voc" IS 'Vocabularies schema';
 
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+
+
+--
+-- Name: EXTENSION "plpgsql"; Type: COMMENT; Schema: -; Owner: 
+--
+
+
+
+--
+-- Name: postgis; Type: EXTENSION; Schema: -; Owner: 
+--
+
+
+
+--
+-- Name: EXTENSION "postgis"; Type: COMMENT; Schema: -; Owner: 
+--
+
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -138,8 +139,8 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE "admin"."group_members" (
-                                         "groupname" character varying(128) NOT NULL,
-                                         "username" character varying(128) NOT NULL
+    "groupname" character varying(128) NOT NULL,
+    "username" character varying(128) NOT NULL
 );
 
 
@@ -150,8 +151,8 @@ ALTER TABLE "admin"."group_members" OWNER TO "test_archiraq_admin";
 --
 
 CREATE TABLE "admin"."group_roles" (
-                                       "groupname" character varying(64) NOT NULL,
-                                       "rolename" character varying(64) NOT NULL
+    "groupname" character varying(64) NOT NULL,
+    "rolename" character varying(64) NOT NULL
 );
 
 
@@ -162,8 +163,8 @@ ALTER TABLE "admin"."group_roles" OWNER TO "test_archiraq_admin";
 --
 
 CREATE TABLE "admin"."groups" (
-                                  "name" character varying(128) NOT NULL,
-                                  "enabled" character(1) NOT NULL
+    "name" character varying(128) NOT NULL,
+    "enabled" character(1) NOT NULL
 );
 
 
@@ -174,9 +175,9 @@ ALTER TABLE "admin"."groups" OWNER TO "test_archiraq_admin";
 --
 
 CREATE TABLE "admin"."role_props" (
-                                      "rolename" character varying(128) NOT NULL,
-                                      "propname" character varying(64) NOT NULL,
-                                      "propvalue" character varying(2048)
+    "rolename" character varying(128) NOT NULL,
+    "propname" character varying(64) NOT NULL,
+    "propvalue" character varying(2048)
 );
 
 
@@ -187,8 +188,8 @@ ALTER TABLE "admin"."role_props" OWNER TO "test_archiraq_admin";
 --
 
 CREATE TABLE "admin"."roles" (
-                                 "name" character varying(64) NOT NULL,
-                                 "parent" character varying(64)
+    "name" character varying(64) NOT NULL,
+    "parent" character varying(64)
 );
 
 
@@ -199,9 +200,9 @@ ALTER TABLE "admin"."roles" OWNER TO "test_archiraq_admin";
 --
 
 CREATE TABLE "admin"."user_props" (
-                                      "username" character varying(128) NOT NULL,
-                                      "propname" character varying(64) NOT NULL,
-                                      "propvalue" character varying(2048)
+    "username" character varying(128) NOT NULL,
+    "propname" character varying(64) NOT NULL,
+    "propvalue" character varying(2048)
 );
 
 
@@ -212,8 +213,8 @@ ALTER TABLE "admin"."user_props" OWNER TO "test_archiraq_admin";
 --
 
 CREATE TABLE "admin"."user_roles" (
-                                      "username" character varying(64) NOT NULL,
-                                      "rolename" character varying(64) NOT NULL
+    "username" character varying(64) NOT NULL,
+    "rolename" character varying(64) NOT NULL
 );
 
 
@@ -224,9 +225,9 @@ ALTER TABLE "admin"."user_roles" OWNER TO "test_archiraq_admin";
 --
 
 CREATE TABLE "admin"."users" (
-                                 "name" character varying(128) NOT NULL,
-                                 "password" character varying(254),
-                                 "enabled" character(1) NOT NULL
+    "name" character varying(128) NOT NULL,
+    "password" character varying(254),
+    "enabled" character(1) NOT NULL
 );
 
 
@@ -236,7 +237,7 @@ ALTER TABLE "admin"."users" OWNER TO "test_archiraq_admin";
 -- Name: TABLE "users"; Type: COMMENT; Schema: admin; Owner: archiraq_admin
 --
 
-COMMENT ON TABLE "admin"."users" IS 'Geoserver JDBC user/group service compliant table
+COMMENT ON TABLE "admin"."users" IS 'Geoserver JDBC user/group service compliant table 
 @see https://docs.geoserver.org/stable/en/user/security/usergrouprole/usergroupservices.html';
 
 
@@ -245,10 +246,10 @@ COMMENT ON TABLE "admin"."users" IS 'Geoserver JDBC user/group service compliant
 --
 
 CREATE TABLE "geom"."admbnd0" (
-                                  "code" character(2) NOT NULL,
-                                  "name" character varying NOT NULL,
-                                  "altname" character varying,
-                                  "geom" "public"."geography"(MultiPolygon,4326) NOT NULL
+    "code" character(2) NOT NULL,
+    "name" character varying NOT NULL,
+    "altname" character varying,
+    "geom" "public"."geometry"(MultiPolygon,4326) NOT NULL
 );
 
 
@@ -266,11 +267,11 @@ COMMENT ON TABLE "geom"."admbnd0" IS 'Administrative boundaries, level 0 (nation
 --
 
 CREATE SEQUENCE "geom"."seq__admbnd1__id"
-START WITH 1
-INCREMENT BY 1
-MINVALUE 0
-MAXVALUE 32767
-CACHE 1;
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 0
+    MAXVALUE 32767
+    CACHE 1;
 
 
 ALTER TABLE "geom"."seq__admbnd1__id" OWNER TO "test_archiraq_admin";
@@ -280,11 +281,11 @@ ALTER TABLE "geom"."seq__admbnd1__id" OWNER TO "test_archiraq_admin";
 --
 
 CREATE TABLE "geom"."admbnd1" (
-                                  "id" smallint DEFAULT "nextval"('"geom"."seq__admbnd1__id"'::"regclass") NOT NULL,
-                                  "admbnd0_code" character(2) NOT NULL,
-                                  "name" character varying NOT NULL,
-                                  "altname" character varying,
-                                  "geom" "public"."geography"(MultiPolygon,4326) NOT NULL
+    "id" smallint DEFAULT "nextval"('"geom"."seq__admbnd1__id"'::"regclass") NOT NULL,
+    "admbnd0_code" character(2) NOT NULL,
+    "name" character varying NOT NULL,
+    "altname" character varying,
+    "geom" "public"."geometry"(MultiPolygon,4326) NOT NULL
 );
 
 
@@ -295,11 +296,11 @@ ALTER TABLE "geom"."admbnd1" OWNER TO "test_archiraq_admin";
 --
 
 CREATE SEQUENCE "geom"."seq__admbnd2__id"
-START WITH 1
-INCREMENT BY 1
-MINVALUE 0
-MAXVALUE 2147483647
-CACHE 1;
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 0
+    MAXVALUE 2147483647
+    CACHE 1;
 
 
 ALTER TABLE "geom"."seq__admbnd2__id" OWNER TO "test_archiraq_admin";
@@ -309,26 +310,172 @@ ALTER TABLE "geom"."seq__admbnd2__id" OWNER TO "test_archiraq_admin";
 --
 
 CREATE TABLE "geom"."admbnd2" (
-                                  "id" integer DEFAULT "nextval"('"geom"."seq__admbnd2__id"'::"regclass") NOT NULL,
-                                  "admbnd1_id" smallint NOT NULL,
-                                  "name" character varying NOT NULL,
-                                  "altname" character varying,
-                                  "geom" "public"."geography"(MultiPolygon,4326) NOT NULL
+    "id" integer DEFAULT "nextval"('"geom"."seq__admbnd2__id"'::"regclass") NOT NULL,
+    "admbnd1_id" smallint NOT NULL,
+    "name" character varying NOT NULL,
+    "altname" character varying,
+    "geom" "public"."geometry"(MultiPolygon,4326) NOT NULL
 );
 
 
 ALTER TABLE "geom"."admbnd2" OWNER TO "test_archiraq_admin";
 
 --
+-- Name: seq___contribute__id; Type: SEQUENCE; Schema: public; Owner: archiraq_admin
+--
+
+CREATE SEQUENCE "public"."seq___contribute__id"
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 0
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+ALTER TABLE "public"."seq___contribute__id" OWNER TO "test_archiraq_admin";
+
+--
+-- Name: contribute; Type: TABLE; Schema: public; Owner: archiraq_admin
+--
+
+CREATE TABLE "public"."contribute" (
+    "id" integer DEFAULT "nextval"('"public"."seq___contribute__id"'::"regclass") NOT NULL,
+    "email" character varying NOT NULL,
+    "contributor" character varying,
+    "description" character varying,
+    "status" smallint DEFAULT 0 NOT NULL,
+    "sha1" character(40) NOT NULL,
+    "institution" character varying
+);
+
+
+ALTER TABLE "public"."contribute" OWNER TO "test_archiraq_admin";
+
+--
+-- Name: TABLE "contribute"; Type: COMMENT; Schema: public; Owner: archiraq_admin
+--
+
+COMMENT ON TABLE "public"."contribute" IS 'Shapefile contributes table';
+
+
+--
+-- Name: seq___public__draft; Type: SEQUENCE; Schema: public; Owner: archiraq_admin
+--
+
+CREATE SEQUENCE "public"."seq___public__draft"
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 0
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+ALTER TABLE "public"."seq___public__draft" OWNER TO "test_archiraq_admin";
+
+--
+-- Name: draft; Type: TABLE; Schema: public; Owner: archiraq_admin
+--
+
+CREATE TABLE "public"."draft" (
+    "id" integer DEFAULT "nextval"('"public"."seq___public__draft"'::"regclass") NOT NULL,
+    "contribute_id" integer NOT NULL,
+    "entry_id" character(7) NOT NULL,
+    "modern_name" character varying,
+    "ancient_name" character varying,
+    "district" character varying NOT NULL,
+    "nearest_city" character varying,
+    "cadastre" character varying,
+    "sbah_no" character varying,
+    "survey_visit_date" character varying,
+    "survey_verified_on_field" character(1),
+    "survey_type" character varying,
+    "survey_prev_refs" "text",
+    "features_epigraphic" boolean DEFAULT false,
+    "features_ancient_structures" boolean DEFAULT false,
+    "features_paleochannels" boolean DEFAULT false,
+    "features_remarks" "text",
+    "site_chronology" character varying,
+    "excavations_whom_when" "text",
+    "excavations_bibliography" "text",
+    "threats_natural_dunes" boolean DEFAULT false,
+    "threats_looting" boolean DEFAULT false,
+    "threats_cultivation_trenches" boolean DEFAULT false,
+    "threats_modern_structures" boolean DEFAULT false,
+    "threats_modern_canals" boolean DEFAULT false,
+    "remarks" "text",
+    "compiler" character varying NOT NULL,
+    "compilation_date" "date" NOT NULL,
+    "credits" character varying,
+    "geom" "public"."geometry"(MultiPolygon,4326) NOT NULL
+);
+
+
+ALTER TABLE "public"."draft" OWNER TO "test_archiraq_admin";
+
+--
+-- Name: seq___tmp__draft; Type: SEQUENCE; Schema: tmp; Owner: archiraq_admin
+--
+
+CREATE SEQUENCE "tmp"."seq___tmp__draft"
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 0
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+ALTER TABLE "tmp"."seq___tmp__draft" OWNER TO "test_archiraq_admin";
+
+--
+-- Name: draft; Type: TABLE; Schema: tmp; Owner: archiraq_admin
+--
+
+CREATE TABLE "tmp"."draft" (
+    "id" integer DEFAULT "nextval"('"tmp"."seq___tmp__draft"'::"regclass") NOT NULL,
+    "contribute_id" integer,
+    "entry_id" character varying,
+    "modern_name" character varying,
+    "ancient_name" character varying,
+    "district" character varying,
+    "nearest_city" character varying,
+    "cadastre" character varying,
+    "sbah_no" character varying,
+    "survey_visit_date" character varying,
+    "survey_verified_on_field" character varying,
+    "survey_type" character varying,
+    "survey_prev_refs" "text",
+    "features_epigraphic" character varying,
+    "features_ancient_structures" character varying,
+    "features_paleochannels" character varying,
+    "features_remarks" "text",
+    "site_chronology" character varying,
+    "excavations_whom_when" "text",
+    "excavations_bibliography" "text",
+    "threats_natural_dunes" character varying,
+    "threats_looting" character varying,
+    "threats_cultivation_trenches" character varying,
+    "threats_modern_structures" character varying,
+    "threats_modern_canals" character varying,
+    "remarks" "text",
+    "compiler" character varying,
+    "compilation_date" character varying,
+    "credits" character varying,
+    "geom" "public"."geometry"(MultiPolygon,4326)
+);
+
+
+ALTER TABLE "tmp"."draft" OWNER TO "test_archiraq_admin";
+
+--
 -- Name: seq___chronology__id; Type: SEQUENCE; Schema: voc; Owner: archiraq_admin
 --
 
 CREATE SEQUENCE "voc"."seq___chronology__id"
-START WITH 1
-INCREMENT BY 1
-NO MINVALUE
-NO MAXVALUE
-CACHE 1;
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 
 ALTER TABLE "voc"."seq___chronology__id" OWNER TO "test_archiraq_admin";
@@ -338,12 +485,12 @@ ALTER TABLE "voc"."seq___chronology__id" OWNER TO "test_archiraq_admin";
 --
 
 CREATE TABLE "voc"."chronology" (
-                                    "id" smallint DEFAULT "nextval"('"voc"."seq___chronology__id"'::"regclass") NOT NULL,
-                                    "code" character varying NOT NULL,
-                                    "name" character varying NOT NULL,
-                                    "date_low" integer,
-                                    "date_high" integer,
-                                    CONSTRAINT "ck___voc__chronology___date_low___lte___date_high" CHECK (("date_low" <= "date_high"))
+    "id" smallint DEFAULT "nextval"('"voc"."seq___chronology__id"'::"regclass") NOT NULL,
+    "code" character varying NOT NULL,
+    "name" character varying NOT NULL,
+    "date_low" integer,
+    "date_high" integer,
+    CONSTRAINT "ck___voc__chronology___date_low___lte___date_high" CHECK (("date_low" <= "date_high"))
 );
 
 
@@ -451,6 +598,30 @@ ALTER TABLE ONLY "geom"."admbnd1"
 
 ALTER TABLE ONLY "geom"."admbnd2"
     ADD CONSTRAINT "uq___geom__admbnd2__admbnd1_id__name" UNIQUE ("admbnd1_id", "name");
+
+
+--
+-- Name: pk___public__contribute; Type: CONSTRAINT; Schema: public; Owner: archiraq_admin
+--
+
+ALTER TABLE ONLY "public"."contribute"
+    ADD CONSTRAINT "pk___public__contribute" PRIMARY KEY ("id");
+
+
+--
+-- Name: pk___public__draft; Type: CONSTRAINT; Schema: public; Owner: archiraq_admin
+--
+
+ALTER TABLE ONLY "public"."draft"
+    ADD CONSTRAINT "pk___public__draft" PRIMARY KEY ("id");
+
+
+--
+-- Name: pk___tmp__draft; Type: CONSTRAINT; Schema: tmp; Owner: archiraq_admin
+--
+
+ALTER TABLE ONLY "tmp"."draft"
+    ADD CONSTRAINT "pk___tmp__draft" PRIMARY KEY ("id");
 
 
 --
