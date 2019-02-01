@@ -34,7 +34,8 @@ class CompareShpAndSpreadsheetsEntriesTask extends AbstractTask
 
     protected function executeStep(array $arguments): void
     {
-        $this->$arguments[0]();
+        $method = $arguments[0];
+        $this->$method();
     }
 
     public function getSteps(): iterable

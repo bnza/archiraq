@@ -4,16 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82ccce98aec04ec973e1d894da94276e",
+    "content-hash": "f1922ad84c72141b195b142339d4283f",
     "packages": [
         {
             "name": "bnza/job-manager",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bnza/job-manager.git",
+                "reference": "64e6d71ab0d026889ca52019e2e546fa08397139"
+            },
             "dist": {
-                "type": "path",
-                "url": "/home/petrux/Documents/dev/php/job-manager",
-                "reference": "a66dbaa52d7a7fd8a654d3b2cede4c6fe25def33",
-                "shasum": null
+                "type": "zip",
+                "url": "https://api.github.com/repos/bnza/job-manager/zipball/64e6d71ab0d026889ca52019e2e546fa08397139",
+                "reference": "64e6d71ab0d026889ca52019e2e546fa08397139",
+                "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "^1.3",
@@ -34,11 +39,7 @@
                     "Bnza\\JobManagerBundle\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Bnza\\JobManagerBundle\\Tests\\": "tests/unit/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0-or-later"
             ],
@@ -47,7 +48,8 @@
                 "job",
                 "runner",
                 "task"
-            ]
+            ],
+            "time": "2019-02-02T10:33:36+00:00"
         },
         {
             "name": "doctrine/annotations",

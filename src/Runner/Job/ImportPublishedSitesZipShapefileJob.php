@@ -5,6 +5,8 @@ namespace App\Runner\Job;
 
 use App\Entity\ContributeEntity;
 use App\Runner\Task\Database\PersistContributeTask;
+use App\Runner\Task\Database\Raw\CompareShpAndSpreadsheetsEntriesTask;
+use App\Runner\Task\Database\Raw\InsertDraftAndShpIntoTmpDraftTask;
 use App\Runner\Task\Process\ImportShpToTmpTableTask;
 use App\Runner\Task\Spreadsheet\GetContributeFromSpreadsheetMetadataTask;
 use App\Runner\Task\Spreadsheet\ImportPublishedSitesSpreadsheetToTmpTableTask;
@@ -161,6 +163,18 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
                 'class' => ImportPublishedSitesSpreadsheetToTmpTableTask::class,
                 'parameters' => [
                     ['setSpreadSheetPath', 'getSpreadSheetPath'],
+                    ['setEntityManager', 'getEntityManager']
+                ],
+            ],
+            [
+                'class' => CompareShpAndSpreadsheetsEntriesTask::class,
+                'parameters' => [
+                    ['setEntityManager', 'getEntityManager']
+                ],
+            ],
+            [
+                'class' => InsertDraftAndShpIntoTmpDraftTask::class,
+                'parameters' => [
                     ['setEntityManager', 'getEntityManager']
                 ],
             ],

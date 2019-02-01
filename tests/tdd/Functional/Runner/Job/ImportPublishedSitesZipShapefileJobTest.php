@@ -64,6 +64,7 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
     {
         $this->assertDirIsEmpty($this->getBaseWorkDir());
         $this->assertDirIsEmpty($this->getBaseOmDir());
+        $this->assertTableRowsNum(0, 'draft', 'tmp');
     }
 
     /**
@@ -78,7 +79,8 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
             [3, 'assertContributeEntityIsSetIntoJob'],
             [4, 'assertContributeEntityIsPersistedToDb'],
             [5, 'assertShp2PgsqlTableHasBeenDropped'],
-            [6, 'assertDraftTableHasBeenCreated']
+            [6, 'assertDraftTableHasBeenCreated'],
+            [8, 'assertDataAreBeenInsertInTmpDraftTable']
         ];
     }
 
@@ -120,7 +122,7 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
         $this->job->setZipShapefilePath($this->zipPath);
         $this->job->setWorkDir($this->getBaseWorkDir());
         $this->job->setEntityManager($this->getEntityManager());
-        $this->job->setShapefileName('simple');
+        //$this->job->setShapefileName('simple');
         $this->assertFileExists($this->getWorkDir($this->getJob()->getId()));
     }
 
@@ -162,6 +164,11 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
     {
         $id = $this->getJob()->getId();
         $this->assertTemporaryTableExists("draft$id");
+    }
+
+    protected function assertDataAreBeenInsertInTmpDraftTable()
+    {
+        $this->assertTableRowsNum(1, 'draft', 'tmp');
     }
 
 }

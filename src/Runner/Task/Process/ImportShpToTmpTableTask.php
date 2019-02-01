@@ -29,9 +29,10 @@ class ImportShpToTmpTableTask extends AbstractTask
 
     protected function getDumpFile()
     {
+        // TODO Verify shapefile projection
         if (!$this->dumpFile) {
             $shp2pgsqlCommand = $this->getFullPathCommand('shp2pgsql');
-            $shp2pgsqlArguments = sprintf(" -e %s %s", $this->getSource(), $this->getTableName());
+            $shp2pgsqlArguments = sprintf(" -e -s %d %s %s", 4326, $this->getSource(), $this->getTableName());
             $source = $this->getSource();
             $this->dumpFile = \dirname($source) . DIRECTORY_SEPARATOR . 'shp-dump-' . \basename($source) . '.sql';
             $command = "$shp2pgsqlCommand $shp2pgsqlArguments > $this->dumpFile";
