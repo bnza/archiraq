@@ -6,7 +6,9 @@ services:
 addons:
     postgresql: "9.5"
     apt:
+        update: true
         packages:
+            -   postgis
             -   postgresql-9.5-postgis-2.4
 
 before_script:
