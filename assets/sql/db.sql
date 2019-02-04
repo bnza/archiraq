@@ -37,16 +37,20 @@ ALTER TABLE IF EXISTS ONLY "admin"."group_members" DROP CONSTRAINT IF EXISTS "gr
 CREATE SCHEMA "admin";
 
 
-ALTER SCHEMA "admin" OWNER TO "test_archiraq_admin";
+ALTER SCHEMA "admin" OWNER TO "archiraq_admin";
 
 
+COMMENT ON SCHEMA "admin" IS 'Administratin schemao';
 
 
 
 CREATE SCHEMA "geom";
 
 
-ALTER SCHEMA "geom" OWNER TO "test_archiraq_admin";
+ALTER SCHEMA "geom" OWNER TO "archiraq_admin";
+
+
+COMMENT ON SCHEMA "geom" IS 'Geometry tables schema';
 
 
 
@@ -54,23 +58,23 @@ ALTER SCHEMA "geom" OWNER TO "test_archiraq_admin";
 
 
 
-
-
+COMMENT ON SCHEMA "public" IS 'standard public schema';
 
 
 
 CREATE SCHEMA "tmp";
 
 
-ALTER SCHEMA "tmp" OWNER TO "test_archiraq_admin";
+ALTER SCHEMA "tmp" OWNER TO "archiraq_admin";
 
 
 CREATE SCHEMA "voc";
 
 
-ALTER SCHEMA "voc" OWNER TO "test_archiraq_admin";
+ALTER SCHEMA "voc" OWNER TO "archiraq_admin";
 
 
+COMMENT ON SCHEMA "voc" IS 'Vocabularies schema';
 
 
 
@@ -96,7 +100,7 @@ CREATE TABLE "admin"."group_members" (
 );
 
 
-ALTER TABLE "admin"."group_members" OWNER TO "test_archiraq_admin";
+ALTER TABLE "admin"."group_members" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "admin"."group_roles" (
@@ -105,7 +109,7 @@ CREATE TABLE "admin"."group_roles" (
 );
 
 
-ALTER TABLE "admin"."group_roles" OWNER TO "test_archiraq_admin";
+ALTER TABLE "admin"."group_roles" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "admin"."groups" (
@@ -114,7 +118,7 @@ CREATE TABLE "admin"."groups" (
 );
 
 
-ALTER TABLE "admin"."groups" OWNER TO "test_archiraq_admin";
+ALTER TABLE "admin"."groups" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "admin"."role_props" (
@@ -124,7 +128,7 @@ CREATE TABLE "admin"."role_props" (
 );
 
 
-ALTER TABLE "admin"."role_props" OWNER TO "test_archiraq_admin";
+ALTER TABLE "admin"."role_props" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "admin"."roles" (
@@ -133,7 +137,7 @@ CREATE TABLE "admin"."roles" (
 );
 
 
-ALTER TABLE "admin"."roles" OWNER TO "test_archiraq_admin";
+ALTER TABLE "admin"."roles" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "admin"."user_props" (
@@ -143,7 +147,7 @@ CREATE TABLE "admin"."user_props" (
 );
 
 
-ALTER TABLE "admin"."user_props" OWNER TO "test_archiraq_admin";
+ALTER TABLE "admin"."user_props" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "admin"."user_roles" (
@@ -152,7 +156,7 @@ CREATE TABLE "admin"."user_roles" (
 );
 
 
-ALTER TABLE "admin"."user_roles" OWNER TO "test_archiraq_admin";
+ALTER TABLE "admin"."user_roles" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "admin"."users" (
@@ -162,7 +166,7 @@ CREATE TABLE "admin"."users" (
 );
 
 
-ALTER TABLE "admin"."users" OWNER TO "test_archiraq_admin";
+ALTER TABLE "admin"."users" OWNER TO "archiraq_admin";
 
 
 COMMENT ON TABLE "admin"."users" IS 'Geoserver JDBC user/group service compliant table 
@@ -178,9 +182,10 @@ CREATE TABLE "geom"."admbnd0" (
 );
 
 
-ALTER TABLE "geom"."admbnd0" OWNER TO "test_archiraq_admin";
+ALTER TABLE "geom"."admbnd0" OWNER TO "archiraq_admin";
 
 
+COMMENT ON TABLE "geom"."admbnd0" IS 'Administrative boundaries, level 0 (nations)';
 
 
 
@@ -192,7 +197,7 @@ CREATE SEQUENCE "geom"."seq__admbnd1__id"
     CACHE 1;
 
 
-ALTER TABLE "geom"."seq__admbnd1__id" OWNER TO "test_archiraq_admin";
+ALTER TABLE "geom"."seq__admbnd1__id" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "geom"."admbnd1" (
@@ -204,7 +209,7 @@ CREATE TABLE "geom"."admbnd1" (
 );
 
 
-ALTER TABLE "geom"."admbnd1" OWNER TO "test_archiraq_admin";
+ALTER TABLE "geom"."admbnd1" OWNER TO "archiraq_admin";
 
 
 CREATE SEQUENCE "geom"."seq__admbnd2__id"
@@ -215,7 +220,7 @@ CREATE SEQUENCE "geom"."seq__admbnd2__id"
     CACHE 1;
 
 
-ALTER TABLE "geom"."seq__admbnd2__id" OWNER TO "test_archiraq_admin";
+ALTER TABLE "geom"."seq__admbnd2__id" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "geom"."admbnd2" (
@@ -227,7 +232,7 @@ CREATE TABLE "geom"."admbnd2" (
 );
 
 
-ALTER TABLE "geom"."admbnd2" OWNER TO "test_archiraq_admin";
+ALTER TABLE "geom"."admbnd2" OWNER TO "archiraq_admin";
 
 
 CREATE SEQUENCE "public"."seq___contribute__id"
@@ -238,7 +243,7 @@ CREATE SEQUENCE "public"."seq___contribute__id"
     CACHE 1;
 
 
-ALTER TABLE "public"."seq___contribute__id" OWNER TO "test_archiraq_admin";
+ALTER TABLE "public"."seq___contribute__id" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "public"."contribute" (
@@ -252,9 +257,10 @@ CREATE TABLE "public"."contribute" (
 );
 
 
-ALTER TABLE "public"."contribute" OWNER TO "test_archiraq_admin";
+ALTER TABLE "public"."contribute" OWNER TO "archiraq_admin";
 
 
+COMMENT ON TABLE "public"."contribute" IS 'Shapefile contributes table';
 
 
 
@@ -266,7 +272,7 @@ CREATE SEQUENCE "public"."seq___public__draft"
     CACHE 1;
 
 
-ALTER TABLE "public"."seq___public__draft" OWNER TO "test_archiraq_admin";
+ALTER TABLE "public"."seq___public__draft" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "public"."draft" (
@@ -303,7 +309,7 @@ CREATE TABLE "public"."draft" (
 );
 
 
-ALTER TABLE "public"."draft" OWNER TO "test_archiraq_admin";
+ALTER TABLE "public"."draft" OWNER TO "archiraq_admin";
 
 
 CREATE SEQUENCE "tmp"."seq___tmp__draft"
@@ -314,7 +320,7 @@ CREATE SEQUENCE "tmp"."seq___tmp__draft"
     CACHE 1;
 
 
-ALTER TABLE "tmp"."seq___tmp__draft" OWNER TO "test_archiraq_admin";
+ALTER TABLE "tmp"."seq___tmp__draft" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "tmp"."draft" (
@@ -351,7 +357,7 @@ CREATE TABLE "tmp"."draft" (
 );
 
 
-ALTER TABLE "tmp"."draft" OWNER TO "test_archiraq_admin";
+ALTER TABLE "tmp"."draft" OWNER TO "archiraq_admin";
 
 
 CREATE SEQUENCE "voc"."seq___chronology__id"
@@ -362,7 +368,7 @@ CREATE SEQUENCE "voc"."seq___chronology__id"
     CACHE 1;
 
 
-ALTER TABLE "voc"."seq___chronology__id" OWNER TO "test_archiraq_admin";
+ALTER TABLE "voc"."seq___chronology__id" OWNER TO "archiraq_admin";
 
 
 CREATE TABLE "voc"."chronology" (
@@ -375,7 +381,7 @@ CREATE TABLE "voc"."chronology" (
 );
 
 
-ALTER TABLE "voc"."chronology" OWNER TO "test_archiraq_admin";
+ALTER TABLE "voc"."chronology" OWNER TO "archiraq_admin";
 
 
 ALTER TABLE ONLY "admin"."group_members"
@@ -458,6 +464,7 @@ ALTER TABLE ONLY "public"."draft"
 
 
 
+COMMENT ON CONSTRAINT "uq___public__draft__contribute_id__entry_id" ON "public"."draft" IS 'entry_id MUST be unique for any contribute';
 
 
 
