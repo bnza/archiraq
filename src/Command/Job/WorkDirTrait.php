@@ -2,9 +2,12 @@
 
 namespace App\Command\Job;
 
+use Bnza\JobManagerBundle\Runner\Job\JobInterface;
 
 trait WorkDirTrait
 {
+    abstract function getJob(): JobInterface;
+
     /**
      * @var string
      */
@@ -24,5 +27,10 @@ trait WorkDirTrait
     public function setBaseWorkDir(string $workDir): void
     {
         $this->baseWorkDir = $workDir;
+    }
+
+    public function getWorkDir(): string
+    {
+        return $this->getBaseWorkDir().DIRECTORY_SEPARATOR.$this->getJob()->getId();
     }
 }

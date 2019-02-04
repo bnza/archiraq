@@ -16,6 +16,7 @@ class ImportPublishesSitesZipShapefileCommand extends AbstractJobSubscriberComma
 {
     use DatabaseTrait;
     use WorkDirTrait;
+    use SummaryTrait;
 
     protected $path  = '';
 

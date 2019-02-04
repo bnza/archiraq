@@ -4,7 +4,10 @@ namespace App\Runner\Task\Database\Raw;
 
 
 use App\Runner\Task\TaskEntityManagerTrait;
+use Bnza\JobManagerBundle\Exception\JobManagerNonCriticalErrorException;
 use Bnza\JobManagerBundle\Runner\Task\AbstractTask;
+use Bnza\JobManagerBundle\Summary\Entry\ErrorEntry;
+use Bnza\JobManagerBundle\Event\SummaryEntryEvent;
 
 /**
  * Compares "id" field values in "tmp"."shp2pgsql[job_id]" and "entry" field values "draft[job_id]" in order to
@@ -93,5 +96,23 @@ EOT;
         return $this->spreadsheetDiff;
     }
 
-
+    /**
+     * @throws JobManagerNonCriticalErrorException
+     */
+    public function terminate(): void
+    {
+        $diffs = [];
+        if ($spreadsheetDiff = $this->getSpreadsheetDifference()) {
+            $diffs['spreadsheet'] = $spreadsheetDiff;
+        }
+        if ($shpDiff = $this->getShapefileDifference()) {
+            $diffs['shapefile'] = $shpDiff;
+        }
+        if ($diffs) {
+            $entry = new ErrorEntry($this, 'Shapefile and Spreadsheet entries does not match', $diffs);
+            $event = new SummaryEntryEvent($entry);
+            $this->getJob()->getDispatcher()->dispatch(SummaryEntryEvent::NAME, $event);
+            throw new JobManagerNonCriticalErrorException($entry->getMessage());
+        }
+    }
 }

@@ -61,7 +61,8 @@ class ImportPublishedSitesSpreadsheetToTmpTableTaskTest extends AbstractPgTestIs
     {
         $this->spreadsheetFileName = 'site.xlsx';
         $this->setUpTask();
-        $this->getTask()->configure();
+        $method = $this->getNonPublicMethod(ImportPublishedSitesSpreadsheetToTmpTableTask::class, 'configure');
+        $method->invoke($this->getTask());
         $this->assertTemporaryTableExists("draft{$this->getJob()->getId()}");
     }
 

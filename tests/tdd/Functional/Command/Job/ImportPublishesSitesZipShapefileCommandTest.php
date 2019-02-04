@@ -38,29 +38,39 @@ class ImportPublishesSitesZipShapefileCommandTest extends AbstractPgTestIsolatio
     public function setUp()
     {
         $this->savepoint();
-        $this->setUpBaseWorkDir();
-        $this->setUpBaseOmDir();
     }
 
     public function tearDown()
     {
         $this->rollbackSavepoint();
-        $this->tearDownDir($this->getTestDir());
+        $this->getFilesystem()->remove($this->command->getWorkDir());
     }
 
     public function assertPreConditions()
     {
-        $this->assertDirIsEmpty($this->getBaseWorkDir());
-        $this->assertDirIsEmpty($this->getBaseOmDir());
         $this->assertTableRowsNum(0, 'draft', 'tmp');
     }
 
-    public function testCommand()
+    public function assertPostConditions()
+    {
+        $this->assertFileExists($this->command->getWorkDir().DIRECTORY_SEPARATOR.'summary.json');
+    }
+
+    public function testSuccessfulCommand()
     {
         $this->setUpAssets('tdd/shp/zip/simple.shp.zip');
         $tester = $this->executeCommandTester(SutCommand::getDefaultName(),['path' => $this->zipPath]);
-        //$this->assertEquals('', $tester->getDisplay(true));
         $this->assertEquals(0, $tester->getStatusCode());
+    }
+
+    /**
+     * @expectedException \Bnza\JobManagerBundle\Exception\JobManagerNonCriticalErrorException
+     * Shapefile and Spreadsheet entries does not match
+     */
+    public function testEntryMismatchCommand()
+    {
+        $this->setUpAssets('tdd/shp/zip/entryMismatch.shp.zip');
+        $tester = $this->executeCommandTester(SutCommand::getDefaultName(),['path' => $this->zipPath]);
     }
 
     public function setCommandParameters(Command $command)

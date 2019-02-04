@@ -6,14 +6,12 @@
  * Time: 20.50
  */
 
-namespace App\Tests\Functional\Runner\Task\Database;
+namespace App\Tests\Functional\Runner\Task\Database\Raw;
 
 
 USE App\Runner\Task\Database\Raw\CompareShpAndSpreadsheetsEntriesTask;
 use App\Tests\Functional\AbstractPgTestIsolation;
 use App\Tests\Functional\Runner\Task\AbstractMockTrait;
-use App\Tests\Functional\Runner\Task\MockObject;
-use App\Tests\Functional\Runner\Task\TaskInterface;
 
 class CompareShpAndSpreadsheetsEntriesTaskTest extends AbstractPgTestIsolation
 {

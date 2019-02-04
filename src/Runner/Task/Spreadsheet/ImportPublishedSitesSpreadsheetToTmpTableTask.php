@@ -120,11 +120,11 @@ EOT;
         $this->getEntityManager()->getConnection()->exec($sql);
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $this->checkHeaders();
         $this->createTempTable();
-        $this->dateStyle = $this->getDateStyle();
+        //$this->dateStyle = $this->getDateStyle();
     }
 
     public function getSteps(): iterable

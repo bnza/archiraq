@@ -74,6 +74,36 @@ class AbstractSpreadsheetTaskTest extends \PHPUnit\Framework\TestCase
             "AB"=>"credits"
         ];
         $this->assertEquals($expected, $task->getHeaders());
+    }
+
+    /**
+     * @expectedException \App\Exception\Import\SpreadsheetHeadersMismatchException
+     * @expectedExceptionMessage Spreadsheet headers does not match the expected ones in class
+     */
+    public function testMethodCheckHeadersWithHeadersMismatchWillThrowException()
+    {
+
+        /**
+         * @var AbstractSpreadsheetTask
+         */
+        $task = $this->getMockTask(
+            AbstractSpreadsheetTask::class,
+            [
+                'getHeaders',
+                'getExpectedHeaders',
+                'createTempTable',
+            ]
+        );
+
+
+        $headers = ['A' => 'id', 'B' => 'date'];
+        $expectedHeaders = ['A' => 'id', 'B' => 'year'];
+
+        $task->method('getHeaders')->willReturn($headers);
+        $task->method('getExpectedHeaders')->willReturn($expectedHeaders);
+
+        $method = $this->getNonPublicMethod(AbstractSpreadsheetTask::class, 'checkHeaders');
+        $method->invoke($task);
 
     }
 }

@@ -6,7 +6,6 @@ use Bnza\JobManagerBundle\ObjectManager\ObjectManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Console\Command\Command;
-use Bnza\JobManagerBundle\ObjectManager\TmpFS\ObjectManager;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 trait CommandUtilsTrait
@@ -21,6 +20,11 @@ trait CommandUtilsTrait
      */
     protected $dispatcher;
 
+    /**
+     * @var command
+     */
+    protected $command;
+
 
     abstract function getBaseOmDir(): string;
 
@@ -31,7 +35,7 @@ trait CommandUtilsTrait
         $kernel = static::createKernel();
         $application = new Application($kernel);
 
-        $command = $application->find($name);
+        $this->command = $command = $application->find($name);
         $commandTester = new CommandTester($command);
 
         $defaultInput = [
