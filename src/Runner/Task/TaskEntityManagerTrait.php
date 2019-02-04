@@ -38,14 +38,6 @@ trait TaskEntityManagerTrait
         $this->em = $em;
     }
 
-    /**
-     * @param string $schema
-     */
-    public function setSchema(string $schema): void
-    {
-        $this->schema = $schema;
-    }
-
     protected function getDateStyle()
     {
         $sql = "SHOW DATESTYLE;";

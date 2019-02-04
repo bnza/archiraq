@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Command;
+namespace App\Command\Job;
 
 use Bnza\JobManagerBundle\Runner\Job\JobInterface;
 use Bnza\JobManagerBundle\Command\AbstractJobSubscriberCommand;
 use Bnza\JobManagerBundle\ObjectManager\ObjectManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,16 +14,17 @@ use App\Runner\Job\ImportPublishedSitesZipShapefileJob;
 
 class ImportPublishesSitesZipShapefileCommand extends AbstractJobSubscriberCommand
 {
+    use DatabaseTrait;
+    use WorkDirTrait;
+
+    protected $path  = '';
+
     protected static $defaultName = 'app:import:sites-zip';
 
-    /**
-     * @var string
-     */
-    protected $baseWorkDir = '';
-
-    public function __construct(ObjectManagerInterface $om, EventDispatcherInterface $dispatcher)
+    public function __construct(ObjectManagerInterface $om, EventDispatcherInterface $dispatcher, EntityManagerInterface $em)
     {
         parent::__construct($om, $dispatcher);
+        $this->em = $em;
     }
 
     public function configure()
@@ -37,33 +39,18 @@ EOT;
             ->addArgument('path', InputArgument::REQUIRED, 'The zip path');
     }
 
-    /**
-     * @return string
-     */
-    public function getBaseWorkDir(): string
-    {
-        return $this->baseWorkDir;
-    }
-
-    /**
-     * @param string $workDir
-     */
-    public function setWorkDir(string $workDir): void
-    {
-        if (!\file_exists($workDir)) {
-            throw new \InvalidArgumentException("Base work directory MUST exists");
-        }
-        $this->baseWorkDir = $workDir;
-    }
-
     protected function setUpJob(): JobInterface
     {
         $job = new ImportPublishedSitesZipShapefileJob($this->getObjectManager(), $this->getDispatcher(), '');
         $job->setWorkDir($this->getBaseWorkDir());
+        $job->setEntityManager($this->getEntityManager());
+        $job->setSourceZipShapefilePath($this->path);
+        return $job;
     }
 
     public function initialize(InputInterface $input, OutputInterface $output)
     {
+        $this->path = $input->getArgument('path');
         $this->job = $this->setUpJob();
         parent::initialize($input, $output);
     }
@@ -75,6 +62,6 @@ EOT;
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-
+        $this->getJob()->run();
     }
 }

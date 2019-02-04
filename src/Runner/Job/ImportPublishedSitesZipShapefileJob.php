@@ -13,9 +13,10 @@ use App\Runner\Task\Spreadsheet\ImportPublishedSitesSpreadsheetToTmpTableTask;
 use Bnza\JobManagerBundle\Runner\Job\WorkDirTrait;
 use Bnza\JobManagerBundle\Runner\Task\FileSystem\RenameTask;
 use Bnza\JobManagerBundle\Runner\Task\Zip\ZipExtractToTask;
+
 class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
 {
-    const KEY_ZIP_PATH = 'zip-path';
+    const KEY_ZIP_PATH_SOURCE = 'source-zip-path';
     const KEY_ZIP_NAME = 'zip-name';
     const KEY_CONTRIBUTE = 'contribute';
     const KEY_XLS_PATH = 'xls-path';
@@ -27,14 +28,24 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
         return 'app:job:import:sites-zip';
     }
 
-    public function getZipShapefilePath(bool $throw = true):string
+    public function getDescription(): string
     {
-        return $this->getParameter(self::KEY_ZIP_PATH, $throw);
+        return 'Importing published sites zip file into db';
     }
 
-    public function setZipShapefilePath(string $path)
+    public function getSourceZipShapefilePath(bool $throw = true):string
     {
-        return $this->getParameters()->set(self::KEY_ZIP_PATH, $path);
+        return $this->getParameter(self::KEY_ZIP_PATH_SOURCE, $throw);
+    }
+
+    public function setSourceZipShapefilePath(string $path)
+    {
+        return $this->getParameters()->set(self::KEY_ZIP_PATH_SOURCE, $path);
+    }
+
+    public function getTargetZipShapefilePath(bool $throw = true):string
+    {
+        return $this->getWorkDir().DIRECTORY_SEPARATOR.basename($this->getParameter(self::KEY_ZIP_PATH_SOURCE, $throw));
     }
 
     public function setShapefileName(string $name)
@@ -64,7 +75,7 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
             foreach (new \DirectoryIterator($this->getWorkDir()) as $item ) {
                 if ($item->isFile()) {
                     if (
-                        \in_array($item->getExtension(), ['xls','xlsx','ods','csv'])
+                        \in_array($item->getExtension(), ['xls','xlsx','ods'])
                         && $item->getBasename(".{$item->getExtension()}") === $name
                     ) {
                         $path = $this->getWorkDir().DIRECTORY_SEPARATOR.$item->getBasename();
@@ -114,23 +125,14 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
             [
                 'class' => RenameTask::class,
                 'arguments' => [
-                    [$this, 'getZipShapefilePath'],
+                    [$this, 'getSourceZipShapefilePath'],
                     [$this, 'getWorkDir']
                 ],
-                'setters' => [
-                    [
-                        'setZipShapefilePath',
-                        [
-                            'getTarget',
-                            [$this, 'getZipShapefilePath'],
-                        ]
-                    ]
-                ]
             ],
             [
                 'class' => ZipExtractToTask::class,
                 'arguments' => [
-                    [$this, 'getZipShapefilePath'],
+                    [$this, 'getTargetZipShapefilePath'],
                     [$this, 'getWorkDir']
                 ],
             ],

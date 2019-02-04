@@ -128,4 +128,10 @@ trait TestWorkDirTrait
         $path = realpath($dir.'/../../assets/');
         return $path;
     }
+
+    protected function assertDirIsEmpty(string $dir) {
+        $this->assertFileExists($dir);
+        $this->assertTrue(\is_dir($dir), "\"$dir\" is a directory");
+        $this->assertEquals(0, $this->countFiles($dir), "Directory \"$dir\" is empty");
+    }
 }

@@ -34,6 +34,7 @@ class ContributeEntityTest extends AbstractPgTestIsolation
     public function testPersistEntityDoesWork()
     {
         $entity = new ContributeEntity();
+        $entity->setId(444);
         $entity->setEmail('mail@example.com');
         $entity->setContributor('A contributor');
         $entity->setInstitution('An institution');

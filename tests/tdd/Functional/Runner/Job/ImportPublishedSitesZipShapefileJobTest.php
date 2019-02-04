@@ -119,7 +119,7 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
         if ($this->contribute) {
             $this->job->setContribute($this->contribute);
         }
-        $this->job->setZipShapefilePath($this->zipPath);
+        $this->job->setSourceZipShapefilePath($this->zipPath);
         $this->job->setWorkDir($this->getBaseWorkDir());
         $this->job->setEntityManager($this->getEntityManager());
         //$this->job->setShapefileName('simple');
