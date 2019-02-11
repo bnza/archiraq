@@ -2,14 +2,13 @@
 
 namespace App\Tests\Functional;
 
-use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
+use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 abstract class AbstractPgTestIsolation extends KernelTestCase
 {
     use TestKernelUtilsTrait;
-
     /**
      * @var EntityManager[]
      */
@@ -28,7 +27,6 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
         if (!array_key_exists($em, $this->ems)) {
             $this->ems[$em] = self::getContainerEntityManager($em);
         }
-
         return $this->ems[$em];
     }
 
@@ -41,8 +39,8 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
     {
         $connection = self::getContainerEntityManager($em)->getConnection();
         $connection->setAutoCommit(false);
-        $connection->beginTransaction();
-        $connection->createSavepoint('main');
+        $connection->exec("BEGIN TRANSACTION");
+        $connection->exec("SAVEPOINT main");
         $sql = \file_get_contents(self::getAbsolutePath('tests/assets/tdd/sql/db.sql'));
         $connection->exec($sql);
     }
@@ -50,28 +48,26 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
     protected static function rollbackDatabaseSchema(string $em = 'default')
     {
         $connection = self::getContainerEntityManager($em)->getConnection();
-        $connection->rollbackSavepoint('main');
-        $connection->rollBack();
-        $connection->setAutoCommit(true);
+        $connection->exec("ROLLBACK TO SAVEPOINT main");
+        $connection->exec("ROLLBACK");
     }
 
     protected function savepoint(string $em = 'default', string $savepoint = 'test')
     {
         $connection = $this->getEntityManager($em)->getConnection();
-        $connection->createSavepoint($savepoint);
+        $connection->exec("SAVEPOINT \"$savepoint\"");
     }
 
     protected function rollbackSavepoint(string $em = 'default', string $savepoint = 'test')
     {
         $connection = $this->getEntityManager($em)->getConnection();
-        $connection->rollbackSavepoint($savepoint);
+        $connection->exec("ROLLBACK TO SAVEPOINT \"$savepoint\"");
     }
 
     protected function executeSql(string $sql, string $em = 'default')
     {
         return $this->getConnection($em)->exec($sql);
     }
-
     /**
      * @param string $path
      * @return int
@@ -99,18 +95,16 @@ SELECT EXISTS (
 EOF;
         $stmt = $this->getEntityManager($em)->getConnection()->prepare($query);
         $stmt->execute(['schema' => $schema, 'table' => $table]);
-
         return $stmt->fetchColumn();
     }
 
     protected function getTableIdentifiers(string $identifier): array
     {
-        $identifiers = [];
+        $identifiers= [];
         if (preg_match('/\"(?P<schema>.+)\".\"(?P<table>.+)\"/mU', $identifier, $matches)) {
             $identifiers['schema'] = $matches['schema'];
             $identifiers['table'] = $matches['table'];
         }
-
         return $identifiers;
     }
 
@@ -136,9 +130,9 @@ SELECT EXISTS (
 EOF;
         $stmt = $this->getEntityManager($em)->getConnection()->prepare($query);
         $stmt->execute(['table' => $table]);
-
         return $stmt->fetchColumn();
     }
+
 
     protected function assertTemporaryTableExists(string $table, string $em = 'default')
     {
