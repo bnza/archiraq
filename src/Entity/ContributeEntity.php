@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ContributeRepository")
  * @ORM\Table(name="contribute", schema="public")
  */
-class ContributeEntity
+class ContributeEntity implements EntityInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -19,6 +20,18 @@ class ContributeEntity
      * @var int
      */
     private $id;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="SiteEntity", mappedBy="contribute")
+     */
+    private $sites;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="TmpDraftEntity", mappedBy="contribute")
+     */
+    private $tmp_drafts;
 
     /**
      * @Assert\NotBlank()
@@ -59,6 +72,11 @@ class ContributeEntity
      */
     private $status = 0;
 
+    public function __construct() {
+        $this->sites = new ArrayCollection();
+        $this->tmp_drafts = new ArrayCollection();
+    }
+
     /**
      * @return int
      */
@@ -94,7 +112,7 @@ class ContributeEntity
     /**
      * @return string
      */
-    public function getContributor(): string
+    public function getContributor(): ?string
     {
         return $this->contributor;
     }
@@ -110,7 +128,7 @@ class ContributeEntity
     /**
      * @return string
      */
-    public function getInstitution(): string
+    public function getInstitution(): ?string
     {
         return $this->institution;
     }
@@ -126,7 +144,7 @@ class ContributeEntity
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -142,7 +160,7 @@ class ContributeEntity
     /**
      * @return mixed
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -169,6 +187,40 @@ class ContributeEntity
     public function setSha1(string $sha1): void
     {
         $this->sha1 = $sha1;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSites(): iterable
+    {
+        return $this->sites;
+    }
+
+    /**
+     * @param SiteEntity $site
+     */
+    public function addSite(SiteEntity $site): void
+    {
+        $this->sites[] = $site;
+        $site->setContribute($this);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTmpDrafts(): iterable
+    {
+        return $this->tmp_drafts;
+    }
+
+    /**
+     * @param TmpDraftEntity $draft
+     */
+    public function addTmpDrafts(TmpDraftEntity $draft): void
+    {
+        $this->tmp_drafts[] = $draft;
+        $draft->setContribute($this);
     }
 
 

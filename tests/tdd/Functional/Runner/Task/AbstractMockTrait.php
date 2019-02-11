@@ -49,7 +49,7 @@ trait AbstractMockTrait
         return $this->job;
     }
 
-    protected function setUpMockedTask(string $className, array $constructorArgs = [], $mockedMethods = [])
+    protected function setUpMockedTask(string $className, array $constructorArgs = [], array $mockedMethods = [])
     {
         $id = sha1(microtime());
         $this->om = new ObjectManager('dev', $this->getBaseOmDir());
@@ -68,17 +68,17 @@ trait AbstractMockTrait
         $this->invokeConstructor($className, $this->task, $args);
     }
 
-    protected function setUpTask()
+    protected function setUpTask(array $constructorArgs = [], array $mockedMethods = [])
     {
-        $this->setUpMockedTask($this->getTaskClassName());
+        $this->setUpMockedTask($this->getTaskClassName(), $constructorArgs, $mockedMethods);
         $this->setUpAssets();
         $this->callTaskSetters();
     }
 
 
-    protected function runTask()
+    protected function runTask(array $constructorArgs = [], array $mockedMethods = [])
     {
-        $this->setUpTask();
+        $this->setUpTask($constructorArgs, $mockedMethods);
         $this->getTask()->run();
     }
 }

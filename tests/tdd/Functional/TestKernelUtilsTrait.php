@@ -30,4 +30,9 @@ trait TestKernelUtilsTrait
 
         return self::getRootDir().DIRECTORY_SEPARATOR.$relativePath;
     }
+
+    protected function getAssetsDir(): string
+    {
+        return $this->getRootDir().DIRECTORY_SEPARATOR.'tests/assets';
+    }
 }

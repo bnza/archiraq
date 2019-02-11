@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1922ad84c72141b195b142339d4283f",
+    "content-hash": "06b2a83fe96c0ecea8825fbdc2d59f1b",
     "packages": [
         {
             "name": "bnza/job-manager",
@@ -12,18 +12,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bnza/job-manager.git",
-                "reference": "64e6d71ab0d026889ca52019e2e546fa08397139"
+                "reference": "118ced8abdf3987ff112cfff4240a351928dbd8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bnza/job-manager/zipball/64e6d71ab0d026889ca52019e2e546fa08397139",
-                "reference": "64e6d71ab0d026889ca52019e2e546fa08397139",
+                "url": "https://api.github.com/repos/bnza/job-manager/zipball/118ced8abdf3987ff112cfff4240a351928dbd8a",
+                "reference": "118ced8abdf3987ff112cfff4240a351928dbd8a",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "^1.3",
+                "ext-json": "*",
                 "ext-zip": "*",
                 "php": "~7.1",
+                "psr/log": "^1.1",
                 "symfony/config": "^4.2",
                 "symfony/console": "^4.2",
                 "symfony/dependency-injection": "^4.2",
@@ -49,7 +51,59 @@
                 "runner",
                 "task"
             ],
-            "time": "2019-02-02T10:33:36+00:00"
+            "time": "2019-02-11T16:02:08+00:00"
+        },
+        {
+            "name": "bnza/spgsp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bnza/spgsp.git",
+                "reference": "5f2bd5747a63821e6886c9d7ec0689969e0e6703"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bnza/spgsp/zipball/5f2bd5747a63821e6886c9d7ec0689969e0e6703",
+                "reference": "5f2bd5747a63821e6886c9d7ec0689969e0e6703",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "~2.6",
+                "ext-json": "*",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~7"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Bnza\\SPgSp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Pietro Baldassarri",
+                    "email": "pietro.baldassarri@gmail.com"
+                }
+            ],
+            "description": "Doctrine2 simple support for spatial types and functions",
+            "keywords": [
+                "coordinate",
+                "geo",
+                "geography",
+                "geometry",
+                "lexer",
+                "parser",
+                "spatial",
+                "string",
+                "text"
+            ],
+            "time": "2019-01-23T13:34:21+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2529,16 +2583,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v4.2.2",
+            "version": "v4.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "a7a7d0a0244cfc82f040729ccf769e6cf55a78fb"
+                "reference": "25a2e7abe0d97e70282537292e3df45cf6da7b98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/a7a7d0a0244cfc82f040729ccf769e6cf55a78fb",
-                "reference": "a7a7d0a0244cfc82f040729ccf769e6cf55a78fb",
+                "url": "https://api.github.com/repos/symfony/config/zipball/25a2e7abe0d97e70282537292e3df45cf6da7b98",
+                "reference": "25a2e7abe0d97e70282537292e3df45cf6da7b98",
                 "shasum": ""
             },
             "require": {
@@ -2588,7 +2642,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-03T09:07:35+00:00"
+            "time": "2019-01-30T11:44:30+00:00"
         },
         {
             "name": "symfony/console",
@@ -2785,16 +2839,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v4.2.2",
+            "version": "v4.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "a28dda9df1d5494367454cad91e44751ac53921c"
+                "reference": "72c14cbc0c27706b9b4c33b9cd7a280972ff4806"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/a28dda9df1d5494367454cad91e44751ac53921c",
-                "reference": "a28dda9df1d5494367454cad91e44751ac53921c",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/72c14cbc0c27706b9b4c33b9cd7a280972ff4806",
+                "reference": "72c14cbc0c27706b9b4c33b9cd7a280972ff4806",
                 "shasum": ""
             },
             "require": {
@@ -2854,7 +2908,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-05T16:37:49+00:00"
+            "time": "2019-01-30T17:51:38+00:00"
         },
         {
             "name": "symfony/doctrine-bridge",
@@ -3118,16 +3172,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v4.2.2",
+            "version": "v4.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "c2ffd9a93f2d6c5be2f68a0aa7953cc229f871f8"
+                "reference": "7c16ebc2629827d4ec915a52ac809768d060a4ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/c2ffd9a93f2d6c5be2f68a0aa7953cc229f871f8",
-                "reference": "c2ffd9a93f2d6c5be2f68a0aa7953cc229f871f8",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/7c16ebc2629827d4ec915a52ac809768d060a4ee",
+                "reference": "7c16ebc2629827d4ec915a52ac809768d060a4ee",
                 "shasum": ""
             },
             "require": {
@@ -3164,7 +3218,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-03T09:07:35+00:00"
+            "time": "2019-01-16T20:35:37+00:00"
         },
         {
             "name": "symfony/finder",
@@ -6635,7 +6689,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "bnza/job-manager": 20
+        "bnza/job-manager": 20,
+        "bnza/spgsp": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -14,8 +14,13 @@ doctrine:
         #default_table_options:
         #   charset: utf8mb4
         #    collate: utf8mb4_unicode_ci
-
+        mapping_types:
+            geometry:   geometry
+            multipolygon: multipolygon
         url: '%env(resolve:DATABASE_URL)%'
+        types:
+            geometry:       Bnza\SPgSp\DBAL\Types\GeometryType
+            multipolygon:   Bnza\SPgSp\DBAL\Types\MultiPolygonType
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore

@@ -2,12 +2,14 @@
 
 namespace App\Tests\Functional;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 abstract class AbstractPgTestIsolation extends KernelTestCase
 {
     use TestKernelUtilsTrait;
+
     /**
      * @var EntityManager[]
      */
@@ -15,7 +17,10 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
 
     protected static function getContainerEntityManager(string $em = 'default'): EntityManager
     {
-        return self::getKernel()->getContainer()->get('doctrine')->getManager($em);
+        $container =
+            self::getKernel()->getContainer()
+            ?: self::bootKernel()->getContainer();
+        return $container->get('doctrine')->getManager($em);
     }
 
     protected function getEntityManager(string $em = 'default'): EntityManager
@@ -23,15 +28,21 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
         if (!array_key_exists($em, $this->ems)) {
             $this->ems[$em] = self::getContainerEntityManager($em);
         }
+
         return $this->ems[$em];
+    }
+
+    protected function getConnection(string $em = 'default'): Connection
+    {
+        return $this->getEntityManager($em)->getConnection();
     }
 
     protected static function setUpDatabaseSchema(string $em = 'default')
     {
         $connection = self::getContainerEntityManager($em)->getConnection();
         $connection->setAutoCommit(false);
-        $connection->exec("BEGIN TRANSACTION");
-        $connection->exec("SAVEPOINT main");
+        $connection->beginTransaction();
+        $connection->createSavepoint('main');
         $sql = \file_get_contents(self::getAbsolutePath('tests/assets/tdd/sql/db.sql'));
         $connection->exec($sql);
     }
@@ -39,20 +50,37 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
     protected static function rollbackDatabaseSchema(string $em = 'default')
     {
         $connection = self::getContainerEntityManager($em)->getConnection();
-        $connection->exec("ROLLBACK TO SAVEPOINT main");
-        $connection->exec("ROLLBACK");
+        $connection->rollbackSavepoint('main');
+        $connection->rollBack();
+        $connection->setAutoCommit(true);
     }
 
     protected function savepoint(string $em = 'default', string $savepoint = 'test')
     {
         $connection = $this->getEntityManager($em)->getConnection();
-        $connection->exec("SAVEPOINT \"$savepoint\"");
+        $connection->createSavepoint($savepoint);
     }
 
     protected function rollbackSavepoint(string $em = 'default', string $savepoint = 'test')
     {
         $connection = $this->getEntityManager($em)->getConnection();
-        $connection->exec("ROLLBACK TO SAVEPOINT \"$savepoint\"");
+        $connection->rollbackSavepoint($savepoint);
+    }
+
+    protected function executeSql(string $sql, string $em = 'default')
+    {
+        return $this->getConnection($em)->exec($sql);
+    }
+
+    /**
+     * @param string $path
+     * @return int
+     */
+    protected function executeSqlAssetFile(string $path, string $em = 'default')
+    {
+        $path = $this->getAssetsDir().DIRECTORY_SEPARATOR.$path;
+        $sql = \file_get_contents($path);
+        return $this->executeSql($sql);
     }
 
     protected function checkTableExists(string $table, string $schema = 'public', string $em = 'default')
@@ -71,16 +99,18 @@ SELECT EXISTS (
 EOF;
         $stmt = $this->getEntityManager($em)->getConnection()->prepare($query);
         $stmt->execute(['schema' => $schema, 'table' => $table]);
+
         return $stmt->fetchColumn();
     }
 
     protected function getTableIdentifiers(string $identifier): array
     {
-        $identifiers= [];
+        $identifiers = [];
         if (preg_match('/\"(?P<schema>.+)\".\"(?P<table>.+)\"/mU', $identifier, $matches)) {
             $identifiers['schema'] = $matches['schema'];
             $identifiers['table'] = $matches['table'];
         }
+
         return $identifiers;
     }
 
@@ -106,9 +136,9 @@ SELECT EXISTS (
 EOF;
         $stmt = $this->getEntityManager($em)->getConnection()->prepare($query);
         $stmt->execute(['table' => $table]);
+
         return $stmt->fetchColumn();
     }
-
 
     protected function assertTemporaryTableExists(string $table, string $em = 'default')
     {

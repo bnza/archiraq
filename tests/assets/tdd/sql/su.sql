@@ -8,6 +8,7 @@ DROP ROLE IF EXISTS "test_archiraq_admin";
 CREATE ROLE "test_archiraq_admin";
 ALTER ROLE "test_archiraq_admin" WITH NOSUPERUSER NOINHERIT CREATEROLE NOCREATEDB LOGIN NOREPLICATION NOBYPASSRLS PASSWORD 'md5d5e83e13a426bfe2e4ccf93a10f3f931';
 
+DROP DATABASE IF EXISTS "test_archiraq";
 
 -- pg_dump --create --schema-only --quote-all-identifiers --no-password --exclude-schema='*' -d postgresql://superuser:password@localhost:5432/archiraq
 
