@@ -2,7 +2,6 @@
 
 namespace App\Runner\Job;
 
-
 use Bnza\JobManagerBundle\Runner\Job\AbstractJob;
 use Doctrine\ORM\EntityManagerInterface;
 

@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 30/01/19
- * Time: 19.40
+ * Time: 19.40.
  */
 
 namespace App\Runner\Task\Spreadsheet;
@@ -12,9 +12,6 @@ use App\Exception\Import\SpreadsheetHeadersMismatchException;
 use App\Runner\Task\Spreadsheet\Filter\HeaderFilter;
 use App\Runner\Task\Spreadsheet\Filter\DataFilter;
 use Bnza\JobManagerBundle\Runner\Task\AbstractTask;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 abstract class AbstractSpreadsheetTask extends AbstractTask
 {
@@ -28,6 +25,7 @@ abstract class AbstractSpreadsheetTask extends AbstractTask
 
     /**
      * @return array
+     *
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
@@ -36,12 +34,15 @@ abstract class AbstractSpreadsheetTask extends AbstractTask
         if (!$this->headers) {
             $this->headers = $this->extractHeadersFromFile();
         }
+
         return $this->headers;
     }
 
     /**
-     * Extract Spreadsheet header from file as an associative array "column" => "value"
+     * Extract Spreadsheet header from file as an associative array "column" => "value".
+     *
      * @return array
+     *
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
@@ -59,6 +60,7 @@ abstract class AbstractSpreadsheetTask extends AbstractTask
             }
             break;
         }
+
         return $headers;
     }
 
@@ -68,7 +70,7 @@ abstract class AbstractSpreadsheetTask extends AbstractTask
         $worksheet = $this->readCurrentWorksheet($filter);
         $generator = function () use ($worksheet) {
             foreach ($worksheet->getRowIterator() as $row) {
-                if ($row->getRowIndex() === 1) {
+                if (1 === $row->getRowIndex()) {
                     continue;
                 }
                 if (!$worksheet->getCell("A{$row->getRowIndex()}")->getValue()) {
@@ -77,6 +79,7 @@ abstract class AbstractSpreadsheetTask extends AbstractTask
                 yield [$worksheet, $row->getRowIndex()];
             }
         };
+
         return $generator();
     }
 
@@ -90,6 +93,7 @@ abstract class AbstractSpreadsheetTask extends AbstractTask
         if (!$equals && $throw) {
             throw new SpreadsheetHeadersMismatchException($expected, $actual, self::class);
         }
+
         return $equals;
     }
 }

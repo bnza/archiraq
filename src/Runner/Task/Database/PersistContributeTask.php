@@ -59,14 +59,14 @@ class PersistContributeTask extends AbstractTask
             } else {
                 throw new \InvalidArgumentException(sprintf('Invalid sha1 hash "%s"', $contribute));
             }
-        } else if (\is_int($contribute)) {
+        } elseif (\is_int($contribute)) {
             $key = 'id';
             $value = $contribute;
             $contribute = $this->getEntityManager()->getRepository(ContributeEntity::class)->find($contribute);
-        } else if (!$contribute instanceof ContributeEntity) {
+        } elseif (!$contribute instanceof ContributeEntity) {
             $message = sprintf('Invalid argument type: %s', gettype($contribute));
             if (\is_object($contribute)) {
-                $message .= " [".\get_class($contribute)."]";
+                $message .= ' ['.\get_class($contribute).']';
             }
             throw new \InvalidArgumentException($message);
         }
@@ -87,6 +87,7 @@ class PersistContributeTask extends AbstractTask
                 throw new \InvalidArgumentException("Property \"$key\" does not exist in ContributeEntity");
             }
         }
+
         return $contribute;
     }
 

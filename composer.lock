@@ -59,12 +59,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bnza/spgsp.git",
-                "reference": "5f2bd5747a63821e6886c9d7ec0689969e0e6703"
+                "reference": "d0cc42e4047ae6200bf3f4307dced537a1a071f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bnza/spgsp/zipball/5f2bd5747a63821e6886c9d7ec0689969e0e6703",
-                "reference": "5f2bd5747a63821e6886c9d7ec0689969e0e6703",
+                "url": "https://api.github.com/repos/bnza/spgsp/zipball/d0cc42e4047ae6200bf3f4307dced537a1a071f5",
+                "reference": "d0cc42e4047ae6200bf3f4307dced537a1a071f5",
                 "shasum": ""
             },
             "require": {
@@ -103,7 +103,7 @@
                 "string",
                 "text"
             ],
-            "time": "2019-01-23T13:34:21+00:00"
+            "time": "2019-02-14T15:23:49+00:00"
         },
         {
             "name": "doctrine/annotations",

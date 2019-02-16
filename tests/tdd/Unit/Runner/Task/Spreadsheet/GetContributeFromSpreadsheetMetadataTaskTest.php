@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 01/02/19
- * Time: 13.25
+ * Time: 13.25.
  */
 
 namespace App\Tests\Unit\Runner\Task\Spreadsheet;
@@ -31,7 +31,8 @@ class GetContributeFromSpreadsheetMetadataTaskTest extends \PHPUnit\Framework\Te
 
     /**
      * @dataProvider getContributeDataProvider
-     * @param string $description
+     *
+     * @param string           $description
      * @param ContributeEntity $expected
      */
     public function testGetContributeWillReturnExpectedValue(string $description, ContributeEntity $expected)
@@ -50,12 +51,12 @@ class GetContributeFromSpreadsheetMetadataTaskTest extends \PHPUnit\Framework\Te
 
     public function testGetContributeWillBeLoadedFromSpreadsheet()
     {
-        $filename = "metadata.xlsx";
+        $filename = 'metadata.xlsx';
         $this->copyAssetToTempDir("tdd/spreadsheet/$filename", $filename);
         /**
          * @var GetContributeFromSpreadsheetMetadataTask
          */
-        $task = $this->getMockTaskWithMockedJob(GetContributeFromSpreadsheetMetadataTask::class);;
+        $task = $this->getMockTaskWithMockedJob(GetContributeFromSpreadsheetMetadataTask::class);
 
         $task->setSpreadsheetPath($this->getTestDir().DIRECTORY_SEPARATOR.$filename);
         $contribute = new ContributeEntity();
@@ -84,7 +85,7 @@ EOT;
         $e1->setDescription("Some further remarks on features.\nIn multiline mode");
 
         return [
-          [$d1, $e1]
+          [$d1, $e1],
         ];
     }
 }

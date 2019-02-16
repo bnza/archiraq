@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 09/02/19
- * Time: 14.02
+ * Time: 14.02.
  */
 
 namespace App\Tests\Unit\Serializer\Normalizer;
@@ -25,7 +25,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'entryId' => 'AKK.001',
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
-                    'compilationDate' => '2018-11-28'
+                    'compilationDate' => '2018-11-28',
                 ],
                 [
                     'id' => 1,
@@ -37,8 +37,21 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'sbahNo' => null,
                     'cadastre' => null,
                     'remarks' => null,
-                    'credits' => null
-                ]
+                    'credits' => null,
+                    'errors' => [],
+                    'siteChronology' => null,
+                    'district' => null,
+                    'featuresEpigraphic' => null,
+                    'featuresAncientStructures' => null,
+                    'featuresPaleochannels' => null,
+                    'featuresRemarks' => null,
+                    'threatsNaturalDunes' => null,
+                    'threatsLooting' => null,
+                    'threatsCultivationTrenches' => null,
+                    'threatsModernStructures' => null,
+                    'threatsModernCanals' => null,
+                    'geom' => null,
+                ],
             ],
             [
                 [
@@ -47,7 +60,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'compilationDate' => '2018-11-28',
-                    'ancientName' => 'Ancient Name'
+                    'ancientName' => 'Ancient Name',
                 ],
                 [
                     'id' => 1,
@@ -59,8 +72,21 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'sbahNo' => null,
                     'cadastre' => null,
                     'remarks' => null,
-                    'credits' => null
-                ]
+                    'credits' => null,
+                    'errors' => [],
+                    'siteChronology' => null,
+                    'district' => null,
+                    'featuresEpigraphic' => null,
+                    'featuresAncientStructures' => null,
+                    'featuresPaleochannels' => null,
+                    'featuresRemarks' => null,
+                    'threatsNaturalDunes' => null,
+                    'threatsLooting' => null,
+                    'threatsCultivationTrenches' => null,
+                    'threatsModernStructures' => null,
+                    'threatsModernCanals' => null,
+                    'geom' => null,
+                ],
             ],
             [
                 [
@@ -69,7 +95,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'compilationDate' => '2018-11-28',
-                    'ancientName' => '?Ancient Name'
+                    'ancientName' => '?Ancient Name',
                 ],
                 [
                     'id' => 1,
@@ -82,23 +108,37 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'sbahNo' => null,
                     'cadastre' => null,
                     'remarks' => null,
-                    'credits' => null
-                ]
-            ]
+                    'credits' => null,
+                    'errors' => [],
+                    'siteChronology' => null,
+                    'district' => null,
+                    'featuresEpigraphic' => null,
+                    'featuresAncientStructures' => null,
+                    'featuresPaleochannels' => null,
+                    'featuresRemarks' => null,
+                    'threatsNaturalDunes' => null,
+                    'threatsLooting' => null,
+                    'threatsCultivationTrenches' => null,
+                    'threatsModernStructures' => null,
+                    'threatsModernCanals' => null,
+                    'geom' => null,
+                ],
+            ],
         ];
     }
 
     /**
      * @dataProvider tmpEntitiesDataProvider
+     *
      * @param array $draft
      * @param array $expected
      */
     public function testMethodNormalizeWillReturnExpectedValue(array $draft, array $expected)
     {
         $contribute = [
-           'id' => (int) mt_rand(0, 100),
-           'email' => 'mail@example.com',
-           'sha1' => sha1(microtime())
+            'id' => (int) mt_rand(0, 100),
+            'email' => 'mail@example.com',
+            'sha1' => sha1(microtime()),
         ];
         $normalizer = new TmpDraftEntityNormalizer();
         $serializer = new Serializer([$normalizer, new GetSetMethodNormalizer()]);

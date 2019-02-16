@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 30/01/19
- * Time: 22.33
+ * Time: 22.33.
  */
 
 namespace App\Tests\Functional\Runner\Task\Spreadsheet;
@@ -75,7 +75,7 @@ class ImportPublishedSitesSpreadsheetToTmpTableTaskTest extends AbstractPgTestIs
 
     protected function setUpAssets()
     {
-        $this->copyAssetToTempDir("tdd/spreadsheet/".$this->spreadsheetFileName, $this->spreadsheetFileName);
+        $this->copyAssetToTempDir('tdd/spreadsheet/'.$this->spreadsheetFileName, $this->spreadsheetFileName);
     }
 
     protected function callTaskSetters()

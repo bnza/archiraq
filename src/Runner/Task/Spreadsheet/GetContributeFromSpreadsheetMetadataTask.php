@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 01/02/19
- * Time: 11.45
+ * Time: 11.45.
  */
 
 namespace App\Runner\Task\Spreadsheet;
@@ -49,6 +49,7 @@ class GetContributeFromSpreadsheetMetadataTask extends AbstractTask
         if (!$this->contribute) {
             $this->contribute = $this->extractFromSpreadsheet();
         }
+
         return $this->contribute;
     }
 
@@ -60,7 +61,7 @@ class GetContributeFromSpreadsheetMetadataTask extends AbstractTask
             'sha1' => $this->getJob()->getId(),
             'title' => $props->getTitle() ?: null,
             'subject' => $props->getSubject() ?: null,
-            'keywords' => $props->getKeywords()
+            'keywords' => $props->getKeywords(),
         ];
 
         $descriptionValues = $this->parseDescription($props->getDescription());
@@ -79,6 +80,7 @@ class GetContributeFromSpreadsheetMetadataTask extends AbstractTask
                 $contribute->$method($value);
             }
         }
+
         return $contribute;
     }
 
@@ -97,7 +99,7 @@ class GetContributeFromSpreadsheetMetadataTask extends AbstractTask
             }
         }
         $values['description'] = \trim($description);
+
         return $values;
     }
 }
-

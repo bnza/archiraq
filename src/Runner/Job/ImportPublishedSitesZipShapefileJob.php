@@ -2,7 +2,6 @@
 
 namespace App\Runner\Job;
 
-
 use App\Entity\ContributeEntity;
 use App\Runner\Task\Database\PersistContributeTask;
 use App\Runner\Task\Database\Raw\CompareShpAndSpreadsheetsEntriesTask;
@@ -33,7 +32,7 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
         return 'Importing published sites zip file into db';
     }
 
-    public function getSourceZipShapefilePath(bool $throw = true):string
+    public function getSourceZipShapefilePath(bool $throw = true): string
     {
         return $this->getParameter(self::KEY_ZIP_PATH_SOURCE, $throw);
     }
@@ -43,7 +42,7 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
         return $this->getParameters()->set(self::KEY_ZIP_PATH_SOURCE, $path);
     }
 
-    public function getTargetZipShapefilePath(bool $throw = true):string
+    public function getTargetZipShapefilePath(bool $throw = true): string
     {
         return $this->getWorkDir().DIRECTORY_SEPARATOR.basename($this->getParameter(self::KEY_ZIP_PATH_SOURCE, $throw));
     }
@@ -56,14 +55,15 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
     public function getShapefileName()
     {
         if (!$this->getParameters()->has(self::KEY_ZIP_NAME)) {
-            foreach (new \DirectoryIterator($this->getWorkDir()) as $item ) {
+            foreach (new \DirectoryIterator($this->getWorkDir()) as $item) {
                 if ($item->isFile()) {
-                    if ($item->getExtension() === 'shp') {
+                    if ('shp' === $item->getExtension()) {
                         $this->getParameters()->set(self::KEY_ZIP_NAME, $item->getBasename('.shp'));
                     }
                 }
             }
         }
+
         return $this->getParameter(self::KEY_ZIP_NAME);
     }
 
@@ -72,10 +72,10 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
         if (!$this->getParameters()->has(self::KEY_XLS_PATH)) {
             $name = $this->getShapefileName();
             $path = '';
-            foreach (new \DirectoryIterator($this->getWorkDir()) as $item ) {
+            foreach (new \DirectoryIterator($this->getWorkDir()) as $item) {
                 if ($item->isFile()) {
                     if (
-                        \in_array($item->getExtension(), ['xls','xlsx','ods'])
+                        \in_array($item->getExtension(), ['xls', 'xlsx', 'ods'])
                         && $item->getBasename(".{$item->getExtension()}") === $name
                     ) {
                         $path = $this->getWorkDir().DIRECTORY_SEPARATOR.$item->getBasename();
@@ -88,6 +88,7 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
                 throw new \RuntimeException("No spreadsheets named $name.[xls|xlsx|ods|csv] found");
             }
         }
+
         return $this->getParameter(self::KEY_XLS_PATH);
     }
 
@@ -119,21 +120,21 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
                 'condition' => 'hasContribute',
                 'parameters' => [
                     ['setContribute', 'getContribute'],
-                    ['setEntityManager', 'getEntityManager']
+                    ['setEntityManager', 'getEntityManager'],
                 ],
             ],
             [
                 'class' => RenameTask::class,
                 'arguments' => [
                     [$this, 'getSourceZipShapefilePath'],
-                    [$this, 'getWorkDir']
+                    [$this, 'getWorkDir'],
                 ],
             ],
             [
                 'class' => ZipExtractToTask::class,
                 'arguments' => [
                     [$this, 'getTargetZipShapefilePath'],
-                    [$this, 'getWorkDir']
+                    [$this, 'getWorkDir'],
                 ],
             ],
             [
@@ -141,43 +142,43 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
                 'condition' => 'hasContribute',
                 'negateCondition' => true,
                 'parameters' => [
-                    ['setSpreadSheetPath', 'getSpreadSheetPath']
+                    ['setSpreadSheetPath', 'getSpreadSheetPath'],
                 ],
                 'setters' => [
-                    ['setContribute', 'getContribute']
-                ]
+                    ['setContribute', 'getContribute'],
+                ],
             ],
             [
                 'class' => PersistContributeTask::class,
                 'parameters' => [
                     ['setContribute', 'getContribute'],
-                    ['setEntityManager', 'getEntityManager']
+                    ['setEntityManager', 'getEntityManager'],
                 ],
             ],
             [
                 'class' => ImportShpToTmpTableTask::class,
                 'parameters' => [
                     ['setSource', 'getShapefilePath'],
-                    ['setEntityManager', 'getEntityManager']
+                    ['setEntityManager', 'getEntityManager'],
                 ],
             ],
             [
                 'class' => ImportPublishedSitesSpreadsheetToTmpTableTask::class,
                 'parameters' => [
                     ['setSpreadSheetPath', 'getSpreadSheetPath'],
-                    ['setEntityManager', 'getEntityManager']
+                    ['setEntityManager', 'getEntityManager'],
                 ],
             ],
             [
                 'class' => CompareShpAndSpreadsheetsEntriesTask::class,
                 'parameters' => [
-                    ['setEntityManager', 'getEntityManager']
+                    ['setEntityManager', 'getEntityManager'],
                 ],
             ],
             [
                 'class' => InsertDraftAndShpIntoTmpDraftTask::class,
                 'parameters' => [
-                    ['setEntityManager', 'getEntityManager']
+                    ['setEntityManager', 'getEntityManager'],
                 ],
             ],
         ];

@@ -3,28 +3,20 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 05/02/19
- * Time: 14.50
+ * Time: 14.50.
  */
 
 namespace App\Runner\Task\Database;
 
-
-use App\Entity\SiteEntity;
 use App\Entity\TmpDraftEntity;
 use App\Runner\Task\TaskEntityManagerTrait;
 use App\Serializer\TmpDraftToSiteConverter;
 use Bnza\JobManagerBundle\Runner\Task\AbstractTask;
 use App\Entity\ContributeEntity;
 
-
 class PersistSitesFromTmpDraftsTask extends AbstractTask
 {
     use TaskEntityManagerTrait;
-
-    /**
-     * @var SiteEntity[]
-     */
-    protected $sites = [];
 
     /**
      * @var ContributeEntity
@@ -36,21 +28,33 @@ class PersistSitesFromTmpDraftsTask extends AbstractTask
      */
     protected $converter;
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName(): string
     {
         return 'app:task:db:persist-tmp-drafts';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultDescription(): string
     {
         return 'Persisting temporary draft entities ("tmp""draft") to DB';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function executeStep(array $arguments): void
     {
         $this->persistSite(...$arguments);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSteps(): iterable
     {
         $contribute = $this->getContribute();
@@ -65,14 +69,22 @@ class PersistSitesFromTmpDraftsTask extends AbstractTask
         return $generator();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function terminate(): void
     {
-        $this->getEntityManager()->flush($this->sites);
+        $this->getEntityManager()->flush();
     }
 
+    /**
+     * Converts TmpDraftEntity in SiteBoundaryEntity and persists it.
+     *
+     * @param TmpDraftEntity $draft
+     */
     protected function persistSite(TmpDraftEntity $draft)
     {
-        $this->sites[] = $site = $this->getConverter()->convert($draft);
+        $site = $this->getConverter()->convert($draft);
         $this->getEntityManager()->persist($site);
     }
 
@@ -92,11 +104,15 @@ class PersistSitesFromTmpDraftsTask extends AbstractTask
         $this->contribute = $contribute;
     }
 
+    /**
+     * @return TmpDraftToSiteConverter
+     */
     protected function getConverter(): TmpDraftToSiteConverter
     {
         if (!$this->converter) {
-            $this->converter = new TmpDraftToSiteConverter();
+            $this->converter = new TmpDraftToSiteConverter($this->getEntityManager());
         }
+
         return $this->converter;
     }
 }

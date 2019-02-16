@@ -33,7 +33,8 @@ trait AbstractJobTrait
      * [
      *  [0] => (int) The upper step limit,
      *  [1] => (string) The assertion method to call after running
-     * ]
+     * ].
+     *
      * @return array
      */
     abstract public function stepsDataAssertionsProvider(): array;
@@ -50,16 +51,19 @@ trait AbstractJobTrait
     abstract protected function callJobSetters();
 
     /**
-     * Test the job's steps up to the given limit and test the final status
+     * Test the job's steps up to the given limit and test the final status.
+     *
      * @dataProvider stepsDataAssertionsProvider
-     * @param int $limit
+     *
+     * @param int    $limit
      * @param string $assertions
      */
     abstract public function testJobSteps(int $limit, string $assertions);
 
     /**
-     * Test the job's steps up to the given limit and test the final status
-     * @param int $limit
+     * Test the job's steps up to the given limit and test the final status.
+     *
+     * @param int    $limit
      * @param string $assertions
      */
     public function executeTestSteps(int $limit, string $assertions)
@@ -82,7 +86,6 @@ trait AbstractJobTrait
         $this->dispatcher = new EventDispatcher();
         $this->job = $this->getMockWithMockedMethods($className, ['getSteps']);
 
-
         $steps = $this->getJobSteps($className, $this->job, $limit);
         $this->getJob()->method('getSteps')->willReturn($steps);
 
@@ -90,5 +93,4 @@ trait AbstractJobTrait
         $args = \array_merge($defaultConstructorArgs, $constructorArgs);
         $this->invokeConstructor($className, $this->job, $args);
     }
-
 }

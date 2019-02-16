@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 05/02/19
- * Time: 17.12
+ * Time: 17.12.
  */
 
 namespace App\Tests\Functional\Runner\Task\Database;
-
 
 use App\Entity\ContributeEntity;
 use App\Runner\Task\Database\PersistSitesFromTmpDraftsTask;
@@ -53,6 +52,7 @@ class PersistSitesFromTmpDraftsTaskTest extends AbstractPgTestIsolation
 
     public function testMethodRunWillPersistSiteEntity()
     {
+        $this->executeSqlAssetFile('tdd/sql/test/persist_tmp_drafts_task/admbnd.sql');
         $this->executeSqlAssetFile('tdd/sql/test/persist_tmp_drafts_task/fixtures.sql');
         $this->contribute = $this->getEntityManager()->getRepository(ContributeEntity::class)->find(1);
         $this->runTask();
@@ -74,7 +74,6 @@ class PersistSitesFromTmpDraftsTaskTest extends AbstractPgTestIsolation
 
     protected function setUpAssets()
     {
-
     }
 
     protected function callTaskSetters()

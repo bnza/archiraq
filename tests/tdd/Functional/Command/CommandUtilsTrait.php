@@ -25,10 +25,9 @@ trait CommandUtilsTrait
      */
     protected $command;
 
+    abstract public function getBaseOmDir(): string;
 
-    abstract function getBaseOmDir(): string;
-
-    abstract function setCommandParameters(Command $command): void;
+    abstract public function setCommandParameters(Command $command): void;
 
     protected function executeCommandTester(string $name, array $input = [], array $options = []): CommandTester
     {

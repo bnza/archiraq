@@ -7,7 +7,6 @@ use App\Tests\Functional\AbstractPgTestIsolation;
 use App\Tests\Functional\Runner\Task\AbstractMockTrait;
 use App\Entity\ContributeEntity;
 
-
 class PersistContributeTaskTest extends AbstractPgTestIsolation
 {
     use AbstractMockTrait;
@@ -56,7 +55,7 @@ class PersistContributeTaskTest extends AbstractPgTestIsolation
         $this->runTask();
         $count = $this->getEntityManager()->getRepository(ContributeEntity::class)->count([]);
         $this->assertEquals(1, $count);
-        $count = $this->getEntityManager()->getRepository(ContributeEntity::class)->count(['sha1'=>$sha1]);
+        $count = $this->getEntityManager()->getRepository(ContributeEntity::class)->count(['sha1' => $sha1]);
         $this->assertEquals(1, $count);
     }
 
@@ -75,7 +74,6 @@ class PersistContributeTaskTest extends AbstractPgTestIsolation
 
     protected function setUpAssets()
     {
-
     }
 
     protected function callTaskSetters()

@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 01/02/19
- * Time: 11.51
+ * Time: 11.51.
  */
 
 namespace App\Runner\Task\Spreadsheet;
@@ -41,6 +41,7 @@ trait SpreadsheetInteractionTrait
     {
         $inputFileType = IOFactory::identify($this->getSpreadsheetPath());
         $reader = IOFactory::createReader($inputFileType);
+
         return $reader->load($this->getSpreadsheetPath());
     }
 
@@ -53,12 +54,14 @@ trait SpreadsheetInteractionTrait
             $reader->setReadFilter($filter);
         }
         $spreadsheet = $reader->load($this->getSpreadsheetPath());
+
         return $spreadsheet->getActiveSheet();
     }
 
     protected function getSpreadsheetProperties(): Properties
     {
         $spreadsheet = $this->loadSpreadSheet();
+
         return $spreadsheet->getProperties();
     }
 }

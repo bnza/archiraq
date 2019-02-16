@@ -75,7 +75,6 @@ trait AbstractMockTrait
         $this->callTaskSetters();
     }
 
-
     protected function runTask(array $constructorArgs = [], array $mockedMethods = [])
     {
         $this->setUpTask($constructorArgs, $mockedMethods);

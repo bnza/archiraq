@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
+use App\Validator\Constraints as AppAssert;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TmpDraftRepository")
@@ -16,6 +17,7 @@ class TmpDraftEntity implements EntityInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="SEQUENCE")
      * @ORM\SequenceGenerator(sequenceName="tmp.seq___draft__id")
+     *
      * @var int
      */
     private $id;
@@ -26,6 +28,12 @@ class TmpDraftEntity implements EntityInterface
      * @ORM\JoinColumn(name="contribute_id", referencedColumnName="id", nullable=false, onDelete="NO ACTION")
      */
     private $contribute;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="TmpDraftErrorEntity", mappedBy="draft", cascade={"persist", "remove"})
+     */
+    private $errors;
 
     /**
      * @var string
@@ -60,6 +68,74 @@ class TmpDraftEntity implements EntityInterface
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @AppAssert\ContainsValidChronologyCodes
+     */
+    private $site_chronology;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     * @AppAssert\ContainsValidDistrictName
+     */
+    private $district;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $features_epigraphic;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $features_ancient_structures;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $features_paleochannels;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $features_remarks;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $threats_natural_dunes;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $threats_looting;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $threats_cultivation_trenches;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $threats_modern_structures;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $threats_modern_canals;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
      */
     private $compiler;
 
@@ -80,6 +156,19 @@ class TmpDraftEntity implements EntityInterface
      * @ORM\Column(type="string")
      */
     private $credits;
+
+    /**
+     * @var string
+     * @AppAssert\Geom\IsMultipolygon
+     * @AppAssert\Geom\IsWgs84
+     * @ORM\Column(type="geometry")
+     */
+    private $geom;
+
+    public function __construct()
+    {
+        $this->errors = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -111,6 +200,23 @@ class TmpDraftEntity implements EntityInterface
     public function setContribute(ContributeEntity $contribute): void
     {
         $this->contribute = $contribute;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getErrors(): iterable
+    {
+        return $this->errors;
+    }
+
+    /**
+     * @param TmpDraftErrorEntity $error
+     */
+    public function addError(TmpDraftErrorEntity $error): void
+    {
+        $this->errors[] = $error;
+        $error->setDraft($this);
     }
 
     /**
@@ -196,6 +302,206 @@ class TmpDraftEntity implements EntityInterface
     /**
      * @return string
      */
+    public function getSiteChronology(): ?string
+    {
+        return $this->site_chronology;
+    }
+
+    /**
+     * @param string $site_chronology
+     *
+     * @return TmpDraftEntity
+     */
+    public function setSiteChronology(string $site_chronology): TmpDraftEntity
+    {
+        $this->site_chronology = $site_chronology;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDistrict(): ?string
+    {
+        return $this->district;
+    }
+
+    /**
+     * @param string $district
+     *
+     * @return TmpDraftEntity
+     */
+    public function setDistrict(string $district): TmpDraftEntity
+    {
+        $this->district = $district;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeaturesEpigraphic(): ?string
+    {
+        return $this->features_epigraphic;
+    }
+
+    /**
+     * @param string $features_epigraphic
+     *
+     * @return TmpDraftEntity
+     */
+    public function setFeaturesEpigraphic(string $features_epigraphic): TmpDraftEntity
+    {
+        $this->features_epigraphic = $features_epigraphic;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeaturesAncientStructures(): ?string
+    {
+        return $this->features_ancient_structures;
+    }
+
+    /**
+     * @param string $features_ancient_structures
+     *
+     * @return TmpDraftEntity
+     */
+    public function setFeaturesAncientStructures(string $features_ancient_structures): TmpDraftEntity
+    {
+        $this->features_ancient_structures = $features_ancient_structures;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeaturesPaleochannels(): ?string
+    {
+        return $this->features_paleochannels;
+    }
+
+    /**
+     * @param string $features_paleochannels
+     *
+     * @return TmpDraftEntity
+     */
+    public function setFeaturesPaleochannels(string $features_paleochannels): TmpDraftEntity
+    {
+        $this->features_paleochannels = $features_paleochannels;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeaturesRemarks(): ?string
+    {
+        return $this->features_remarks;
+    }
+
+    /**
+     * @param string $features_remarks
+     *
+     * @return TmpDraftEntity
+     */
+    public function setFeaturesRemarks(string $features_remarks): TmpDraftEntity
+    {
+        $this->features_remarks = $features_remarks;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThreatsNaturalDunes(): ?string
+    {
+        return $this->threats_natural_dunes;
+    }
+
+    /**
+     * @param string $threats_natural_dunes
+     */
+    public function setThreatsNaturalDunes(string $threats_natural_dunes): void
+    {
+        $this->threats_natural_dunes = $threats_natural_dunes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThreatsLooting(): ?string
+    {
+        return $this->threats_looting;
+    }
+
+    /**
+     * @param string $threats_looting
+     */
+    public function setThreatsLooting(string $threats_looting): void
+    {
+        $this->threats_looting = $threats_looting;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThreatsCultivationTrenches(): ?string
+    {
+        return $this->threats_cultivation_trenches;
+    }
+
+    /**
+     * @param string $threats_cultivation_trenches
+     */
+    public function setThreatsCultivationTrenches(string $threats_cultivation_trenches): void
+    {
+        $this->threats_cultivation_trenches = $threats_cultivation_trenches;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThreatsModernStructures(): ?string
+    {
+        return $this->threats_modern_structures;
+    }
+
+    /**
+     * @param string $threats_modern_structures
+     */
+    public function setThreatsModernStructures(string $threats_modern_structures): void
+    {
+        $this->threats_modern_structures = $threats_modern_structures;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThreatsModernCanals(): ?string
+    {
+        return $this->threats_modern_canals;
+    }
+
+    /**
+     * @param string $threats_modern_canals
+     */
+    public function setThreatsModernCanals(string $threats_modern_canals): void
+    {
+        $this->threats_modern_canals = $threats_modern_canals;
+    }
+
+    /**
+     * @return string
+     */
     public function getCompiler(): ?string
     {
         return $this->compiler;
@@ -257,4 +563,23 @@ class TmpDraftEntity implements EntityInterface
         $this->credits = $credits;
     }
 
+    /**
+     * @return string
+     */
+    public function getGeom(): ?string
+    {
+        return $this->geom;
+    }
+
+    /**
+     * @param string $geom
+     *
+     * @return TmpDraftEntity
+     */
+    public function setGeom(string $geom): TmpDraftEntity
+    {
+        $this->geom = $geom;
+
+        return $this;
+    }
 }

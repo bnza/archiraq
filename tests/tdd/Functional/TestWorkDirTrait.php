@@ -31,22 +31,25 @@ trait TestWorkDirTrait
         if (!$this->fs) {
             $this->fs = new Filesystem();
         }
+
         return $this->fs;
     }
 
     protected function getTestDir(): string
     {
         if (!$this->baseTestDir) {
-            $this->baseTestDir = \sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'bnza' . DIRECTORY_SEPARATOR . 'test';
+            $this->baseTestDir = \sys_get_temp_dir().DIRECTORY_SEPARATOR.'bnza'.DIRECTORY_SEPARATOR.'test';
         }
+
         return $this->baseTestDir;
     }
 
     protected function getBaseWorkDir(): string
     {
         if (!$this->baseTestWorkDir) {
-            $this->baseTestWorkDir = $this->getTestDir() . DIRECTORY_SEPARATOR . 'works';
+            $this->baseTestWorkDir = $this->getTestDir().DIRECTORY_SEPARATOR.'works';
         }
+
         return $this->baseTestWorkDir;
     }
 
@@ -58,8 +61,9 @@ trait TestWorkDirTrait
     protected function getBaseOmDir(): string
     {
         if (!$this->baseTestOmDir) {
-            $this->baseTestOmDir = $this->getTestDir() . DIRECTORY_SEPARATOR . 'om';
+            $this->baseTestOmDir = $this->getTestDir().DIRECTORY_SEPARATOR.'om';
         }
+
         return $this->baseTestOmDir;
     }
 
@@ -79,13 +83,11 @@ trait TestWorkDirTrait
 
     protected function setUpWorkDir(string $id)
     {
-
         \mkdir($this->getBaseWorkDir().DIRECTORY_SEPARATOR.$id, 0700, true);
     }
 
     protected function setUpOmJobDir(string $id)
     {
-
         \mkdir($this->getBaseOmDir().DIRECTORY_SEPARATOR.$id, 0700, true);
     }
 
@@ -101,12 +103,14 @@ trait TestWorkDirTrait
     protected function countFiles(string $dir): int
     {
         $i = new \FilesystemIterator($dir, \FilesystemIterator::SKIP_DOTS);
+
         return \iterator_count($i);
     }
 
     /**
-     * @param string $origin path is relative to tests/assets/
+     * @param string $origin      path is relative to tests/assets/
      * @param string $destination path is relative to $TMPDIR/bnza/test
+     *
      * @return string
      */
     protected function copyAssetToTempDir(string $origin, string $destination): string
@@ -119,6 +123,7 @@ trait TestWorkDirTrait
         $origin = $this->getAssetsDir().DIRECTORY_SEPARATOR.$origin;
         $destination = $testDir.DIRECTORY_SEPARATOR.$destination;
         $this->getFilesystem()->copy($origin, $destination);
+
         return $destination;
     }
 
@@ -126,10 +131,12 @@ trait TestWorkDirTrait
     {
         $dir = __DIR__;
         $path = realpath($dir.'/../../assets/');
+
         return $path;
     }
 
-    protected function assertDirIsEmpty(string $dir) {
+    protected function assertDirIsEmpty(string $dir)
+    {
         $this->assertFileExists($dir);
         $this->assertTrue(\is_dir($dir), "\"$dir\" is a directory");
         $this->assertEquals(0, $this->countFiles($dir), "Directory \"$dir\" is empty");

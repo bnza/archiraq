@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2019
+ * Copyright (c) 2019.
  *
  * Author: Pietro Baldassarri
  *
@@ -51,38 +51,42 @@ trait MockUtilsTrait
 
     /**
      * @param $className
+     *
      * @return MockBuilder
      */
     abstract public function getMockBuilder($className);
 
     /**
      * @param $originalClassName
+     *
      * @return MockObject
      */
     abstract protected function createMock($originalClassName);
 
     /**
      * @param $originalClassName
-     * @param array $arguments
+     * @param array  $arguments
      * @param string $mockClassName
-     * @param bool $callOriginalConstructor
-     * @param bool $callOriginalClone
-     * @param bool $callAutoload
-     * @param array $mockedMethods
-     * @param bool $cloneArguments
+     * @param bool   $callOriginalConstructor
+     * @param bool   $callOriginalClone
+     * @param bool   $callAutoload
+     * @param array  $mockedMethods
+     * @param bool   $cloneArguments
+     *
      * @return MockObject
      */
     abstract protected function getMockForAbstractClass($originalClassName, array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = [], $cloneArguments = false);
 
     /**
      * @param $traitName
-     * @param array $arguments
+     * @param array  $arguments
      * @param string $mockClassName
-     * @param bool $callOriginalConstructor
-     * @param bool $callOriginalClone
-     * @param bool $callAutoload
-     * @param array $mockedMethods
-     * @param bool $cloneArguments
+     * @param bool   $callOriginalConstructor
+     * @param bool   $callOriginalClone
+     * @param bool   $callAutoload
+     * @param array  $mockedMethods
+     * @param bool   $cloneArguments
+     *
      * @return MockObject
      */
     abstract protected function getMockForTrait($traitName, array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = [], $cloneArguments = false);
@@ -95,9 +99,9 @@ trait MockUtilsTrait
         } else {
             if ($rc->isInterface()) {
                 return 'interface';
-            } else if ($rc->isAbstract()) {
+            } elseif ($rc->isAbstract()) {
                 return 'abstract';
-            } else if ($rc->isTrait()) {
+            } elseif ($rc->isTrait()) {
                 return 'trait';
             }
         }
@@ -144,30 +148,31 @@ trait MockUtilsTrait
     {
         $type = $this->getClassType($className);
 
-        if ($type === 'interface') {
+        if ('interface' === $type) {
             $mock = $this->createMock($className);
-        } elseif ($type === 'class') {
+        } elseif ('class' === $type) {
             $mock = $this->getMockWithMockedMethods($className, $methods);
-        } elseif ($type === 'abstract') {
+        } elseif ('abstract' === $type) {
             $mock = $this->getMockForAbstractClassWithMockedMethods($className, $methods);
-        } elseif ($type === 'trait') {
+        } elseif ('trait' === $type) {
             $mock = $this->getMockForAbstractClassWithMockedMethods($className, $methods);
         } else {
             throw new \InvalidArgumentException("Invalid class type: $type");
         }
+
         return $mock;
     }
 
     /**
      * @param string $className
-     * @param array $methods
+     * @param array  $methods
+     *
      * @return MockObject|\Bnza\JobManagerBundle\ObjectManager\ObjectManagerInterface
      */
     protected function getMockObjectManager(
         $className = \Bnza\JobManagerBundle\ObjectManager\ObjectManagerInterface::class,
         $methods = []
-    ): MockObject
-    {
+    ): MockObject {
         $this->mockOm = $this->getMockForTypeWithMethods($className, $methods);
 
         return $this->mockOm;
@@ -175,14 +180,14 @@ trait MockUtilsTrait
 
     /**
      * @param string $className
-     * @param array $methods
+     * @param array  $methods
+     *
      * @return MockObject|\Symfony\Component\EventDispatcher\EventDispatcher
      */
     protected function getMockDispatcher(
         $className = \Symfony\Component\EventDispatcher\EventDispatcher::class,
         $methods = []
-    ): MockObject
-    {
+    ): MockObject {
         $this->mockDispatcher = $this->getMockForTypeWithMethods($className, $methods);
 
         return $this->mockDispatcher;
@@ -190,38 +195,41 @@ trait MockUtilsTrait
 
     /**
      * @param string $className
-     * @param array $methods
+     * @param array  $methods
+     *
      * @return MockObject|\Bnza\JobManagerBundle\Runner\Job\JobInterface
      */
     protected function getMockJob(
         $className = \Bnza\JobManagerBundle\Runner\Job\JobInterface::class,
         $methods = []
-    ): MockObject
-    {
+    ): MockObject {
         $this->mockJob = $this->getMockForTypeWithMethods($className, $methods);
+
         return $this->mockJob;
     }
 
     /**
      * @param string $className
-     * @param array $methods
-     * @param int $index
+     * @param array  $methods
+     * @param int    $index
+     *
      * @return MockObject|\Bnza\JobManagerBundle\Runner\Task\TaskInterface
      */
     protected function getMockTask(
         $className = \Bnza\JobManagerBundle\Runner\Task\TaskInterface::class,
         $methods = [],
         $index = 0
-    ): MockObject
-    {
+    ): MockObject {
         $mock = $this->mockTasks[$index] = $this->getMockForTypeWithMethods($className, $methods);
+
         return $mock;
     }
 
     /**
      * @param string $className
-     * @param array $methods
-     * @param int $index
+     * @param array  $methods
+     * @param int    $index
+     *
      * @return MockObject|\Bnza\JobManagerBundle\Runner\Task\TaskInterface
      */
     protected function getMockTaskWithMockedJob(
@@ -229,64 +237,67 @@ trait MockUtilsTrait
         $methods = [],
         $index = 0,
         \Bnza\JobManagerBundle\Runner\Job\JobInterface $mockJob = null
-    ): MockObject
-    {
+    ): MockObject {
         $methods = \array_merge(['getJob'], $methods);
-        $mock = $this->getMockTask($className,$methods,$index);
+        $mock = $this->getMockTask($className, $methods, $index);
         if (!$mockJob) {
             $id = sha1(microtime());
             $mockJob = $this->getMockJob(\Bnza\JobManagerBundle\Runner\Job\JobInterface::class);
             $mockJob->method('getId')->willReturn($id);
         }
         $mock->method('getJob')->willReturn($mockJob);
+
         return $mock;
     }
 
     /**
      * @param string $className
-     * @param array $methods
-     * @param int $index
+     * @param array  $methods
+     * @param int    $index
+     *
      * @return MockObject|\Bnza\JobManagerBundle\Entity\JobEntityInterface
      */
     protected function getMockJobEntity(
         $className = \Bnza\JobManagerBundle\Entity\JobEntityInterface::class,
         $methods = [],
         $index = 0
-    ): MockObject
-    {
+    ): MockObject {
         $mock = $this->mockJobEntity[$index] = $this->getMockForTypeWithMethods($className, $methods);
+
         return $mock;
     }
 
     /**
      * @param string $className
-     * @param array $methods
-     * @param int $index
+     * @param array  $methods
+     * @param int    $index
+     *
      * @return MockObject|\Bnza\JobManagerBundle\Entity\TaskEntityInterface
      */
     protected function getMockTaskEntity(
         $className = \Bnza\JobManagerBundle\Entity\TaskEntityInterface::class,
         $methods = [],
         $index = 0
-    ): MockObject
-    {
+    ): MockObject {
         $mock = $this->mockJobEntity[$index] = $this->getMockForTypeWithMethods($className, $methods);
+
         return $mock;
     }
 
     /**
      * @param string $className
-     * @param array $methods
-     * @param int $index
+     * @param array  $methods
+     * @param int    $index
+     *
      * @return MockObject|\Bnza\JobManagerBundle\Runner\Status
      */
     protected function getMockStatus(
         $className = \Bnza\JobManagerBundle\Runner\Status::class,
         $methods = [],
         $index = 0
-    ): MockObject
-    {
+    ): MockObject {
         $mock = $this->mockStatus[$index] = $this->getMockForTypeWithMethods($className, $methods);
+
         return $mock;
     }
 
@@ -297,7 +308,7 @@ trait MockUtilsTrait
         $constructor->invokeArgs($object, $arguments);
     }
 
-    public function getMockTaskAndInvokeConstructor(string $class, array $specificArgs = [], array $baseArgs = [],  array $methods = [], int $index = 0): MockObject
+    public function getMockTaskAndInvokeConstructor(string $class, array $specificArgs = [], array $baseArgs = [], array $methods = [], int $index = 0): MockObject
     {
         $mockTask = $this->getMockTask($class, $methods, $index);
 
@@ -312,13 +323,16 @@ trait MockUtilsTrait
         }
 
         $this->invokeConstructor($class, $mockTask, \array_merge($baseArgs, $specificArgs));
+
         return $mockTask;
     }
 
     /**
      * Replaces string placeholder (e.g. '**mockJob**' or '**mockTask[0]**') with the corresponding mocked object
-     * stored as object property (e.g. $this->mockObject or $this->mockTask[0])
+     * stored as object property (e.g. $this->mockObject or $this->mockTask[0]).
+     *
      * @param array $data
+     *
      * @return array
      */
     protected function replacePlaceholderWithMockedObject(array $data): array
@@ -339,6 +353,7 @@ trait MockUtilsTrait
                 }
             }
         }
+
         return $data;
     }
 
@@ -373,5 +388,4 @@ trait MockUtilsTrait
 
         return $method;
     }
-
 }

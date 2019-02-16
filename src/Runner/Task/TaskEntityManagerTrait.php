@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 30/01/19
- * Time: 19.43
+ * Time: 19.43.
  */
 
 namespace App\Runner\Task;
@@ -25,8 +25,9 @@ trait TaskEntityManagerTrait
     public function getEntityManager(): EntityManagerInterface
     {
         if (!$this->em) {
-            throw new \LogicException("You must set EntityManager before trying to get it");
+            throw new \LogicException('You must set EntityManager before trying to get it');
         }
+
         return $this->em;
     }
 
@@ -40,7 +41,8 @@ trait TaskEntityManagerTrait
 
     protected function getDateStyle()
     {
-        $sql = "SHOW DATESTYLE;";
+        $sql = 'SHOW DATESTYLE;';
+
         return $this->getEntityManager()->getConnection()->query($sql)->fetchColumn();
     }
 }

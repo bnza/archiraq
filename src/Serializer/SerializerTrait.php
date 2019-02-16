@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 11/02/19
- * Time: 10.57
+ * Time: 10.57.
  */
 
 namespace App\Serializer;
@@ -33,7 +33,6 @@ trait SerializerTrait
 
     abstract protected function initSerializer(): Serializer;
 
-
     /**
      * @return DenormalizerInterface
      */
@@ -43,6 +42,7 @@ trait SerializerTrait
             $this->denormalizer = $this->initDenormalizer();
             $this->getSerializer();
         }
+
         return $this->denormalizer;
     }
 
@@ -55,6 +55,7 @@ trait SerializerTrait
             $this->normalizer = $this->initNormalizer();
             $this->getSerializer();
         }
+
         return $this->normalizer;
     }
 
@@ -66,13 +67,15 @@ trait SerializerTrait
         if (!$this->serializer) {
             $this->serializer = $this->initSerializer();
         }
+
         return $this->serializer;
     }
 
     /**
      * @param EntityInterface $object
-     * @param string|null $format
-     * @param array $context
+     * @param string|null     $format
+     * @param array           $context
+     *
      * @return mixed
      */
     public function circularReferenceHandler(EntityInterface $object, string $format = null, array $context = [])

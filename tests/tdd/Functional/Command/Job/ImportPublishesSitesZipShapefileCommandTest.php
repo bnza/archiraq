@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 02/02/19
- * Time: 20.46
+ * Time: 20.46.
  */
 
 namespace App\Tests\Functional\Command\Job;
-
 
 use App\Command\Job\ImportPublishesSitesZipShapefileCommand as SutCommand;
 use App\Tests\Functional\AbstractPgTestIsolation;
@@ -59,7 +58,7 @@ class ImportPublishesSitesZipShapefileCommandTest extends AbstractPgTestIsolatio
     public function testSuccessfulCommand()
     {
         $this->setUpAssets('tdd/shp/zip/simple.shp.zip');
-        $tester = $this->executeCommandTester(SutCommand::getDefaultName(),['path' => $this->zipPath]);
+        $tester = $this->executeCommandTester(SutCommand::getDefaultName(), ['path' => $this->zipPath]);
         $this->assertEquals(0, $tester->getStatusCode());
     }
 
@@ -70,13 +69,14 @@ class ImportPublishesSitesZipShapefileCommandTest extends AbstractPgTestIsolatio
     public function testEntryMismatchCommand()
     {
         $this->setUpAssets('tdd/shp/zip/entryMismatch.shp.zip');
-        $tester = $this->executeCommandTester(SutCommand::getDefaultName(),['path' => $this->zipPath]);
+        $tester = $this->executeCommandTester(SutCommand::getDefaultName(), ['path' => $this->zipPath]);
     }
 
     public function setCommandParameters(Command $command)
     {
         $command->setWorkDir($this->getBaseWorkDir());
     }
+
     /**
      * @param string $zipPath The zipPath relative to tests/assets dir
      */
@@ -86,6 +86,4 @@ class ImportPublishesSitesZipShapefileCommandTest extends AbstractPgTestIsolatio
         $this->zipPath = $this->copyAssetToTempDir($zipPath, 'site.zip');
         $this->assertFileExists($this->zipPath);
     }
-
-
 }

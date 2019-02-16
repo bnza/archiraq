@@ -2,7 +2,6 @@
 
 namespace App\Runner\Task\Database\Raw;
 
-
 use App\Runner\Task\TaskEntityManagerTrait;
 use Bnza\JobManagerBundle\Exception\JobManagerNonCriticalErrorException;
 use Bnza\JobManagerBundle\Runner\Task\AbstractTask;
@@ -11,10 +10,9 @@ use Bnza\JobManagerBundle\Event\SummaryEntryEvent;
 
 /**
  * Compares "id" field values in "tmp"."shp2pgsql[job_id]" and "entry" field values "draft[job_id]" in order to
- * find id field's mismatch. Such tables will be joined and join key fields MUST match
+ * find id field's mismatch. Such tables will be joined and join key fields MUST match.
  *
  * Class CompareShpAndSpreadsheetsEntriesTask
- * @package App\Runner\Task\Database
  */
 class CompareShpAndSpreadsheetsEntriesTask extends AbstractTask
 {
@@ -23,7 +21,6 @@ class CompareShpAndSpreadsheetsEntriesTask extends AbstractTask
     private $shapefileDiff;
 
     private $spreadsheetDiff;
-
 
     public function getName(): string
     {
@@ -45,13 +42,14 @@ class CompareShpAndSpreadsheetsEntriesTask extends AbstractTask
     {
         return [
             ['getShapefileDifference'],
-            ['getSpreadsheetDifference']
+            ['getSpreadsheetDifference'],
         ];
     }
 
     /**
      * Returns an array consisting in all the "id" values in "tmp"."shp2pgsql[job_id]" table temporary table BUT NOT
-     * in "entry_id" values in "draft[job_id]"
+     * in "entry_id" values in "draft[job_id]".
+     *
      * @return array
      */
     public function getShapefileDifference(): array
@@ -69,12 +67,14 @@ EOT;
             }
             $this->shapefileDiff = $diff;
         }
+
         return $this->shapefileDiff;
     }
 
     /**
      * Returns an array consisting in all the "entry_id" values in "draft[job_id]" temporary table BUT NOT
-     * in "id" values in "tmp"."shp2pgsql[job_id]" table
+     * in "id" values in "tmp"."shp2pgsql[job_id]" table.
+     *
      * @return array
      */
     public function getSpreadsheetDifference(): array
@@ -93,6 +93,7 @@ EOT;
 
             $this->spreadsheetDiff = $diff;
         }
+
         return $this->spreadsheetDiff;
     }
 

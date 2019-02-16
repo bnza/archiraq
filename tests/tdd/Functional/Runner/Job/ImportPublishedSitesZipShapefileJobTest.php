@@ -8,7 +8,6 @@ use Bnza\JobManagerBundle\ObjectManager\TmpFS\ObjectManager;
 use App\Runner\Job\ImportPublishedSitesZipShapefileJob;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-
 class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
 {
     use AbstractJobTrait;
@@ -80,21 +79,23 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
             [4, 'assertContributeEntityIsPersistedToDb'],
             [5, 'assertShp2PgsqlTableHasBeenDropped'],
             [6, 'assertDraftTableHasBeenCreated'],
-            [8, 'assertDataAreBeenInsertInTmpDraftTable']
+            [8, 'assertDataAreBeenInsertInTmpDraftTable'],
         ];
     }
 
     /**
-     * Tests the job's steps up to the given limit and asserts the final status
+     * Tests the job's steps up to the given limit and asserts the final status.
+     *
      * @dataProvider stepsDataAssertionsProvider
-     * @param int $limit
+     *
+     * @param int    $limit
      * @param string $assertions
      */
     public function testJobSteps(int $limit, string $assertions)
     {
-/*        $this->contribute = new ContributeEntity();
-        $this->contribute->setSha1(sha1(microtime()));
-        $this->contribute->setEmail('mail@example.com');*/
+        /*        $this->contribute = new ContributeEntity();
+                $this->contribute->setSha1(sha1(microtime()));
+                $this->contribute->setEmail('mail@example.com');*/
         $this->executeTestSteps($limit, $assertions);
     }
 
@@ -129,7 +130,7 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
     protected function assertContributeEntityIsPersistedToDb()
     {
         $this->assertTableRowsNum(1, 'contribute');
-        $count = $this->getEntityManager()->getRepository(ContributeEntity::class)->count(['sha1'=>$this->getJob()->getId()]);
+        $count = $this->getEntityManager()->getRepository(ContributeEntity::class)->count(['sha1' => $this->getJob()->getId()]);
         $this->assertEquals(1, $count);
     }
 
@@ -141,7 +142,7 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
     protected function assertZipShapefileIsCopiedToWorkDir()
     {
         $this->assertFileExists(
-            $this->getWorkDir($this->getJob()->getId()) . DIRECTORY_SEPARATOR . 'site.zip',
+            $this->getWorkDir($this->getJob()->getId()).DIRECTORY_SEPARATOR.'site.zip',
             'Zip shapefile is copied to job work dir'
         );
     }
@@ -149,7 +150,7 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
     protected function assertZipShapefileIsExpandedInWorkDir()
     {
         $this->assertFileExists(
-            $this->getWorkDir($this->getJob()->getId()) . DIRECTORY_SEPARATOR . 'simple.shp',
+            $this->getWorkDir($this->getJob()->getId()).DIRECTORY_SEPARATOR.'simple.shp',
             'Zip shapefile is expanded in job work dir'
         );
     }
@@ -157,7 +158,7 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
     protected function assertShp2PgsqlTableHasBeenDropped()
     {
         $id = $this->getJob()->getId();
-        $this->assertTableNotExists("shp2pgsql$id", "tmp");
+        $this->assertTableNotExists("shp2pgsql$id", 'tmp');
     }
 
     protected function assertDraftTableHasBeenCreated()
@@ -170,5 +171,4 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
     {
         $this->assertTableRowsNum(1, 'draft', 'tmp');
     }
-
 }

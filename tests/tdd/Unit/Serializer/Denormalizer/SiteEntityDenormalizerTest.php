@@ -2,7 +2,6 @@
 
 namespace App\Tests\Unit\Serializer\Denormalizer;
 
-
 use App\Entity\ContributeEntity;
 use App\Entity\SiteEntity;
 use App\Serializer\Denormalizer\SiteEntityDenormalizer;
@@ -14,38 +13,58 @@ class SiteEntityDenormalizerTest extends \PHPUnit\Framework\TestCase
     public function siteEntityDataProvider()
     {
         return [
-          [
-              [
-                  'id' => 1,
-                  'entryId' => 'AKK.001',
-                  'modernName' => 'Tell Harba',
-                  'compiler' => 'A. Name',
-                  'compilationDate' => '2018-11-28',
-                  'ancientName' => 'Ancient Name',
-                  'ancientNameUncertain' => true,
-                  'sbahNo' => null,
-                  'cadastre' => null,
-                  'remarks' => null,
-                  'credits' => null
-              ],
-              [
-                  'id' => 1,
-                  'entryId' => 'AKK.001',
-                  'modernName' => 'Tell Harba',
-                  'compiler' => 'A. Name',
-                  'compilationDate' => '',
-                  'ancientName' => 'Ancient Name',
-                  'ancientNameUncertain' => true,
-                  'sbahNo' => null,
-                  'cadastre' => null,
-                  'remarks' => null,
-                  'credits' => null
-              ]
-          ]
+            [
+                [
+                    'id' => 1,
+                    'entryId' => 'AKK.001',
+                    'modernName' => 'Tell Harba',
+                    'compiler' => 'A. Name',
+                    'compilationDate' => '2018-11-28',
+                    'ancientName' => 'Ancient Name',
+                    'ancientNameUncertain' => true,
+                    'featuresEpigraphic' => 'y',
+                    'featuresAncientStructures' => 'true',
+                    'featuresPaleochannels' => '1',
+                    'featuresRemarks' => 'reamarks on feature',
+                    'threatsNaturalDunes' => 'y',
+                    'threatsLooting' => 'true',
+                    'threatsCultivationTrenches' => '1',
+                    'threatsModernStructures' => '1',
+                    'threatsModernCanals' => 'false',
+                    'sbahNo' => null,
+                    'cadastre' => null,
+                    'remarks' => null,
+                    'credits' => null,
+                ],
+                [
+                    'id' => 1,
+                    'entryId' => 'AKK.001',
+                    'modernName' => 'Tell Harba',
+                    'compiler' => 'A. Name',
+                    'compilationDate' => '',
+                    'ancientName' => 'Ancient Name',
+                    'ancientNameUncertain' => true,
+                    'sbahNo' => null,
+                    'cadastre' => null,
+                    'featuresEpigraphic' => true,
+                    'featuresAncientStructures' => true,
+                    'featuresPaleochannels' => true,
+                    'featuresRemarks' => 'reamarks on feature',
+                    'threatsNaturalDunes' => true,
+                    'threatsLooting' => true,
+                    'threatsCultivationTrenches' => true,
+                    'threatsModernStructures' => true,
+                    'threatsModernCanals' => false,
+                    'remarks' => null,
+                    'credits' => null,
+                ],
+            ],
         ];
     }
+
     /**
      * @dataProvider siteEntityDataProvider
+     *
      * @param array $site
      * @param array $expected
      */
@@ -54,7 +73,7 @@ class SiteEntityDenormalizerTest extends \PHPUnit\Framework\TestCase
         $contribute = [
             'id' => (int) mt_rand(0, 100),
             'email' => 'mail@example.com',
-            'sha1' => sha1(microtime())
+            'sha1' => sha1(microtime()),
         ];
         $denormalizer = new SiteEntityDenormalizer();
         $serializer = new Serializer([$denormalizer, new GetSetMethodNormalizer()]);

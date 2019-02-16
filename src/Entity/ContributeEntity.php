@@ -12,11 +12,17 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ContributeEntity implements EntityInterface
 {
+    const STATUS_VALIDATE = 0b0001;
+    const STATUS_VALID = 0b0010;
+    const STATUS_ACCEPTED = 0b0100;
+    const STATUS_REJECTED = 0b1000;
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="SEQUENCE")
      * @ORM\SequenceGenerator(sequenceName="public.seq___contribute__id")
+     *
      * @var int
      */
     private $id;
@@ -37,6 +43,7 @@ class ContributeEntity implements EntityInterface
      * @Assert\NotBlank()
      * @Assert\Length(min=40,max=40)
      * @ORM\Column(type="string", nullable=false)
+     *
      * @var string
      */
     private $sha1;
@@ -45,24 +52,28 @@ class ContributeEntity implements EntityInterface
      * @Assert\NotBlank()
      * @Assert\Email()
      * @ORM\Column(type="string", nullable=false)
+     *
      * @var string
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @var string
      */
     private $contributor;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @var string
      */
     private $institution;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @var string
      */
     private $description;
@@ -72,7 +83,8 @@ class ContributeEntity implements EntityInterface
      */
     private $status = 0;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->sites = new ArrayCollection();
         $this->tmp_drafts = new ArrayCollection();
     }
@@ -223,5 +235,18 @@ class ContributeEntity implements EntityInterface
         $draft->setContribute($this);
     }
 
+    public function isValidate(): bool
+    {
+        return (bool) ($this->status & self::STATUS_VALIDATE);
+    }
 
+    public function isValid(): bool
+    {
+        return $this->isValidate() && ($this->status & self::STATUS_VALID);
+    }
+
+    public function isPending(): bool
+    {
+        return (bool) !($this->status & (self::STATUS_ACCEPTED | self::STATUS_REJECTED));
+    }
 }

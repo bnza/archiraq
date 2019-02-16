@@ -1,26 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: petrux
- * Date: 04/02/19
- * Time: 18.47
- */
 
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SiteRepository")
  * @ORM\Table(name="site", schema="public")
  * @UniqueEntity(
- *      fields={"contribute_id", "entry_id"},
+ *      fields={"contribute", "entry_id"},
  *      message="Duplicate entry id {{ value }} for this contribute"
  * )
  * @UniqueEntity(
- *      fields={"sbah_reg_no"},
+ *      fields={"sbah_no"},
  *      message="Duplicate SBAH {{ value }}",
  * )
  */
@@ -31,6 +26,7 @@ class SiteEntity implements EntityInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="SEQUENCE")
      * @ORM\SequenceGenerator(sequenceName="public.seq___site__id")
+     *
      * @var int
      */
     private $id;
@@ -41,6 +37,25 @@ class SiteEntity implements EntityInterface
      * @ORM\JoinColumn(name="contribute_id", referencedColumnName="id", nullable=false, onDelete="NO ACTION")
      */
     private $contribute;
+
+    /**
+     * @var Geom\DistrictBoundaryEntity
+     * @ORM\ManyToOne(targetEntity="App\Entity\Geom\DistrictBoundaryEntity", inversedBy="sites")
+     * @ORM\JoinColumn(name="district_id", referencedColumnName="id", nullable=false, onDelete="NO ACTION")
+     */
+    private $district;
+
+    /**
+     * @var Geom\SiteBoundaryEntity
+     * @ORM\OneToOne(targetEntity="App\Entity\Geom\SiteBoundaryEntity", mappedBy="site", cascade={"persist", "remove"})
+     */
+    private $geom;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="SiteChronologyEntity", mappedBy="site", cascade={"persist", "remove"})
+     */
+    private $chronologies;
 
     /**
      * @var string
@@ -85,6 +100,60 @@ class SiteEntity implements EntityInterface
     private $cadastre;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $features_epigraphic;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $features_ancient_structures;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $features_paleochannels;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $features_remarks;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $threats_natural_dunes;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $threats_looting;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $threats_cultivation_trenches;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $threats_modern_structures;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $threats_modern_canals;
+
+    /**
      * @var string
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255, nullable=false)
@@ -110,6 +179,11 @@ class SiteEntity implements EntityInterface
      */
     private $credits;
 
+    public function __construct()
+    {
+        $this->chronologies = new ArrayCollection();
+    }
+
     /**
      * @return int
      */
@@ -120,11 +194,13 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param int $id
+     *
      * @return SiteEntity
      */
     public function setId(int $id): SiteEntity
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -138,11 +214,13 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param ContributeEntity $contribute
+     *
      * @return SiteEntity
      */
     public function setContribute(ContributeEntity $contribute): SiteEntity
     {
         $this->contribute = $contribute;
+
         return $this;
     }
 
@@ -156,11 +234,13 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param string $entry_id
+     *
      * @return SiteEntity
      */
     public function setEntryId(string $entry_id): SiteEntity
     {
         $this->entry_id = $entry_id;
+
         return $this;
     }
 
@@ -174,11 +254,13 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param string $nearest_city
+     *
      * @return SiteEntity
      */
     public function setNearestCity(string $nearest_city): SiteEntity
     {
         $this->nearest_city = $nearest_city;
+
         return $this;
     }
 
@@ -192,11 +274,13 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param string $modern_name
+     *
      * @return SiteEntity
      */
     public function setModernName(string $modern_name): SiteEntity
     {
         $this->modern_name = $modern_name;
+
         return $this;
     }
 
@@ -210,11 +294,13 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param string $ancient_name
+     *
      * @return SiteEntity
      */
     public function setAncientName(?string $ancient_name): SiteEntity
     {
         $this->ancient_name = $ancient_name;
+
         return $this;
     }
 
@@ -228,11 +314,13 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param bool $ancient_name_uncertain
+     *
      * @return SiteEntity
      */
     public function setAncientNameUncertain(?bool $ancient_name_uncertain): SiteEntity
     {
         $this->ancient_name_uncertain = $ancient_name_uncertain;
+
         return $this;
     }
 
@@ -246,11 +334,13 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param string $sbah_no
+     *
      * @return SiteEntity
      */
     public function setSbahNo(?string $sbah_no): SiteEntity
     {
         $this->sbah_no = $sbah_no;
+
         return $this;
     }
 
@@ -264,11 +354,194 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param string $cadastre
+     *
      * @return SiteEntity
      */
     public function setCadastre(?string $cadastre): SiteEntity
     {
         $this->cadastre = $cadastre;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getChronologies(): ArrayCollection
+    {
+        return $this->chronologies;
+    }
+
+    /**
+     * @param SiteChronologyEntity $chronology
+     */
+    public function addChronology(SiteChronologyEntity $chronology): void
+    {
+        $this->chronologies[] = $chronology;
+        $chronology->setSite($this);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasFeaturesEpigraphic(): ?bool
+    {
+        return $this->features_epigraphic;
+    }
+
+    /**
+     * @param bool $features_epigraphic
+     */
+    public function setFeaturesEpigraphic(?bool $features_epigraphic): void
+    {
+        $this->features_epigraphic = $features_epigraphic;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasFeaturesAncientStructures(): ?bool
+    {
+        return $this->features_ancient_structures;
+    }
+
+    /**
+     * @param bool $features_ancient_structures
+     */
+    public function setFeaturesAncientStructures(?bool $features_ancient_structures): void
+    {
+        $this->features_ancient_structures = $features_ancient_structures;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasFeaturesPaleochannels(): ?bool
+    {
+        return $this->features_paleochannels;
+    }
+
+    /**
+     * @param bool $features_paleochannels
+     */
+    public function setFeaturesPaleochannels(?bool $features_paleochannels): void
+    {
+        $this->features_paleochannels = $features_paleochannels;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeaturesRemarks(): ?string
+    {
+        return $this->features_remarks;
+    }
+
+    /**
+     * @param string $features_remarks
+     */
+    public function setFeaturesRemarks(?string $features_remarks): void
+    {
+        $this->features_remarks = $features_remarks;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasThreatsNaturalDunes(): ?bool
+    {
+        return $this->threats_natural_dunes;
+    }
+
+    /**
+     * @param bool $threats_natural_dunes
+     *
+     * @return SiteEntity
+     */
+    public function setThreatsNaturalDunes(?bool $threats_natural_dunes): SiteEntity
+    {
+        $this->threats_natural_dunes = $threats_natural_dunes;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasThreatsLooting(): ?bool
+    {
+        return $this->threats_looting;
+    }
+
+    /**
+     * @param bool $threats_looting
+     *
+     * @return SiteEntity
+     */
+    public function setThreatsLooting(?bool $threats_looting): SiteEntity
+    {
+        $this->threats_looting = $threats_looting;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasThreatsCultivationTrenches(): ?bool
+    {
+        return $this->threats_cultivation_trenches;
+    }
+
+    /**
+     * @param bool $threats_cultivation_trenches
+     *
+     * @return SiteEntity
+     */
+    public function setThreatsCultivationTrenches(?bool $threats_cultivation_trenches): SiteEntity
+    {
+        $this->threats_cultivation_trenches = $threats_cultivation_trenches;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasThreatsModernStructures(): ?bool
+    {
+        return $this->threats_modern_structures;
+    }
+
+    /**
+     * @param bool $threats_modern_structures
+     *
+     * @return SiteEntity
+     */
+    public function setThreatsModernStructures(?bool $threats_modern_structures): SiteEntity
+    {
+        $this->threats_modern_structures = $threats_modern_structures;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasThreatsModernCanals(): ?bool
+    {
+        return $this->threats_modern_canals;
+    }
+
+    /**
+     * @param bool $threats_modern_canals
+     *
+     * @return SiteEntity
+     */
+    public function setThreatsModernCanals(?bool $threats_modern_canals): SiteEntity
+    {
+        $this->threats_modern_canals = $threats_modern_canals;
+
         return $this;
     }
 
@@ -282,11 +555,13 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param string $compiler
+     *
      * @return SiteEntity
      */
     public function setCompiler(string $compiler): SiteEntity
     {
         $this->compiler = $compiler;
+
         return $this;
     }
 
@@ -300,11 +575,13 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param \DateTime $compilation_date
+     *
      * @return SiteEntity
      */
-    public function setCompilationDate(\DateTime $compilation_date): SiteEntity
+    public function setCompilationDate(?\DateTime $compilation_date): SiteEntity
     {
         $this->compilation_date = $compilation_date;
+
         return $this;
     }
 
@@ -318,11 +595,13 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param string $remarks
+     *
      * @return SiteEntity
      */
     public function setRemarks(?string $remarks): SiteEntity
     {
         $this->remarks = $remarks;
+
         return $this;
     }
 
@@ -336,12 +615,54 @@ class SiteEntity implements EntityInterface
 
     /**
      * @param string $credits
+     *
      * @return SiteEntity
      */
     public function setCredits(?string $credits): SiteEntity
     {
         $this->credits = $credits;
+
         return $this;
     }
 
+    /**
+     * @return Geom\DistrictBoundaryEntity
+     */
+    public function getDistrict(): Geom\DistrictBoundaryEntity
+    {
+        return $this->district;
+    }
+
+    /**
+     * @param Geom\DistrictBoundaryEntity $district
+     *
+     * @return SiteEntity
+     */
+    public function setDistrict(Geom\DistrictBoundaryEntity $district): SiteEntity
+    {
+        $this->district = $district;
+
+        return $this;
+    }
+
+    /**
+     * @return Geom\SiteBoundaryEntity
+     */
+    public function getGeom(): Geom\SiteBoundaryEntity
+    {
+        return $this->geom;
+    }
+
+    /**
+     * @param Geom\SiteBoundaryEntity $geom
+     *
+     * @return SiteEntity
+     */
+    public function setGeom(Geom\SiteBoundaryEntity $geom): SiteEntity
+    {
+        $this->geom = $geom;
+        $geom->setSite($this);
+
+        return $this;
+    }
 }

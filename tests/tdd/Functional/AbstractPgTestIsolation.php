@@ -19,6 +19,7 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
         $container =
             self::getKernel()->getContainer()
             ?: self::bootKernel()->getContainer();
+
         return $container->get('doctrine')->getManager($em);
     }
 
@@ -27,6 +28,7 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
         if (!array_key_exists($em, $this->ems)) {
             $this->ems[$em] = self::getContainerEntityManager($em);
         }
+
         return $this->ems[$em];
     }
 
@@ -39,8 +41,8 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
     {
         $connection = self::getContainerEntityManager($em)->getConnection();
         $connection->setAutoCommit(false);
-        $connection->exec("BEGIN TRANSACTION");
-        $connection->exec("SAVEPOINT main");
+        $connection->exec('BEGIN TRANSACTION');
+        $connection->exec('SAVEPOINT main');
         $sql = \file_get_contents(self::getAbsolutePath('tests/assets/tdd/sql/db.sql'));
         $connection->exec($sql);
     }
@@ -48,8 +50,8 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
     protected static function rollbackDatabaseSchema(string $em = 'default')
     {
         $connection = self::getContainerEntityManager($em)->getConnection();
-        $connection->exec("ROLLBACK TO SAVEPOINT main");
-        $connection->exec("ROLLBACK");
+        $connection->exec('ROLLBACK TO SAVEPOINT main');
+        $connection->exec('ROLLBACK');
     }
 
     protected function savepoint(string $em = 'default', string $savepoint = 'test')
@@ -68,14 +70,17 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
     {
         return $this->getConnection($em)->exec($sql);
     }
+
     /**
      * @param string $path
+     *
      * @return int
      */
     protected function executeSqlAssetFile(string $path, string $em = 'default')
     {
         $path = $this->getAssetsDir().DIRECTORY_SEPARATOR.$path;
         $sql = \file_get_contents($path);
+
         return $this->executeSql($sql);
     }
 
@@ -95,16 +100,18 @@ SELECT EXISTS (
 EOF;
         $stmt = $this->getEntityManager($em)->getConnection()->prepare($query);
         $stmt->execute(['schema' => $schema, 'table' => $table]);
+
         return $stmt->fetchColumn();
     }
 
     protected function getTableIdentifiers(string $identifier): array
     {
-        $identifiers= [];
+        $identifiers = [];
         if (preg_match('/\"(?P<schema>.+)\".\"(?P<table>.+)\"/mU', $identifier, $matches)) {
             $identifiers['schema'] = $matches['schema'];
             $identifiers['table'] = $matches['table'];
         }
+
         return $identifiers;
     }
 
@@ -130,9 +137,9 @@ SELECT EXISTS (
 EOF;
         $stmt = $this->getEntityManager($em)->getConnection()->prepare($query);
         $stmt->execute(['table' => $table]);
+
         return $stmt->fetchColumn();
     }
-
 
     protected function assertTemporaryTableExists(string $table, string $em = 'default')
     {

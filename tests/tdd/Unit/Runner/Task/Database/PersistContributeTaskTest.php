@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 31/01/19
- * Time: 14.10
+ * Time: 14.10.
  */
 
 namespace App\Tests\Unit\Runner\Task\Database;
@@ -68,7 +68,7 @@ class PersistContributeTaskTest extends \PHPUnit\Framework\TestCase
           'contributor' => 'J. Smith',
           'institution' => 'An Institution',
           'description' => 'A short description',
-          'status' => 100
+          'status' => 100,
         ];
         $mockTask = $this->getMockTask(PersistContributeTask::class);
         $mockTask->setContribute($data);
@@ -132,5 +132,4 @@ class PersistContributeTaskTest extends \PHPUnit\Framework\TestCase
         $mockTask->method('getEntityManager')->willReturn($em);
         $mockTask->setContribute(sha1('A'));
     }
-
 }

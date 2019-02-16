@@ -75,9 +75,9 @@ class ImportShpToTmpTableTaskTest extends AbstractPgTestIsolation
     protected function setUpAssets()
     {
         $originDir = $this->getAssetsDir()
-            .DIRECTORY_SEPARATOR .'tdd'
-            .DIRECTORY_SEPARATOR .'shp'
-            .DIRECTORY_SEPARATOR .$this->shapeFolder;
+            .DIRECTORY_SEPARATOR.'tdd'
+            .DIRECTORY_SEPARATOR.'shp'
+            .DIRECTORY_SEPARATOR.$this->shapeFolder;
         $targetDir = $this->getWorkDir($this->getJob()->getId());
         $this->getFilesystem()->mirror($originDir, $targetDir);
     }

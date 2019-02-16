@@ -6,7 +6,8 @@ use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
 
 class DataFilter implements IReadFilter
 {
-    public function readCell($column, $row, $worksheetName = '') {
+    public function readCell($column, $row, $worksheetName = '')
+    {
         return $row > 1;
     }
 }

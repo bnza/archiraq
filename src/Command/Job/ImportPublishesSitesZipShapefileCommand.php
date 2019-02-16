@@ -18,7 +18,7 @@ class ImportPublishesSitesZipShapefileCommand extends AbstractJobSubscriberComma
     use WorkDirTrait;
     use SummaryTrait;
 
-    protected $path  = '';
+    protected $path = '';
 
     protected static $defaultName = 'app:import:sites-zip';
 
@@ -46,6 +46,7 @@ EOT;
         $job->setWorkDir($this->getBaseWorkDir());
         $job->setEntityManager($this->getEntityManager());
         $job->setSourceZipShapefilePath($this->path);
+
         return $job;
     }
 
@@ -58,7 +59,6 @@ EOT;
 
     public function interact(InputInterface $input, OutputInterface $output)
     {
-
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

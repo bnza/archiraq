@@ -39,7 +39,6 @@ services:
                 arguments:
                     -   '@Bnza\JobManagerBundle\Summary\Summary'
 
-
     Bnza\JobManagerBundle\Summary\Summary:
         arguments:
             $baseWorkDir: '%work_dir%'

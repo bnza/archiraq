@@ -25,6 +25,11 @@ doctrine:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        dql:
+            string_functions:
+                GeometryType: Bnza\SPgSp\ORM\Query\AST\Functions\GeometryType
+            numeric_functions:
+                ST_SRID: Bnza\SPgSp\ORM\Query\AST\Functions\ST_SRID
         mappings:
             App:
                 is_bundle: false

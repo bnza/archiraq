@@ -6,7 +6,7 @@ use Bnza\JobManagerBundle\Runner\Job\JobInterface;
 
 trait WorkDirTrait
 {
-    abstract function getJob(): JobInterface;
+    abstract public function getJob(): JobInterface;
 
     /**
      * @var string

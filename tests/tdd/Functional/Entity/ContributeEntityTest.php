@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 28/01/19
- * Time: 19.14
+ * Time: 19.14.
  */
 
 namespace App\Tests\Functional\Entity;
-
 
 use App\Tests\Functional\AbstractPgTestIsolation;
 use App\Entity\ContributeEntity;

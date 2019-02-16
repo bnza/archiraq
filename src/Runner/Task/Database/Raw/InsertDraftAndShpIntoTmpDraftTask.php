@@ -25,7 +25,6 @@ class InsertDraftAndShpIntoTmpDraftTask extends AbstractTask
         return 'Inserting temporary draft and shape data into "tmp"."draft"';
     }
 
-
     public function getSteps(): iterable
     {
         foreach ($this->getIdGenerator() as $id) {
@@ -66,6 +65,7 @@ EOT;
                 yield $row['entry_id'];
             }
         };
+
         return $generator();
     }
 
@@ -74,6 +74,7 @@ EOT;
         if (!$this->stmt) {
             $this->prepareInsertQueryStatement();
         }
+
         return $this->stmt;
     }
 
@@ -93,5 +94,4 @@ INSERT INTO "tmp"."draft"
 EOT;
         $this->stmt = $this->getEntityManager()->getConnection()->prepare($sql);
     }
-
 }

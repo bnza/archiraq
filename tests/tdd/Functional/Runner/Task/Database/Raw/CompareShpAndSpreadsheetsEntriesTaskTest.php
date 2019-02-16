@@ -3,13 +3,12 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 31/01/19
- * Time: 20.50
+ * Time: 20.50.
  */
 
 namespace App\Tests\Functional\Runner\Task\Database\Raw;
 
-
-USE App\Runner\Task\Database\Raw\CompareShpAndSpreadsheetsEntriesTask;
+use App\Runner\Task\Database\Raw\CompareShpAndSpreadsheetsEntriesTask;
 use App\Tests\Functional\AbstractPgTestIsolation;
 use App\Tests\Functional\Runner\Task\AbstractMockTrait;
 
@@ -50,31 +49,32 @@ class CompareShpAndSpreadsheetsEntriesTaskTest extends AbstractPgTestIsolation
                 ['TES.001'],
                 ['TES.001'],
                 [],
-                []
+                [],
             ],
             [
-                ['TES.001','TES.002'],
+                ['TES.001', 'TES.002'],
                 ['TES.001'],
                 ['TES.002'],
-                []
+                [],
             ],
             [
                 ['TES.001'],
-                ['TES.001','TES.002'],
+                ['TES.001', 'TES.002'],
                 [],
-                ['TES.002']
+                ['TES.002'],
             ],
             [
-                ['TES.001','TES.003','TES.004'],
-                ['TES.001','TES.002'],
-                ['TES.003','TES.004'],
-                ['TES.002']
-            ]
+                ['TES.001', 'TES.003', 'TES.004'],
+                ['TES.001', 'TES.002'],
+                ['TES.003', 'TES.004'],
+                ['TES.002'],
+            ],
         ];
     }
 
     /**
      * @dataProvider tablesEntryDataProvider
+     *
      * @param array $draftEntries
      * @param array $shpEntries
      * @param array $draftDiffs
@@ -106,7 +106,6 @@ class CompareShpAndSpreadsheetsEntriesTaskTest extends AbstractPgTestIsolation
 
     protected function setUpAssets()
     {
-
     }
 
     protected function fillDraftTable()
@@ -133,7 +132,6 @@ EOT;
         foreach ($this->shpEntries as $id) {
             $stmt->execute(['id' => $id]);
         }
-
     }
 
     protected function callTaskSetters()

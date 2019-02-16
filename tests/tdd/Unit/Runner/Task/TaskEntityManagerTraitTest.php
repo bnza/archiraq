@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Tests\Unit\Runner\Task;
 
 use App\Runner\Task\TaskEntityManagerTrait;

@@ -20,5 +20,4 @@ trait DatabaseTrait
     {
         $this->em = $em;
     }
-
 }

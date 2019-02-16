@@ -2,7 +2,6 @@
 
 namespace App\Tests\Functional;
 
-
 use App\Tests\Unit\MockUtilsTrait;
 
 trait JobUtilsTrait
@@ -15,13 +14,15 @@ trait JobUtilsTrait
     protected $steps = [];
 
     /**
-     * Return the
+     * Return the.
+     *
      * @param $className
+     *
      * @return iterable
      */
     protected function getJobStepsFromClass($className): iterable
     {
-        $job =  $this->getMockWithMockedMethods($className, []);
+        $job = $this->getMockWithMockedMethods($className, []);
 
         $steps = $job->getSteps();
 
@@ -29,9 +30,11 @@ trait JobUtilsTrait
     }
 
     /**
-     * Return a subset of job's steps
+     * Return a subset of job's steps.
+     *
      * @param string $className The job classname
-     * @param int $limit The upper limit step's index
+     * @param int    $limit     The upper limit step's index
+     *
      * @return iterable The job's steps subset
      */
     protected function getJobSteps(string $className, $object = null, $limit = -1): iterable
@@ -42,7 +45,7 @@ trait JobUtilsTrait
 
         $steps = $this->replacePlaceholderWithObjectInstance($this->steps[$className], $object, $className);
 
-        if ($limit === -1) {
+        if (-1 === $limit) {
             return $steps;
         } else {
             if (\is_array($steps)) {
@@ -57,16 +60,19 @@ trait JobUtilsTrait
                     }
                 };
                 $this->steps[$className] = $generator();
+
                 return $generator();
             }
         }
     }
 
     /**
-     * Replaces the given object instance with a class name string placeholder(e.g. 'Fully/Qualified/Namespaced/Class')
+     * Replaces the given object instance with a class name string placeholder(e.g. 'Fully/Qualified/Namespaced/Class').
+     *
      * @param array $data The haystack
      * @param $object The object instance to replace
      * @param string $placeholder The fully qualified class name
+     *
      * @return array
      */
     protected function replaceObjectInstanceWithPlaceholder(array $data, $object, string $placeholder): array
@@ -80,14 +86,17 @@ trait JobUtilsTrait
                 }
             }
         }
+
         return $data;
     }
 
     /**
-     * Replaces a class name string placeholder(e.g. 'Fully/Qualified/Namespaced/Class') with the given object instance
+     * Replaces a class name string placeholder(e.g. 'Fully/Qualified/Namespaced/Class') with the given object instance.
+     *
      * @param array $data The haystack
      * @param $object The object instance to replace
      * @param string $placeholder The fully qualified class name
+     *
      * @return array
      */
     protected function replacePlaceholderWithObjectInstance(array $data, $object, string $placeholder): array
@@ -106,6 +115,7 @@ trait JobUtilsTrait
                 }
             }
         }
+
         return $data;
     }
 }

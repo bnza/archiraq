@@ -3,12 +3,9 @@
 namespace App\Serializer\Normalizer;
 
 use App\Entity\TmpDraftEntity;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class TmpDraftEntityNormalizer extends AbstractEntityNormalizer
 {
-
     /**
      * {@inheritdoc}
      */
@@ -17,7 +14,7 @@ class TmpDraftEntityNormalizer extends AbstractEntityNormalizer
         $data = $this->getNormalizer()->normalize($object, TmpDraftEntity::class, $context);
         if ($data['ancientName']) {
             $name = $data['ancientName'];
-            if (substr($name, 0, 1) === '?') {
+            if ('?' === substr($name, 0, 1)) {
                 $data['ancientName'] = substr($name, 1);
                 $data['ancientNameUncertain'] = true;
             }
@@ -33,5 +30,4 @@ class TmpDraftEntityNormalizer extends AbstractEntityNormalizer
     {
         return $data instanceof TmpDraftEntity;
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace App\Exception\Import;
 
-
 use Throwable;
 
 class SpreadsheetHeadersMismatchException extends \InvalidArgumentException
@@ -11,7 +10,7 @@ class SpreadsheetHeadersMismatchException extends \InvalidArgumentException
 
     protected $actual;
 
-    public function __construct(array $expected, array $actual, $class, string $message = "", int $code = 0, Throwable $previous = null)
+    public function __construct(array $expected, array $actual, $class, string $message = '', int $code = 0, Throwable $previous = null)
     {
         $this->expected = $expected;
 

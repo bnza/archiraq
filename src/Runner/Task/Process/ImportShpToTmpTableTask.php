@@ -2,7 +2,6 @@
 
 namespace App\Runner\Task\Process;
 
-
 use App\Runner\Task\TaskEntityManagerTrait;
 use Bnza\JobManagerBundle\Event\JobEndedEvent;
 use Bnza\JobManagerBundle\Runner\Task\AbstractTask;
@@ -32,9 +31,9 @@ class ImportShpToTmpTableTask extends AbstractTask
         // TODO Verify shapefile projection
         if (!$this->dumpFile) {
             $shp2pgsqlCommand = $this->getFullPathCommand('shp2pgsql');
-            $shp2pgsqlArguments = sprintf(" -e -s %d %s %s", 4326, $this->getSource(), $this->getTableName());
+            $shp2pgsqlArguments = sprintf(' -e -s %d %s %s', 4326, $this->getSource(), $this->getTableName());
             $source = $this->getSource();
-            $this->dumpFile = \dirname($source) . DIRECTORY_SEPARATOR . 'shp-dump-' . \basename($source) . '.sql';
+            $this->dumpFile = \dirname($source).DIRECTORY_SEPARATOR.'shp-dump-'.\basename($source).'.sql';
             $command = "$shp2pgsqlCommand $shp2pgsqlArguments > $this->dumpFile";
             $process = Process::fromShellCommandline($command);
             try {
@@ -43,6 +42,7 @@ class ImportShpToTmpTableTask extends AbstractTask
                 echo $exception->getMessage();
             }
         }
+
         return $this->dumpFile;
     }
 
@@ -51,21 +51,23 @@ class ImportShpToTmpTableTask extends AbstractTask
         $ddlPattern = '/(?s)^CREATE TABLE.+\);\nALTER TABLE.+\);\nSELECT AddGeometryColumn.+\);/mU';
         \preg_match($ddlPattern, \file_get_contents($this->getDumpFile()), $matches);
         if (!$matches) {
-            throw new \InvalidArgumentException("Invalid DDL in shapefile SQL dump");
+            throw new \InvalidArgumentException('Invalid DDL in shapefile SQL dump');
         }
-        $ddl = 'SET search_path = "public";' . "\n" . $matches[0];
+        $ddl = 'SET search_path = "public";'."\n".$matches[0];
+
         return $ddl;
     }
 
     protected function getDMLs(): \Generator
     {
-        $dmlPattern = '/^INSERT INTO\s+' . $this->getTableName() . '.*;\n/m';
+        $dmlPattern = '/^INSERT INTO\s+'.$this->getTableName().'.*;\n/m';
         \preg_match_all($dmlPattern, \file_get_contents($this->getDumpFile()), $matches);
         $generator = function () use ($matches) {
             foreach ($matches as $match) {
                 yield $match;
             }
         };
+
         return $generator();
     }
 
@@ -108,8 +110,9 @@ class ImportShpToTmpTableTask extends AbstractTask
     public function getSource()
     {
         if (!$this->source) {
-            throw new \LogicException("You must set source file before trying to get it");
+            throw new \LogicException('You must set source file before trying to get it');
         }
+
         return $this->source;
     }
 
@@ -128,9 +131,10 @@ class ImportShpToTmpTableTask extends AbstractTask
 
     public function getFullPathCommand(string $command): string
     {
-        if ($fullPathCommand = realpath($this->getBinDir() . DIRECTORY_SEPARATOR . $command)) {
+        if ($fullPathCommand = realpath($this->getBinDir().DIRECTORY_SEPARATOR.$command)) {
             return $fullPathCommand;
         }
+
         return $command;
     }
 
@@ -139,5 +143,4 @@ class ImportShpToTmpTableTask extends AbstractTask
         $ddl = "DROP TABLE {$this->getTableName()};";
         $this->getEntityManager()->getConnection()->exec($ddl);
     }
-
 }

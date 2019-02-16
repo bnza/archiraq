@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: petrux
  * Date: 30/01/19
- * Time: 20.39
+ * Time: 20.39.
  */
 
 namespace App\Tests\Unit\Runner\Task\Spreadsheet;
@@ -32,6 +32,7 @@ class AbstractSpreadsheetTaskTest extends \PHPUnit\Framework\TestCase
      *                  ["xlsx"]
      *                  ["xls"]
      *                  ["csv"]
+     *
      * @param string $type
      */
     public function testMethodGetHeadersWillReturnHeaders(string $type)
@@ -44,34 +45,34 @@ class AbstractSpreadsheetTaskTest extends \PHPUnit\Framework\TestCase
         $task = $this->getMockTask(AbstractSpreadsheetTask::class);
         $task->setSpreadSheetPath($this->getTestDir().DIRECTORY_SEPARATOR.$filename);
         $expected = [
-            "A"=>"entry_id",
-            "B"=>"archiraq_id",
-            "C"=>"modern_name",
-            "D"=>"ancient_name",
-            "E"=>"district",
-            "F"=>"nearest_city",
-            "G"=>"cadastre",
-            "H"=>"sbah_no",
-            "I"=>"survey_visit_date",
-            "J"=>"survey_verified_on_field",
-            "K"=>"survey_type",
-            "L"=>"survey_prev_refs",
-            "M"=>"features_epigraphic",
-            "N"=>"features_ancient_structures",
-            "O"=>"features_paleochannels",
-            "P"=>"features_remarks",
-            "Q"=>"site_chronology",
-            "R"=>"excavations_whom_when",
-            "S"=>"excavations_bibliography",
-            "T"=>"threats_natural_dunes",
-            "U"=>"threats_looting",
-            "V"=>"threats_cultivation_trenches",
-            "W"=>"threats_modern_structures",
-            "X"=>"threats_modern_canals",
-            "Y"=>"remarks",
-            "Z"=>"compiler",
-            "AA"=>"compilation_date",
-            "AB"=>"credits"
+            'A' => 'entry_id',
+            'B' => 'archiraq_id',
+            'C' => 'modern_name',
+            'D' => 'ancient_name',
+            'E' => 'district',
+            'F' => 'nearest_city',
+            'G' => 'cadastre',
+            'H' => 'sbah_no',
+            'I' => 'survey_visit_date',
+            'J' => 'survey_verified_on_field',
+            'K' => 'survey_type',
+            'L' => 'survey_prev_refs',
+            'M' => 'features_epigraphic',
+            'N' => 'features_ancient_structures',
+            'O' => 'features_paleochannels',
+            'P' => 'features_remarks',
+            'Q' => 'site_chronology',
+            'R' => 'excavations_whom_when',
+            'S' => 'excavations_bibliography',
+            'T' => 'threats_natural_dunes',
+            'U' => 'threats_looting',
+            'V' => 'threats_cultivation_trenches',
+            'W' => 'threats_modern_structures',
+            'X' => 'threats_modern_canals',
+            'Y' => 'remarks',
+            'Z' => 'compiler',
+            'AA' => 'compilation_date',
+            'AB' => 'credits',
         ];
         $this->assertEquals($expected, $task->getHeaders());
     }
@@ -82,7 +83,6 @@ class AbstractSpreadsheetTaskTest extends \PHPUnit\Framework\TestCase
      */
     public function testMethodCheckHeadersWithHeadersMismatchWillThrowException()
     {
-
         /**
          * @var AbstractSpreadsheetTask
          */
@@ -95,7 +95,6 @@ class AbstractSpreadsheetTaskTest extends \PHPUnit\Framework\TestCase
             ]
         );
 
-
         $headers = ['A' => 'id', 'B' => 'date'];
         $expectedHeaders = ['A' => 'id', 'B' => 'year'];
 
@@ -104,6 +103,5 @@ class AbstractSpreadsheetTaskTest extends \PHPUnit\Framework\TestCase
 
         $method = $this->getNonPublicMethod(AbstractSpreadsheetTask::class, 'checkHeaders');
         $method->invoke($task);
-
     }
 }
