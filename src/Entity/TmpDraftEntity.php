@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator\Constraints as AppAssert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -132,6 +133,33 @@ class TmpDraftEntity implements EntityInterface
      * @ORM\Column(type="string")
      */
     private $threats_modern_canals;
+
+    /**
+     * @var string
+     * @Assert\Regex("/^(\d{4}(-\d{4};?)?)+$/")
+     * @ORM\Column(type="string")
+     */
+    private $survey_visit_date;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $survey_verified_on_field;
+
+    /**
+     * Validates against string like ADAMS1972.001;BLAKE1954.a
+     * @var string
+     * @Assert\Regex("/^(\w+((\.\w+)?;)?)+$/")
+     * @ORM\Column(type="string")
+     */
+    private $survey_type;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $survey_prev_refs;
 
     /**
      * @var string
@@ -497,6 +525,70 @@ class TmpDraftEntity implements EntityInterface
     public function setThreatsModernCanals(string $threats_modern_canals): void
     {
         $this->threats_modern_canals = $threats_modern_canals;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSurveyVisitDate(): ?string
+    {
+        return $this->survey_visit_date;
+    }
+
+    /**
+     * @param string $survey_visit_date
+     */
+    public function setSurveyVisitDate(string $survey_visit_date): void
+    {
+        $this->survey_visit_date = $survey_visit_date;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSurveyVerifiedOnField(): ?bool
+    {
+        return $this->survey_verified_on_field;
+    }
+
+    /**
+     * @param bool $survey_verified_on_field
+     */
+    public function setSurveyVerifiedOnField(bool $survey_verified_on_field): void
+    {
+        $this->survey_verified_on_field = $survey_verified_on_field;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSurveyType(): ?string
+    {
+        return $this->survey_type;
+    }
+
+    /**
+     * @param string $survey_type
+     */
+    public function setSurveyType(string $survey_type): void
+    {
+        $this->survey_type = $survey_type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSurveyPrevRefs(): ?string
+    {
+        return $this->survey_prev_refs;
+    }
+
+    /**
+     * @param string $survey_prev_refs
+     */
+    public function setSurveyPrevRefs(string $survey_prev_refs): void
+    {
+        $this->survey_prev_refs = $survey_prev_refs;
     }
 
     /**

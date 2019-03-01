@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DeepCopy\f001\A;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -56,6 +57,12 @@ class SiteEntity implements EntityInterface
      * @ORM\OneToMany(targetEntity="SiteChronologyEntity", mappedBy="site", cascade={"persist", "remove"})
      */
     private $chronologies;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="SiteSurveyEntity", mappedBy="site", cascade={"persist", "remove"})
+     */
+    private $surveys;
 
     /**
      * @var string
@@ -163,7 +170,7 @@ class SiteEntity implements EntityInterface
     /**
      * @var \DateTime
      * @Assert\NotBlank()
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=false)
      */
     private $compilation_date;
 
@@ -182,6 +189,7 @@ class SiteEntity implements EntityInterface
     public function __construct()
     {
         $this->chronologies = new ArrayCollection();
+        $this->surveys = new ArrayCollection();
     }
 
     /**
@@ -227,7 +235,7 @@ class SiteEntity implements EntityInterface
     /**
      * @return string
      */
-    public function getEntryId(): string
+    public function getEntryId(): ?string
     {
         return $this->entry_id;
     }
@@ -237,7 +245,7 @@ class SiteEntity implements EntityInterface
      *
      * @return SiteEntity
      */
-    public function setEntryId(string $entry_id): SiteEntity
+    public function setEntryId(?string $entry_id): SiteEntity
     {
         $this->entry_id = $entry_id;
 
@@ -379,6 +387,23 @@ class SiteEntity implements EntityInterface
     {
         $this->chronologies[] = $chronology;
         $chronology->setSite($this);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSurveys(): ArrayCollection
+    {
+        return $this->surveys;
+    }
+
+    /**
+     * @param SiteSurveyEntity $survey
+     */
+    public function addSurvey(SiteSurveyEntity $survey): void
+    {
+        $this->surveys[] = $survey;
+        $survey->setSite($this);
     }
 
     /**

@@ -84,7 +84,7 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
     }
 
     /**
-     * Converts TmpDraftEntity in SiteBoundaryEntity and persists it.
+     * Validates TmpDraftEntity instance SiteBoundaryEntity  and persists error to DB
      *
      * @param TmpDraftEntity $draft
      */
@@ -96,6 +96,10 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
         }
     }
 
+    /**
+     * Convert TmpDraftEntity instance to SiteEntity one, validates it and persists error to DB
+     * @param TmpDraftEntity $draft
+     */
     protected function validateSite(TmpDraftEntity $draft)
     {
         $site = $this->getConverter()->convert($draft);
@@ -105,6 +109,11 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
         }
     }
 
+    /**
+     * Persists constraint validation errors to DB
+     * @param TmpDraftEntity $draft
+     * @param $errors
+     */
     protected function persistErrors(TmpDraftEntity $draft, $errors)
     {
         $converter = new ConstraintViolationToTmpDraftErrorConverter();

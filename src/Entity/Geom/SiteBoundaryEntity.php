@@ -21,7 +21,7 @@ class SiteBoundaryEntity implements EntityInterface
 {
     /**
      * @ORM\Id
-     * @ORM\OneToOne(targetEntity="App\Entity\SiteEntity", mappedBy="geom")
+     * @ORM\OneToOne(targetEntity="App\Entity\SiteEntity", inversedBy="geom")
      * @ORM\JoinColumn(name="id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *
      * @var SiteEntity

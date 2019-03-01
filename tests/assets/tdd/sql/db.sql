@@ -10,6 +10,8 @@ SET row_security = off;
 
 ALTER TABLE IF EXISTS ONLY "tmp"."draft_error" DROP CONSTRAINT IF EXISTS "fk___tmp__draft_error___tmp__draft";
 ALTER TABLE IF EXISTS ONLY "tmp"."draft" DROP CONSTRAINT IF EXISTS "fk___tmp__draft___public__contribute";
+ALTER TABLE IF EXISTS ONLY "public"."site_survey" DROP CONSTRAINT IF EXISTS "pk___site_survey___survey";
+ALTER TABLE IF EXISTS ONLY "public"."site_survey" DROP CONSTRAINT IF EXISTS "fk___site_survey___voc__survey";
 ALTER TABLE IF EXISTS ONLY "public"."site_chronology" DROP CONSTRAINT IF EXISTS "fk___site_chronology___voc__chronology";
 ALTER TABLE IF EXISTS ONLY "public"."site_chronology" DROP CONSTRAINT IF EXISTS "fk___site_chronology___site";
 ALTER TABLE IF EXISTS ONLY "public"."site" DROP CONSTRAINT IF EXISTS "fk___public__site___public__contribute";
@@ -18,8 +20,10 @@ ALTER TABLE IF EXISTS ONLY "public"."draft" DROP CONSTRAINT IF EXISTS "fk___publ
 ALTER TABLE IF EXISTS ONLY "geom"."site" DROP CONSTRAINT IF EXISTS "fk___geom__site___public__site";
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd2" DROP CONSTRAINT IF EXISTS "fk___geom__admbnd2___admbnd1_id__admbnd1_id";
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd1" DROP CONSTRAINT IF EXISTS "fk___admbnd1__admbnd0_code__admbnd0__code";
+ALTER TABLE IF EXISTS ONLY "voc"."survey" DROP CONSTRAINT IF EXISTS "uq___voc__survey__name";
 ALTER TABLE IF EXISTS ONLY "voc"."chronology" DROP CONSTRAINT IF EXISTS "uq___voc__chronology___name";
 ALTER TABLE IF EXISTS ONLY "voc"."chronology" DROP CONSTRAINT IF EXISTS "uq___voc__chronology___code";
+ALTER TABLE IF EXISTS ONLY "voc"."survey" DROP CONSTRAINT IF EXISTS "pk___voc__survey";
 ALTER TABLE IF EXISTS ONLY "voc"."chronology" DROP CONSTRAINT IF EXISTS "pk___voc__chronology";
 ALTER TABLE IF EXISTS ONLY "tmp"."draft_error" DROP CONSTRAINT IF EXISTS "pk___tmp__draft_error";
 ALTER TABLE IF EXISTS ONLY "tmp"."draft" DROP CONSTRAINT IF EXISTS "pk___tmp__draft";
@@ -27,6 +31,7 @@ ALTER TABLE IF EXISTS ONLY "public"."site_chronology" DROP CONSTRAINT IF EXISTS 
 ALTER TABLE IF EXISTS ONLY "public"."site" DROP CONSTRAINT IF EXISTS "uq___public__site___sbah_reg_no";
 ALTER TABLE IF EXISTS ONLY "public"."site" DROP CONSTRAINT IF EXISTS "uq___public__site___contribute_id__entry_id";
 ALTER TABLE IF EXISTS ONLY "public"."draft" DROP CONSTRAINT IF EXISTS "uq___public__draft__contribute_id__entry_id";
+ALTER TABLE IF EXISTS ONLY "public"."site_survey" DROP CONSTRAINT IF EXISTS "pk___site_survey";
 ALTER TABLE IF EXISTS ONLY "public"."site_chronology" DROP CONSTRAINT IF EXISTS "pk___site_chronology";
 ALTER TABLE IF EXISTS ONLY "public"."site" DROP CONSTRAINT IF EXISTS "pk___public__site";
 ALTER TABLE IF EXISTS ONLY "public"."draft" DROP CONSTRAINT IF EXISTS "pk___public__draft";
@@ -360,6 +365,17 @@ CREATE SEQUENCE "public"."seq___site_chronology__id"
 ALTER TABLE "public"."seq___site_chronology__id" OWNER TO "test_archiraq_admin";
 
 
+CREATE SEQUENCE "public"."seq___site_survey__id"
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 0
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+ALTER TABLE "public"."seq___site_survey__id" OWNER TO "test_archiraq_admin";
+
+
 CREATE TABLE "public"."site" (
     "id" integer DEFAULT "nextval"('"public"."seq___site__id"'::"regclass") NOT NULL,
     "contribute_id" integer NOT NULL,
@@ -398,6 +414,20 @@ CREATE TABLE "public"."site_chronology" (
 
 
 ALTER TABLE "public"."site_chronology" OWNER TO "test_archiraq_admin";
+
+
+CREATE TABLE "public"."site_survey" (
+    "id" integer DEFAULT "nextval"('"public"."seq___site_survey__id"'::"regclass") NOT NULL,
+    "survey_id" integer NOT NULL,
+    "site_id" integer NOT NULL,
+    "ref" character varying,
+    "year_low" smallint,
+    "year_high" smallint,
+    "remarks" "text"
+);
+
+
+ALTER TABLE "public"."site_survey" OWNER TO "test_archiraq_admin";
 
 
 CREATE SEQUENCE "tmp"."seq___draft__id"
@@ -494,6 +524,28 @@ CREATE TABLE "voc"."chronology" (
 ALTER TABLE "voc"."chronology" OWNER TO "test_archiraq_admin";
 
 
+CREATE SEQUENCE "voc"."seq___survey__id"
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 0
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+ALTER TABLE "voc"."seq___survey__id" OWNER TO "test_archiraq_admin";
+
+
+CREATE TABLE "voc"."survey" (
+    "id" integer DEFAULT "nextval"('"voc"."seq___survey__id"'::"regclass") NOT NULL,
+    "code" character varying NOT NULL,
+    "name" character varying,
+    "remarks" "text"
+);
+
+
+ALTER TABLE "voc"."survey" OWNER TO "test_archiraq_admin";
+
+
 ALTER TABLE ONLY "admin"."group_members"
     ADD CONSTRAINT "group_members_pk" PRIMARY KEY ("groupname", "username");
 
@@ -584,6 +636,11 @@ ALTER TABLE ONLY "public"."site_chronology"
 
 
 
+ALTER TABLE ONLY "public"."site_survey"
+    ADD CONSTRAINT "pk___site_survey" PRIMARY KEY ("id");
+
+
+
 ALTER TABLE ONLY "public"."draft"
     ADD CONSTRAINT "uq___public__draft__contribute_id__entry_id" UNIQUE ("contribute_id", "entry_id");
 
@@ -622,6 +679,11 @@ ALTER TABLE ONLY "voc"."chronology"
 
 
 
+ALTER TABLE ONLY "voc"."survey"
+    ADD CONSTRAINT "pk___voc__survey" PRIMARY KEY ("id");
+
+
+
 ALTER TABLE ONLY "voc"."chronology"
     ADD CONSTRAINT "uq___voc__chronology___code" UNIQUE ("code");
 
@@ -629,6 +691,11 @@ ALTER TABLE ONLY "voc"."chronology"
 
 ALTER TABLE ONLY "voc"."chronology"
     ADD CONSTRAINT "uq___voc__chronology___name" UNIQUE ("name");
+
+
+
+ALTER TABLE ONLY "voc"."survey"
+    ADD CONSTRAINT "uq___voc__survey__name" UNIQUE ("id");
 
 
 
@@ -669,6 +736,16 @@ ALTER TABLE ONLY "public"."site_chronology"
 
 ALTER TABLE ONLY "public"."site_chronology"
     ADD CONSTRAINT "fk___site_chronology___voc__chronology" FOREIGN KEY ("chronology_id") REFERENCES "voc"."chronology"("id") MATCH FULL ON UPDATE CASCADE;
+
+
+
+ALTER TABLE ONLY "public"."site_survey"
+    ADD CONSTRAINT "fk___site_survey___voc__survey" FOREIGN KEY ("survey_id") REFERENCES "voc"."survey"("id") MATCH FULL ON UPDATE CASCADE;
+
+
+
+ALTER TABLE ONLY "public"."site_survey"
+    ADD CONSTRAINT "pk___site_survey___survey" FOREIGN KEY ("site_id") REFERENCES "public"."site"("id") MATCH FULL ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 

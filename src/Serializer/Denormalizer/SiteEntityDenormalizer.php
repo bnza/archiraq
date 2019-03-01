@@ -8,7 +8,9 @@
 
 namespace App\Serializer\Denormalizer;
 
+use App\Entity\SiteChronologyEntity;
 use App\Entity\SiteEntity;
+use App\Serializer\TmpDraftToSiteConverter;
 
 class SiteEntityDenormalizer extends AbstractEntityDenormalizer
 {
@@ -16,6 +18,7 @@ class SiteEntityDenormalizer extends AbstractEntityDenormalizer
 
     /**
      * {@inheritdoc}
+     * @see TmpDraftToSiteConverter::preDenormalize()
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
@@ -33,7 +36,23 @@ class SiteEntityDenormalizer extends AbstractEntityDenormalizer
             $data[$key] = $this->cast($data[$key], ...$type);
         }
 
-        return $this->getDenormalizer()->denormalize($data, SiteEntity::class, null, $context);
+        $site = $this->getDenormalizer()->denormalize($data, SiteEntity::class, null, $context);
+
+        if (\array_key_exists('site_chronology', $context)) {
+            foreach ($context['site_chronology'] as $chronology) {
+                $siteChronology = new SiteChronologyEntity();
+                $siteChronology->setChronology($chronology);
+                $site->addChronology($siteChronology);
+            }
+        }
+
+        if (\array_key_exists('site_prev_refs', $context)) {
+            foreach ($context['site_prev_refs'] as $survey) {
+                $site->addSurvey($survey);
+            }
+        }
+
+        return $site;
     }
 
     /**
