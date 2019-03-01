@@ -3,12 +3,18 @@
 namespace App\Tests\Functional;
 
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Trait TestKernelUtilsTrait must be used in \Symfony\Bundle\FrameworkBundle\Test\KernelTestCase subclasses.
  */
 trait TestKernelUtilsTrait
 {
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
     protected static function getKernel(): KernelInterface
     {
         if (!self::$kernel) {
@@ -34,5 +40,17 @@ trait TestKernelUtilsTrait
     protected function getAssetsDir(): string
     {
         return $this->getRootDir().DIRECTORY_SEPARATOR.'tests/assets';
+    }
+
+    protected function getValidator(): ValidatorInterface
+    {
+        if (!$this->validator) {
+            if (!self::$container) {
+                self::getKernel()->getContainer();
+            }
+            $this->validator = self::$container->get(ValidatorInterface::class);
+        }
+
+        return $this->validator;
     }
 }

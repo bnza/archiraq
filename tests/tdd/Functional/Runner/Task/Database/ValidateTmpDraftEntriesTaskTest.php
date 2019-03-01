@@ -18,11 +18,6 @@ class ValidateTmpDraftEntriesTaskTest extends AbstractPgTestIsolation
      */
     private $contribute;
 
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
     public static function setUpBeforeClass()
     {
         self::setUpDatabaseSchema();
@@ -129,18 +124,6 @@ class ValidateTmpDraftEntriesTaskTest extends AbstractPgTestIsolation
         $this->getTask()->expects($this->once())->method('validateSite');
         $this->getTask()->run();
         $this->assertTableRowsNum(1, 'draft_error', 'tmp');
-    }
-
-    protected function getValidator(): ValidatorInterface
-    {
-        if (!$this->validator) {
-            if (!self::$container) {
-                self::getKernel()->getContainer();
-            }
-            $this->validator = self::$container->get(ValidatorInterface::class);
-        }
-
-        return $this->validator;
     }
 
     /**

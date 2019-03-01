@@ -72,8 +72,10 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
     }
 
     /**
-     * @param string $path
      *
+     * @param string $path relativo to tests/assets
+     *
+     * @param string $em
      * @return int
      */
     protected function executeSqlAssetFile(string $path, string $em = 'default')
@@ -81,7 +83,7 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
         $path = $this->getAssetsDir().DIRECTORY_SEPARATOR.$path;
         $sql = \file_get_contents($path);
 
-        return $this->executeSql($sql);
+        return $this->executeSql($sql, $em);
     }
 
     protected function checkTableExists(string $table, string $schema = 'public', string $em = 'default')
