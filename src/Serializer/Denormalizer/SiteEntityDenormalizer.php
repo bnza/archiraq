@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: petrux
- * Date: 07/02/19
- * Time: 20.36.
- */
 
 namespace App\Serializer\Denormalizer;
 

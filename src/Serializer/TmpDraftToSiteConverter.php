@@ -102,10 +102,17 @@ class TmpDraftToSiteConverter extends AbstractEntityConverter
         $dates = [];
         $repo = $this->getEntityManager()->getRepository(SurveyEntity::class);
 
-        if (\array_key_exists('surveyVisitDate', $object)) {
+        if (
+            \array_key_exists('surveyVisitDate', $object)
+            && $object['surveyVisitDate']
+        ) {
             $dates = \explode(';', $object['surveyVisitDate']);
         }
-        if (\array_key_exists('surveyPrevRefs', $object)) {
+
+        if (
+            \array_key_exists('surveyPrevRefs', $object)
+            && $object['surveyPrevRefs']
+        ) {
             foreach (\explode(';', $object['surveyPrevRefs']) as $i => $ref) {
                 $ref = explode('.', $ref);
                 $ksurvey = strtoupper(trim($ref[0]));
