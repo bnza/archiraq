@@ -6,12 +6,12 @@ use App\Entity\ContributeEntity;
 use App\Entity\SiteEntity;
 use App\Entity\TmpDraftEntity;
 use App\Entity\TmpDraftErrorEntity;
-use App\Entity\VocChronologyEntity;
+use App\Entity\Voc\ChronologyEntity;
 use App\Repository\ContributeRepository;
 use App\Repository\SiteRepository;
 use App\Repository\TmpDraftErrorRepository;
 use App\Repository\TmpDraftRepository;
-use App\Repository\VocChronologyRepository;
+use App\Repository\Voc\ChronologyRepository;
 use App\Tests\Functional\AbstractPgTestIsolation;
 
 class RepositoryTest extends AbstractPgTestIsolation
@@ -23,7 +23,7 @@ class RepositoryTest extends AbstractPgTestIsolation
             [ContributeEntity::class, ContributeRepository::class],
             [TmpDraftEntity::class, TmpDraftRepository::class],
             [TmpDraftErrorEntity::class, TmpDraftErrorRepository::class],
-            [VocChronologyEntity::class, VocChronologyRepository::class],
+            [ChronologyEntity::class, ChronologyRepository::class],
         ];
     }
 

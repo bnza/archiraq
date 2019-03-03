@@ -2,7 +2,7 @@
 
 namespace App\Tests\Unit\Entity\Geom;
 
-use App\Entity\VocChronologyEntity;
+use App\Entity\Voc\ChronologyEntity;
 
 class ChronologyEntityTest extends \PHPUnit\Framework\TestCase
 {
@@ -26,7 +26,7 @@ class ChronologyEntityTest extends \PHPUnit\Framework\TestCase
      */
     public function testSettersGettersDoesWork(string $prop, $value)
     {
-        $site = new VocChronologyEntity();
+        $site = new ChronologyEntity();
         $site->{"set$prop"}($value);
         $this->assertEquals($value, $site->{"get$prop"}());
     }

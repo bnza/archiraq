@@ -2,7 +2,7 @@
 
 namespace App\Validator\Constraints;
 
-use App\Entity\VocChronologyEntity;
+use App\Entity\Voc\ChronologyEntity;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
@@ -30,7 +30,7 @@ class ContainsValidChronologyCodesValidator extends AbstractEntityManagerRelated
             // separate multiple types using pipes
             // throw new UnexpectedValueException($value, 'string|int');
         }
-        $repo = $this->getEntityManager()->getRepository(VocChronologyEntity::class);
+        $repo = $this->getEntityManager()->getRepository(ChronologyEntity::class);
         foreach (\explode(';', $value) as $code) {
             if (!$repo->codeExists($code)) {
                 $this->context->buildViolation($constraint->message)

@@ -52,6 +52,7 @@ class PersistSitesFromTmpDraftsTaskTest extends AbstractPgTestIsolation
 
     public function testMethodRunWillPersistSiteEntity()
     {
+        $this->executeSqlAssetFile('tdd/sql/chronology.sql');
         $this->executeSqlAssetFile('tdd/sql/test/persist_tmp_drafts_task/admbnd.sql');
         $this->executeSqlAssetFile('tdd/sql/test/persist_tmp_drafts_task/fixtures.sql');
         $this->contribute = $this->getEntityManager()->getRepository(ContributeEntity::class)->find(1);

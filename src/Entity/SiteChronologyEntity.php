@@ -33,8 +33,8 @@ class SiteChronologyEntity implements EntityInterface
     private $site;
 
     /**
-     * @var VocChronologyEntity
-     * @ORM\ManyToOne(targetEntity="VocChronologyEntity", inversedBy="sites")
+     * @var Voc\ChronologyEntity
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Voc\ChronologyEntity", inversedBy="sites")
      * @ORM\JoinColumn(name="chronology_id", referencedColumnName="id", nullable=false, onDelete="NO ACTION")
      */
     private $chronology;
@@ -80,19 +80,19 @@ class SiteChronologyEntity implements EntityInterface
     }
 
     /**
-     * @return VocChronologyEntity
+     * @return Voc\ChronologyEntity
      */
-    public function getChronology(): VocChronologyEntity
+    public function getChronology(): Voc\ChronologyEntity
     {
         return $this->chronology;
     }
 
     /**
-     * @param VocChronologyEntity $chronology
+     * @param Voc\ChronologyEntity $chronology
      *
      * @return SiteChronologyEntity
      */
-    public function setChronology(VocChronologyEntity $chronology): SiteChronologyEntity
+    public function setChronology(Voc\ChronologyEntity $chronology): SiteChronologyEntity
     {
         $this->chronology = $chronology;
 

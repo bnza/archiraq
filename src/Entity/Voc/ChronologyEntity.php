@@ -1,20 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: petrux
- * Date: 13/02/19
- * Time: 14.38.
- */
 
-namespace App\Entity;
+namespace App\Entity\Voc;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\EntityInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\VocChronologyRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Voc\ChronologyRepository")
  * @ORM\Table(name="chronology", schema="voc")
  * @UniqueEntity(
  *      fields={"code"},
@@ -25,7 +20,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *      message="Duplicate chronology name {{ value }}",
  * )
  */
-class VocChronologyEntity implements EntityInterface
+class ChronologyEntity implements EntityInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -39,7 +34,7 @@ class VocChronologyEntity implements EntityInterface
 
     /**
      * @var ArrayCollection;
-     * @ORM\OneToMany(targetEntity="SiteChronologyEntity", mappedBy="chronology")
+     * @ORM\OneToMany(targetEntity="\App\Entity\SiteChronologyEntity", mappedBy="chronology")
      */
     private $sites;
 
@@ -85,9 +80,9 @@ class VocChronologyEntity implements EntityInterface
     /**
      * @param int $id
      *
-     * @return VocChronologyEntity
+     * @return ChronologyEntity
      */
-    public function setId(int $id): VocChronologyEntity
+    public function setId(int $id): ChronologyEntity
     {
         $this->id = $id;
 
@@ -105,9 +100,9 @@ class VocChronologyEntity implements EntityInterface
     /**
      * @param string $code
      *
-     * @return VocChronologyEntity
+     * @return ChronologyEntity
      */
-    public function setCode(string $code): VocChronologyEntity
+    public function setCode(string $code): ChronologyEntity
     {
         $this->code = $code;
 
@@ -125,9 +120,9 @@ class VocChronologyEntity implements EntityInterface
     /**
      * @param string $name
      *
-     * @return VocChronologyEntity
+     * @return ChronologyEntity
      */
-    public function setName(string $name): VocChronologyEntity
+    public function setName(string $name): ChronologyEntity
     {
         $this->name = $name;
 
@@ -145,9 +140,9 @@ class VocChronologyEntity implements EntityInterface
     /**
      * @param int $date_low
      *
-     * @return VocChronologyEntity
+     * @return ChronologyEntity
      */
-    public function setDateLow(int $date_low): VocChronologyEntity
+    public function setDateLow(int $date_low): ChronologyEntity
     {
         $this->date_low = $date_low;
 
@@ -165,9 +160,9 @@ class VocChronologyEntity implements EntityInterface
     /**
      * @param int $date_high
      *
-     * @return VocChronologyEntity
+     * @return ChronologyEntity
      */
-    public function setDateHigh(int $date_high): VocChronologyEntity
+    public function setDateHigh(int $date_high): ChronologyEntity
     {
         $this->date_high = $date_high;
 

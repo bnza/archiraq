@@ -5,7 +5,7 @@ namespace App\Serializer;
 use App\Entity\EntityInterface;
 use App\Entity\SiteSurveyEntity;
 use App\Entity\Voc\SurveyEntity;
-use App\Entity\VocChronologyEntity;
+use App\Entity\Voc\ChronologyEntity;
 use App\Entity\Geom\DistrictBoundaryEntity;
 use App\Entity\Geom\SiteBoundaryEntity;
 use App\Entity\SiteEntity;
@@ -87,7 +87,7 @@ class TmpDraftToSiteConverter extends AbstractEntityConverter
             \array_key_exists('siteChronology', $object)
             && is_string($object['siteChronology'])
         ) {
-            $repo = $this->getEntityManager()->getRepository(VocChronologyEntity::class);
+            $repo = $this->getEntityManager()->getRepository(ChronologyEntity::class);
             foreach (\explode(';', $object['siteChronology']) as $code) {
                 $code = strtoupper(trim($code));
                 $entities[] = $repo->findOneBy(['code' => $code]);
