@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Tmp\DraftEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -221,7 +222,7 @@ class ContributeEntity implements EntityInterface
     /**
      * @return ArrayCollection
      */
-    public function getTmpDrafts(): iterable
+    public function getDrafts(): iterable
     {
         return $this->tmp_drafts;
     }
@@ -229,7 +230,7 @@ class ContributeEntity implements EntityInterface
     /**
      * @param DraftEntity $draft
      */
-    public function addTmpDrafts(DraftEntity $draft): void
+    public function addDraft(DraftEntity $draft): void
     {
         $this->tmp_drafts[] = $draft;
         $draft->setContribute($this);
