@@ -35,7 +35,7 @@ class ContributeEntity implements EntityInterface
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="TmpDraftEntity", mappedBy="contribute")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tmp\DraftEntity", mappedBy="contribute")
      */
     private $tmp_drafts;
 
@@ -227,9 +227,9 @@ class ContributeEntity implements EntityInterface
     }
 
     /**
-     * @param TmpDraftEntity $draft
+     * @param DraftEntity $draft
      */
-    public function addTmpDrafts(TmpDraftEntity $draft): void
+    public function addTmpDrafts(DraftEntity $draft): void
     {
         $this->tmp_drafts[] = $draft;
         $draft->setContribute($this);

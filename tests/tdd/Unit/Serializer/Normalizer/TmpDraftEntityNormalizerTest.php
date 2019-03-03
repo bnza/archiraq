@@ -9,7 +9,7 @@
 namespace App\Tests\Unit\Serializer\Normalizer;
 
 use App\Entity\ContributeEntity;
-use App\Entity\TmpDraftEntity;
+use App\Entity\Tmp\DraftEntity;
 use App\Serializer\Normalizer\TmpDraftEntityNormalizer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -155,7 +155,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
         $normalizer = new TmpDraftEntityNormalizer();
         $serializer = new Serializer([$normalizer, new GetSetMethodNormalizer()]);
         $contribute = $serializer->denormalize($contribute, ContributeEntity::class);
-        $draft = $serializer->denormalize($draft, TmpDraftEntity::class);
+        $draft = $serializer->denormalize($draft, DraftEntity::class);
         $draft->setContribute($contribute);
         $data = $normalizer->normalize($draft);
         unset($data['contribute']);

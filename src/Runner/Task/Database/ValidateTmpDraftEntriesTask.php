@@ -8,7 +8,7 @@
 
 namespace App\Runner\Task\Database;
 
-use App\Entity\TmpDraftEntity;
+use App\Entity\Tmp\DraftEntity;
 use App\Runner\Task\TaskEntityManagerTrait;
 use App\Runner\Task\ValidatorTrait;
 use App\Serializer\ConstraintViolationToTmpDraftErrorConverter;
@@ -77,18 +77,18 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
         $this->getEntityManager()->flush();
     }
 
-    protected function validate(TmpDraftEntity $draft)
+    protected function validate(DraftEntity $draft)
     {
         $this->validateDraft($draft);
         $this->validateSite($draft);
     }
 
     /**
-     * Validates TmpDraftEntity instance SiteBoundaryEntity  and persists error to DB
+     * Validates DraftEntity instance SiteBoundaryEntity  and persists error to DB
      *
-     * @param TmpDraftEntity $draft
+     * @param DraftEntity $draft
      */
-    protected function validateDraft(TmpDraftEntity $draft)
+    protected function validateDraft(DraftEntity $draft)
     {
         $errors = $this->getValidator()->validate($draft);
         if (count($errors) > 0) {
@@ -97,10 +97,10 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
     }
 
     /**
-     * Convert TmpDraftEntity instance to SiteEntity one, validates it and persists error to DB
-     * @param TmpDraftEntity $draft
+     * Convert DraftEntity instance to SiteEntity one, validates it and persists error to DB
+     * @param DraftEntity $draft
      */
-    protected function validateSite(TmpDraftEntity $draft)
+    protected function validateSite(DraftEntity $draft)
     {
         $site = $this->getConverter()->convert($draft);
         $errors = $this->getValidator()->validate($site);
@@ -111,10 +111,10 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
 
     /**
      * Persists constraint validation errors to DB
-     * @param TmpDraftEntity $draft
+     * @param DraftEntity $draft
      * @param $errors
      */
-    protected function persistErrors(TmpDraftEntity $draft, $errors)
+    protected function persistErrors(DraftEntity $draft, $errors)
     {
         $converter = new ConstraintViolationToTmpDraftErrorConverter();
         $em = $this->getEntityManager();

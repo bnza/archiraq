@@ -6,7 +6,7 @@ use App\Entity\ContributeEntity;
 use App\Entity\Geom\DistrictBoundaryEntity;
 use App\Entity\Geom\SiteBoundaryEntity;
 use App\Entity\SiteEntity;
-use App\Entity\TmpDraftEntity;
+use App\Entity\Tmp\DraftEntity;
 use App\Repository\Geom\DistrictBoundaryRepository;
 use App\Serializer\TmpDraftToSiteConverter;
 use Doctrine\ORM\EntityManagerInterface;
@@ -70,7 +70,7 @@ EOF
             'sha1' => sha1(microtime()),
         ];
         $serializer = new Serializer([new GetSetMethodNormalizer()]);
-        $draft = $serializer->denormalize($draft, TmpDraftEntity::class);
+        $draft = $serializer->denormalize($draft, DraftEntity::class);
         $expected['compilationDate'] = \DateTime::createFromFormat('Y-m-d', '2018-11-28');
         $expected = $serializer->denormalize($expected, SiteEntity::class);
 

@@ -2,7 +2,7 @@
 
 namespace App\Serializer;
 
-use App\Entity\TmpDraftErrorEntity;
+use App\Entity\Tmp\DraftErrorEntity;
 use App\Serializer\Denormalizer\TmpDraftErrorEntityDenormalizer;
 use App\Serializer\Normalizer\ConstraintViolationNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -22,6 +22,6 @@ class ConstraintViolationToTmpDraftErrorConverter extends AbstractConverter
 
     public function getTargetClass(): string
     {
-        return TmpDraftErrorEntity::class;
+        return DraftErrorEntity::class;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Serializer\Normalizer;
 
-use App\Entity\TmpDraftEntity;
+use App\Entity\Tmp\DraftEntity;
 
 class TmpDraftEntityNormalizer extends AbstractEntityNormalizer
 {
@@ -11,7 +11,7 @@ class TmpDraftEntityNormalizer extends AbstractEntityNormalizer
      */
     public function normalize($object, $format = null, array $context = array())
     {
-        $data = $this->getNormalizer()->normalize($object, TmpDraftEntity::class, $context);
+        $data = $this->getNormalizer()->normalize($object, DraftEntity::class, $context);
         if ($data['ancientName']) {
             $name = $data['ancientName'];
             if ('?' === substr($name, 0, 1)) {
@@ -28,6 +28,6 @@ class TmpDraftEntityNormalizer extends AbstractEntityNormalizer
      */
     public function supportsNormalization($data, $format = null)
     {
-        return $data instanceof TmpDraftEntity;
+        return $data instanceof DraftEntity;
     }
 }

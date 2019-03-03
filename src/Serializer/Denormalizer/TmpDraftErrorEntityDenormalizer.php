@@ -8,7 +8,7 @@
 
 namespace App\Serializer\Denormalizer;
 
-use App\Entity\TmpDraftErrorEntity;
+use App\Entity\Tmp\DraftErrorEntity;
 
 class TmpDraftErrorEntityDenormalizer extends AbstractEntityDenormalizer
 {
@@ -17,7 +17,7 @@ class TmpDraftErrorEntityDenormalizer extends AbstractEntityDenormalizer
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        return $this->getDenormalizer()->denormalize($data, TmpDraftErrorEntity::class, null, $context);
+        return $this->getDenormalizer()->denormalize($data, DraftErrorEntity::class, null, $context);
     }
 
     /**
@@ -25,6 +25,6 @@ class TmpDraftErrorEntityDenormalizer extends AbstractEntityDenormalizer
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return TmpDraftErrorEntity::class === $type;
+        return DraftErrorEntity::class === $type;
     }
 }

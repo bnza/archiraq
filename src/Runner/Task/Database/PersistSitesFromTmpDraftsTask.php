@@ -8,7 +8,7 @@
 
 namespace App\Runner\Task\Database;
 
-use App\Entity\TmpDraftEntity;
+use App\Entity\Tmp\DraftEntity;
 use App\Runner\Task\TaskEntityManagerTrait;
 use App\Serializer\TmpDraftToSiteConverter;
 use Bnza\JobManagerBundle\Runner\Task\AbstractTask;
@@ -78,11 +78,11 @@ class PersistSitesFromTmpDraftsTask extends AbstractTask
     }
 
     /**
-     * Converts TmpDraftEntity in SiteBoundaryEntity and persists it.
+     * Converts DraftEntity in SiteBoundaryEntity and persists it.
      *
-     * @param TmpDraftEntity $draft
+     * @param DraftEntity $draft
      */
-    protected function persistSite(TmpDraftEntity $draft)
+    protected function persistSite(DraftEntity $draft)
     {
         $site = $this->getConverter()->convert($draft);
         $this->getEntityManager()->persist($site);

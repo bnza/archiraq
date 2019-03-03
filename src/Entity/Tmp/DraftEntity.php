@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Tmp;
 
+use App\Entity\EntityInterface;
+use App\Entity\ContributeEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator\Constraints as AppAssert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\TmpDraftRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Tmp\DraftRepository")
  * @ORM\Table(name="draft", schema="tmp")
  */
-class TmpDraftEntity implements EntityInterface
+class DraftEntity implements EntityInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -25,14 +27,14 @@ class TmpDraftEntity implements EntityInterface
 
     /**
      * @var ContributeEntity
-     * @ORM\ManyToOne(targetEntity="ContributeEntity", inversedBy="tmp_drafts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ContributeEntity", inversedBy="tmp_drafts")
      * @ORM\JoinColumn(name="contribute_id", referencedColumnName="id", nullable=false, onDelete="NO ACTION")
      */
     private $contribute;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="TmpDraftErrorEntity", mappedBy="draft", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="DraftErrorEntity", mappedBy="draft", cascade={"persist", "remove"})
      */
     private $errors;
 
@@ -239,9 +241,9 @@ class TmpDraftEntity implements EntityInterface
     }
 
     /**
-     * @param TmpDraftErrorEntity $error
+     * @param DraftErrorEntity $error
      */
-    public function addError(TmpDraftErrorEntity $error): void
+    public function addError(DraftErrorEntity $error): void
     {
         $this->errors[] = $error;
         $error->setDraft($this);
@@ -338,9 +340,9 @@ class TmpDraftEntity implements EntityInterface
     /**
      * @param string $site_chronology
      *
-     * @return TmpDraftEntity
+     * @return DraftEntity
      */
-    public function setSiteChronology(string $site_chronology): TmpDraftEntity
+    public function setSiteChronology(string $site_chronology): DraftEntity
     {
         $this->site_chronology = $site_chronology;
 
@@ -358,9 +360,9 @@ class TmpDraftEntity implements EntityInterface
     /**
      * @param string $district
      *
-     * @return TmpDraftEntity
+     * @return DraftEntity
      */
-    public function setDistrict(string $district): TmpDraftEntity
+    public function setDistrict(string $district): DraftEntity
     {
         $this->district = $district;
 
@@ -378,9 +380,9 @@ class TmpDraftEntity implements EntityInterface
     /**
      * @param string $features_epigraphic
      *
-     * @return TmpDraftEntity
+     * @return DraftEntity
      */
-    public function setFeaturesEpigraphic(string $features_epigraphic): TmpDraftEntity
+    public function setFeaturesEpigraphic(string $features_epigraphic): DraftEntity
     {
         $this->features_epigraphic = $features_epigraphic;
 
@@ -398,9 +400,9 @@ class TmpDraftEntity implements EntityInterface
     /**
      * @param string $features_ancient_structures
      *
-     * @return TmpDraftEntity
+     * @return DraftEntity
      */
-    public function setFeaturesAncientStructures(string $features_ancient_structures): TmpDraftEntity
+    public function setFeaturesAncientStructures(string $features_ancient_structures): DraftEntity
     {
         $this->features_ancient_structures = $features_ancient_structures;
 
@@ -418,9 +420,9 @@ class TmpDraftEntity implements EntityInterface
     /**
      * @param string $features_paleochannels
      *
-     * @return TmpDraftEntity
+     * @return DraftEntity
      */
-    public function setFeaturesPaleochannels(string $features_paleochannels): TmpDraftEntity
+    public function setFeaturesPaleochannels(string $features_paleochannels): DraftEntity
     {
         $this->features_paleochannels = $features_paleochannels;
 
@@ -438,9 +440,9 @@ class TmpDraftEntity implements EntityInterface
     /**
      * @param string $features_remarks
      *
-     * @return TmpDraftEntity
+     * @return DraftEntity
      */
-    public function setFeaturesRemarks(string $features_remarks): TmpDraftEntity
+    public function setFeaturesRemarks(string $features_remarks): DraftEntity
     {
         $this->features_remarks = $features_remarks;
 
@@ -666,9 +668,9 @@ class TmpDraftEntity implements EntityInterface
     /**
      * @param string $geom
      *
-     * @return TmpDraftEntity
+     * @return DraftEntity
      */
-    public function setGeom(string $geom): TmpDraftEntity
+    public function setGeom(string $geom): DraftEntity
     {
         $this->geom = $geom;
 

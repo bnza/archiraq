@@ -1,21 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: petrux
- * Date: 13/02/19
- * Time: 10.13.
- */
 
-namespace App\Entity;
+namespace App\Entity\Tmp;
 
+use App\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
- * @ORM\Entity(repositoryClass="App\Repository\TmpDraftErrorRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Tmp\DraftErrorRepository")
  * @ORM\Table(name="draft_error", schema="tmp")
  */
-class TmpDraftErrorEntity implements EntityInterface
+class DraftErrorEntity implements EntityInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -28,8 +24,8 @@ class TmpDraftErrorEntity implements EntityInterface
     private $id;
 
     /**
-     * @var TmpDraftEntity
-     * @ORM\ManyToOne(targetEntity="TmpDraftEntity", inversedBy="errors")
+     * @var DraftEntity
+     * @ORM\ManyToOne(targetEntity="DraftEntity", inversedBy="errors")
      * @ORM\JoinColumn(name="draft_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $draft;
@@ -58,9 +54,9 @@ class TmpDraftErrorEntity implements EntityInterface
     /**
      * @param int $id
      *
-     * @return TmpDraftErrorEntity
+     * @return DraftErrorEntity
      */
-    public function setId(int $id): TmpDraftErrorEntity
+    public function setId(int $id): DraftErrorEntity
     {
         $this->id = $id;
 
@@ -68,19 +64,19 @@ class TmpDraftErrorEntity implements EntityInterface
     }
 
     /**
-     * @return TmpDraftEntity
+     * @return DraftEntity
      */
-    public function getDraft(): TmpDraftEntity
+    public function getDraft(): DraftEntity
     {
         return $this->draft;
     }
 
     /**
-     * @param TmpDraftEntity $draft
+     * @param DraftEntity $draft
      *
-     * @return TmpDraftErrorEntity
+     * @return DraftErrorEntity
      */
-    public function setDraft(TmpDraftEntity $draft): TmpDraftErrorEntity
+    public function setDraft(DraftEntity $draft): DraftErrorEntity
     {
         $this->draft = $draft;
 
@@ -98,9 +94,9 @@ class TmpDraftErrorEntity implements EntityInterface
     /**
      * @param string $path
      *
-     * @return TmpDraftErrorEntity
+     * @return DraftErrorEntity
      */
-    public function setPath(string $path): TmpDraftErrorEntity
+    public function setPath(string $path): DraftErrorEntity
     {
         $this->path = $path;
 
@@ -118,9 +114,9 @@ class TmpDraftErrorEntity implements EntityInterface
     /**
      * @param string $message
      *
-     * @return TmpDraftErrorEntity
+     * @return DraftErrorEntity
      */
-    public function setMessage(string $message): TmpDraftErrorEntity
+    public function setMessage(string $message): DraftErrorEntity
     {
         $this->message = $message;
 

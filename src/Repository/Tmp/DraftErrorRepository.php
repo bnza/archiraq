@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Tmp;
 
-use App\Entity\TmpDraftEntity;
+use App\Entity\Tmp\DraftErrorEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class TmpDraftRepository extends ServiceEntityRepository
+class DraftErrorRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, TmpDraftEntity::class);
+        parent::__construct($registry, DraftErrorEntity::class);
     }
 }

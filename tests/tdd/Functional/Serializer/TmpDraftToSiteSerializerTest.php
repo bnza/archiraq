@@ -4,7 +4,7 @@ namespace App\Tests\Functional\Serializer;
 
 use App\Entity\ContributeEntity;
 use App\Entity\SiteEntity;
-use App\Entity\TmpDraftEntity;
+use App\Entity\Tmp\DraftEntity;
 use App\Serializer\TmpDraftToSiteConverter;
 use App\Tests\Functional\AbstractPgTestIsolation;
 use App\Tests\Functional\TestKernelUtilsTrait;
@@ -73,14 +73,14 @@ class TmpDraftToSiteSerializerTest extends AbstractPgTestIsolation
         return $this->converter;
     }
 
-    private function getDraftEntity(): TmpDraftEntity
+    private function getDraftEntity(): DraftEntity
     {
         $contribute = new ContributeEntity();
         $contribute->setSha1(sha1('A'));
         $contribute->setId(1);
         $contribute->setEmail('example@mail.com');
         $this->getEntityManager()->persist($contribute);
-        $draft = new TmpDraftEntity();
+        $draft = new DraftEntity();
         $draft->setCompilationDate('2018-11-22');
         $draft->setDistrict('Hilla');
         $draft->setContribute($contribute);

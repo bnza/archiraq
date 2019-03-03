@@ -9,7 +9,7 @@ use App\Entity\Voc\ChronologyEntity;
 use App\Entity\Geom\DistrictBoundaryEntity;
 use App\Entity\Geom\SiteBoundaryEntity;
 use App\Entity\SiteEntity;
-use App\Entity\TmpDraftEntity;
+use App\Entity\Tmp\DraftErrorEntity;
 use App\Serializer\Denormalizer\SiteEntityDenormalizer;
 use App\Serializer\Normalizer\TmpDraftEntityNormalizer;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,7 +37,7 @@ class TmpDraftToSiteConverter extends AbstractEntityConverter
 
     public function getSourceClass(): string
     {
-        return TmpDraftEntity::class;
+        return DraftEntity::class;
     }
 
     public function getTargetClass(): string
@@ -55,7 +55,7 @@ class TmpDraftToSiteConverter extends AbstractEntityConverter
     }
 
     /**
-     * Prepares TmpDraftEntity for SiteEntity denormalization
+     * Prepares DraftEntity for SiteEntity denormalization
      *
      * @see SiteEntityDenormalizer::denormalize()
      * @param array $object
