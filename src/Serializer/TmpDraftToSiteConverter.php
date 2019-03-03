@@ -123,6 +123,7 @@ class TmpDraftToSiteConverter extends AbstractEntityConverter
                 if (!\array_key_exists($ksurvey, $this->surveys)) {
                     $survey = $repo->findOneBy(['code' => $ksurvey]);
                     if (!$survey) {
+                        // No survey found. Adding new one
                         $survey = new SurveyEntity();
                         $survey->setCode($ksurvey);
                         $this->getEntityManager()->persist($survey);

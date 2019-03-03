@@ -25,8 +25,6 @@ trait CommandUtilsTrait
      */
     protected $command;
 
-    abstract public function getBaseOmDir(): string;
-
     abstract public function setCommandParameters(Command $command): void;
 
     protected function executeCommandTester(string $name, array $input = [], array $options = []): CommandTester
@@ -48,9 +46,11 @@ trait CommandUtilsTrait
         $input = \array_merge($input, $defaultInput);
         $options = \array_merge($options, $defaultOptions);
 
-        if (\method_exists($this, 'getEntityManager')) {
+/*        if (\method_exists($this, 'getEntityManager')) {
             $command->setEntityManager($this->getEntityManager());
-        }
+        }*/
+
+        $this->setCommandParameters($command);
 
         $commandTester->execute($input, $options);
 

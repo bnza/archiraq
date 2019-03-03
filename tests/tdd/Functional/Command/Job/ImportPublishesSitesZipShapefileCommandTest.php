@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: petrux
- * Date: 02/02/19
- * Time: 20.46.
- */
 
 namespace App\Tests\Functional\Command\Job;
 
@@ -74,7 +68,7 @@ class ImportPublishesSitesZipShapefileCommandTest extends AbstractPgTestIsolatio
 
     public function setCommandParameters(Command $command)
     {
-        $command->setWorkDir($this->getBaseWorkDir());
+        $command->setEntityManager($this->getEntityManager());
     }
 
     /**
@@ -82,7 +76,6 @@ class ImportPublishesSitesZipShapefileCommandTest extends AbstractPgTestIsolatio
      */
     protected function setUpAssets(string $zipPath)
     {
-        //'tdd/shp/zip/simple.shp.zip'
         $this->zipPath = $this->copyAssetToTempDir($zipPath, 'site.zip');
         $this->assertFileExists($this->zipPath);
     }

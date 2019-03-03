@@ -60,6 +60,11 @@ class DistrictBoundaryEntity implements EntityInterface
      */
     private $geom;
 
+    public function __construct()
+    {
+        $this->sites = new ArrayCollection();
+    }
+
     /**
      * @return int
      */
@@ -143,7 +148,7 @@ class DistrictBoundaryEntity implements EntityInterface
     /**
      * @return NationBoundaryEntity
      */
-    public function getGovernorate(): NationBoundaryEntity
+    public function getGovernorate(): GovernorateBoundaryEntity
     {
         return $this->governorate;
     }
@@ -153,7 +158,7 @@ class DistrictBoundaryEntity implements EntityInterface
      *
      * @return DistrictBoundaryEntity
      */
-    public function setGovernorate(NationBoundaryEntity $governorate): DistrictBoundaryEntity
+    public function setGovernorate(GovernorateBoundaryEntity $governorate): DistrictBoundaryEntity
     {
         $this->governorate = $governorate;
 

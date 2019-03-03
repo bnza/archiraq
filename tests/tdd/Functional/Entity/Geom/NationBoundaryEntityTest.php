@@ -8,6 +8,7 @@
 
 namespace App\Tests\Functional\Entity\Geom;
 
+use App\Entity\Geom\GovernorateBoundaryEntity;
 use App\Entity\Geom\NationBoundaryEntity;
 use App\Tests\Functional\AbstractPgTestIsolation;
 
@@ -23,6 +24,16 @@ class NationBoundaryEntityTest extends AbstractPgTestIsolation
         $this->savepoint();
     }
 
+    public function propValueProvider(): array
+    {
+        return [
+            ['Code', 'IQ'],
+            ['Name', 'A name'],
+            ['AlternativeName', 'An alternative name'],
+            ['Geom', 'A geoJson string']
+        ];
+    }
+
     public function testPersistEntityDoesWork()
     {
         $this->executeSqlAssetFile('tdd/sql/admbnd0.sql');
@@ -31,6 +42,26 @@ class NationBoundaryEntityTest extends AbstractPgTestIsolation
         $nation = $this->getEntityManager()->getRepository(NationBoundaryEntity::class)->find('IQ');
         $this->assertCount(18, $nation->getGovernorates());
         $this->assertCount(4, $nation->getGovernorates()->first()->getDistricts());
+    }
+
+    /**
+     * @dataProvider propValueProvider
+     * @param string $prop
+     * @param $value
+     */
+    public function testSettersGettersDoesWork(string $prop, $value)
+    {
+        $nation = new NationBoundaryEntity();
+        $nation->{"set$prop"}($value);
+        $this->assertEquals($value, $nation->{"get$prop"}());
+    }
+
+    public function testAddGovernateDoesWork()
+    {
+        $nation = new NationBoundaryEntity();
+        $governorate = new GovernorateBoundaryEntity();
+        $nation->addGovernorate($governorate);
+        $this->assertCount(1, $nation->getGovernorates());
     }
 
     public function tearDown()

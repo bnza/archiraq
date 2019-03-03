@@ -2,6 +2,8 @@
 
 namespace App\Command\Job;
 
+
+use App\Runner\Job\ValidateTmpDraftEntriesJob;
 use Bnza\JobManagerBundle\Runner\Job\JobInterface;
 use Bnza\JobManagerBundle\Command\AbstractJobListenerCommand;
 use Bnza\JobManagerBundle\ObjectManager\ObjectManagerInterface;
@@ -10,19 +12,26 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use App\Runner\Job\ImportPublishedSitesZipShapefileJob;
 
-class ImportPublishesSitesZipShapefileCommand extends AbstractJobListenerCommand
+
+class ValidateTmpDraftEntriesCommand extends AbstractJobListenerCommand
 {
     use DatabaseTrait;
-    use WorkDirTrait;
+    use ValidatorTrait;
     use SummaryTrait;
 
-    protected $path = '';
+    protected static $defaultName = 'app:validate:tmp-draft';
 
-    protected static $defaultName = 'app:import:sites-zip';
+    /**
+     * @var int
+     */
+    protected $contributeId;
 
-    public function __construct(ObjectManagerInterface $om, EventDispatcherInterface $dispatcher, EntityManagerInterface $em)
+    public function __construct(
+        ObjectManagerInterface $om,
+        EventDispatcherInterface $dispatcher,
+        EntityManagerInterface $em
+    )
     {
         parent::__construct($om, $dispatcher);
         $this->em = $em;
@@ -31,28 +40,27 @@ class ImportPublishesSitesZipShapefileCommand extends AbstractJobListenerCommand
     public function configure()
     {
         $help = <<<'EOT'
-Import a zip compressed shapefile into "public"."contribute" archiraq table assigning all entities to a new 
-"public"."contribute" table entry with PENDING status
+Validates "tmp"."draft" table's entries registering errors in "tmp"."draft_error" table
 EOT;
         $this
-            ->setDescription('Import a zip compressed shapefile into "public"."draft" archiraq table')
+            ->setDescription('Validates "tmp"."draft" table\'s entries')
             ->setHelp($help)
-            ->addArgument('path', InputArgument::REQUIRED, 'The zip path');
+            ->addArgument('contribute', InputArgument::REQUIRED, 'The contribute id');
     }
 
     protected function setUpJob(): JobInterface
     {
-        $job = new ImportPublishedSitesZipShapefileJob($this->getObjectManager(), $this->getDispatcher(), '');
-        $job->setWorkDir($this->getBaseWorkDir());
+        $job = new ValidateTmpDraftEntriesJob($this->getObjectManager(), $this->getDispatcher(), '');
         $job->setEntityManager($this->getEntityManager());
-        $job->setSourceZipShapefilePath($this->path);
+        $job->setValidator($this->getValidator());
+        $job->setContribute($this->contributeId);
 
         return $job;
     }
 
     public function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->path = $input->getArgument('path');
+        $this->contributeId = $input->getArgument('contribute');
         $this->job = $this->setUpJob();
         parent::initialize($input, $output);
     }
