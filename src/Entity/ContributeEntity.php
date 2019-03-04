@@ -38,7 +38,7 @@ class ContributeEntity implements EntityInterface
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="App\Entity\Tmp\DraftEntity", mappedBy="contribute")
      */
-    private $tmp_drafts;
+    private $drafts;
 
     /**
      * @Assert\NotBlank()
@@ -87,7 +87,7 @@ class ContributeEntity implements EntityInterface
     public function __construct()
     {
         $this->sites = new ArrayCollection();
-        $this->tmp_drafts = new ArrayCollection();
+        $this->drafts = new ArrayCollection();
     }
 
     /**
@@ -224,7 +224,7 @@ class ContributeEntity implements EntityInterface
      */
     public function getDrafts(): iterable
     {
-        return $this->tmp_drafts;
+        return $this->drafts;
     }
 
     /**
@@ -232,7 +232,7 @@ class ContributeEntity implements EntityInterface
      */
     public function addDraft(DraftEntity $draft): void
     {
-        $this->tmp_drafts[] = $draft;
+        $this->drafts[] = $draft;
         $draft->setContribute($this);
     }
 

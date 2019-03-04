@@ -12,4 +12,18 @@ class DraftErrorRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, DraftErrorEntity::class);
     }
+
+    public function getByContribute(int $id): array
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb
+            ->select('e')
+            ->leftJoin('e.draft', 'd')
+            ->leftJoin('d.contribute', 'c')
+            ->where('c.id = ?1')
+            ->setParameter(1, $id)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

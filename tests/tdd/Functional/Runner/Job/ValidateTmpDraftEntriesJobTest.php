@@ -72,7 +72,8 @@ class ValidateTmpDraftEntriesJobTest extends AbstractPgTestIsolation
                     'tdd/sql/test/validate_tmp_drafts_job/admbnd.sql',
                     'tdd/sql/chronology.sql',
                     'tdd/sql/test/validate_tmp_drafts_job/valid_fixtures.sql'
-                ]
+                ],
+                true
             ],
             [
                 1,
@@ -81,7 +82,8 @@ class ValidateTmpDraftEntriesJobTest extends AbstractPgTestIsolation
                     'tdd/sql/test/validate_tmp_drafts_job/admbnd.sql',
                     'tdd/sql/chronology.sql',
                     'tdd/sql/test/validate_tmp_drafts_job/invalid_fixtures.sql'
-                ]
+                ],
+                false
             ],
         ];
     }
@@ -95,10 +97,19 @@ class ValidateTmpDraftEntriesJobTest extends AbstractPgTestIsolation
      * @param string $assertions
      * @param array $assets
      */
-    public function testJobSteps(int $limit, string $assertions, array $assets)
+    public function testJobSteps(int $limit, string $assertions, array $assets, bool $isValid)
     {
         $this->assets = $assets;
         $this->executeTestSteps($limit, $assertions);
+        $repo = $this->getEntityManager()->getRepository(ContributeEntity::class);
+
+        $contribute = $repo->find(100);
+        // Assert status validate
+        $this->assertTrue((bool) ($contribute->getStatus() & ContributeEntity::STATUS_VALIDATE));
+
+        // Assert status valid
+        $this->assertEquals($isValid, (bool) ($contribute->getStatus() & ContributeEntity::STATUS_VALID));
+
     }
 
     protected function getJobClassName(): string
