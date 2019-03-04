@@ -58,7 +58,6 @@ class PersistSitesFromTmpDraftsTask extends AbstractTask
     public function getSteps(): iterable
     {
         $contribute = $this->getContribute();
-        $this->getEntityManager()->refresh($contribute);
 
         $generator = function () use ($contribute) {
             foreach ($contribute->getDrafts() as $draft) {

@@ -64,6 +64,7 @@ abstract class AbstractPgTestIsolation extends KernelTestCase
     {
         $connection = $this->getEntityManager($em)->getConnection();
         $connection->exec("ROLLBACK TO SAVEPOINT \"$savepoint\"");
+        $this->getEntityManager()->clear();
     }
 
     protected function executeSql(string $sql, string $em = 'default')

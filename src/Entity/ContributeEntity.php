@@ -36,7 +36,7 @@ class ContributeEntity implements EntityInterface
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Tmp\DraftEntity", mappedBy="contribute")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tmp\DraftEntity", mappedBy="contribute", cascade={"refresh"})
      */
     private $drafts;
 
@@ -236,14 +236,14 @@ class ContributeEntity implements EntityInterface
         $draft->setContribute($this);
     }
 
-    public function isValidate(): bool
+    public function isValidated(): bool
     {
         return (bool) ($this->status & self::STATUS_VALIDATE);
     }
 
     public function isValid(): bool
     {
-        return $this->isValidate() && ($this->status & self::STATUS_VALID);
+        return $this->isValidated() && ($this->status & self::STATUS_VALID);
     }
 
     public function isPending(): bool

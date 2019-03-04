@@ -12,4 +12,16 @@ class DraftRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, DraftEntity::class);
     }
+
+    public function getByContribute(int $id): array
+    {
+        $qb = $this->createQueryBuilder('d');
+        $qb
+            ->select('d')
+            ->innerJoin('d.contribute', 'c')
+            ->where('c.id = ?1')
+            ->setParameter(1, $id)
+        ;
+        return $qb->getQuery()->getResult();
+    }
 }

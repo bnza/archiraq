@@ -31,4 +31,5 @@ class ContributeRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getSingleScalarResult();
     }
+
 }

@@ -24,14 +24,4 @@ trait SummaryTrait
     {
         $this->summary = $summary;
     }
-
-    public function getSummary(): Summary
-    {
-        return $this->summary;
-    }
-
-    public function getJobSummaryEntry(): array
-    {
-        return $this->getSummary()->getJobEntry($this->getJob()->getId());
-    }
 }

@@ -11,6 +11,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 class ValidateTmpDraftEntriesJobTest extends AbstractPgTestIsolation
 {
     use AbstractJobTrait;
+
     /**
      * @var ObjectManager
      */
@@ -65,16 +66,16 @@ class ValidateTmpDraftEntriesJobTest extends AbstractPgTestIsolation
     public function stepsDataAssertionsProvider(): array
     {
         return [
-            [
-                1,
-                'assertThisTmpTablesContainsZeroEntry',
-                [
-                    'tdd/sql/test/validate_tmp_drafts_job/admbnd.sql',
-                    'tdd/sql/chronology.sql',
-                    'tdd/sql/test/validate_tmp_drafts_job/valid_fixtures.sql'
-                ],
-                true
-            ],
+//            [
+//                1,
+//                'assertThisTmpTablesContainsZeroEntry',
+//                [
+//                    'tdd/sql/test/validate_tmp_drafts_job/admbnd.sql',
+//                    'tdd/sql/chronology.sql',
+//                    'tdd/sql/test/validate_tmp_drafts_job/valid_fixtures.sql'
+//                ],
+//                true
+//            ],
             [
                 1,
                 'assertThisTmpTablesContainsTwoEntries',
@@ -105,10 +106,10 @@ class ValidateTmpDraftEntriesJobTest extends AbstractPgTestIsolation
 
         $contribute = $repo->find(100);
         // Assert status validate
-        $this->assertTrue((bool) ($contribute->getStatus() & ContributeEntity::STATUS_VALIDATE));
+        $this->assertTrue($contribute->isValidated());
 
         // Assert status valid
-        $this->assertEquals($isValid, (bool) ($contribute->getStatus() & ContributeEntity::STATUS_VALID));
+        $this->assertEquals($isValid, $contribute->isValid());
 
     }
 
@@ -122,7 +123,6 @@ class ValidateTmpDraftEntriesJobTest extends AbstractPgTestIsolation
         foreach ($this->assets as $asset) {
             $this->executeSqlAssetFile($asset);
         }
-
     }
 
     protected function getJob(): ValidateTmpDraftEntriesJob
