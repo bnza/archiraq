@@ -3,14 +3,14 @@
 namespace App\Runner\Job;
 
 use App\Runner\Task\Database\ValidateTmpDraftEntriesTask;
-use App\Entity\ContributeEntity;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 class ValidateTmpDraftEntriesJob extends AbstractDatabaseJob
 {
+    use ContributeTrait;
+
     const KEY_VALIDATOR = 'validator';
-    const KEY_CONTRIBUTE = 'contribute';
 
     public function getName(): string
     {
@@ -46,21 +46,5 @@ class ValidateTmpDraftEntriesJob extends AbstractDatabaseJob
         return $this->getParameter(self::KEY_VALIDATOR);
     }
 
-    public function setContribute($contribute)
-    {
-        if (!(is_int($contribute) || $contribute instanceof ContributeEntity)) {
-          throw new \InvalidArgumentException("Invalid contribute");
-        }
-        $this->getParameters()->set(self::KEY_CONTRIBUTE, $contribute);
-    }
 
-    public function getContribute(): ContributeEntity
-    {
-        $contribute = $this->getParameter(self::KEY_CONTRIBUTE);
-        if (is_int($contribute)) {
-            $contribute = $this->getEntityManager()->getRepository(ContributeEntity::class)->find($contribute);
-            $this->setContribute($contribute);
-        }
-        return $contribute;
-    }
 }

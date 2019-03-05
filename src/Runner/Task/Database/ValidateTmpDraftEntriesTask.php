@@ -39,7 +39,7 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
      */
     public function getDefaultDescription(): string
     {
-        return 'Validating temporary draft entities ("tmp""draft") to DB';
+        return 'Validating temporary draft entities ("tmp"."draft") to DB';
     }
 
     /**

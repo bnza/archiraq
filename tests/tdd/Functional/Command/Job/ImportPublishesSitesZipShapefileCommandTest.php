@@ -51,7 +51,7 @@ class ImportPublishesSitesZipShapefileCommandTest extends AbstractPgTestIsolatio
 
     public function testSuccessfulCommand()
     {
-        $this->setUpAssets('tdd/shp/zip/simple.shp.zip');
+        $this->setUpAssets('tdd/shp/zip/site.shp.zip');
         $tester = $this->executeCommandTester(SutCommand::getDefaultName(), ['path' => $this->zipPath]);
         $this->assertEquals(0, $tester->getStatusCode());
     }

@@ -39,6 +39,28 @@ services:
                 arguments:
                     -   '@Bnza\JobManagerBundle\Summary\Summary'
 
+    App\Command\Job\ValidateTmpDraftEntriesCommand:
+        tags:
+            -   name: 'console.command'
+        calls:
+            -   method: setValidator
+                arguments:
+                    - '@validator'
+            -   method: setSummary
+                arguments:
+                    - '@Bnza\JobManagerBundle\Summary\Summary'
+
+    App\Command\Job\ImportSitesFromTmpDraftCommand:
+        tags:
+            -   name: 'console.command'
+        calls:
+            -   method: setValidator
+                arguments:
+                    - '@validator'
+            -   method: setSummary
+                arguments:
+                    - '@Bnza\JobManagerBundle\Summary\Summary'
+
     Bnza\JobManagerBundle\Summary\Summary:
         arguments:
             $baseWorkDir: '%work_dir%'

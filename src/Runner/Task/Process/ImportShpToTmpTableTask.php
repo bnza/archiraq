@@ -63,8 +63,8 @@ class ImportShpToTmpTableTask extends AbstractTask
         $dmlPattern = '/^INSERT INTO\s+'.$this->getTableName().'.*;\n/m';
         \preg_match_all($dmlPattern, \file_get_contents($this->getDumpFile()), $matches);
         $generator = function () use ($matches) {
-            foreach ($matches as $match) {
-                yield $match;
+            foreach ($matches[0] as $match) {
+                yield [$match];
             }
         };
 

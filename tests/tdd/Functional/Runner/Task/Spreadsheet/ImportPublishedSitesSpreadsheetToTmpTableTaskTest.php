@@ -8,6 +8,7 @@
 
 namespace App\Tests\Functional\Runner\Task\Spreadsheet;
 
+use App\Entity\ContributeEntity;
 use App\Runner\Task\Spreadsheet\ImportPublishedSitesSpreadsheetToTmpTableTask;
 use App\Tests\Functional\AbstractPgTestIsolation;
 use App\Tests\Functional\Runner\Task\AbstractMockTrait;
@@ -80,6 +81,9 @@ class ImportPublishedSitesSpreadsheetToTmpTableTaskTest extends AbstractPgTestIs
 
     protected function callTaskSetters()
     {
+        $contribute = new ContributeEntity();
+        $contribute->setId(129);
+        $this->getTask()->setContribute($contribute);
         $this->getTask()->setEntityManager($this->getEntityManager());
         $this->getTask()->setSpreadsheetPath($this->getTestDir().DIRECTORY_SEPARATOR.$this->spreadsheetFileName);
     }

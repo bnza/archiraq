@@ -34,9 +34,11 @@ class SiteEntityDenormalizer extends AbstractEntityDenormalizer
 
         if (\array_key_exists('site_chronology', $context)) {
             foreach ($context['site_chronology'] as $chronology) {
-                $siteChronology = new SiteChronologyEntity();
-                $siteChronology->setChronology($chronology);
-                $site->addChronology($siteChronology);
+                if ($chronology) {
+                    $siteChronology = new SiteChronologyEntity();
+                    $siteChronology->setChronology($chronology);
+                    $site->addChronology($siteChronology);
+                }
             }
         }
 

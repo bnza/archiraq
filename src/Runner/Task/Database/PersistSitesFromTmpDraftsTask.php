@@ -1,27 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: petrux
- * Date: 05/02/19
- * Time: 14.50.
- */
 
 namespace App\Runner\Task\Database;
 
 use App\Entity\Tmp\DraftEntity;
+use App\Runner\Task\ContributeTrait;
 use App\Runner\Task\TaskEntityManagerTrait;
 use App\Serializer\TmpDraftToSiteConverter;
 use Bnza\JobManagerBundle\Runner\Task\AbstractTask;
-use App\Entity\ContributeEntity;
 
 class PersistSitesFromTmpDraftsTask extends AbstractTask
 {
     use TaskEntityManagerTrait;
-
-    /**
-     * @var ContributeEntity
-     */
-    protected $contribute;
+    use ContributeTrait;
 
     /**
      * @var TmpDraftToSiteConverter
@@ -85,22 +75,6 @@ class PersistSitesFromTmpDraftsTask extends AbstractTask
     {
         $site = $this->getConverter()->convert($draft);
         $this->getEntityManager()->persist($site);
-    }
-
-    /**
-     * @return ContributeEntity
-     */
-    public function getContribute(): ContributeEntity
-    {
-        return $this->contribute;
-    }
-
-    /**
-     * @param mixed $contribute
-     */
-    public function setContribute(ContributeEntity $contribute): void
-    {
-        $this->contribute = $contribute;
     }
 
     /**

@@ -21,6 +21,7 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
     const KEY_XLS_PATH = 'xls-path';
 
     use WorkDirTrait;
+    use ContributeTrait;
 
     public function getName(): string
     {
@@ -165,6 +166,7 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
             [
                 'class' => ImportPublishedSitesSpreadsheetToTmpTableTask::class,
                 'parameters' => [
+                    ['setContribute', 'getContribute'],
                     ['setSpreadSheetPath', 'getSpreadSheetPath'],
                     ['setEntityManager', 'getEntityManager'],
                 ],

@@ -2,6 +2,7 @@
 
 namespace App\Runner\Task\Spreadsheet;
 
+use App\Runner\Task\ContributeTrait;
 use App\Runner\Task\TaskEntityManagerTrait;
 use Doctrine\DBAL\Driver\Statement;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -10,6 +11,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 class ImportPublishedSitesSpreadsheetToTmpTableTask extends AbstractSpreadsheetTask
 {
     use TaskEntityManagerTrait;
+    use ContributeTrait;
 
     /**
      * @var Statement
@@ -65,6 +67,7 @@ class ImportPublishedSitesSpreadsheetToTmpTableTask extends AbstractSpreadsheetT
     protected function insertValues(Worksheet $worksheet, int $rowIndex)
     {
         $values = [];
+        $contributeId = $this->getContribute()->getId();
         $headers = $this->getHeaders();
         if ($rowIndex > 1) {
             foreach ($headers as $column => $key) {
@@ -74,11 +77,12 @@ class ImportPublishedSitesSpreadsheetToTmpTableTask extends AbstractSpreadsheetT
                     if ($value && 'compilation_date' === $key) {
                         $date = Date::excelToDateTimeObject($value)->format('Y-m-d');
                         $values[$key] = $date;
+                    } else {
+                        $values[$key] = $value ?: null;
                     }
-                    $values[$key] = $value ?: null;
                 }
             }
-            $values['contribute_id'] = null;
+            $values['contribute_id'] = $contributeId;
             $values['geom'] = null;
             $values['id'] = $rowIndex;
             $this->getInsertPreparedStatement()->execute($values);

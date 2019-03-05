@@ -4,6 +4,7 @@ namespace App\Entity\Tmp;
 
 use App\Entity\EntityInterface;
 use App\Entity\ContributeEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator\Constraints as AppAssert;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +13,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Tmp\DraftRepository")
  * @ORM\Table(name="draft", schema="tmp")
+ * @UniqueEntity(
+ *      fields={"entry_id", "contribute"},
+ *      message="Duplicate entry id {{ value }} for this contribute"
+ * )
  */
 class DraftEntity implements EntityInterface
 {

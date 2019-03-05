@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use DeepCopy\f001\A;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -285,7 +284,7 @@ class SiteEntity implements EntityInterface
      *
      * @return SiteEntity
      */
-    public function setModernName(string $modern_name): SiteEntity
+    public function setModernName(?string $modern_name): SiteEntity
     {
         $this->modern_name = $modern_name;
 
