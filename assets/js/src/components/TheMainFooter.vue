@@ -1,10 +1,10 @@
 <template>
     <v-footer
-        color="indigo"
+        color="gray"
         app
     >
         <span class="white--text">
-            &copy; 2018
+            &copy; 2019
         </span>
     </v-footer>
 </template>
@@ -14,7 +14,3 @@ export default {
     name: 'TheMainFooter'
 };
 </script>
-
-<style scoped>
-
-</style>

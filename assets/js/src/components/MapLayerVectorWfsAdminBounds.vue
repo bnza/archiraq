@@ -7,13 +7,13 @@ export default {
     computed: {
         visible: {
             get() {
-                return !!this.componentStoreMx_cid && this.componentStoreMx_cid === this.mapContainerComponentStoreMx_currentAdminBoundsLayer;
+                return !!this.cid && this.cid === this.mapContainerAdminBounds;
             },
             set(value) {
                 let currentAdminBoundsLayer;
                 if (value) {
                     // set the $store property
-                    currentAdminBoundsLayer = this.componentStoreMx_cid;
+                    currentAdminBoundsLayer = this.cid;
                 } else {
                     try {
                         if (this.visible) {
@@ -27,7 +27,7 @@ export default {
                         currentAdminBoundsLayer = '';
                     }
                 }
-                this.mapContainerComponentStoreMx_currentAdminBoundsLayer = currentAdminBoundsLayer;
+                this.mapContainerAdminBounds = currentAdminBoundsLayer;
             }
         }
     },

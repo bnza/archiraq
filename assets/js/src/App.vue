@@ -1,25 +1,23 @@
 <template>
     <v-app>
+        <the-main-toolbar />
         <the-main-navigation-drawer />
-        <the-main-top-toolbar
-            cid-p="the-main-top-toolbar"
-        />
         <v-content>
             <v-container
-                    class="no-side-padding"
-                    fluid
+                class="no-side-padding"
+                fluid
             >
                 <v-layout
                     align-space-between
                     justify-center
                     column
                 >
-                    <router-view />
                     <transition>
                         <keep-alive>
                             <router-view name="map" />
                         </keep-alive>
                     </transition>
+                    <router-view />
                 </v-layout>
             </v-container>
         </v-content>
@@ -28,20 +26,20 @@
 </template>
 
 <script>
-import TheMainFooter from './components/TheMainFooter';
+import {SET_ENV_DATA} from './store/actions';
 import TheMainNavigationDrawer from './components/TheMainNavigationDrawer';
-import TheMainTopToolbar from './components/TheMainTopToolbar';
-import {STORE_M_ROOT_A_ENV_DATA} from './utils/constants';
+import TheMainToolbar from './components/TheMainToolbar';
+import TheMainFooter from './components/TheMainFooter';
 
 export default {
     name: 'App',
     components: {
-        TheMainFooter,
         TheMainNavigationDrawer,
-        TheMainTopToolbar
+        TheMainToolbar,
+        TheMainFooter
     },
     beforeCreate: function () {
-        this.$store.dispatch(STORE_M_ROOT_A_ENV_DATA, window.envData).then(() => {
+        this.$store.dispatch(SET_ENV_DATA, window.envData).then(() => {
             delete window.envData;
             document.getElementById('env-data').remove();
         });
@@ -51,6 +49,7 @@ export default {
 
 <style scoped>
     .no-side-padding {
-        padding: 24px 0;
+        padding: 0 0 24px 0;
     }
 </style>
+

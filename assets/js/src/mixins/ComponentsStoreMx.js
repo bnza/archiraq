@@ -1,71 +1,60 @@
-//import STORE from '../store/store-funcs';
 import {mapGetters, mapMutations} from 'vuex';
-import {
-    STORE_M_COMPONENTS_G_COMPONENT_PROP,
-    STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP,
-    STORE_M_COMPONENTS_M_CREATE_COMPONENT,
-    STORE_M_COMPONENTS_M_COMPONENT_PROP
-} from '../utils/constants';
+import {HAS_COMPONENT, GET_COMPONENT_PROP} from '../store/components/getters';
+import {CREATE_COMPONENT, SET_COMPONENT_PROP, TOGGLE_COMPONENT_PROP} from '../store/components/mutations';
 
-const NAMESPACE = 'components';
 
 export default {
     data() {
         return {
-            componentStoreMx_cid: ''
+            cid: ''
         };
     },
     props: {
         cidP: {
             type: String,
             validator: (value) => {
-                return /^[\w-]+$/.test(value);
+                return /^[\w]+$/.test(value);
             }
         }
     },
     computed: {
-        ...mapGetters(NAMESPACE, [
-            STORE_M_COMPONENTS_G_COMPONENT_PROP
+        ...mapGetters('components', [
+            HAS_COMPONENT,
+            GET_COMPONENT_PROP
         ]),
-    },
-    created() {
-        if (this.cidP) {
-            this.$data.componentStoreMx_cid = this.cidP;
-        }
-        if (
-            this.$data.componentStoreMx_cid
-            && !this.$store.state.components.all.hasOwnProperty(this.$data.componentStoreMx_cid)
-        ) {
-            this[STORE_M_COMPONENTS_M_CREATE_COMPONENT]({cid: this.$data.componentStoreMx_cid});
-        }
     },
     methods: {
-        ...mapMutations(NAMESPACE, [
-            STORE_M_COMPONENTS_M_CREATE_COMPONENT,
-            STORE_M_COMPONENTS_M_COMPONENT_PROP,
-            STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP
+        ...mapMutations('components', [
+            CREATE_COMPONENT,
+            SET_COMPONENT_PROP,
+            TOGGLE_COMPONENT_PROP
         ]),
-        componentStoreMx_getStoreProp(prop) {
-            return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](this.$data.componentStoreMx_cid, prop);
+        getProp(prop) {
+            return this[GET_COMPONENT_PROP](this.cid, prop);
         },
-        componentStoreMx_setStoreProp(prop, value) {
-            this[STORE_M_COMPONENTS_M_COMPONENT_PROP]({
-                cid: this.$data.componentStoreMx_cid,
+        setProp(prop, value) {
+            this[SET_COMPONENT_PROP]({
+                cid: this.cid,
                 prop: prop,
                 value: value
             });
         },
-        componentStoreMx_toggleStoreProp(prop) {
-            this[STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP]({
-                cid: this.$data.componentStoreMx_cid,
+        toggleProp(prop) {
+            this[TOGGLE_COMPONENT_PROP]({
+                cid: this.cid,
                 prop: prop
             });
-        },
-        componentStoreMx_getter(name) {
-            return this[name];
-        },
-        componentStoreMx_mutation(name, payload) {
-            this[name](payload);
+        }
+    },
+    created() {
+        if (this.cidP) {
+            this.cid = this.cidP;
+        }
+        if (
+            this.cid
+            && !this[HAS_COMPONENT](this.cid)
+        ) {
+            this[CREATE_COMPONENT]({cid: this.cid});
         }
     }
 };

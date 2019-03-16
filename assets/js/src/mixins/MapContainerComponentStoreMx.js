@@ -1,85 +1,85 @@
 import ComponentsStoreMx from './ComponentsStoreMx';
+import {GET_COMPONENT_PROP} from '../store/components/getters';
+import {SET_COMPONENT_PROP, TOGGLE_COMPONENT_PROP} from '../store/components/mutations';
 
-import {
-    CID_THE_MAP_CONTAINER,
-    STORE_M_COMPONENTS_G_COMPONENT_PROP,
-    STORE_M_COMPONENTS_M_COMPONENT_PROP,
-    PK_CURRENT_ADMIN_BOUNDS_LAYER,
-    PK_CURRENT_BASE_MAP,
-    PK_CURRENT_BING_IMAGERY_SET,
-    PK_CURRENT_LAYER,
-    PK_SELECTED_FEATURES
-} from '../utils/constants';
+const CID_THE_MAP_CONTAINER = 'TheMapContainer';
+const CID_MAP_LAYER_VECTOR_WFS_VW_SITES = 'MapLayerVectorWfsVwSites';
 
 export default {
     mixins: [
         ComponentsStoreMx
     ],
     computed: {
-        mapContainerComponentStoreMx_currentBaseMap: {
+        mapContainerHeight: {
             get() {
-                return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](CID_THE_MAP_CONTAINER, PK_CURRENT_BASE_MAP);
+                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'height');
             },
             set(value) {
-                this.componentStoreMx_mutation(STORE_M_COMPONENTS_M_COMPONENT_PROP, {
+                this[SET_COMPONENT_PROP]({
                     cid: CID_THE_MAP_CONTAINER,
-                    prop: PK_CURRENT_BASE_MAP,
+                    prop: 'height',
                     value: value
                 });
             }
         },
-        mapContainerComponentStoreMx_currentBingImagerySet: {
+        mapContainerCurrentLayer: {
             get() {
-                return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](CID_THE_MAP_CONTAINER, PK_CURRENT_BING_IMAGERY_SET);
+                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'currentLayer');
             },
             set(value) {
-                this.componentStoreMx_mutation(STORE_M_COMPONENTS_M_COMPONENT_PROP, {
+                this[SET_COMPONENT_PROP]({
                     cid: CID_THE_MAP_CONTAINER,
-                    prop: PK_CURRENT_BING_IMAGERY_SET,
+                    prop: 'currentLayer',
                     value: value
                 });
             }
         },
-        mapContainerComponentStoreMx_currentLayer: {
+        mapContainerBaseMap: {
             get() {
-                return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](CID_THE_MAP_CONTAINER, PK_CURRENT_LAYER);
+                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'baseMap');
             },
             set(value) {
-                this.componentStoreMx_mutation(STORE_M_COMPONENTS_M_COMPONENT_PROP, {
+                this[SET_COMPONENT_PROP]({
                     cid: CID_THE_MAP_CONTAINER,
-                    prop: PK_CURRENT_LAYER,
+                    prop: 'baseMap',
                     value: value
                 });
             }
         },
-        mapContainerComponentStoreMx_currentAdminBoundsLayer: {
+        mapContainerAdminBounds: {
             get() {
-                return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](CID_THE_MAP_CONTAINER, PK_CURRENT_ADMIN_BOUNDS_LAYER);
+                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'adminBounds');
             },
             set(value) {
-                this.componentStoreMx_mutation(STORE_M_COMPONENTS_M_COMPONENT_PROP, {
+                this[SET_COMPONENT_PROP]({
                     cid: CID_THE_MAP_CONTAINER,
-                    prop: PK_CURRENT_ADMIN_BOUNDS_LAYER,
+                    prop: 'adminBounds',
                     value: value
                 });
             }
         },
-        mapContainerComponentStoreMx_selectedFeatures: {
+        mapContainerBingImagerySet: {
             get() {
-                return this[STORE_M_COMPONENTS_G_COMPONENT_PROP](CID_THE_MAP_CONTAINER, PK_SELECTED_FEATURES);
+                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'bingImagerySet');
             },
             set(value) {
-                this.componentStoreMx_mutation(STORE_M_COMPONENTS_M_COMPONENT_PROP, {
+                this[SET_COMPONENT_PROP]({
                     cid: CID_THE_MAP_CONTAINER,
-                    prop: PK_SELECTED_FEATURES,
+                    prop: 'bingImagerySet',
                     value: value
+                });
+            }
+        },
+        mapContainerVwSitesVisible: {
+            get() {
+                return this[GET_COMPONENT_PROP](CID_MAP_LAYER_VECTOR_WFS_VW_SITES, 'visible');
+            },
+            set() {
+                this[TOGGLE_COMPONENT_PROP]({
+                    cid: CID_MAP_LAYER_VECTOR_WFS_VW_SITES,
+                    prop: 'visible'
                 });
             }
         },
     },
-    methods: {
-        mapContainerComponentStoreMx_getLayerProperties(cid) {
-
-        }
-    }
 };

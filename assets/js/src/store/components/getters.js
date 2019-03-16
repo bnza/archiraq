@@ -1,4 +1,6 @@
-import {STORE_M_COMPONENTS_G_COMPONENT, STORE_M_COMPONENTS_G_COMPONENT_PROP} from '../../utils/constants';
+export const HAS_COMPONENT = 'hasComponent';
+export const GET_COMPONENT = 'getComponent';
+export const GET_COMPONENT_PROP = 'getComponentProp';
 
 export const getComponent = (state) => (id) => {
     if (!state.all.hasOwnProperty(id)) {
@@ -8,9 +10,12 @@ export const getComponent = (state) => (id) => {
 };
 
 export default {
-    [STORE_M_COMPONENTS_G_COMPONENT]: getComponent,
-    [STORE_M_COMPONENTS_G_COMPONENT_PROP]: (state, getter) => (id, prop) => {
-        const component = getter[STORE_M_COMPONENTS_G_COMPONENT](id);
+    [HAS_COMPONENT]: (state) => (id) => {
+        return state.all.hasOwnProperty(id);
+    },
+    [GET_COMPONENT]: getComponent,
+    [GET_COMPONENT_PROP]: (state, getter) => (id, prop) => {
+        const component = getter[GET_COMPONENT](id);
         if (!component.hasOwnProperty(prop)) {
             throw new ReferenceError(`No "${prop}" property in "${id}" component found`);
         }

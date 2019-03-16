@@ -1,7 +1,7 @@
-import {STORE_M_GS_M_BASE_URL} from '../../utils/constants';
+export const SET_BASE_URL = 'setBaseUrl';
 
 export default {
-    [STORE_M_GS_M_BASE_URL](state, baseUrl) {
+    [SET_BASE_URL](state, baseUrl) {
         state.baseUrl = baseUrl;
     }
 };

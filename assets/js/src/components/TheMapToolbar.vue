@@ -4,58 +4,34 @@
         dense
     >
         <v-toolbar-side-icon
-            :data-test="DT_THE_MAP_TOOLBAR_LEFT_SIDE_ICON"
-            @click.stop="componentStoreMx_mutation(
-                STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP,
-                {
-                    cid: CID_THE_MAP_LAYERS_DRAWER,
-                    prop: 'visible'
-                }
-            )"
+            data-test="the-map-toolbar--side-icon"
+            @click.stop="toggleMapLayersDrawerVisibility"
         />
-        <v-toolbar-title>Title</v-toolbar-title>
-        <v-spacer />
-        <v-btn
-            :data-test="DT_THE_MAP_TOOLBAR_PROPERTIES_BUTTON"
-            icon
-            @click.stop="componentStoreMx_mutation(
-                STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP,
-                {
-                    cid: CID_THE_MAP_PROPERTIES_DRAWER,
-                    prop: 'visible'
-                }
-            )"
-        >
-            <v-icon>view_list</v-icon>
-        </v-btn>
+        <v-toolbar-title>Map</v-toolbar-title>
     </v-toolbar>
 </template>
 
 <script>
-import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
-import {
-    CID_THE_MAP_PROPERTIES_DRAWER,
-    CID_THE_MAP_LAYERS_DRAWER,
-    STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP,
-    DT_THE_MAP_TOOLBAR_LEFT_SIDE_ICON,
-    DT_THE_MAP_TOOLBAR_PROPERTIES_BUTTON
-} from '../utils/constants';
+import ComponentsStoreMx from '../mixins/ComponentsStoreMx';
+import {TOGGLE_COMPONENT_PROP} from '../store/components/mutations';
+import {CID as CID_THE_MAP_LAYERS_DRAWER}  from './TheMapLayersDrawer';
+export const CID = 'TheMapToolbar';
 
 export default {
-    name: 'TheMapToolbar',
+    name: CID,
     mixins: [
-        MapContainerComponentStoreMx
+        ComponentsStoreMx
     ],
-    computed: {
-        STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP: () => STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP,
-        CID_THE_MAP_LAYERS_DRAWER: () => CID_THE_MAP_LAYERS_DRAWER,
-        CID_THE_MAP_PROPERTIES_DRAWER: () => CID_THE_MAP_PROPERTIES_DRAWER,
-        DT_THE_MAP_TOOLBAR_LEFT_SIDE_ICON: () => DT_THE_MAP_TOOLBAR_LEFT_SIDE_ICON,
-        DT_THE_MAP_TOOLBAR_PROPERTIES_BUTTON: () => DT_THE_MAP_TOOLBAR_PROPERTIES_BUTTON
+    data() {
+        return {
+            cid: CID
+        };
+    },
+    methods: {
+        toggleMapLayersDrawerVisibility() {
+            this[TOGGLE_COMPONENT_PROP]({cid: CID_THE_MAP_LAYERS_DRAWER, prop: 'visible'});
+        }
     }
 };
 </script>
 
-<style scoped>
-
-</style>

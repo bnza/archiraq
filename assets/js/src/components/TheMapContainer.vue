@@ -3,11 +3,11 @@
         <the-map-toolbar />
         <vl-map
             ref="map"
-            :data-test="DT_THE_MAP_CONTAINER"
+            data-test="the-map-container"
             :load-tiles-while-animating="true"
             :load-tiles-while-interacting="true"
             data-projection="EPSG:4326"
-            style="height: 400px"
+            :style="'height: '+mapContainerHeight"
         >
             <vl-view
                 :zoom.sync="zoom"
@@ -15,83 +15,82 @@
                 :rotation.sync="rotation"
                 projection="EPSG:4326"
             />
-            <!-- Base Maps -->
             <vl-layer-tile
                 id="bingmaps"
-                :visible="'bing'===mapContainerComponentStoreMx_currentBaseMap"
+                data-test="base-map-tile-bingmaps"
+                :visible="'bing'===mapContainerBaseMap"
             >
                 <vl-source-bingmaps
-                    :api-key="apiKey"
-                    :imagery-set="mapContainerComponentStoreMx_currentBingImagerySet"
+                    :api-key="bingApiKey"
+                    :imagery-set="mapContainerBingImagerySet"
                 />
             </vl-layer-tile>
             <vl-layer-tile
                 id="osm"
-                :visible="'osm'===mapContainerComponentStoreMx_currentBaseMap"
+                data-test="base-map-tile-osm"
+                :visible="'osm'===mapContainerBaseMap"
             >
                 <vl-source-osm />
             </vl-layer-tile>
-            <!--// Base Maps -->
-            <map-admin-bounds-layer-group />
+            <map-layer-group-admin-bounds />
+            <map-layer-vector-wfs-vw-sites />
             <the-map-layers-drawer />
-            <the-map-properties-drawer />
         </vl-map>
     </v-card>
 </template>
 
 <script>
-//import ol from 'ol';
-import {
-    CID_THE_MAP_CONTAINER,
-    DT_THE_MAP_CONTAINER,
-} from '../utils/constants';
-import TheMapLayersDrawer from './TheMapLayersDrawer';
+import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
+import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx';
 import TheMapToolbar from './TheMapToolbar';
-import TheMapPropertiesDrawer from './TheMapPropertiesDrawer';
-import MapAdminBoundsLayerGroup from './MapAdminBoundsLayerGroup';
-import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
+import TheMapLayersDrawer from './TheMapLayersDrawer';
+import MapLayerGroupAdminBounds from './MapLayerGroupAdminBounds';
+import MapLayerVectorWfsVwSites from './MapLayerVectorWfsVwSites';
+import {CID_ADMIN_BOUNDS_DISTRICTS} from './MapLayerGroupAdminBounds';
+
+export const CID = 'TheMapContainer';
+export const HEIGHT = '500px';
 
 export default {
-    name: 'TheMapContainer',
+    name: CID,
     components: {
-        MapAdminBoundsLayerGroup,
-        TheMapLayersDrawer,
         TheMapToolbar,
-        TheMapPropertiesDrawer
+        TheMapLayersDrawer,
+        MapLayerVectorWfsVwSites,
+        MapLayerGroupAdminBounds,
     },
     mixins: [
+        ComponentStoreVisibleMx,
         MapContainerComponentStoreMx
     ],
     data() {
         return {
+            cid: CID,
             zoom: 6,
             center: [0, 0],
             rotation: 0,
-            apiKey: this.$store.state.bingApiKey,
-            componentStoreMx_cid: CID_THE_MAP_CONTAINER
         };
     },
     computed: {
-        DT_THE_MAP_CONTAINER: () => DT_THE_MAP_CONTAINER
+        bingApiKey() {
+            return this.$store.state.bingApiKey;
+        }
     },
     created() {
-        this.mapContainerComponentStoreMx_currentBaseMap = this.$store.state.default.baseMap;
-        this.mapContainerComponentStoreMx_currentBingImagerySet =  this.$store.state.default.bingImagerySet;
-        this.mapContainerComponentStoreMx_currentLayer =  this.$store.state.default.currentLayer;
-        this.mapContainerComponentStoreMx_selectedFeatures =  [];
+        this.mapContainerHeight = HEIGHT;
+        this.mapContainerAdminBounds = CID_ADMIN_BOUNDS_DISTRICTS;
+        this.mapContainerCurrentLayer = CID_ADMIN_BOUNDS_DISTRICTS;
+        this.mapContainerBaseMap = 'bing';
+        this.mapContainerBingImagerySet = 'AerialWithLabels';
     },
-    mounted () {
+    mounted() {
         // get vl-map by ref="map" and await ol.Map creation
         this.$refs.map.$createPromise.then(() => {
-            this.center = [ 47.44, 33.37];
+            this.center = [47.44, 33.37];
             if (process.env.NODE_ENV !== 'production') {
                 window.map = this.$refs.map.$map;
-                //window.ol = ol;
             }
         });
-    },
-    methods: {
-
     },
 };
 </script>

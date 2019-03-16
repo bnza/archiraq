@@ -1,14 +1,14 @@
 /* global context, cy */
 import {getDataTestSelector} from '../../unit/utils';
-const TID_DRAWER = 'the-map-layers-drawer--aside';
-const TID_SIDE_ICON = 'the-map-toolbar--side-icon';
+const TID_DRAWER = 'the-main-navigation-drawer--aside';
+const TID_SIDE_ICON = 'the-main-toolbar--side-icon';
 
-context('<TheMapToolbar>', () => {
+context('<TheMainToolbar>', () => {
     beforeEach(() => {
         cy.visit('http://archiraq.local');
     });
 
-    it('click on side button show/hide <TheMapLayersDrawer>', () => {
+    it('click on left button show/hide <TheMainNavigationDrawer>', () => {
         const cyDrawerSelector = getDataTestSelector(TID_DRAWER);
         const cyButtonSelector = getDataTestSelector(TID_SIDE_ICON);
         cy.get(cyDrawerSelector).then(($drawer) => {

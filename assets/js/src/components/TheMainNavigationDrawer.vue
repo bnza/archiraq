@@ -1,42 +1,26 @@
 <template>
     <v-navigation-drawer
         v-model="visible"
+        data-test="the-main-navigation-drawer--aside"
         clipped
-        :hide-overlay="true"
         app
     />
 </template>
 
 <script>
-import {CID_THE_MAIN_NAVIGATION_DRAWER} from '../utils/constants';
-import ComponentsStoreMx from '../../src/mixins/ComponentsStoreMx';
+import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
+
+export const CID = 'TheMainNavigationDrawer';
 
 export default {
-    name: 'TheMainNavigationDrawer',
+    name: CID,
     mixins: [
-        ComponentsStoreMx
+        ComponentStoreVisibleMx
     ],
     data() {
         return {
-            componentStoreMx_cid: CID_THE_MAIN_NAVIGATION_DRAWER
+            cid: CID
         };
-    },
-    computed: {
-        visible: {
-            get() {
-                return this.componentStoreMx_getStoreProp('visible');
-            },
-            set(value) {
-                this.componentStoreMx_setStoreProp('visible', value);
-            }
-        }
-    },
-    created() {
-        this.visible = false;
-    },
+    }
 };
 </script>
-
-<style scoped>
-
-</style>

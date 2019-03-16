@@ -21,13 +21,15 @@ import { shiftKeyOnly, singleClick } from 'ol/events/condition';
 import * as olExt from 'vuelayers/lib/ol-ext';
 import { fetch } from 'whatwg-fetch';
 import {headers} from '../utils/http';
-import {STORE_M_GS_AUTH_G_GUEST_AUTH} from '../utils/constants';
-import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
+import {GET_GUEST_AUTH} from '../store/geoserver/auth/getters';
+import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx';
+import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
 
 export default {
     name: 'MapLayerVectorWfs',
     mixins: [
-        MapContainerComponentStoreMx
+        MapContainerComponentStoreMx,
+        ComponentStoreVisibleMx
     ],
     props: {
         typename: {
@@ -46,32 +48,34 @@ export default {
     },
     computed: {
         isCurrentLayer() {
-            return !!this.componentStoreMx_cid
-                    && this.mapContainerComponentStoreMx_currentLayer === this.componentStoreMx_cid;
-        },
-        visible: {
-            get() {
-                return this.componentStoreMx_getStoreProp('visible');
-            },
-            set(value) {
-                this.componentStoreMx_setStoreProp('visible', !!value);
-            }
+            return !!this.cid
+                    && this.mapContainerCurrentLayer === this.cid;
         }
     },
     watch: {
+        isCurrentLayer: function (flag) {
+            if (flag) {
+                this.selectedFeatures = this.getProp('selectedFeatures');
+            } else {
+                this.selectedFeatures = [];
+            }
+        },
         visible: function (flag) {
-            if (!flag) {
+            if (flag) {
+                this.selectedFeatures = this.getProp('selectedFeatures');
+            } else {
                 this.selectedFeatures = [];
             }
         },
         selectedFeatures: function (features) {
-            if (this.isCurrentLayer) {
-                this.mapContainerComponentStoreMx_selectedFeatures = features;
+            if (this.isCurrentLayer && this.visible) {
+                this.setProp('selectedFeatures', features);
             }
         }
     },
     created() {
         this.visible = this.visibleP;
+        this.setProp('selectedFeatures', this.selectedFeatures);
     },
     methods: {
         selectCondition(olMapBrowserEvent)  {
@@ -101,7 +105,7 @@ export default {
                     credentials: 'same-origin',
                     mode: 'cors',
                     headers: headers.setAuthorizationBasic(
-                        vm.$store.getters[`geoserver/auth/${STORE_M_GS_AUTH_G_GUEST_AUTH}`]
+                        vm.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`]
                     )
                 }).then(function (response) {
                     return response.text();
@@ -109,7 +113,6 @@ export default {
                     if (!vm.$source) {
                         return [];
                     }
-
                     return vm.$source.getFormat().readFeatures(text, {
                         featureProjection: vm.viewProjection,
                         dataProjection: vm.resolvedDataProjection

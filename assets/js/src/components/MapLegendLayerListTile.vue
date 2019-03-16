@@ -12,23 +12,7 @@
             <v-list-tile-title>{{ title }}</v-list-tile-title>
         </v-list-tile-content>
         <v-list-tile-action v-if="$slots.action">
-            <v-menu offset-y>
-                <v-tooltip
-                    slot="activator"
-                    bottom
-                >
-                    <v-btn
-                        slot="activator"
-                        color="primary"
-                        icon
-                        flat
-                    >
-                        <v-icon>more_vert</v-icon>
-                    </v-btn>
-                    <span>Settings</span>
-                </v-tooltip>
-                <slot name="action" />
-            </v-menu>
+            <slot name="action" />
         </v-list-tile-action>
     </v-list-tile>
 </template>
@@ -37,7 +21,7 @@
 import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
 
 export default {
-    name: 'MapLayerListTile',
+    name: 'MapLegendLayerListTile',
     mixins: [
         MapContainerComponentStoreMx
     ],
@@ -54,13 +38,13 @@ export default {
     computed: {
         isCurrentLayer() {
             return !!this.layerCid
-          && this.mapContainerComponentStoreMx_currentLayer === this.layerCid;
+          && this.mapContainerCurrentLayer === this.layerCid;
         }
     },
     methods: {
         setCurrentLayer() {
             if (this.layerCid !== '') {
-                this.mapContainerComponentStoreMx_currentLayer = this.layerCid;
+                this.mapContainerCurrentLayer = this.layerCid;
             }
         }
     }

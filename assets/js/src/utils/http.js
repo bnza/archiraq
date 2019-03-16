@@ -1,5 +1,13 @@
 import {merge} from 'lodash';
-import {isBase64} from './assert';
+
+export const isBase64 = (str) => {
+    try {
+        atob(str);
+        return true;
+    } catch (e) {
+        return false;
+    }
+};
 
 export var getUserNameFromAuth = (auth) => {
     auth = isBase64(auth) ? atob(auth) : auth;
@@ -28,5 +36,3 @@ export const headers = {
         );
     }
 };
-
-export const dataTestSelector = (value) => `[data-test="${value}"]`;

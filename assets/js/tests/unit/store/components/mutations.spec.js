@@ -1,56 +1,23 @@
-import mutations from '../../../../src/store/components/mutations';
-import {
-    STORE_M_COMPONENTS_M_COMPONENT_PROP,
-    STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP,
-    STORE_M_COMPONENTS_M_CREATE_COMPONENT
-} from '../../../../src/utils/constants';
+import mutations, * as consts from '../../../../src/store/components/mutations';
 
-describe('components mutations', () => {
-
+describe('store/components mutations', () => {
     let mutation;
 
-    const throwsRange = () => {
-        const state = {all: {dummy: {}}};
-
-        function t() {
-            mutation(state, {
-                cid: 'dummy',
-                prop: 'drawer'
-            });
-        }
-
-        expect(t).toThrowError(RangeError);
-    };
-
-    const throwsType = () => {
-        const state = {all: {dummy: {drawer: 10}}};
-
-        function t() {
-            mutation(state, {
-                cid: 'dummy',
-                prop: 'drawer'
-            });
-        }
-
-        expect(t).toThrowError(TypeError);
-    };
-
-    describe(STORE_M_COMPONENTS_M_CREATE_COMPONENT, () => {
-        it('Success', () => {
+    describe(consts.CREATE_COMPONENT, () => {
+        it('create new component', () => {
             const state = {all: {}};
-            mutations[STORE_M_COMPONENTS_M_CREATE_COMPONENT](state, {cid: 'dummy'});
+            mutations[consts.CREATE_COMPONENT](state, {cid: 'dummy'});
             expect(state.all).toHaveProperty('dummy', {});
         });
-
     });
 
-    describe(STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP, () => {
+    describe(consts.TOGGLE_COMPONENT_PROP, () => {
 
         beforeEach(() => {
-            mutation = mutations[STORE_M_COMPONENTS_M_TOGGLE_COMPONENT_PROP];
+            mutation = mutations[consts.TOGGLE_COMPONENT_PROP];
         });
 
-        it('Success', () => {
+        it('toggle property value', () => {
 
             const state = {all: {dummy: {drawer: false}}};
 
@@ -68,16 +35,12 @@ describe('components mutations', () => {
 
             expect(state.all.dummy.drawer).toBe(false);
         });
-
-        it('Throws when property does not exist', throwsRange);
-
-        it('Throws when property is not boolean', throwsType);
     });
 
-    describe(STORE_M_COMPONENTS_M_COMPONENT_PROP, () => {
+    describe(consts.SET_COMPONENT_PROP, () => {
 
         beforeEach(() => {
-            mutation = mutations[STORE_M_COMPONENTS_M_COMPONENT_PROP];
+            mutation = mutations[consts.SET_COMPONENT_PROP];
         });
 
         it('Success', () => {

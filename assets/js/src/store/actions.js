@@ -1,14 +1,13 @@
-import {
-    STORE_M_ROOT_A_ENV_DATA,
-    STORE_M_ROOT_M_BING_API_KEY,
-    STORE_M_GS_M_BASE_URL,
-    STORE_M_GS_AUTH_M_GUEST_TOKEN
-} from '../utils/constants';
+import {SET_BING_API_KEY} from './mutations';
+import {SET_BASE_URL} from './geoserver/mutations';
+import {SET_GUEST_TOKEN} from './geoserver/auth/mutations';
+
+export const SET_ENV_DATA = 'setEnvData';
 
 export default {
-    [STORE_M_ROOT_A_ENV_DATA]({commit}, {bingApiKey, geoServer}) {
-        commit(STORE_M_ROOT_M_BING_API_KEY, bingApiKey);
-        commit(`geoserver/${STORE_M_GS_M_BASE_URL}`, geoServer.baseUrl);
-        commit(`geoserver/auth/${STORE_M_GS_AUTH_M_GUEST_TOKEN}`, {auth: geoServer.guestAuth});
+    [SET_ENV_DATA]({commit}, {bingApiKey, geoServer}) {
+        commit(SET_BING_API_KEY, bingApiKey);
+        commit(`geoserver/${SET_BASE_URL}`, geoServer.baseUrl);
+        commit(`geoserver/auth/${SET_GUEST_TOKEN}`, {auth: geoServer.guestAuth});
     },
 };
