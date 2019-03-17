@@ -18,7 +18,7 @@
                 >
                     <map-legend-layer-list-tile
                         title="Sites"
-                        :layer-cid="CID_VW_SITES"
+                        :layer-cid="CID_MAP_LAYER_VECTOR_WFS_VW_SITES"
                     >
                         <v-checkbox
                             slot="visibility"
@@ -33,35 +33,35 @@
                 >
                     <map-legend-layer-list-tile
                         title="Nations"
-                        :layer-cid="CID_ADMIN_BOUNDS_NATIONS"
+                        :layer-cid="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0"
                     >
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerAdminBounds"
                             data-test="the-map-layers-drawer--checkbox-admin-bounds-0-visibility"
-                            :value="CID_ADMIN_BOUNDS_NATIONS"
+                            :value="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0"
                         />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
                         title="Governorates"
-                        :layer-cid="CID_ADMIN_BOUNDS_GOVERNORATES"
+                        :layer-cid="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1"
                     >
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerAdminBounds"
                             data-test="the-map-layers-drawer--checkbox-admin-bounds-1-visibility"
-                            :value="CID_ADMIN_BOUNDS_GOVERNORATES"
+                            :value="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1"
                         />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
                         title="Districts"
-                        :layer-cid="CID_ADMIN_BOUNDS_DISTRICTS"
+                        :layer-cid="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2"
                     >
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerAdminBounds"
                             data-test="the-map-layers-drawer--checkbox-admin-bounds-2-visibility"
-                            :value="CID_ADMIN_BOUNDS_DISTRICTS"
+                            :value="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2"
                         />
                     </map-legend-layer-list-tile>
                 </map-legend-list-group>
@@ -104,14 +104,17 @@
 <script>
 import MapLegendLayerListTile from './MapLegendLayerListTile';
 import MapLegendListGroup from './MapLegendListGroup';
-import MapLayerSettingDialog from './MapLayerSettingDialog';
+import MapLayerSettingDialog from './MapLayerSettingsDialog';
 import BingBaseMapSettingsDialogLayout from './BingBaseMapSettingsDialogLayout';
 import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
 import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx';
-import {CID_ADMIN_BOUNDS_DISTRICTS, CID_ADMIN_BOUNDS_GOVERNORATES, CID_ADMIN_BOUNDS_NATIONS} from './MapLayerGroupAdminBounds';
-import {CID as CID_VW_SITES} from './MapLayerVectorWfsVwSites';
-
-export const CID = 'TheMapLayersDrawer';
+import {
+    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
+    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
+    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
+    CID_MAP_LAYER_VECTOR_WFS_VW_SITES,
+    CID_THE_MAP_LAYERS_DRAWER as CID
+} from '../utils/cids';
 
 export default {
     name: CID,
@@ -131,10 +134,10 @@ export default {
         };
     },
     computed: {
-        CID_VW_SITES: () => CID_VW_SITES,
-        CID_ADMIN_BOUNDS_NATIONS: () => CID_ADMIN_BOUNDS_NATIONS,
-        CID_ADMIN_BOUNDS_GOVERNORATES: () => CID_ADMIN_BOUNDS_GOVERNORATES,
-        CID_ADMIN_BOUNDS_DISTRICTS: () => CID_ADMIN_BOUNDS_DISTRICTS
+        CID_MAP_LAYER_VECTOR_WFS_VW_SITES: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES,
+        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
+        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
+        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2
     }
 };
 </script>

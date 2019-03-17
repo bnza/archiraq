@@ -1,9 +1,10 @@
 import ComponentsStoreMx from './ComponentsStoreMx';
 import {GET_COMPONENT_PROP} from '../store/components/getters';
 import {SET_COMPONENT_PROP, TOGGLE_COMPONENT_PROP} from '../store/components/mutations';
-
-const CID_THE_MAP_CONTAINER = 'TheMapContainer';
-const CID_MAP_LAYER_VECTOR_WFS_VW_SITES = 'MapLayerVectorWfsVwSites';
+import {
+    CID_THE_MAP_CONTAINER,
+    CID_MAP_LAYER_VECTOR_WFS_VW_SITES
+} from '../utils/cids';
 
 export default {
     mixins: [

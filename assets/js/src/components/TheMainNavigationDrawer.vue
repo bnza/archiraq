@@ -9,8 +9,7 @@
 
 <script>
 import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
-
-export const CID = 'TheMainNavigationDrawer';
+import {CID_THE_MAIN_NAVIGATION_DRAWER as CID} from '../utils/cids';
 
 export default {
     name: CID,

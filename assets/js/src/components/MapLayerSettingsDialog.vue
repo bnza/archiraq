@@ -44,7 +44,8 @@
 </template>
 
 <script>
-export const CID = 'MapLayerSettingsDialog';
+import {CID_MAP_LATER_SETTINGS_DIALOG as CID} from '../utils/cids';
+
 export default {
     name: CID,
     props: {

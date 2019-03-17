@@ -1,6 +1,6 @@
 <template>
     <map-layer-vector-wfs
-        :cid-p="CID_MAP_LAYER_VECTOR_WFS_VW_SITES"
+        :cid-p="CID"
         typename="archiraq:vw_site"
         :visible-p="true"
     />
@@ -8,9 +8,7 @@
 <script>
 import MapLayerVectorWfs from './MapLayerVectorWfs';
 import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
-
-export const CID = 'MapLayerVectorWfsVwSites';
-export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES = CID;
+import {CID_MAP_LAYER_VECTOR_WFS_VW_SITES as CID} from '../utils/cids';
 
 export default {
     name: CID,
@@ -26,7 +24,7 @@ export default {
         };
     },
     computed: {
-        CID_MAP_LAYER_VECTOR_WFS_VW_SITES: () => CID
+        CID: () => CID
     },
 };
 </script>

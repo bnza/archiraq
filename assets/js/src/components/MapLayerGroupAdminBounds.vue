@@ -1,17 +1,17 @@
 <template>
     <div>
         <map-layer-vector-wfs-admin-bounds
-            :cid-p="CID_ADMIN_BOUNDS_NATIONS"
+            :cid-p="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0"
             typename="archiraq:admbnd0"
             :visible-p="false"
         />
         <map-layer-vector-wfs-admin-bounds
-            :cid-p="CID_ADMIN_BOUNDS_GOVERNORATES"
+            :cid-p="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1"
             typename="archiraq:admbnd1"
             :visible-p="false"
         />
         <map-layer-vector-wfs-admin-bounds
-            :cid-p="CID_ADMIN_BOUNDS_DISTRICTS"
+            :cid-p="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2"
             typename="archiraq:admbnd2"
             :visible-p="false"
         />
@@ -20,20 +20,25 @@
 
 <script>
 
-export const CID_ADMIN_BOUNDS_NATIONS = 'MapLayerVectorWfsAdminBoundsNations';
-export const CID_ADMIN_BOUNDS_GOVERNORATES = 'MapLayerVectorWfsAdminBoundsGovernorates';
-export const CID_ADMIN_BOUNDS_DISTRICTS = 'MapLayerVectorWfsAdminBoundsDistricts';
+import {
+    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
+    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
+    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
+    CID_MAP_LAYER_GROUP_ADMIN_BOUNDS as CID
+} from '../utils/cids';
+
 
 import MapLayerVectorWfsAdminBounds from './MapLayerVectorWfsAdminBounds';
+
 export default {
-    name: 'MapLayerGroupAdminBounds',
+    name: CID,
     components: {
         MapLayerVectorWfsAdminBounds
     },
     computed: {
-        CID_ADMIN_BOUNDS_NATIONS: () => CID_ADMIN_BOUNDS_NATIONS,
-        CID_ADMIN_BOUNDS_GOVERNORATES: () => CID_ADMIN_BOUNDS_GOVERNORATES,
-        CID_ADMIN_BOUNDS_DISTRICTS: () => CID_ADMIN_BOUNDS_DISTRICTS
+        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
+        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
+        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2
     }
 };
 </script>

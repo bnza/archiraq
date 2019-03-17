@@ -22,8 +22,8 @@
 
 <script>
 import MapContainerComponentStoreMx from '../../src/mixins/MapContainerComponentStoreMx';
+import {CID_BING_BASE_MAP_SETTINGS_DIALOG_LAYOUT as CID} from '../utils/cids';
 
-export const CID = 'BingBaseMapSettingsDialog';
 export default {
     name: CID,
     mixins: [

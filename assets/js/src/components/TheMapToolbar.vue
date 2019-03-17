@@ -14,8 +14,10 @@
 <script>
 import ComponentsStoreMx from '../mixins/ComponentsStoreMx';
 import {TOGGLE_COMPONENT_PROP} from '../store/components/mutations';
-import {CID as CID_THE_MAP_LAYERS_DRAWER}  from './TheMapLayersDrawer';
-export const CID = 'TheMapToolbar';
+import {
+    CID_THE_MAP_TOOLBAR as CID,
+    CID_THE_MAP_LAYERS_DRAWER
+} from '../utils/cids';
 
 export default {
     name: CID,

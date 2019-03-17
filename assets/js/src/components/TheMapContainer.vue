@@ -46,9 +46,12 @@ import TheMapToolbar from './TheMapToolbar';
 import TheMapLayersDrawer from './TheMapLayersDrawer';
 import MapLayerGroupAdminBounds from './MapLayerGroupAdminBounds';
 import MapLayerVectorWfsVwSites from './MapLayerVectorWfsVwSites';
-import {CID_ADMIN_BOUNDS_DISTRICTS} from './MapLayerGroupAdminBounds';
+import {
+    CID_THE_MAP_CONTAINER as CID,
+    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
+    CID_MAP_LAYER_VECTOR_WFS_VW_SITES
+} from '../utils/cids';
 
-export const CID = 'TheMapContainer';
 export const HEIGHT = '500px';
 
 export default {
@@ -78,8 +81,8 @@ export default {
     },
     created() {
         this.mapContainerHeight = HEIGHT;
-        this.mapContainerAdminBounds = CID_ADMIN_BOUNDS_DISTRICTS;
-        this.mapContainerCurrentLayer = CID_ADMIN_BOUNDS_DISTRICTS;
+        this.mapContainerAdminBounds = CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2;
+        this.mapContainerCurrentLayer = CID_MAP_LAYER_VECTOR_WFS_VW_SITES;
         this.mapContainerBaseMap = 'bing';
         this.mapContainerBingImagerySet = 'AerialWithLabels';
     },
