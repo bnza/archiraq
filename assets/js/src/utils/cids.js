@@ -8,5 +8,6 @@ export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES = 'MapLayerVectorWfsVwSites';
 export const CID_THE_MAIN_NAVIGATION_DRAWER = 'TheMainNavigationDrawer';
 export const CID_THE_MAP_CONTAINER = 'TheMapContainer';
 export const CID_THE_MAIN_TOOLBAR = 'TheMainToolbar';
+export const CID_THE_MAP_FOOTER = 'TheMapFooter';
 export const CID_THE_MAP_LAYERS_DRAWER = 'TheMapLayersDrawer';
 export const CID_THE_MAP_TOOLBAR = 'TheMapToolbar';

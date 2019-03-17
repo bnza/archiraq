@@ -71,6 +71,24 @@ export default {
                 });
             }
         },
+        mapContainerPointerCoords: {
+            get() {
+                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'pointerCoords');
+            },
+            set(value) {
+                this[SET_COMPONENT_PROP]({
+                    cid: CID_THE_MAP_CONTAINER,
+                    prop: 'pointerCoords',
+                    value: value
+                });
+            }
+        },
+        mapContainerPointerCoordX() {
+            return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'pointerCoords')[0];
+        },
+        mapContainerPointerCoordY() {
+            return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'pointerCoords')[1];
+        },
         mapContainerVwSitesVisible: {
             get() {
                 return this[GET_COMPONENT_PROP](CID_MAP_LAYER_VECTOR_WFS_VW_SITES, 'visible');
