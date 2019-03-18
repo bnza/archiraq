@@ -54,10 +54,10 @@ describe('ComponentsStoreMx', () => {
                         [getNamespacedStoreProp('components', HAS_COMPONENT)]: jest.fn(),
                         [getNamespacedStoreProp('components', GET_COMPONENT_PROP)]: getStoreProp,
                     }
+                },
+                propsData: {
+                    visibleP: true
                 }
-            };
-            componentOptions.propsData = {
-                visibleP: true
             };
             const wrapper = getWrapper('shallowMount', componentOptions, mountOptions);
             expect(wrapper.vm.$store.commit).toHaveBeenCalledWith(
