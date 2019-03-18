@@ -267,6 +267,30 @@ CREATE TABLE "geom"."site" (
 ALTER TABLE "geom"."site" OWNER TO "test_archiraq_admin";
 
 
+CREATE TABLE "geom"."vw_site" (
+    "id" integer,
+    "sbah_no" character varying,
+    "modern_name" character varying,
+    "nearest_city" character varying,
+    "ancient_name" "text",
+    "district_id" integer,
+    "district" character varying,
+    "governorate" character varying,
+    "nation" character varying,
+    "chronology" "text",
+    "surveys" "text",
+    "survey_refs" "text",
+    "geom" "public"."geometry"(MultiPolygon,4326),
+    "centroid" "public"."geometry",
+    "area" double precision
+);
+
+ALTER TABLE ONLY "geom"."vw_site" REPLICA IDENTITY NOTHING;
+
+
+ALTER TABLE "geom"."vw_site" OWNER TO "test_archiraq_admin";
+
+
 CREATE SEQUENCE "public"."seq___contribute__id"
     START WITH 1
     INCREMENT BY 1
@@ -428,30 +452,6 @@ CREATE TABLE "public"."site_survey" (
 
 
 ALTER TABLE "public"."site_survey" OWNER TO "test_archiraq_admin";
-
-
-CREATE TABLE "public"."vw_site" (
-    "id" integer,
-    "sbah_no" character varying,
-    "modern_name" character varying,
-    "nearest_city" character varying,
-    "ancient_name" "text",
-    "district_id" integer,
-    "district" character varying,
-    "governorate" character varying,
-    "nation" character varying,
-    "chronology" "text",
-    "surveys" "text",
-    "survey_refs" "text",
-    "geom" "public"."geometry"(MultiPolygon,4326),
-    "centroid" "public"."geometry",
-    "area" double precision
-);
-
-ALTER TABLE ONLY "public"."vw_site" REPLICA IDENTITY NOTHING;
-
-
-ALTER TABLE "public"."vw_site" OWNER TO "test_archiraq_admin";
 
 
 CREATE SEQUENCE "tmp"."seq___draft__id"
@@ -724,7 +724,7 @@ ALTER TABLE ONLY "voc"."survey"
 
 
 CREATE RULE "_RETURN" AS
-    ON SELECT TO "public"."vw_site" DO INSTEAD  SELECT "s"."id",
+    ON SELECT TO "geom"."vw_site" DO INSTEAD  SELECT "s"."id",
     "s"."sbah_no",
     "s"."modern_name",
     "s"."nearest_city",
@@ -741,7 +741,7 @@ CREATE RULE "_RETURN" AS
     "string_agg"(DISTINCT ("vs"."code")::"text", ';'::"text") AS "surveys",
     "array_to_string"("array_agg"(DISTINCT "concat_ws"('.'::"text", "vs"."code", "ss"."ref")), ';'::"text") AS "survey_refs",
     "gs"."geom",
-    "public"."st_centroid"("gs"."geom") AS "centroid",
+    "public"."st_setsrid"("public"."st_centroid"("gs"."geom"), 4326) AS "centroid",
     "public"."st_area"(("gs"."geom")::"public"."geography") AS "area"
    FROM (((((((("public"."site" "s"
      LEFT JOIN "geom"."admbnd2" "ab2" ON (("s"."district_id" = "ab2"."id")))
@@ -753,7 +753,6 @@ CREATE RULE "_RETURN" AS
      LEFT JOIN "voc"."survey" "vs" ON (("ss"."survey_id" = "vs"."id")))
      LEFT JOIN "geom"."site" "gs" ON (("s"."id" = "gs"."id")))
   GROUP BY "s"."id", "ab2"."id", "ab2"."name", "ab1"."name", "ab0"."name", "gs"."geom";
-ALTER VIEW "public"."vw_site" SET ("security_barrier"='false');
 
 
 

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\View\SiteRepository")
- * @ORM\Table(name="vw_site", schema="public")
+ * @ORM\Table(name="vw_site", schema="geom")
  */
 class SiteEntity implements EntityInterface
 {
