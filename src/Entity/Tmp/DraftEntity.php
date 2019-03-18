@@ -32,7 +32,7 @@ class DraftEntity implements EntityInterface
 
     /**
      * @var ContributeEntity
-     * @ORM\ManyToOne(targetEntity="App\Entity\ContributeEntity", inversedBy="tmp_drafts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ContributeEntity", inversedBy="drafts")
      * @ORM\JoinColumn(name="contribute_id", referencedColumnName="id", nullable=false, onDelete="NO ACTION")
      */
     private $contribute;

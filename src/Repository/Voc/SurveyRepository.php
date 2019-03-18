@@ -1,19 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: petrux
- * Date: 01/03/19
- * Time: 16.21
- */
 
 namespace App\Repository\Voc;
 
 use App\Entity\Voc\SurveyEntity;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\AbstractCrudRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 
-class SurveyRepository extends ServiceEntityRepository
+class SurveyRepository extends AbstractCrudRepository
 {
     public function __construct(RegistryInterface $registry)
     {

@@ -3,10 +3,10 @@
 namespace App\Repository\Tmp;
 
 use App\Entity\Tmp\DraftErrorEntity;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\AbstractCrudRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class DraftErrorRepository extends ServiceEntityRepository
+class DraftErrorRepository extends AbstractCrudRepository
 {
     public function __construct(RegistryInterface $registry)
     {

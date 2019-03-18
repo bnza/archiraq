@@ -3,10 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\SiteEntity;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class SiteRepository extends ServiceEntityRepository
+class SiteRepository extends AbstractCrudRepository
 {
     public function __construct(RegistryInterface $registry)
     {

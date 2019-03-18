@@ -3,10 +3,10 @@
 namespace App\Repository\Tmp;
 
 use App\Entity\Tmp\DraftEntity;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\AbstractCrudRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class DraftRepository extends ServiceEntityRepository
+class DraftRepository extends AbstractCrudRepository
 {
     public function __construct(RegistryInterface $registry)
     {

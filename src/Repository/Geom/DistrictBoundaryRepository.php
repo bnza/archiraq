@@ -3,10 +3,10 @@
 namespace App\Repository\Geom;
 
 use App\Entity\Geom\DistrictBoundaryEntity;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\AbstractCrudRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class DistrictBoundaryRepository extends ServiceEntityRepository
+class DistrictBoundaryRepository extends AbstractCrudRepository
 {
     public function __construct(RegistryInterface $registry)
     {

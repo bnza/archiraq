@@ -430,6 +430,30 @@ CREATE TABLE "public"."site_survey" (
 ALTER TABLE "public"."site_survey" OWNER TO "test_archiraq_admin";
 
 
+CREATE TABLE "public"."vw_site" (
+    "id" integer,
+    "sbah_no" character varying,
+    "modern_name" character varying,
+    "nearest_city" character varying,
+    "ancient_name" "text",
+    "district_id" integer,
+    "district" character varying,
+    "governorate" character varying,
+    "nation" character varying,
+    "chronology" "text",
+    "surveys" "text",
+    "survey_refs" "text",
+    "geom" "public"."geometry"(MultiPolygon,4326),
+    "centroid" "public"."geometry",
+    "area" double precision
+);
+
+ALTER TABLE ONLY "public"."vw_site" REPLICA IDENTITY NOTHING;
+
+
+ALTER TABLE "public"."vw_site" OWNER TO "test_archiraq_admin";
+
+
 CREATE SEQUENCE "tmp"."seq___draft__id"
     START WITH 1
     INCREMENT BY 1
@@ -696,6 +720,40 @@ ALTER TABLE ONLY "voc"."chronology"
 
 ALTER TABLE ONLY "voc"."survey"
     ADD CONSTRAINT "uq___voc__survey__name" UNIQUE ("id");
+
+
+
+CREATE RULE "_RETURN" AS
+    ON SELECT TO "public"."vw_site" DO INSTEAD  SELECT "s"."id",
+    "s"."sbah_no",
+    "s"."modern_name",
+    "s"."nearest_city",
+    (("s"."ancient_name")::"text" ||
+        CASE
+            WHEN "s"."ancient_name_uncertain" THEN '?'::"text"
+            ELSE ''::"text"
+        END) AS "ancient_name",
+    "ab2"."id" AS "district_id",
+    "ab2"."name" AS "district",
+    "ab1"."name" AS "governorate",
+    "ab0"."name" AS "nation",
+    "string_agg"(DISTINCT ("vc"."code")::"text", ';'::"text") AS "chronology",
+    "string_agg"(DISTINCT ("vs"."code")::"text", ';'::"text") AS "surveys",
+    "array_to_string"("array_agg"(DISTINCT "concat_ws"('.'::"text", "vs"."code", "ss"."ref")), ';'::"text") AS "survey_refs",
+    "gs"."geom",
+    "public"."st_centroid"("gs"."geom") AS "centroid",
+    "public"."st_area"(("gs"."geom")::"public"."geography") AS "area"
+   FROM (((((((("public"."site" "s"
+     LEFT JOIN "geom"."admbnd2" "ab2" ON (("s"."district_id" = "ab2"."id")))
+     LEFT JOIN "geom"."admbnd1" "ab1" ON (("ab2"."admbnd1_id" = "ab1"."id")))
+     LEFT JOIN "geom"."admbnd0" "ab0" ON (("ab1"."admbnd0_code" = "ab0"."code")))
+     LEFT JOIN "public"."site_chronology" "sc" ON (("s"."id" = "sc"."site_id")))
+     LEFT JOIN "voc"."chronology" "vc" ON (("sc"."chronology_id" = "vc"."id")))
+     LEFT JOIN "public"."site_survey" "ss" ON (("s"."id" = "ss"."site_id")))
+     LEFT JOIN "voc"."survey" "vs" ON (("ss"."survey_id" = "vs"."id")))
+     LEFT JOIN "geom"."site" "gs" ON (("s"."id" = "gs"."id")))
+  GROUP BY "s"."id", "ab2"."id", "ab2"."name", "ab1"."name", "ab0"."name", "gs"."geom";
+ALTER VIEW "public"."vw_site" SET ("security_barrier"='false');
 
 
 

@@ -3,10 +3,10 @@
 namespace App\Repository\Voc;
 
 use App\Entity\Voc\ChronologyEntity;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\AbstractCrudRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class ChronologyRepository extends ServiceEntityRepository
+class ChronologyRepository extends AbstractCrudRepository
 {
     public function __construct(RegistryInterface $registry)
     {

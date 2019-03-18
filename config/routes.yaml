@@ -1,3 +1,20 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+data__crud__list:
+    path:       /data/{entityName}
+    controller: App\Controller\DataCrudController::list
+    methods:    [GET]
+    requirements:
+        entityName: '[\w\-?]+'
+
+data__crud__read:
+    path:       /data/{entityName}/{id}
+    controller: App\Controller\DataCrudController::read
+    methods:    [GET]
+    requirements:
+        entityName: '[\w\-?]+'
+        id: '\d+'
+
+
