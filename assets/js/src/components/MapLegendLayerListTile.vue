@@ -4,9 +4,7 @@
         @click="setCurrentLayer"
     >
         <v-list-tile-action>
-            <v-list-tile-action>
-                <slot name="visibility" />
-            </v-list-tile-action>
+            <slot name="visibility" />
         </v-list-tile-action>
         <v-list-tile-content>
             <v-list-tile-title>{{ title }}</v-list-tile-title>

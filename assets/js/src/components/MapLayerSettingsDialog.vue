@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import {CID_MAP_LATER_SETTINGS_DIALOG as CID} from '../utils/cids';
+import {CID_MAP_LAYER_SETTINGS_DIALOG as CID} from '../utils/cids';
 
 export default {
     name: CID,

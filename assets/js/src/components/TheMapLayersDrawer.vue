@@ -25,6 +25,10 @@
                             v-model="mapContainerVwSitesVisible"
                             data-test="the-map-layers-drawer--checkbox-vw-sites"
                         />
+                        <open-attribute-table-button
+                            slot="action"
+                            table="vw-site"
+                        />
                     </map-legend-layer-list-tile>
                 </map-legend-list-group>
                 <map-legend-list-group
@@ -78,12 +82,12 @@
                             data-test="the-map-layers-drawer--checkbox-base-map-bing-visibility"
                             value="bing"
                         />
-                        <map-layer-setting-dialog
+                        <map-layer-settings-dialog
                             slot="action"
                             title="Bing Maps"
                         >
                             <bing-base-map-settings-dialog-layout />
-                        </map-layer-setting-dialog>
+                        </map-layer-settings-dialog>
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
                         title="Open Street Map"
@@ -104,7 +108,8 @@
 <script>
 import MapLegendLayerListTile from './MapLegendLayerListTile';
 import MapLegendListGroup from './MapLegendListGroup';
-import MapLayerSettingDialog from './MapLayerSettingsDialog';
+import MapLayerSettingsDialog from './MapLayerSettingsDialog';
+import OpenAttributeTableButton from './OpenAttributeTableButton';
 import BingBaseMapSettingsDialogLayout from './BingBaseMapSettingsDialogLayout';
 import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
 import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx';
@@ -121,7 +126,8 @@ export default {
     components: {
         MapLegendLayerListTile,
         MapLegendListGroup,
-        MapLayerSettingDialog,
+        MapLayerSettingsDialog,
+        OpenAttributeTableButton,
         BingBaseMapSettingsDialogLayout
     },
     mixins: [
