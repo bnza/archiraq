@@ -19,9 +19,11 @@
 <script>
 import { shiftKeyOnly, singleClick } from 'ol/events/condition';
 import * as olExt from 'vuelayers/lib/ol-ext';
-import { fetch } from 'whatwg-fetch';
 import {headers} from '../utils/http';
+import {SET_OFF} from '../store/geoserver/mutations';
 import {GET_GUEST_AUTH} from '../store/geoserver/auth/getters';
+import {REQUEST} from '../store/client/actions';
+import HttpClientMx from '../mixins/HttpClientMx';
 import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx';
 import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
 
@@ -29,7 +31,8 @@ export default {
     name: 'MapLayerVectorWfs',
     mixins: [
         MapContainerComponentStoreMx,
-        ComponentStoreVisibleMx
+        ComponentStoreVisibleMx,
+        HttpClientMx
     ],
     props: {
         typename: {
@@ -99,24 +102,32 @@ export default {
         },
         loaderFactory(vm) {
             return function (extent, resolution, projection) {
-                let url = vm.$source.getUrl();
-                url = url(extent, resolution, projection);
-                return fetch(url, {
-                    credentials: 'same-origin',
-                    mode: 'cors',
+                const  getUrl = vm.$source.getUrl();
+                const url = getUrl(extent, resolution, projection);
+                let axiosRequestConfig = {
+                    method: 'get',
+                    url: url,
                     headers: headers.setAuthorizationBasic(
                         vm.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`]
                     )
-                }).then(function (response) {
-                    return response.text();
-                }).then(function (text) {
+                };
+                return vm.$store.dispatch(
+                    `client/${REQUEST}`,
+                    axiosRequestConfig
+                ).then((response) => {
+                    return response.data;
+                }).then(function (data) {
                     if (!vm.$source) {
                         return [];
                     }
-                    return vm.$source.getFormat().readFeatures(text, {
+                    return vm.$source.getFormat().readFeatures(data, {
                         featureProjection: vm.viewProjection,
                         dataProjection: vm.resolvedDataProjection
                     });
+                }).catch((error) => {
+                    if (!error.response && error.request) {
+                        vm.$store.commit(`geoserver/${SET_OFF}`);
+                    }
                 });
             };
         }

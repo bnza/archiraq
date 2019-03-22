@@ -29,7 +29,13 @@ describe('store/messages actions', () => {
             expect(commit).toHaveBeenCalledWith(mutations.SET_REQUEST_PENDING, -1);
         });
 
-        it(`commit "${mutations.SET_REQUEST_TERMINATED}"`, async () => {
+        it(`commit "${mutations.SET_RESPONSE}" on success`, async () => {
+            const axiosRequestConfig = {method: 'put', url: 'some/url'};
+            await actions[consts.REQUEST]({commit, state}, axiosRequestConfig);
+            expect(commit).toHaveBeenCalledWith(mutations.SET_RESPONSE, expect.any(Object));
+        });
+
+        it(`commit "${mutations.SET_REQUEST_TERMINATED}" on success`, async () => {
             const axiosRequestConfig = {method: 'put', url: 'some/url'};
             await actions[consts.REQUEST]({commit, state}, axiosRequestConfig);
             expect(commit).toHaveBeenCalledWith(mutations.SET_REQUEST_TERMINATED, -1);

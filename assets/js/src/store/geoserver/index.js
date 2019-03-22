@@ -3,6 +3,7 @@ import mutations from './mutations';
 import auth from './auth';
 
 export const state = {
+    on: true,
     baseUrl: ''
 };
 
