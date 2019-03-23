@@ -110,17 +110,15 @@ abstract class AbstractCrudController extends AbstractController
      */
     public function list(Request $request, string $entityName)
     {
-        /**
-         * Maps sort[code]=ASC query string to ['code'=>'ASC'] array.
-         */
-        $sort = $request->get('sort') ?: [];
+        $pagination =  $request->get('pagination') ?: [];
+
+
+        $sort = array_key_exists('sort', $pagination) ? $pagination['sort'] : [];
+        $limit = array_key_exists('limit', $pagination) ? $pagination['limit'] : 10;
+        $limit = $limit > 50 ? 50 : $limit;
+        $offset = array_key_exists('offset', $pagination) ? $pagination['offset'] : 0;
 
         $filter = $request->get('filter') ?: [];
-
-        $limit = $request->get('limit') ?: 10;
-        $limit = $limit > 50 ? 50 : $limit;
-
-        $offset = $request->get('offset') ?: 0;
 
         $repo = $this->getRepository($entityName);
 

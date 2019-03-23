@@ -22,6 +22,13 @@ export default {
             HAS_COMPONENT,
             GET_COMPONENT_PROP
         ]),
+        ...mapGetters({
+            componentsGetComponentProp: `components/${GET_COMPONENT_PROP}`,
+            componentsHasComponent: `components/${HAS_COMPONENT}`
+        }),
+        existComponent() {
+            return !!this.cid && this.componentsHasComponent(this.cid);
+        }
     },
     methods: {
         ...mapMutations('components', [
@@ -29,6 +36,9 @@ export default {
             SET_COMPONENT_PROP,
             TOGGLE_COMPONENT_PROP
         ]),
+        ...mapMutations({
+            componentsSetComponentProp: `components/${SET_COMPONENT_PROP}`
+        }),
         getProp(prop) {
             return this[GET_COMPONENT_PROP](this.cid, prop);
         },

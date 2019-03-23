@@ -5,12 +5,13 @@ import {HAS_PENDING_REQUESTS, PENDING_REQUESTS_NUM} from '../store/client/getter
 export default {
     computed: {
         ...mapGetters({
-            clientHasPendingRequests: `client/${HAS_PENDING_REQUESTS}`
+            clientHasPendingRequests: `client/${HAS_PENDING_REQUESTS}`,
+            clientPendingRequestsNum: `client/${PENDING_REQUESTS_NUM}`,
         })
     },
     methods: {
-        ...mapActions('client', [
-            REQUEST
-        ])
+        ...mapActions({
+            clientRequest: `client/${REQUEST}`
+        })
     }
 };

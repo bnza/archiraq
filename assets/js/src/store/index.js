@@ -5,6 +5,7 @@ import mutations from './mutations';
 import client from './client';
 import components from './components';
 import geoserver from './geoserver';
+import query from './query';
 
 Vue.use(Vuex);
 
@@ -17,7 +18,8 @@ const options = {
     modules: {
         client: client,
         components: components,
-        geoserver: geoserver
+        geoserver: geoserver,
+        query: query,
     }
 };
 

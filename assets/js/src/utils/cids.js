@@ -11,3 +11,4 @@ export const CID_THE_MAIN_TOOLBAR = 'TheMainToolbar';
 export const CID_THE_MAP_FOOTER = 'TheMapFooter';
 export const CID_THE_MAP_LAYERS_DRAWER = 'TheMapLayersDrawer';
 export const CID_THE_MAP_TOOLBAR = 'TheMapToolbar';
+export const CID_VW_SITE_LIST_DATA_CARD = 'VwSiteListDataCard';
