@@ -11,6 +11,7 @@
                 :url="urlFunction"
                 :strategy-factory="loadingStrategyFactory"
                 :loader-factory="loaderFactory"
+                @fetchError="displaySnackbar"
             />
         </vl-layer-vector>
     </vl-interaction-select>
@@ -26,13 +27,15 @@ import {REQUEST} from '../store/client/actions';
 import HttpClientMx from '../mixins/HttpClientMx';
 import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx';
 import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
+import SnackbarComponentStoreMx from '../mixins/SnackbarComponentStoreMx';
 
 export default {
     name: 'MapLayerVectorWfs',
     mixins: [
         MapContainerComponentStoreMx,
         ComponentStoreVisibleMx,
-        HttpClientMx
+        HttpClientMx,
+        SnackbarComponentStoreMx
     ],
     props: {
         typename: {
@@ -102,7 +105,7 @@ export default {
         },
         loaderFactory(vm) {
             return function (extent, resolution, projection) {
-                const  getUrl = vm.$source.getUrl();
+                const getUrl = vm.$source.getUrl();
                 const url = getUrl(extent, resolution, projection);
                 let axiosRequestConfig = {
                     method: 'get',
@@ -125,9 +128,13 @@ export default {
                         dataProjection: vm.resolvedDataProjection
                     });
                 }).catch((error) => {
+                    const color = 'error';
+                    let text = 'Error: ';
                     if (!error.response && error.request) {
                         vm.$store.commit(`geoserver/${SET_OFF}`);
+                        text += 'GeoServer does not respond. \n Please contact server administrator';
                     }
+                    vm.$emit('fetchError', text, color);
                 });
             };
         }

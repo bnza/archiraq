@@ -3,10 +3,10 @@ export const GET_COMPONENT = 'getComponent';
 export const GET_COMPONENT_PROP = 'getComponentProp';
 
 export const getComponent = (state) => (id) => {
-    if (!state.all.hasOwnProperty(id)) {
+/*    if (!state.all.hasOwnProperty(id)) {
         throw new ReferenceError(`No "${id}" component found`);
-    }
-    return state.all[id];
+    }*/
+    return state.all[id] || {};
 };
 
 export default {
@@ -16,9 +16,9 @@ export default {
     [GET_COMPONENT]: getComponent,
     [GET_COMPONENT_PROP]: (state, getter) => (id, prop) => {
         const component = getter[GET_COMPONENT](id);
-        if (!component.hasOwnProperty(prop)) {
+/*        if (!component.hasOwnProperty(prop)) {
             throw new ReferenceError(`No "${prop}" property in "${id}" component found`);
-        }
+        }*/
         return component[prop];
     }
 };

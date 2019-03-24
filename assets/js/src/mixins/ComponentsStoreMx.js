@@ -1,6 +1,6 @@
 import {mapGetters, mapMutations} from 'vuex';
 import {HAS_COMPONENT, GET_COMPONENT_PROP} from '../store/components/getters';
-import {CREATE_COMPONENT, SET_COMPONENT_PROP, TOGGLE_COMPONENT_PROP} from '../store/components/mutations';
+import {CREATE_COMPONENT, SET_COMPONENT_PROP, TOGGLE_COMPONENT_PROP, SET_COMPONENT} from '../store/components/mutations';
 
 
 export default {
@@ -37,6 +37,7 @@ export default {
             TOGGLE_COMPONENT_PROP
         ]),
         ...mapMutations({
+            componentsSetComponent: `components/${SET_COMPONENT}`,
             componentsSetComponentProp: `components/${SET_COMPONENT_PROP}`
         }),
         getProp(prop) {

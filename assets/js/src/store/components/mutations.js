@@ -2,6 +2,7 @@ import Vue from 'vue';
 import {getComponent} from './getters';
 
 export const CREATE_COMPONENT = 'createComponent';
+export const SET_COMPONENT = 'setComponent';
 export const SET_COMPONENT_PROP = 'setComponentProp';
 export const TOGGLE_COMPONENT_PROP = 'toggleComponentProp';
 
@@ -22,6 +23,9 @@ export default {
         }
         Vue.set(state.all, cid, obj);
     },
+    [SET_COMPONENT] (state, {cid, obj}) {
+        Vue.set(state.all, cid, obj);
+    },
     [TOGGLE_COMPONENT_PROP] (state, {cid, prop}) {
         const component = getComponent(state)(cid);
         validateProp(component, prop, 'boolean');
@@ -31,5 +35,4 @@ export default {
         const component = getComponent(state)(cid);
         Vue.set(component, prop, value);
     }
-
 };

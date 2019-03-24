@@ -3,6 +3,7 @@
         <the-main-toolbar />
         <the-main-navigation-drawer />
         <v-content>
+            <the-snack-bar />
             <v-container
                 class="no-side-padding"
                 fluid
@@ -30,13 +31,15 @@ import {SET_ENV_DATA} from './store/actions';
 import TheMainNavigationDrawer from './components/TheMainNavigationDrawer';
 import TheMainToolbar from './components/TheMainToolbar';
 import TheMainFooter from './components/TheMainFooter';
+import TheSnackBar from './components/TheSnackbar';
 
 export default {
     name: 'App',
     components: {
         TheMainNavigationDrawer,
         TheMainToolbar,
-        TheMainFooter
+        TheMainFooter,
+        TheSnackBar
     },
     beforeCreate: function () {
         this.$store.dispatch(SET_ENV_DATA, window.envData).then(() => {
