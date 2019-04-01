@@ -100,5 +100,30 @@ export default {
                 });
             }
         },
+        mapContainerCallee: {
+            get() {
+                return this.componentsGetComponentProp(CID_THE_MAP_CONTAINER, 'callee');
+            },
+            set(value) {
+                this.componentsSetComponentProp({
+                    cid: CID_THE_MAP_CONTAINER,
+                    prop: 'callee',
+                    value: value
+                });
+            }
+        },
     },
+    methods: {
+        /**
+         * Set the "callee" store value
+         * @param {string} method
+         * @param args
+         */
+        mapContainerCallMethod(method, args) {
+            this.mapContainerCallee = {
+                method: method,
+                args: args
+            };
+        }
+    }
 };

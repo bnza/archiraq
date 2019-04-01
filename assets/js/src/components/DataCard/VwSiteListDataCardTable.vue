@@ -11,9 +11,10 @@
             slot-scope="props"
         >
             <td
-                class="text-xs-right"
+                class="text-xs-center"
             >
-                <strong>{{ props.item.id }}</strong>
+                <vw-site-list-row-action-menu :item="props.item" />
+                <!--<strong>{{ props.item.id }}</strong>-->
             </td>
             <td
                 class="text-xs-right"
@@ -70,9 +71,14 @@
 </template>
 
 <script>
+import VwSiteListRowActionMenu from './ListRowMenu/VwSiteListRowActionMenu';
 import DataCardTableMx from '../../mixins/DataCardTableMx';
+
 export default {
     name: 'VwSiteDataCardTable',
+    components: {
+        VwSiteListRowActionMenu
+    },
     mixins: [
         DataCardTableMx
     ]

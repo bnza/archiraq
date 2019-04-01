@@ -8,6 +8,7 @@
                 color="primary"
                 icon
                 flat
+                @click="$router.push(`${prefix}/${table}/${action}`)"
             >
                 <v-icon>list</v-icon>
             </v-btn>
@@ -20,9 +21,17 @@
 export default {
     name: 'OpenAttributeTableButton',
     props: {
+        prefix: {
+            type: String,
+            default: 'data'
+        },
         table: {
             type: String,
             required: true
+        },
+        action: {
+            type: String,
+            default: 'list'
         }
     }
 };

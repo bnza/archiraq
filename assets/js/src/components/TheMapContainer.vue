@@ -2,6 +2,7 @@
     <v-card flat>
         <the-map-toolbar />
         <vl-map
+            id="map"
             ref="map"
             data-test="the-map-container"
             :load-tiles-while-animating="true"
@@ -11,6 +12,7 @@
             @pointermove="storePointerCoords"
         >
             <vl-view
+                ref="view"
                 :zoom.sync="zoom"
                 :center.sync="center"
                 :rotation.sync="rotation"
@@ -54,6 +56,7 @@ import {
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
     CID_MAP_LAYER_VECTOR_WFS_VW_SITES
 } from '../utils/cids';
+import {callObjectMethod} from '../utils/utils';
 
 export const HEIGHT = '500px';
 const center = [47.44, 33.37];
@@ -84,6 +87,14 @@ export default {
             return this.$store.state.bingApiKey;
         }
     },
+    watch: {
+        mapContainerCallee: {
+            handler: function (callee) {
+                callObjectMethod(this, callee);
+                this.mapContainerCallee = null;
+            }
+        }
+    },
     created() {
         this.mapContainerHeight = HEIGHT;
         this.mapContainerAdminBounds = CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2;
@@ -91,6 +102,7 @@ export default {
         this.mapContainerPointerCoords = center;
         this.mapContainerBaseMap = 'bing';
         this.mapContainerBingImagerySet = 'AerialWithLabels';
+        this.mapContainerCallee = null;
     },
     mounted() {
         // get vl-map by ref="map" and await ol.Map creation
@@ -107,8 +119,11 @@ export default {
                 this.mapContainerPointerCoords =  this.$refs.map.getCoordinateFromPixel(pixel);
             }, this), 100);
             storeCoords(pixel);
+        },
+        zoomToItemGeometry(item) {
+            this.$refs.view.fit(JSON.parse(item.geom));
         }
-    },
+    }
 };
 </script>
 
