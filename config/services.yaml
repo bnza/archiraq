@@ -61,7 +61,19 @@ services:
                 arguments:
                     - '@Bnza\JobManagerBundle\Summary\Summary'
 
+
+    App\Security\Guard\GeoServerDigest1Authenticator:
+        arguments:
+            - '@router'
+            - '@App\Security\Core\Encoder\GeoServerDigest1Encoder'
+            - '@doctrine.orm.entity_manager'
+
+
     Bnza\JobManagerBundle\Summary\Summary:
         arguments:
             $baseWorkDir: '%work_dir%'
+
+
+    app.geoserver_digest1_authenticator:
+        alias: App\Security\Guard\GeoServerDigest1Authenticator
 
