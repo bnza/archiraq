@@ -9,10 +9,13 @@ import query from './query';
 
 Vue.use(Vuex);
 
+export const state = {
+    bingApiKey: '',
+    xsrfToken: ''
+};
+
 const options = {
-    state: {
-        bingApiKey: '',
-    },
+    state: state,
     mutations,
     actions,
     modules: {

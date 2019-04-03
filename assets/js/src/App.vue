@@ -27,11 +27,34 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie';
 import {SET_ENV_DATA} from './store/actions';
 import TheMainNavigationDrawer from './components/TheMainNavigationDrawer';
 import TheMainToolbar from './components/TheMainToolbar';
 import TheMainFooter from './components/TheMainFooter';
 import TheSnackBar from './components/TheSnackbar';
+
+const setEnvData = ($store) => {
+    $store.dispatch(SET_ENV_DATA, getEnvData()).then(() => {
+        clearEnvData();
+    });
+};
+
+/**
+ *
+ * @return {{bingApiKey, geoServer}|*|{}}
+ */
+const getEnvData = () => {
+    const envData = window.envData || {};
+    envData.xsrfToken = Cookies.get('xsrf-token');
+    return envData;
+};
+
+const clearEnvData = () =>  {
+    delete window.envData;
+    document.getElementById('env-data').remove();
+    Cookies.remove('xsrf-token');
+};
 
 export default {
     name: 'App',
@@ -42,10 +65,7 @@ export default {
         TheSnackBar
     },
     beforeCreate: function () {
-        this.$store.dispatch(SET_ENV_DATA, window.envData).then(() => {
-            delete window.envData;
-            document.getElementById('env-data').remove();
-        });
+        setEnvData(this.$store);
     }
 };
 </script>
