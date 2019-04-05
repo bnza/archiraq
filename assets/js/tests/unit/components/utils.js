@@ -11,6 +11,7 @@ const logError = console.error;
 export const catchLocalVueDuplicateVueBug = () => {
     console.error = (...args) => {
         if (
+            typeof args[0] === 'string' &&
             args[0].includes('[Vuetify]') &&
             args[0].includes('https://github.com/vuetifyjs/vuetify/issues/4068')
         )

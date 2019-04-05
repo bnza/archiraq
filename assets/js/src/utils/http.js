@@ -10,6 +10,9 @@ export const isBase64 = (str) => {
 };
 
 export var getUserNameFromAuth = (auth) => {
+    if (!auth) {
+        return '';
+    }
     auth = isBase64(auth) ? atob(auth) : auth;
     return auth.split(':').shift();
 };
@@ -32,6 +35,14 @@ export const headers = {
             headers,
             {
                 'Accept': types
+            }
+        );
+    },
+    setXsrfToken: (token, headers = {}) => {
+        return merge(
+            headers,
+            {
+                'X-XSRF-Token': token
             }
         );
     }

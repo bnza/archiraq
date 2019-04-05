@@ -5,12 +5,14 @@ import actions, * as consts from '../../../../src/store/client/actions';
 import * as mutations from '../../../../src/store/client/mutations';
 
 let commit;
+let dispatch;
 let state;
 jest.mock('axios');
 
 beforeEach(() => {
     // cleaning up the mess left behind the previous test
     commit = jest.fn();
+    dispatch = jest.fn().mockResolvedValue({});
     state = clone(baseState);
     axios.request.mockResolvedValue({});
 });
@@ -53,6 +55,26 @@ describe('store/messages actions', () => {
             axios.request.mockRejectedValue(new Error('Some error'));
             await expect(actions[consts.REQUEST]({commit, state}, axiosRequestConfig)).rejects.toThrow();
             expect(commit).toHaveBeenCalledWith(mutations.SET_ERROR, {error: 'Some error', index: -1});
+        });
+    });
+    describe(`${consts.XSRF_REQUEST}`, () => {
+        it('set "X-XSRF-Token" headers with the relative store value', async () => {
+            const rootState = {
+                xsrfToken: 'theXsrfToken'
+            };
+            const axiosRequestConfig = {method: 'post', url: 'some/url'};
+            await actions[consts.XSRF_REQUEST]({dispatch, rootState}, axiosRequestConfig);
+            expect(axiosRequestConfig).toHaveProperty('headers');
+            expect(axiosRequestConfig.headers).toHaveProperty('X-XSRF-Token');
+            expect(axiosRequestConfig.headers['X-XSRF-Token']).toEqual(rootState.xsrfToken);
+        });
+        it(`dispatch "${consts.REQUEST}" action`, async () => {
+            const rootState = {
+                xsrfToken: 'theXsrfToken'
+            };
+            const axiosRequestConfig = {method: 'post', url: 'some/url'};
+            await actions[consts.XSRF_REQUEST]({dispatch, rootState}, axiosRequestConfig);
+            expect(dispatch).toHaveBeenCalledWith(consts.REQUEST, axiosRequestConfig);
         });
     });
 });

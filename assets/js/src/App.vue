@@ -19,6 +19,7 @@
                         </keep-alive>
                     </transition>
                     <router-view />
+                    <router-view name="modal" />
                 </v-layout>
             </v-container>
         </v-content>

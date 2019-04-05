@@ -1,7 +1,7 @@
 import {clone} from 'lodash';
 import * as mutations from '../../../src/store/mutations';
 import {SET_BASE_URL} from '../../../src/store/geoserver/mutations';
-import {SET_GUEST_TOKEN} from '../../../src/store/geoserver/auth/mutations';
+import {SET_GUEST_TOKEN_AUTH} from '../../../src/store/geoserver/auth/mutations';
 import actions, * as consts from '../../../src/store/actions';
 import {state as baseState} from '../../../src/store/index';
 
@@ -35,9 +35,9 @@ describe('[root] store actions', () => {
             actions[consts.SET_ENV_DATA]({commit, state}, envData);
             expect(commit).toHaveBeenCalledWith(`geoserver/${SET_BASE_URL}`, envData.geoServer.baseUrl);
         });
-        it(`commit "geoserver/auth/${SET_GUEST_TOKEN}"`, () => {
+        it(`commit "geoserver/auth/${SET_GUEST_TOKEN_AUTH}"`, () => {
             actions[consts.SET_ENV_DATA]({commit, state}, envData);
-            expect(commit).toHaveBeenCalledWith(`geoserver/auth/${SET_GUEST_TOKEN}`, {auth: envData.geoServer.guestAuth});
+            expect(commit).toHaveBeenCalledWith(`geoserver/auth/${SET_GUEST_TOKEN_AUTH}`, {auth: envData.geoServer.guestAuth});
         });
     });
 });

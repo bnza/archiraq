@@ -2,6 +2,7 @@
 
 namespace App\Security\Guard;
 
+use App\Security\Guard\Token\GeoserverDigest1PostAuthenticationGuardToken;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,9 +37,14 @@ class GeoServerDigest1Authenticator extends AbstractGuardAuthenticator
     private $router;
 
     /**
-     * @var ObjectManagerInterface
+     * @var ObjectManager
      */
     private $em;
+
+    /**
+     * @var $password
+     */
+    private $password;
 
     public function __construct(RouterInterface $router, UserPasswordEncoderInterface $encoder, ObjectManager $em)
     {
@@ -86,6 +92,7 @@ class GeoServerDigest1Authenticator extends AbstractGuardAuthenticator
         }
 
         if ($this->encoder->isPasswordValid($user, $plainPassword)) {
+            $this->password = $plainPassword;
             return true;
         }
 
@@ -93,6 +100,17 @@ class GeoServerDigest1Authenticator extends AbstractGuardAuthenticator
                 $this->em->persist($user);
                 $this->em->flush();*/
         throw new BadCredentialsException(self::WRONG_CREDENTIALS);
+    }
+
+    public function createAuthenticatedToken(UserInterface $user, $providerKey)
+    {
+        $token = new GeoserverDigest1PostAuthenticationGuardToken(
+            $user,
+            $providerKey,
+            $user->getRoles()
+        );
+        $token->setAuth($this->password);
+        return $token;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
@@ -106,8 +124,13 @@ class GeoServerDigest1Authenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        $f = function ($role) {
+            return $role->getRole();
+        };
+
         return new JsonResponse([
                 'username' => $token->getUsername(),
+                'roles' => array_map($f, $token->getRoles())
             ]
         );
     }

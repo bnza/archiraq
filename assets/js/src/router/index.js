@@ -2,9 +2,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import TheMapContainer from '../components/TheMapContainer';
+import TheLoginModal from '../components/TheLoginModal';
+import TheLogoutModal from '../components/TheLogoutModal';
 import TheDataContainer from '../components/TheDataContainer';
 import DataCardContainer from '../components/DataCard/DataCardContainer';
-
 
 Vue.use(Router);
 
@@ -39,6 +40,20 @@ let router = new Router({
             components: {
                 // default: TheHomepageContent,
                 map: TheMapContainer
+            }
+        },
+        {
+            path: '/login',
+            name: 'login',
+            components: {
+                modal: TheLoginModal
+            }
+        },
+        {
+            path: '/logout',
+            name: 'logout',
+            components: {
+                modal: TheLogoutModal
             }
         },
         dataRoutes,

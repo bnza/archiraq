@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import actions from './actions';
 import mutations from './mutations';
+import auth from './auth';
 import client from './client';
 import components from './components';
 import geoserver from './geoserver';
@@ -19,6 +20,7 @@ const options = {
     mutations,
     actions,
     modules: {
+        auth: auth,
         client: client,
         components: components,
         geoserver: geoserver,

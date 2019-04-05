@@ -9762,6 +9762,11 @@ vuelayers@^0.11.1:
     uuid "^3.3.2"
     whatwg-fetch "^3.0.0"
 
+vuelidate@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/vuelidate/-/vuelidate-0.7.4.tgz#5a0e54be09ac0192f1aa3387d74b92e0945bf8aa"
+  integrity sha512-QHZWYOL325Zo+2K7VBNEJTZ496Kd8Z31p85aQJFldKudUUGBmgw4zu4ghl4CyqPwjRCmqZ9lDdx4FSdMnu4fGg==
+
 vuetify-scss@^1.2.11:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/vuetify-scss/-/vuetify-scss-1.4.0.tgz#4b5cace35403a002c3cdd1b002ad97643e63d7f4"

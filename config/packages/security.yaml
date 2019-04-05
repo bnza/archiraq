@@ -10,12 +10,19 @@ security:
             entity:
                 class: App\Entity\Admin\UserEntity
                 property: name
+
+    role_hierarchy:
+            ROLE_EDITOR:        ROLE_USER
+            ROLE_ADMIN:         ROLE_EDITOR
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+            logout:
+                target: /logoutSuccess
             guard:
                 authenticators:
                     - app.geoserver_digest1_authenticator

@@ -1,7 +1,9 @@
 import axios from 'axios';
 import * as mutations from './mutations';
+import {headers} from '../../utils/http';
 
 export const REQUEST = 'request';
+export const XSRF_REQUEST = 'xsrfRequest';
 
 const getAxiosError = (error) => {
     if (error.response) {
@@ -30,9 +32,15 @@ export default {
                 if (error.response) {
                     commit(mutations.SET_RESPONSE, {index: index, response: error.response});
                 }
-                commit(mutations.SET_ERROR, {index: index, error: getAxiosError(error)});
+                const errorMessages = getAxiosError(error);
+                commit(mutations.SET_ERROR, {index: index, error: errorMessages});
+                error.errorMessages = errorMessages.errors;
                 throw error;
             }
         );
+    },
+    [XSRF_REQUEST] ({dispatch, rootState}, axiosRequestConfig) {
+        axiosRequestConfig.headers = headers.setXsrfToken(rootState.xsrfToken, axiosRequestConfig.headers);
+        return dispatch(REQUEST, axiosRequestConfig);
     }
 };
