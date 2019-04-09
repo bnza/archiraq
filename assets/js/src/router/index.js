@@ -33,6 +33,23 @@ export const dataRoutes = {
 };
 
 let router = new Router({
+    scrollBehavior: function(to, from, savedPosition) {
+        if (savedPosition) {
+            // savedPosition is only available for popstate navigations.
+            return savedPosition;
+        } else {
+            const position = {};
+
+            // scroll to anchor by returning the selector
+            if (to.hash) {
+                position.selector = to.hash;
+
+                // if the returned position is falsy or an empty object,
+                // will retain current scroll position.
+                return position;
+            }
+        }
+    },
     routes: [
         {
             path: '/',

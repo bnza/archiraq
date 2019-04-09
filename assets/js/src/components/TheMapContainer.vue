@@ -93,6 +93,16 @@ export default {
                 callObjectMethod(this, callee);
                 this.mapContainerCallee = null;
             }
+        },
+        mapContainerHeight: {
+            handler: function () {
+                if (this.$refs.map.$map) {
+                    const map = this.$refs.map;
+                    map.render().then((e) => {
+                        map.$map.updateSize();
+                    });
+                }
+            }
         }
     },
     created() {
@@ -114,6 +124,18 @@ export default {
         });
     },
     methods: {
+        // /**
+        //  * @see https://openlayers.org/en/latest/apidoc/module-ol_render_Event-RenderEvent.html
+        //  * @param {ol.render.Event} renderEvent
+        //  */
+        // updateSizeOnHeightChange(renderEvent) {
+        //     if (this.$refs.map.$map) {
+        //         const height = renderEvent.context.canvas.height+'px';
+        //         if (height !== this.mapContainerHeight) {
+        //             this.$refs.map.$map.updateSize();
+        //         }
+        //     }
+        // },
         storePointerCoords({pixel}) {
             const storeCoords = debounce(bind(function (pixel) {
                 this.mapContainerPointerCoords =  this.$refs.map.getCoordinateFromPixel(pixel);
@@ -123,7 +145,7 @@ export default {
         zoomToItemGeometry(item) {
             this.$refs.view.fit(JSON.parse(item.geom));
         }
-    }
+    },
 };
 </script>
 

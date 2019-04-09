@@ -8,10 +8,13 @@
             @click.stop="toggleMapLayersDrawerVisibility"
         />
         <v-toolbar-title>Map</v-toolbar-title>
+        <v-spacer />
+        <fullscreen-map-button />
     </v-toolbar>
 </template>
 
 <script>
+import FullscreenMapButton from './FullscreenMapButton'
 import ComponentsStoreMx from '../mixins/ComponentsStoreMx';
 import {TOGGLE_COMPONENT_PROP} from '../store/components/mutations';
 import {
@@ -21,6 +24,9 @@ import {
 
 export default {
     name: CID,
+    components: {
+        FullscreenMapButton
+    },
     mixins: [
         ComponentsStoreMx
     ],

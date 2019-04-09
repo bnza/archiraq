@@ -8,7 +8,7 @@
                 color="primary"
                 icon
                 flat
-                @click="$router.push(`${prefix}/${table}/${action}`)"
+                @click="$router.push(`/${prefix}/${table}/${action}#data-table`)"
             >
                 <v-icon>list</v-icon>
             </v-btn>

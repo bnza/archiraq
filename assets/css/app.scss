@@ -1,3 +1,6 @@
+@import '~vuelayers/lib/style.css';
+@import '~vuetify/dist/vuetify.min.css';
+
 $material-icons-font-path: '~material-icons/iconfont/';
 
 @import '~material-icons/iconfont/material-icons.scss';
@@ -11,4 +14,3 @@ $alert-font-size: 18px;
 
 
 @import '~vuetify-scss';
-

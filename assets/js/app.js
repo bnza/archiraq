@@ -14,7 +14,8 @@ import VueLayers from 'vuelayers';
 
 import App from './src/App';
 
-import 'vuetify/dist/vuetify.min.css';
+/*import 'vuelayers/lib/style.css';
+import 'vuetify/dist/vuetify.min.css';*/
 import '../css/app.scss';
 
 Vue.use(Vuetify);

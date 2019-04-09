@@ -40,8 +40,8 @@ export default {
         pagination: {
             handler: function (pagination) {
                 if (pagination) {
-                    const route = getPaginatedRoute(this.$route, pagination);
-                    navigateToQuery(this.$router, route);
+                    //const route = getPaginatedRoute(this.$route, pagination);
+                    //navigateToQuery(this.$router, route);
                     this.fetch();
                 }
             },

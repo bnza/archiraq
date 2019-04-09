@@ -1,6 +1,7 @@
 <template>
     <component
         :is="dataComponent"
+        id="data-table"
         :action="action"
         :typename="typename"
     />
@@ -44,7 +45,15 @@ export default {
         pascalCase(string) {
             return upperFirst(camelCase(string));
         }
+    },
+    beforeRouteEnter (to, from, next) {
+        next(vm => {
+            if (to.hash) {
+                vm.$root.$emit('triggerScroll');
+            }
+        });
     }
+
 };
 </script>
 

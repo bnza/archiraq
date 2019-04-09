@@ -30,7 +30,7 @@ describe('store/auth actions', () => {
             };
             dispatch.mockResolvedValue({username: 'username2'});
             await actions[consts.LOGIN]({dispatch, commit}, credentials);
-            expect(commit).toHaveBeenCalledWith(`geoserver/auth/${SET_USER_TOKEN}`, 'dXNlcm5hbWUyOnBhc3N3b3JkMg==', {'root': true});
+            expect(commit).toHaveBeenCalledWith(`geoserver/auth/${SET_USER_TOKEN}`, {'auth': 'dXNlcm5hbWUyOnBhc3N3b3JkMg=='}, {'root': true});
         });
     });
 });
