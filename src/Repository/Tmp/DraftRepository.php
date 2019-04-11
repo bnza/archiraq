@@ -18,7 +18,6 @@ class DraftRepository extends AbstractCrudRepository
         $qb = $this->createQueryBuilder('d');
         $qb
             ->select('d')
-            //->innerJoin('d.contribute', 'c')
             ->where('d.contribute = ?1')
             ->setParameter(1, $id)
         ;
@@ -30,7 +29,6 @@ class DraftRepository extends AbstractCrudRepository
         $qb = $this->createQueryBuilder('d');
         $qb
             ->select('COUNT(d)')
-            //->innerJoin('d.contribute', 'c')
             ->where('d.contribute = ?1')
             ->setParameter(1, $id)
         ;
