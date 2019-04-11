@@ -32,6 +32,7 @@ class SiteEntity implements EntityInterface
     private $id;
 
     /**
+     * @Assert\NotBlank
      * @var ContributeEntity
      * @ORM\ManyToOne(targetEntity="ContributeEntity", inversedBy="sites")
      * @ORM\JoinColumn(name="contribute_id", referencedColumnName="id", nullable=false, onDelete="NO ACTION")
@@ -39,6 +40,7 @@ class SiteEntity implements EntityInterface
     private $contribute;
 
     /**
+     * @Assert\NotBlank
      * @var Geom\DistrictBoundaryEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\Geom\DistrictBoundaryEntity", inversedBy="sites")
      * @ORM\JoinColumn(name="district_id", referencedColumnName="id", nullable=false, onDelete="NO ACTION")
@@ -662,7 +664,7 @@ class SiteEntity implements EntityInterface
      *
      * @return SiteEntity
      */
-    public function setDistrict(Geom\DistrictBoundaryEntity $district): SiteEntity
+    public function setDistrict(?Geom\DistrictBoundaryEntity $district): SiteEntity
     {
         $this->district = $district;
 

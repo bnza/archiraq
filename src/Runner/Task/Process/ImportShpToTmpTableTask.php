@@ -140,7 +140,7 @@ class ImportShpToTmpTableTask extends AbstractTask
 
     public function dropTemporaryTable()
     {
-        $ddl = "DROP TABLE {$this->getTableName()};";
+        $ddl = "DROP TABLE IF EXISTS {$this->getTableName()};";
         $this->getEntityManager()->getConnection()->exec($ddl);
     }
 }

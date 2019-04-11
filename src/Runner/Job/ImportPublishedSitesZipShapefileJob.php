@@ -3,6 +3,7 @@
 namespace App\Runner\Job;
 
 use App\Entity\ContributeEntity;
+use App\Runner\Task\Database\DoctrineTransactionTask;
 use App\Runner\Task\Database\PersistContributeTask;
 use App\Runner\Task\Database\Raw\CompareShpAndSpreadsheetsEntriesTask;
 use App\Runner\Task\Database\Raw\InsertDraftAndShpIntoTmpDraftTask;
@@ -56,13 +57,19 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
     public function getShapefileName()
     {
         if (!$this->getParameters()->has(self::KEY_ZIP_NAME)) {
+            $baseName = '';
             foreach (new \DirectoryIterator($this->getWorkDir()) as $item) {
                 if ($item->isFile()) {
                     if ('shp' === $item->getExtension()) {
-                        $this->getParameters()->set(self::KEY_ZIP_NAME, $item->getBasename('.shp'));
+                        $baseName = $item->getBasename('.shp');
+                        break;
                     }
                 }
             }
+            if (!$baseName) {
+                throw new \RuntimeException('No shapefile found');
+            }
+            $this->getParameters()->set(self::KEY_ZIP_NAME, $item->getBasename('.shp'));
         }
 
         return $this->getParameter(self::KEY_ZIP_NAME);
@@ -116,6 +123,12 @@ class ImportPublishedSitesZipShapefileJob extends AbstractDatabaseJob
     public function getSteps(): iterable
     {
         return [
+            [
+                'class' => DoctrineTransactionTask::class,
+                'parameters' => [
+                    ['setEntityManager', 'getEntityManager'],
+                ],
+            ],
             [
                 'class' => PersistContributeTask::class,
                 'condition' => 'hasContribute',

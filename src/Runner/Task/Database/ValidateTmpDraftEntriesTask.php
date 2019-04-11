@@ -4,6 +4,7 @@ namespace App\Runner\Task\Database;
 
 use App\Entity\Tmp\DraftEntity;
 use App\Entity\Tmp\DraftErrorEntity;
+use App\Repository\Tmp\DraftRepository;
 use App\Runner\Task\TaskEntityManagerTrait;
 use App\Runner\Task\ValidatorTrait;
 use App\Serializer\ConstraintViolationToTmpDraftErrorConverter;
@@ -55,12 +56,21 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
      */
     public function getSteps(): iterable
     {
-        $contribute = $this->getContribute();
+        $contribute = $this->getContribute()->getId();
 
         $generator = function () use ($contribute) {
-            foreach ($contribute->getDrafts() as $draft) {
-                yield [$draft];
+            /** @var DraftRepository $repo */
+            $repo = $this->getEntityManager()->getRepository(DraftEntity::class);
+            $rowsNum = $this->getStepsNum();
+            $limit = 100;
+            $offset = 0;
+            while ($offset < $rowsNum) {
+                foreach ($repo->findBy(['contribute'=>$contribute], null, $limit, $offset) as $draft) {
+                    yield [$draft];
+                }
+                $offset += $limit;
             }
+
         };
 
         return $generator();
@@ -202,5 +212,15 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
         }
 
         return $this->converter;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function countStepsNum(): int
+    {
+        /** @var DraftRepository $repo */
+        $repo = $this->getEntityManager()->getRepository(DraftEntity::class);
+        return $repo->countByContribute($this->getContribute()->getId());
     }
 }

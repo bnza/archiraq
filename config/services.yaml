@@ -28,7 +28,19 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    Bnza\JobManagerBundle\Summary\Summary:
+        arguments:
+            $baseWorkDir: '%work_dir%'
+
+    Bnza\JobManagerBundle\ObjectManager\TmpFs\ObjectManager:
+        arguments:
+            $env: '%env(APP_ENV)%'
+            $tempDir: ''
+            $workDir: '%work_dir%'
+
     App\Command\Job\ImportPublishesSitesZipShapefileCommand:
+        arguments:
+            $om: '@Bnza\JobManagerBundle\ObjectManager\TmpFs\ObjectManager'
         tags:
             - name: 'console.command'
         calls:
@@ -40,6 +52,8 @@ services:
                     -   '@Bnza\JobManagerBundle\Summary\Summary'
 
     App\Command\Job\ValidateTmpDraftEntriesCommand:
+        arguments:
+            $om: '@Bnza\JobManagerBundle\ObjectManager\TmpFs\ObjectManager'
         tags:
             -   name: 'console.command'
         calls:
@@ -51,6 +65,8 @@ services:
                     - '@Bnza\JobManagerBundle\Summary\Summary'
 
     App\Command\Job\ImportSitesFromTmpDraftCommand:
+        arguments:
+            $om: '@Bnza\JobManagerBundle\ObjectManager\TmpFs\ObjectManager'
         tags:
             -   name: 'console.command'
         calls:
@@ -61,18 +77,11 @@ services:
                 arguments:
                     - '@Bnza\JobManagerBundle\Summary\Summary'
 
-
     App\Security\Guard\GeoServerDigest1Authenticator:
         arguments:
             - '@router'
             - '@App\Security\Core\Encoder\GeoServerDigest1Encoder'
             - '@doctrine.orm.entity_manager'
-
-
-    Bnza\JobManagerBundle\Summary\Summary:
-        arguments:
-            $baseWorkDir: '%work_dir%'
-
 
     app.geoserver_digest1_authenticator:
         alias: App\Security\Guard\GeoServerDigest1Authenticator

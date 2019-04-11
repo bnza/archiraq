@@ -4,6 +4,7 @@ namespace App\Repository\Geom;
 
 use App\Entity\Geom\DistrictBoundaryEntity;
 use App\Repository\AbstractCrudRepository;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class DistrictBoundaryRepository extends AbstractCrudRepository

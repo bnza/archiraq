@@ -82,7 +82,7 @@ trait AbstractJobTrait
 
     protected function setUpMockedJob(string $className, int $limit = -1, array $constructorArgs = [])
     {
-        $this->om = new ObjectManager('dev', $this->getBaseOmDir());
+        $this->om = new ObjectManager('dev', $this->getBaseOmDir(), $this->getBaseWorkDir());
         $this->dispatcher = new EventDispatcher();
         $this->job = $this->getMockWithMockedMethods($className, ['getSteps']);
 

@@ -73,13 +73,13 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
     {
         return [
             //[0, 'assertContributeEntityIsPersistedToDb'],
-            [1, 'assertZipShapefileIsCopiedToWorkDir'],
-            [2, 'assertZipShapefileIsExpandedInWorkDir'],
-            [3, 'assertContributeEntityIsSetIntoJob'],
-            [4, 'assertContributeEntityIsPersistedToDb'],
-            [5, 'assertShp2PgsqlTableHasBeenDropped'],
-            [6, 'assertDraftTableHasBeenCreated'],
-            [8, 'assertDataAreBeenInsertInTmpDraftTable'],
+            [2, 'assertZipShapefileIsCopiedToWorkDir'],
+            [3, 'assertZipShapefileIsExpandedInWorkDir'],
+            [4, 'assertContributeEntityIsSetIntoJob'],
+            [5, 'assertContributeEntityIsPersistedToDb'],
+            [6, 'assertShp2PgsqlTableHasBeenDropped'],
+            [7, 'assertDraftTableHasBeenCreated'],
+            [9, 'assertDataAreBeenInsertInTmpDraftTable'],
         ];
     }
 

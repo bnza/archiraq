@@ -27,7 +27,7 @@ class ImportPublishedSitesSpreadsheetToTmpTableTask extends AbstractSpreadsheetT
 
     public function getDefaultDescription(): string
     {
-        return 'Importing shapefile into db using shp2pgsql command';
+        return 'Importing spreadsheet data into temp table';
     }
 
     public function getExpectedHeaders(): array

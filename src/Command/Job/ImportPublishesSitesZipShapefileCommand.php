@@ -2,6 +2,7 @@
 
 namespace App\Command\Job;
 
+use Bnza\JobManagerBundle\Exception\JobManagerNonCriticalErrorException;
 use Bnza\JobManagerBundle\Runner\Job\JobInterface;
 use Bnza\JobManagerBundle\Command\AbstractJobListenerCommand;
 use Bnza\JobManagerBundle\ObjectManager\ObjectManagerInterface;

@@ -13,6 +13,7 @@ use App\Entity\Tmp\DraftErrorEntity;
 use App\Serializer\Denormalizer\SiteEntityDenormalizer;
 use App\Serializer\Normalizer\TmpDraftEntityNormalizer;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use Symfony\Component\Serializer\Serializer;
 
 class TmpDraftToSiteConverter extends AbstractEntityConverter
@@ -54,6 +55,19 @@ class TmpDraftToSiteConverter extends AbstractEntityConverter
         $context['contribute'] = $object->getContribute();
     }
 
+    protected function getDistrict(?string $districtName): ?DistrictBoundaryEntity
+    {
+        if (!$districtName) {
+            return null;
+        }
+        try {
+            return $this->getEntityManager()->getRepository(DistrictBoundaryEntity::class)->findByName($districtName);
+        } catch (NoResultException $e) {
+            return null;
+        }
+
+    }
+
     /**
      * Prepares DraftEntity for SiteEntity denormalization
      *
@@ -64,7 +78,7 @@ class TmpDraftToSiteConverter extends AbstractEntityConverter
     protected function preDenormalize(array &$object, array &$context = []): void
     {
         $this->setSiteGeom($object);
-        $object['district'] = $this->getEntityManager()->getRepository(DistrictBoundaryEntity::class)->findByName($object['district']);
+        $object['district'] = $this->getDistrict($object['district']);//$this->getEntityManager()->getRepository(DistrictBoundaryEntity::class)->findByName($object['district'], false, false);
         $object['contribute'] = $context['contribute'];
         $context['site_chronology'] = $this->setChronologies($object);
         unset($object['site_chronology']);
