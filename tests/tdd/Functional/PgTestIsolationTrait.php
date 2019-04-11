@@ -40,9 +40,9 @@ trait PgTestIsolationTrait
     protected static function setUpDatabaseSchema(string $em = 'default')
     {
         $connection = self::getContainerEntityManager($em)->getConnection();
+        $connection->setNestTransactionsWithSavepoints(true);
         $connection->setAutoCommit(false);
-        $connection->exec('BEGIN TRANSACTION');
-        $connection->exec('SAVEPOINT main');
+        $connection->beginTransaction();
         $sql = \file_get_contents(self::getAbsolutePath('tests/assets/tdd/sql/db.sql'));
         $connection->exec($sql);
     }
@@ -50,20 +50,20 @@ trait PgTestIsolationTrait
     protected static function rollbackDatabaseSchema(string $em = 'default')
     {
         $connection = self::getContainerEntityManager($em)->getConnection();
-        $connection->exec('ROLLBACK TO SAVEPOINT main');
-        $connection->exec('ROLLBACK');
+        $connection->rollBack();
+        $connection->setAutoCommit(true);
     }
 
     protected function savepoint(string $em = 'default', string $savepoint = 'test')
     {
         $connection = $this->getEntityManager($em)->getConnection();
-        $connection->exec("SAVEPOINT \"$savepoint\"");
+        $connection->beginTransaction();
     }
 
     protected function rollbackSavepoint(string $em = 'default', string $savepoint = 'test')
     {
         $connection = $this->getEntityManager($em)->getConnection();
-        $connection->exec("ROLLBACK TO SAVEPOINT \"$savepoint\"");
+        $connection->rollBack();
         $this->getEntityManager()->clear();
     }
 
