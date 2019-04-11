@@ -102,6 +102,69 @@ ALTER SCHEMA "voc" OWNER TO "test_archiraq_admin";
 
 
 
+
+CREATE FUNCTION "public"."orientedenvelope"("g" "public"."geometry") RETURNS "public"."geometry"
+    LANGUAGE "plpgsql" IMMUTABLE
+    AS $$
+declare
+    p record;
+    p0 geometry(point);
+    p1 geometry(point);
+    ctr geometry(point);
+    angle_min float;
+    angle_cur float;
+    area_min float;
+    area_cur float;
+begin
+    -- Approach is based on the rotating calipers method:
+    -- <https://en.wikipedia.org/wiki/Rotating_calipers>
+    g := ST_ConvexHull(g);
+    ctr := ST_Centroid(g);
+    for p in (select (ST_DumpPoints(g)).geom) loop
+        p0 := p1;
+        p1 := p.geom;
+        if p0 is null then
+            continue;
+        end if;
+        angle_cur := ST_Azimuth(p0, p1) - pi()/2;
+        area_cur := ST_Area(ST_Envelope(ST_Rotate(g, angle_cur, ctr)));
+        if area_cur < area_min or area_min is null then
+            area_min := area_cur;
+            angle_min := angle_cur;
+        end if;
+    end loop;
+    return ST_Rotate(ST_Envelope(ST_Rotate(g, angle_min, ctr)), -angle_min, ctr);
+end;
+$$;
+
+
+ALTER FUNCTION "public"."orientedenvelope"("g" "public"."geometry") OWNER TO "test_archiraq_admin";
+
+
+CREATE FUNCTION "public"."orientedenvelopesides"("g" "public"."geometry") RETURNS double precision[]
+    LANGUAGE "plpgsql" IMMUTABLE
+    AS $$
+declare
+	l geometry(linestring);
+    p1 geometry(point);
+    p2 geometry(point);
+    p3 geometry(point);
+    length1 float;
+    length2 float;
+begin
+	l := ST_ExteriorRing(OrientedEnvelope(g));
+	p1 = ST_PointN(l, 1)::geography;
+	p2 = ST_PointN(l, 2)::geography;
+	p3 = ST_PointN(l, 3)::geography;
+	length1 := ST_Distance(p1,p2,true);
+	length2 := ST_Distance(p2,p3,true);
+	return ARRAY[GREATEST(length1,length2), LEAST(length1,length2)];				 
+end;
+$$;
+
+
+ALTER FUNCTION "public"."orientedenvelopesides"("g" "public"."geometry") OWNER TO "test_archiraq_admin";
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -282,7 +345,9 @@ CREATE TABLE "geom"."vw_site" (
     "survey_refs" "text",
     "geom" "public"."geometry"(MultiPolygon,4326),
     "centroid" "public"."geometry",
-    "area" double precision
+    "area" double precision,
+    "length" double precision,
+    "width" double precision
 );
 
 ALTER TABLE ONLY "geom"."vw_site" REPLICA IDENTITY NOTHING;
@@ -724,7 +789,12 @@ ALTER TABLE ONLY "voc"."survey"
 
 
 CREATE RULE "_RETURN" AS
-    ON SELECT TO "geom"."vw_site" DO INSTEAD  SELECT "s"."id",
+    ON SELECT TO "geom"."vw_site" DO INSTEAD  WITH "oriented_envelop_sides" AS (
+         SELECT "site"."id",
+            "public"."orientedenvelopesides"("site"."geom") AS "sides"
+           FROM "geom"."site"
+        )
+ SELECT "s"."id",
     "s"."sbah_no",
     "s"."modern_name",
     "s"."nearest_city",
@@ -742,8 +812,10 @@ CREATE RULE "_RETURN" AS
     "array_to_string"("array_agg"(DISTINCT "concat_ws"('.'::"text", "vs"."code", "ss"."ref")), ';'::"text") AS "survey_refs",
     "gs"."geom",
     "public"."st_setsrid"("public"."st_centroid"("gs"."geom"), 4326) AS "centroid",
-    "public"."st_area"(("gs"."geom")::"public"."geography") AS "area"
-   FROM (((((((("public"."site" "s"
+    "public"."st_area"(("gs"."geom")::"public"."geography") AS "area",
+    "oes"."sides"[1] AS "length",
+    "oes"."sides"[2] AS "width"
+   FROM ((((((((("public"."site" "s"
      LEFT JOIN "geom"."admbnd2" "ab2" ON (("s"."district_id" = "ab2"."id")))
      LEFT JOIN "geom"."admbnd1" "ab1" ON (("ab2"."admbnd1_id" = "ab1"."id")))
      LEFT JOIN "geom"."admbnd0" "ab0" ON (("ab1"."admbnd0_code" = "ab0"."code")))
@@ -752,7 +824,8 @@ CREATE RULE "_RETURN" AS
      LEFT JOIN "public"."site_survey" "ss" ON (("s"."id" = "ss"."site_id")))
      LEFT JOIN "voc"."survey" "vs" ON (("ss"."survey_id" = "vs"."id")))
      LEFT JOIN "geom"."site" "gs" ON (("s"."id" = "gs"."id")))
-  GROUP BY "s"."id", "ab2"."id", "ab2"."name", "ab1"."name", "ab0"."name", "gs"."geom";
+     LEFT JOIN "oriented_envelop_sides" "oes" ON (("s"."id" = "oes"."id")))
+  GROUP BY "s"."id", "ab2"."id", "ab2"."name", "ab1"."name", "ab0"."name", "gs"."geom", "oes"."sides";
 
 
 
