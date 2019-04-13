@@ -38,20 +38,39 @@ services:
             $tempDir: ''
             $workDir: '%work_dir%'
 
-    App\Command\Job\ImportPublishesSitesZipShapefileCommand:
+    App\Command\Job\FullImportPublishedSitesZipShapefileJobCommand:
+        shared: false
         arguments:
             $om: '@Bnza\JobManagerBundle\ObjectManager\TmpFs\ObjectManager'
         tags:
-            - name: 'console.command'
+            -   name: 'console.command'
         calls:
             -   method: setBaseWorkDir
                 arguments:
-                    -   '%work_dir%'
+                    - '%work_dir%'
             -   method: setSummary
                 arguments:
-                    -   '@Bnza\JobManagerBundle\Summary\Summary'
+                    - '@Bnza\JobManagerBundle\Summary\Summary'
+            -   method: setValidator
+                arguments:
+                    - '@validator'
+
+    App\Command\Job\ImportPublishedSitesZipShapefileJobToTmpDraftCommand:
+        shared: false
+        arguments:
+            $om: '@Bnza\JobManagerBundle\ObjectManager\TmpFs\ObjectManager'
+        tags:
+            -   name: 'console.command'
+        calls:
+            -   method: setBaseWorkDir
+                arguments:
+                    - '%work_dir%'
+            -   method: setSummary
+                arguments:
+                    - '@Bnza\JobManagerBundle\Summary\Summary'
 
     App\Command\Job\ValidateTmpDraftEntriesCommand:
+        shared: false
         arguments:
             $om: '@Bnza\JobManagerBundle\ObjectManager\TmpFs\ObjectManager'
         tags:
@@ -65,6 +84,7 @@ services:
                     - '@Bnza\JobManagerBundle\Summary\Summary'
 
     App\Command\Job\ImportSitesFromTmpDraftCommand:
+        shared: false
         arguments:
             $om: '@Bnza\JobManagerBundle\ObjectManager\TmpFs\ObjectManager'
         tags:
@@ -85,4 +105,5 @@ services:
 
     app.geoserver_digest1_authenticator:
         alias: App\Security\Guard\GeoServerDigest1Authenticator
+
 

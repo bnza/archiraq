@@ -3,7 +3,7 @@
 namespace App\Runner\Job;
 
 use App\Runner\Task\Database\PersistSitesFromTmpDraftsTask;
-use App\Runner\Task\Database\ValidateTmpDraftEntriesTask;
+use App\Runner\Task\Database\ValidateTmpDraftEntriesTaskToDb;
 use App\Entity\ContributeEntity;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -28,7 +28,7 @@ class ImportSitesFromTmpDraftJob extends AbstractDatabaseJob
     {
         return [
             [
-                'class' => ValidateTmpDraftEntriesTask::class,
+                'class' => ValidateTmpDraftEntriesTaskToDb::class,
                 'condition' => ['isContributeValidated'],
                 'negateCondition' => true,
                 'parameters' => [

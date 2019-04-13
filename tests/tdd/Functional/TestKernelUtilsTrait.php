@@ -2,6 +2,7 @@
 
 namespace App\Tests\Functional;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -24,6 +25,16 @@ trait TestKernelUtilsTrait
         return self::$kernel;
     }
 
+    protected static function getContainer(): ContainerInterface
+    {
+        if (!self::$container) {
+            self::getKernel()->getContainer();
+        }
+
+        return self::$container;
+    }
+
+
     protected static function getRootDir(): string
     {
         return self::getKernel()->getProjectDir();
@@ -45,10 +56,10 @@ trait TestKernelUtilsTrait
     protected function getValidator(): ValidatorInterface
     {
         if (!$this->validator) {
-            if (!self::$container) {
+/*            if (!self::$container) {
                 self::getKernel()->getContainer();
-            }
-            $this->validator = self::$container->get(ValidatorInterface::class);
+            }*/
+            $this->validator = self::getContainer()->get(ValidatorInterface::class);
         }
 
         return $this->validator;

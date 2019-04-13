@@ -7,12 +7,11 @@ use App\Entity\Tmp\DraftErrorEntity;
 use App\Repository\Tmp\DraftRepository;
 use App\Runner\Task\TaskEntityManagerTrait;
 use App\Runner\Task\ValidatorTrait;
-use App\Serializer\ConstraintViolationToTmpDraftErrorConverter;
 use App\Serializer\TmpDraftToSiteConverter;
 use Bnza\JobManagerBundle\Runner\Task\AbstractTask;
 use App\Entity\ContributeEntity;
 
-class ValidateTmpDraftEntriesTask extends AbstractTask
+abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
 {
     use TaskEntityManagerTrait;
     use ValidatorTrait;
@@ -28,20 +27,11 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
     protected $converter;
 
     /**
-     * {@inheritdoc}
+     * Persists constraint validation errors
+     * @param DraftEntity $draft
+     * @param $errors
      */
-    public function getName(): string
-    {
-        return 'app:task:db:validate-tmp-draft';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefaultDescription(): string
-    {
-        return 'Validating temporary draft entities ("tmp"."draft") to DB';
-    }
+    abstract protected function persistErrors(DraftEntity $draft, $errors);
 
     /**
      * {@inheritdoc}
@@ -145,7 +135,7 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
     }
 
     /**
-     * Validates DraftEntity instance SiteBoundaryEntity  and persists error to DB
+     * Validates DraftEntity instance SiteBoundaryEntity and persists error to DB
      *
      * @param DraftEntity $draft
      */
@@ -168,22 +158,6 @@ class ValidateTmpDraftEntriesTask extends AbstractTask
         if (count($errors) > 0) {
             $this->persistErrors($draft, $errors);
         }
-    }
-
-    /**
-     * Persists constraint validation errors to DB
-     * @param DraftEntity $draft
-     * @param $errors
-     */
-    protected function persistErrors(DraftEntity $draft, $errors)
-    {
-        $converter = new ConstraintViolationToTmpDraftErrorConverter();
-        $em = $this->getEntityManager();
-        foreach ($errors as $key => $violation) {
-            $error = $converter->convert($violation);
-            $draft->addError($error);
-        }
-        $em->persist($draft);
     }
 
     /**

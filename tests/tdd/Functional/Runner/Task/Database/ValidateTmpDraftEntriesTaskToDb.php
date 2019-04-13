@@ -3,13 +3,13 @@
 namespace App\Tests\Functional\Runner\Task\Database;
 
 use App\Entity\ContributeEntity;
-use App\Runner\Task\Database\ValidateTmpDraftEntriesTask;
+use App\Runner\Task\Database\ValidateTmpDraftEntriesTaskToDb;
 use App\Tests\Functional\AbstractPgTestIsolation;
 use App\Tests\Functional\Runner\Task\AbstractMockTrait;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class ValidateTmpDraftEntriesTaskTest extends AbstractPgTestIsolation
+class ValidateTmpDraftEntriesTaskToDb extends AbstractPgTestIsolation
 {
     use AbstractMockTrait;
 
@@ -127,7 +127,7 @@ class ValidateTmpDraftEntriesTaskTest extends AbstractPgTestIsolation
     }
 
     /**
-     * @return MockObject|ValidateTmpDraftEntriesTask
+     * @return MockObject|ValidateTmpDraftEntriesTaskToDb
      */
     protected function getTask()
     {
@@ -136,7 +136,7 @@ class ValidateTmpDraftEntriesTaskTest extends AbstractPgTestIsolation
 
     protected function getTaskClassName(): string
     {
-        return ValidateTmpDraftEntriesTask::class;
+        return ValidateTmpDraftEntriesTaskToDb::class;
     }
 
     protected function setUpAssets()

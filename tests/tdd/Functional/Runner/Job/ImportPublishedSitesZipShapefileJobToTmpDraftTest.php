@@ -5,10 +5,10 @@ namespace App\Tests\Functional\Runner\Job;
 use App\Entity\ContributeEntity;
 use App\Tests\Functional\AbstractPgTestIsolation;
 use Bnza\JobManagerBundle\ObjectManager\TmpFS\ObjectManager;
-use App\Runner\Job\ImportPublishedSitesZipShapefileJob;
+use App\Runner\Job\ImportPublishedSitesZipShapefileJobToTmpDraft;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
+class ImportPublishedSitesZipShapefileJobToTmpDraftTest extends AbstractPgTestIsolation
 {
     use AbstractJobTrait;
     /**
@@ -22,7 +22,7 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
     protected $dispatcher;
 
     /**
-     * @var ImportPublishedSitesZipShapefileJob
+     * @var ImportPublishedSitesZipShapefileJobToTmpDraft
      */
     protected $job;
 
@@ -101,7 +101,7 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
 
     protected function getJobClassName(): string
     {
-        return ImportPublishedSitesZipShapefileJob::class;
+        return ImportPublishedSitesZipShapefileJobToTmpDraft::class;
     }
 
     protected function setUpAssets()
@@ -110,7 +110,7 @@ class ImportPublishedSitesZipShapefileJobTest extends AbstractPgTestIsolation
         $this->assertFileExists($this->zipPath);
     }
 
-    protected function getJob(): ImportPublishedSitesZipShapefileJob
+    protected function getJob(): ImportPublishedSitesZipShapefileJobToTmpDraft
     {
         return $this->job;
     }

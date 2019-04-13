@@ -49,6 +49,7 @@ class PersistSitesFromTmpDraftsTask extends AbstractTask
     {
         $contribute = $this->getContribute();
 
+        $this->getEntityManager()->refresh($contribute);
         $generator = function () use ($contribute) {
             foreach ($contribute->getDrafts() as $draft) {
                 yield [$draft];

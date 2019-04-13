@@ -2,7 +2,7 @@
 
 namespace App\Runner\Job;
 
-use App\Runner\Task\Database\ValidateTmpDraftEntriesTask;
+use App\Runner\Task\Database\ValidateTmpDraftEntriesTaskToDb;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
@@ -26,7 +26,7 @@ class ValidateTmpDraftEntriesJob extends AbstractDatabaseJob
     {
         return [
             [
-                'class' => ValidateTmpDraftEntriesTask::class,
+                'class' => ValidateTmpDraftEntriesTaskToDb::class,
                 'parameters' => [
                     ['setValidator', 'getValidator'],
                     ['setEntityManager', 'getEntityManager'],

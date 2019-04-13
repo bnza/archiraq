@@ -17,6 +17,11 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 trait SpreadsheetInteractionTrait
 {
     /**
+     * @var Spreadsheet
+     */
+    private $spreadsheet;
+
+    /**
      * @var string
      */
     protected $spreadsheetPath = '';
@@ -35,6 +40,14 @@ trait SpreadsheetInteractionTrait
     public function setSpreadsheetPath(string $spreadsheetPath): void
     {
         $this->spreadsheetPath = $spreadsheetPath;
+    }
+
+    public function getSpreadsheet(): Spreadsheet
+    {
+        if (!$this->spreadsheet) {
+            $this->spreadsheet = $this->loadSpreadSheet();
+        }
+        return $this->spreadsheet;
     }
 
     protected function loadSpreadSheet(): Spreadsheet
@@ -63,5 +76,13 @@ trait SpreadsheetInteractionTrait
         $spreadsheet = $this->loadSpreadSheet();
 
         return $spreadsheet->getProperties();
+    }
+
+    protected function writeCurrentWorksheet(Spreadsheet $spreadsheet)
+    {
+        $inputFileType = IOFactory::identify($this->getSpreadsheetPath());
+        $writer = IOFactory::createWriter($spreadsheet, 'Csv');
+        $writer->setPreCalculateFormulas(false);
+        return $writer->save($this->getSpreadsheetPath().'.csv');
     }
 }

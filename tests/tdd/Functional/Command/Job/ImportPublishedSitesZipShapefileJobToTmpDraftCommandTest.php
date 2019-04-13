@@ -2,13 +2,13 @@
 
 namespace App\Tests\Functional\Command\Job;
 
-use App\Command\Job\ImportPublishesSitesZipShapefileCommand as SutCommand;
+use App\Command\Job\ImportPublishedSitesZipShapefileJobToTmpDraftCommand as SutCommand;
 use App\Tests\Functional\AbstractPgTestIsolation;
 use App\Tests\Functional\TestWorkDirTrait;
 use App\Tests\Functional\Command\CommandUtilsTrait;
 use Symfony\Component\Console\Command\Command;
 
-class ImportPublishesSitesZipShapefileCommandTest extends AbstractPgTestIsolation
+class ImportPublishedSitesZipShapefileJobToTmpDraftCommandTest extends AbstractPgTestIsolation
 {
     use TestWorkDirTrait;
     use CommandUtilsTrait;
