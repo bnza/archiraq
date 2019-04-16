@@ -26,6 +26,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'compilationDate' => '2018-11-28',
+                    'remoteSensing' => 'y'
                 ],
                 [
                     'id' => 1,
@@ -33,6 +34,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'compilationDate' => '2018-11-28',
+                    'remoteSensing' => 'y',
                     'ancientName' => null,
                     'sbahNo' => null,
                     'cadastre' => null,
@@ -50,6 +52,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'threatsCultivationTrenches' => null,
                     'threatsModernStructures' => null,
                     'threatsModernCanals' => null,
+                    'threatsBulldozer' => null,
                     'surveyVisitDate' => null,
                     'surveyVerifiedOnField' => null,
                     'surveyType' => null,
@@ -65,6 +68,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'compiler' => 'A. Name',
                     'compilationDate' => '2018-11-28',
                     'ancientName' => 'Ancient Name',
+                    'remoteSensing' => 'n'
                 ],
                 [
                     'id' => 1,
@@ -72,6 +76,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'compilationDate' => '2018-11-28',
+                    'remoteSensing' => 'n',
                     'ancientName' => 'Ancient Name',
                     'sbahNo' => null,
                     'cadastre' => null,
@@ -89,6 +94,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'threatsCultivationTrenches' => null,
                     'threatsModernStructures' => null,
                     'threatsModernCanals' => null,
+                    'threatsBulldozer' => null,
                     'surveyVisitDate' => null,
                     'surveyVerifiedOnField' => null,
                     'surveyType' => null,
@@ -104,6 +110,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'compiler' => 'A. Name',
                     'compilationDate' => '2018-11-28',
                     'ancientName' => '?Ancient Name',
+                    'remoteSensing' => null
                 ],
                 [
                     'id' => 1,
@@ -111,6 +118,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'compilationDate' => '2018-11-28',
+                    'remoteSensing' => null,
                     'ancientName' => 'Ancient Name',
                     'ancientNameUncertain' => true,
                     'sbahNo' => null,
@@ -129,6 +137,8 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'threatsCultivationTrenches' => null,
                     'threatsModernStructures' => null,
                     'threatsModernCanals' => null,
+                    'threatsBulldozer' => null,
+                    'threatsBulldozer' => null,
                     'surveyVisitDate' => null,
                     'surveyVerifiedOnField' => null,
                     'surveyType' => null,

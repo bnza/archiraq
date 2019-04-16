@@ -10,8 +10,8 @@ INSERT INTO voc.survey(
 VALUES (2, 'SURVEY1989', 'The survey 1989', 'Some remarks on 1989');
 
 INSERT INTO public.site(
-  id, contribute_id, entry_id, nearest_city, ancient_name, ancient_name_uncertain, modern_name, cadastre, compiler, compilation_date, remarks, credits, sbah_no, features_epigraphic, features_ancient_structures, features_paleochannels, features_remarks, threats_natural_dunes, threats_looting, threats_cultivation_trenches, threats_modern_structures, threats_modern_canals, district_id)
-VALUES (1, 104, null, 'Hilla', 'Ancient Name', true, 'Tell Ishnayt', 'Cadastre', 'T. Compiler', '2019-03-18', 'Some remarks', 'Some credits', 'IQ234', true, true, false, 'Some remarks', true, false, true, null, null, 88);
+  id, contribute_id, entry_id, remote_sensing, nearest_city, ancient_name, ancient_name_uncertain, modern_name, cadastre, compiler, compilation_date, remarks, credits, sbah_no, features_epigraphic, features_ancient_structures, features_paleochannels, features_remarks, threats_natural_dunes, threats_looting, threats_cultivation_trenches, threats_modern_structures, threats_modern_canals, district_id)
+VALUES (1, 104, null, false, 'Hilla', 'Ancient Name', true, 'Tell Ishnayt', 'Cadastre', 'T. Compiler', '2019-03-18', 'Some remarks', 'Some credits', 'IQ234', true, true, false, 'Some remarks', true, false, true, null, null, 88);
 
 INSERT INTO public.site_chronology(
   id, site_id, chronology_id)

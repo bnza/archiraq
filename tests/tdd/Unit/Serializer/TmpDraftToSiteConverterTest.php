@@ -24,6 +24,7 @@ class TmpDraftToSiteConverterTest extends \PHPUnit\Framework\TestCase
                     'entryId' => 'AKK.001',
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
+                    'remoteSensing' => 'n',
                     'compilationDate' => '2018-11-28',
                     'ancientName' => '?Ancient Name',
                     'district' => 'District',
@@ -44,6 +45,7 @@ EOF
                     'entryId' => 'AKK.001',
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
+                    'remoteSensing' => false,
                     'compilationDate' => new \DateTime(),
                     'ancientName' => 'Ancient Name',
                     'ancientNameUncertain' => true,
@@ -51,6 +53,47 @@ EOF
                     'cadastre' => null,
                     'remarks' => null,
                     'credits' => null,
+                ],
+            ],
+            [
+                [
+                    'id' => 1,
+                    'entryId' => 'AKK.001',
+                    'modernName' => 'Tell Harba',
+                    'compiler' => 'A. Name',
+                    'remoteSensing' => 'y',
+                    'compilationDate' => '2018-11-28',
+                    'ancientName' => 'Ancient Name',
+                    'district' => 'District',
+                    'cadastre' => 'cadastre value',
+                    'remarks' => 'some remarks on feature',
+                    'credits' => 'some credits',
+                    'sbahNo' => 'SBAH.1123',
+                    'geom' => <<<EOF
+                    { 
+                        "type": "MultiPolygon",
+                        "crs":{"type":"name","properties":{"name":"EPSG:4326"}},
+                        "coordinates": [
+                            [[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0]]],
+                            [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
+                            [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]
+                        ]
+                    }
+EOF
+                ],
+                [
+                    'id' => 1,
+                    'entryId' => 'AKK.001',
+                    'modernName' => 'Tell Harba',
+                    'compiler' => 'A. Name',
+                    'remoteSensing' => true,
+                    'compilationDate' => new \DateTime(),
+                    'ancientName' => 'Ancient Name',
+                    'ancientNameUncertain' => false,
+                    'sbahNo' => 'SBAH.1123',
+                    'cadastre' => 'cadastre value',
+                    'remarks' => 'some remarks on feature',
+                    'credits' => 'some credits',
                 ],
             ],
         ];

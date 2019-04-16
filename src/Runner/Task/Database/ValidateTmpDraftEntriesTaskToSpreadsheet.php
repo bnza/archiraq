@@ -4,7 +4,6 @@ namespace App\Runner\Task\Database;
 
 use App\Entity\Tmp\DraftEntity;
 use App\Runner\Task\Spreadsheet\SpreadsheetInteractionTrait;
-use App\Serializer\ConstraintViolationToTmpDraftErrorConverter;
 use Bnza\JobManagerBundle\Event\SummaryEntryEvent;
 use Bnza\JobManagerBundle\Exception\JobManagerNonCriticalErrorException;
 use Bnza\JobManagerBundle\Summary\Entry\ErrorEntry;

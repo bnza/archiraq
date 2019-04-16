@@ -18,6 +18,7 @@ class SiteEntityDenormalizer extends AbstractEntityDenormalizer
     {
         foreach ([
                      'compilationDate' => ['date'],
+                     'remoteSensing' => ['boolean'],
                      'featuresEpigraphic' => ['boolean'],
                      'featuresAncientStructures' => ['boolean'],
                      'featuresPaleochannels' => ['boolean'],

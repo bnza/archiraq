@@ -254,7 +254,7 @@ CREATE TABLE "geom"."admbnd0" (
     "code" character(2) NOT NULL,
     "name" character varying NOT NULL,
     "altname" character varying,
-    "geom" "public"."geometry"(MultiPolygon,4326) NOT NULL
+    "geom" "public"."geometry" NOT NULL
 );
 
 
@@ -280,7 +280,7 @@ CREATE TABLE "geom"."admbnd1" (
     "admbnd0_code" character(2) NOT NULL,
     "name" character varying NOT NULL,
     "altname" character varying,
-    "geom" "public"."geometry"(MultiPolygon,4326) NOT NULL
+    "geom" "public"."geometry" NOT NULL
 );
 
 
@@ -303,7 +303,7 @@ CREATE TABLE "geom"."admbnd2" (
     "admbnd1_id" smallint NOT NULL,
     "name" character varying NOT NULL,
     "altname" character varying,
-    "geom" "public"."geometry"(MultiPolygon,4326) NOT NULL
+    "geom" "public"."geometry" NOT NULL
 );
 
 
@@ -425,7 +425,7 @@ CREATE TABLE "public"."draft" (
     "compiler" character varying NOT NULL,
     "compilation_date" "date" NOT NULL,
     "credits" character varying,
-    "geom" "public"."geometry"(MultiPolygon,4326) NOT NULL
+    "geom" "public"."geometry" NOT NULL
 );
 
 
@@ -488,7 +488,10 @@ CREATE TABLE "public"."site" (
     "threats_cultivation_trenches" boolean,
     "threats_modern_structures" boolean,
     "threats_modern_canals" boolean,
-    "district_id" smallint NOT NULL
+    "district_id" smallint NOT NULL,
+    "threats_bulldozer" boolean,
+    "remote_sensing" boolean NOT NULL,
+    "survey_verified_on_field" boolean
 );
 
 
@@ -560,7 +563,9 @@ CREATE TABLE "tmp"."draft" (
     "compiler" character varying,
     "compilation_date" character varying,
     "credits" character varying,
-    "geom" "public"."geometry"
+    "geom" "public"."geometry",
+    "remote_sensing" character varying,
+    "threats_bulldozer" character varying
 );
 
 

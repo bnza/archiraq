@@ -51,6 +51,17 @@ class DraftEntity implements EntityInterface
 
     /**
      * @var string
+     * @Assert\NotBlank
+     * @Assert\Choice(
+     *     choices={"y", "n"},
+     *     message="This field must assume only 'y' or 'n' value"
+     * )
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $remote_sensing;
+
+    /**
+     * @var string
      * @ORM\Column(type="string")
      */
     private $modern_name;
@@ -140,6 +151,12 @@ class DraftEntity implements EntityInterface
      * @ORM\Column(type="string")
      */
     private $threats_modern_canals;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $threats_bulldozer;
 
     /**
      * @var string
@@ -268,6 +285,24 @@ class DraftEntity implements EntityInterface
     public function setEntryId(string $entry_id): void
     {
         $this->entry_id = $entry_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRemoteSensing(): ?string
+    {
+        return $this->remote_sensing;
+    }
+
+    /**
+     * @param string $remote_sensing
+     * @return DraftEntity
+     */
+    public function setRemoteSensing(?string $remote_sensing): DraftEntity
+    {
+        $this->remote_sensing = $remote_sensing;
+        return $this;
     }
 
     /**
@@ -537,6 +572,22 @@ class DraftEntity implements EntityInterface
     /**
      * @return string
      */
+    public function getThreatsBulldozer(): ?string
+    {
+        return $this->threats_bulldozer;
+    }
+
+    /**
+     * @param string $threats_bulldozer
+     */
+    public function setThreatsBulldozer(string $threats_bulldozer): void
+    {
+        $this->threats_bulldozer = $threats_bulldozer;
+    }
+
+    /**
+     * @return string
+     */
     public function getSurveyVisitDate(): ?string
     {
         return $this->survey_visit_date;
@@ -551,17 +602,17 @@ class DraftEntity implements EntityInterface
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isSurveyVerifiedOnField(): ?bool
+    public function getSurveyVerifiedOnField(): ?string
     {
         return $this->survey_verified_on_field;
     }
 
     /**
-     * @param bool $survey_verified_on_field
+     * @param string $survey_verified_on_field
      */
-    public function setSurveyVerifiedOnField(bool $survey_verified_on_field): void
+    public function setSurveyVerifiedOnField(string $survey_verified_on_field): void
     {
         $this->survey_verified_on_field = $survey_verified_on_field;
     }

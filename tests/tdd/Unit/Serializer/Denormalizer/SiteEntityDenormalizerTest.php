@@ -17,6 +17,7 @@ class SiteEntityDenormalizerTest extends \PHPUnit\Framework\TestCase
                 [
                     'id' => 1,
                     'entryId' => 'AKK.001',
+                    'remoteSensing' => 'y',
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'compilationDate' => '2018-11-28',
@@ -39,6 +40,7 @@ class SiteEntityDenormalizerTest extends \PHPUnit\Framework\TestCase
                 [
                     'id' => 1,
                     'entryId' => 'AKK.001',
+                    'remoteSensing' => 'n',
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'compilationDate' => '',
@@ -67,6 +69,7 @@ class SiteEntityDenormalizerTest extends \PHPUnit\Framework\TestCase
      *
      * @param array $site
      * @param array $expected
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
      */
     public function testMethodDenormalizeWillReturnExpectedValue(array $site, array $expected)
     {

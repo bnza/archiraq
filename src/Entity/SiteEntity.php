@@ -72,6 +72,19 @@ class SiteEntity implements EntityInterface
     private $entry_id;
 
     /**
+     * @Assert\NotNull
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $remote_sensing;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $survey_verified_on_field;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -162,6 +175,12 @@ class SiteEntity implements EntityInterface
     private $threats_modern_canals;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $threats_bulldozer;
+
+    /**
      * @var string
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255, nullable=false)
@@ -230,6 +249,42 @@ class SiteEntity implements EntityInterface
     {
         $this->contribute = $contribute;
 
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRemoteSensing(): bool
+    {
+        return $this->remote_sensing;
+    }
+
+    /**
+     * @param bool $remote_sensing
+     * @return SiteEntity
+     */
+    public function setRemoteSensing(bool $remote_sensing): SiteEntity
+    {
+        $this->remote_sensing = $remote_sensing;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSurveyVerifiedOnField(): ?bool
+    {
+        return $this->survey_verified_on_field;
+    }
+
+    /**
+     * @param bool $verified
+     * @return SiteEntity
+     */
+    public function setSurveyVerifiedOnField(?bool $verified): SiteEntity
+    {
+        $this->survey_verified_on_field = $verified;
         return $this;
     }
 
@@ -568,6 +623,24 @@ class SiteEntity implements EntityInterface
     {
         $this->threats_modern_canals = $threats_modern_canals;
 
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasThreatsBulldozer(): ?bool
+    {
+        return $this->threats_bulldozer;
+    }
+
+    /**
+     * @param bool $threats_bulldozer
+     * @return SiteEntity
+     */
+    public function setThreatsBulldozer(?bool $threats_bulldozer): SiteEntity
+    {
+        $this->threats_bulldozer = $threats_bulldozer;
         return $this;
     }
 

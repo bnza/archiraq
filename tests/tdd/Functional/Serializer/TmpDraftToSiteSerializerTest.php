@@ -51,7 +51,21 @@ class TmpDraftToSiteSerializerTest extends AbstractPgTestIsolation
         $this->getEntityManager()->flush($site);
     }
 
-    public function testConverterWillSet()
+    public function testConverterWillSetSurvey()
+    {
+        $this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/admbnd.sql');
+        $this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/survey.sql');
+        $draft = $this->getDraftEntity();
+        $draft->setSurveyPrevRefs('Adams1972.002;Black1995.a');
+        $draft->setSurveyVisitDate('1975-1977;1995');
+        $site = $this->getConverter()->convert($draft);
+        $this->assertInstanceOf(SiteEntity::class, $site);
+        $this->assertCount(2, $site->getSurveys());
+        $this->getEntityManager()->persist($site);
+        $this->getEntityManager()->flush($site);
+    }
+
+    public function testConverterWillSetRemoteSensing()
     {
         $this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/admbnd.sql');
         $this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/survey.sql');
@@ -82,6 +96,7 @@ class TmpDraftToSiteSerializerTest extends AbstractPgTestIsolation
         $this->getEntityManager()->persist($contribute);
         $draft = new DraftEntity();
         $draft->setCompilationDate('2018-11-22');
+        $draft->setRemoteSensing('n');
         $draft->setDistrict('Hilla');
         $draft->setContribute($contribute);
         $draft->setId(1);

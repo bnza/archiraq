@@ -85,6 +85,8 @@ class ImportPublishedSitesSpreadsheetToTmpTableTask extends AbstractSpreadsheetT
             $values['contribute_id'] = $contributeId;
             $values['geom'] = null;
             $values['id'] = $rowIndex;
+            $values['remote_sensing'] = 'n'; // hardcoded value for published sites
+            $values['threats_bulldozer'] = null; // published sites spreadsheet does not have this entry value
             $this->getInsertPreparedStatement()->execute($values);
         }
     }
@@ -109,8 +111,8 @@ class ImportPublishedSitesSpreadsheetToTmpTableTask extends AbstractSpreadsheetT
 
         $sql = <<<EOT
 INSERT INTO "draft$id"
-   ("id","contribute_id", "entry_id", "modern_name", "ancient_name", "district", "nearest_city", "cadastre", "sbah_no", "survey_visit_date", "survey_verified_on_field", "survey_type", "survey_prev_refs", "features_epigraphic", "features_ancient_structures", "features_paleochannels", "features_remarks", "site_chronology", "excavations_whom_when", "excavations_bibliography", "threats_natural_dunes", "threats_looting", "threats_cultivation_trenches", "threats_modern_structures", "threats_modern_canals", "remarks", "compiler", "compilation_date", "credits", "geom")
-	VALUES (:id, :contribute_id, :entry_id, :modern_name, :ancient_name, :district, :nearest_city, :cadastre, :sbah_no, :survey_visit_date, :survey_verified_on_field, :survey_type, :survey_prev_refs, :features_epigraphic, :features_ancient_structures, :features_paleochannels, :features_remarks, :site_chronology, :excavations_whom_when, :excavations_bibliography, :threats_natural_dunes, :threats_looting, :threats_cultivation_trenches, :threats_modern_structures, :threats_modern_canals, :remarks, :compiler, TO_DATE(:compilation_date, 'YYYY-MM-DD'), :credits, :geom);
+   ("id","contribute_id", "remote_sensing", "entry_id", "modern_name", "ancient_name", "district", "nearest_city", "cadastre", "sbah_no", "survey_visit_date", "survey_verified_on_field", "survey_type", "survey_prev_refs", "features_epigraphic", "features_ancient_structures", "features_paleochannels", "features_remarks", "site_chronology", "excavations_whom_when", "excavations_bibliography", "threats_natural_dunes", "threats_looting", "threats_cultivation_trenches", "threats_modern_structures", "threats_modern_canals", "threats_bulldozer" , "remarks", "compiler", "compilation_date", "credits", "geom")
+	VALUES (:id, :contribute_id, :remote_sensing, :entry_id, :modern_name, :ancient_name, :district, :nearest_city, :cadastre, :sbah_no, :survey_visit_date, :survey_verified_on_field, :survey_type, :survey_prev_refs, :features_epigraphic, :features_ancient_structures, :features_paleochannels, :features_remarks, :site_chronology, :excavations_whom_when, :excavations_bibliography, :threats_natural_dunes, :threats_looting, :threats_cultivation_trenches, :threats_modern_structures, :threats_modern_canals, :threats_bulldozer, :remarks, :compiler, TO_DATE(:compilation_date, 'YYYY-MM-DD'), :credits, :geom);
 EOT;
 
         return $this->getEntityManager()->getConnection()->prepare($sql);
