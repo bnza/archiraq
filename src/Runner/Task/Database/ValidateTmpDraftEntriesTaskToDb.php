@@ -3,6 +3,7 @@
 namespace App\Runner\Task\Database;
 
 use App\Entity\Tmp\DraftEntity;
+use App\Entity\Tmp\DraftErrorEntity;
 use App\Serializer\ConstraintViolationToTmpDraftErrorConverter;
 
 class ValidateTmpDraftEntriesTaskToDb extends AbstractValidateTmpDraftEntriesTask
@@ -38,5 +39,37 @@ class ValidateTmpDraftEntriesTaskToDb extends AbstractValidateTmpDraftEntriesTas
             $draft->addError($error);
         }
         $em->persist($draft);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure(): void
+    {
+        $this->deleteContributeDraftErrors();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function terminate(): void
+    {
+        $this->getEntityManager()->flush();
+        parent::terminate();
+    }
+
+    /**
+     * Remove old contribute's draft errors before validate
+     */
+    protected function deleteContributeDraftErrors()
+    {
+        $em = $this->getEntityManager();
+        $errors = $em
+            ->getRepository(DraftErrorEntity::class)
+            ->getByContribute($this->getContribute()->getId())
+        ;
+        foreach ($errors as $error) {
+            $em->remove($error);
+        }
     }
 }

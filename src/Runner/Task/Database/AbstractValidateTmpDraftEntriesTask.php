@@ -3,7 +3,6 @@
 namespace App\Runner\Task\Database;
 
 use App\Entity\Tmp\DraftEntity;
-use App\Entity\Tmp\DraftErrorEntity;
 use App\Repository\Tmp\DraftRepository;
 use App\Runner\Task\TaskEntityManagerTrait;
 use App\Runner\Task\ValidatorTrait;
@@ -17,6 +16,11 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
     use ValidatorTrait;
 
     /**
+     * @var bool
+     */
+    protected $draftContainsErrors = false;
+
+    /**
      * @var ContributeEntity
      */
     protected $contribute;
@@ -27,7 +31,8 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
     protected $converter;
 
     /**
-     * Persists constraint validation errors
+     * Persists constraint validation errors.
+     *
      * @param DraftEntity $draft
      * @param $errors
      */
@@ -55,12 +60,11 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
             $limit = 100;
             $offset = 0;
             while ($offset < $rowsNum) {
-                foreach ($repo->findBy(['contribute'=>$contribute], null, $limit, $offset) as $draft) {
+                foreach ($repo->findBy(['contribute' => $contribute], null, $limit, $offset) as $draft) {
                     yield [$draft];
                 }
                 $offset += $limit;
             }
-
         };
 
         return $generator();
@@ -69,37 +73,13 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
     /**
      * {@inheritdoc}
      */
-    protected function configure(): void
-    {
-        $this->deleteContributeDraftErrors();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function terminate(): void
     {
-        $this->getEntityManager()->flush();
         $this->updateContributeStatus();
     }
 
     /**
-     * Remove old contribute's draft errors before validate
-     */
-    protected function deleteContributeDraftErrors()
-    {
-        $em = $this->getEntityManager();
-        $errors = $em
-            ->getRepository(DraftErrorEntity::class)
-            ->getByContribute($this->getContribute()->getId())
-        ;
-        foreach ($errors as $error) {
-            $em->remove($error);
-        }
-    }
-
-    /**
-     * Update ContributeEntity Status according to validation results
+     * Update ContributeEntity Status according to validation results.
      */
     protected function updateContributeStatus()
     {
@@ -113,7 +93,7 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
     }
 
     /**
-     * Update ContributeEntity Status VALID flag according to validation results
+     * Update ContributeEntity Status VALID flag according to validation results.
      *
      * @param int $status
      */
@@ -135,7 +115,7 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
     }
 
     /**
-     * Validates DraftEntity instance SiteBoundaryEntity and persists error to DB
+     * Validates DraftEntity instance SiteBoundaryEntity and persists error to DB.
      *
      * @param DraftEntity $draft
      */
@@ -148,7 +128,8 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
     }
 
     /**
-     * Convert DraftEntity instance to SiteEntity one, validates it and persists error to DB
+     * Convert DraftEntity instance to SiteEntity one, validates it and persists error to DB.
+     *
      * @param DraftEntity $draft
      */
     protected function validateSite(DraftEntity $draft)
@@ -189,12 +170,18 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function countStepsNum(): int
     {
         /** @var DraftRepository $repo */
         $repo = $this->getEntityManager()->getRepository(DraftEntity::class);
+
         return $repo->countByContribute($this->getContribute()->getId());
+    }
+
+    public function isDraftValid(): bool
+    {
+        return !$this->draftContainsErrors;
     }
 }

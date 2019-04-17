@@ -5,28 +5,28 @@ namespace App\Runner\Job;
 use App\Runner\Task\Database\DoctrineTransactionTask;
 use App\Runner\Task\Database\PersistContributeTask;
 use App\Runner\Task\Database\PersistSitesFromTmpDraftsTask;
-use App\Runner\Task\Database\Raw\CompareShpAndSpreadsheetsEntriesTask;
-use App\Runner\Task\Database\Raw\InsertDraftAndShpIntoTmpDraftTask;
-use App\Runner\Task\Database\ValidateTmpDraftEntriesTaskToSpreadsheet;
+use App\Runner\Task\Database\Raw\InsertRemoteSensingShpIntoTmpDraftTask;
+use App\Runner\Task\Database\ValidateTmpDraftEntriesTaskToCsv;
+use App\Runner\Task\GetContributeMetadataFromTextFileTask;
 use App\Runner\Task\Process\ImportShpToTmpTableTask;
-use App\Runner\Task\Spreadsheet\GetContributeFromSpreadsheetMetadataTask;
-use App\Runner\Task\Spreadsheet\ImportPublishedSitesSpreadsheetToTmpTableTask;
 use App\Runner\Task\ValidatorTrait;
 use Bnza\JobManagerBundle\Runner\Task\FileSystem\RenameTask;
 use Bnza\JobManagerBundle\Runner\Task\Zip\ZipExtractToTask;
 
-class FullImportPublishedSitesZipShapefileJob extends AbstractImportPublishedSitesZipShapefileJob
+class FullImportRemoteSensingZipShapefile extends AbstractImportRemoteSensingSitesZipShapefileJob
 {
     use ValidatorTrait;
 
+    const KEY_VALIDATION_CSV_PATH = 'validation-csv-path';
+
     public function getName(): string
     {
-        return 'app:job:import:full-sites-zip';
+        return 'app:job:import:full-remote-sensing-sites-zip';
     }
 
     public function getDescription(): string
     {
-        return 'Importing published sites zip file into to "public".site"';
+        return 'Importing remote sensing found sites zip file into to "public".site"';
     }
 
     public function getSteps(): iterable
@@ -61,11 +61,11 @@ class FullImportPublishedSitesZipShapefileJob extends AbstractImportPublishedSit
                 ],
             ],
             [
-                'class' => GetContributeFromSpreadsheetMetadataTask::class,
+                'class' => GetContributeMetadataFromTextFileTask::class,
                 'condition' => 'hasContribute',
                 'negateCondition' => true,
                 'parameters' => [
-                    ['setSpreadSheetPath', 'getSpreadSheetPath'],
+                    ['setTextMetadataFilePath', 'getTextMetadataFilePath'],
                 ],
                 'setters' => [
                     ['setContribute', 'getContribute'],
@@ -86,35 +86,23 @@ class FullImportPublishedSitesZipShapefileJob extends AbstractImportPublishedSit
                 ],
             ],
             [
-                'class' => ImportPublishedSitesSpreadsheetToTmpTableTask::class,
+                'class' => InsertRemoteSensingShpIntoTmpDraftTask::class,
                 'parameters' => [
                     ['setContribute', 'getContribute'],
-                    ['setSpreadSheetPath', 'getSpreadSheetPath'],
                     ['setEntityManager', 'getEntityManager'],
                 ],
             ],
             [
-                'class' => CompareShpAndSpreadsheetsEntriesTask::class,
-                'parameters' => [
-                    ['setEntityManager', 'getEntityManager'],
-                ],
-            ],
-            [
-                'class' => InsertDraftAndShpIntoTmpDraftTask::class,
-                'parameters' => [
-                    ['setEntityManager', 'getEntityManager'],
-                ],
-            ],
-            [
-                'class' => ValidateTmpDraftEntriesTaskToSpreadsheet::class,
+                'class' => ValidateTmpDraftEntriesTaskToCsv::class,
                 'parameters' => [
                     ['setValidator', 'getValidator'],
                     ['setEntityManager', 'getEntityManager'],
-                    ['setSpreadSheetPath', 'getSpreadSheetPath'],
+                    ['setValidationCsvFilePath', 'getShapefilePath'],
                     ['setContribute', 'getContribute'],
                 ],
                 'setters' => [
                     ['setDraftValid', 'isDraftValid'],
+                    ['setValidationCsvFilePath', 'getValidationCsvFilePath'],
                 ],
             ],
             [
@@ -126,5 +114,15 @@ class FullImportPublishedSitesZipShapefileJob extends AbstractImportPublishedSit
                 ],
             ],
         ];
+    }
+
+    public function getValidationCsvFilePath(bool $throw = true): string
+    {
+        return $this->getParameter(self::KEY_VALIDATION_CSV_PATH, $throw);
+    }
+
+    public function setValidationCsvFilePath(string $path)
+    {
+        return $this->getParameters()->set(self::KEY_VALIDATION_CSV_PATH, $path);
     }
 }

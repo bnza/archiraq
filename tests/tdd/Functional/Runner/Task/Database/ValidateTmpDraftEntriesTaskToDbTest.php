@@ -7,9 +7,8 @@ use App\Runner\Task\Database\ValidateTmpDraftEntriesTaskToDb;
 use App\Tests\Functional\AbstractPgTestIsolation;
 use App\Tests\Functional\Runner\Task\AbstractMockTrait;
 use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class ValidateTmpDraftEntriesTaskToDb extends AbstractPgTestIsolation
+class ValidateTmpDraftEntriesTaskToDbTest extends AbstractPgTestIsolation
 {
     use AbstractMockTrait;
 
@@ -127,7 +126,7 @@ class ValidateTmpDraftEntriesTaskToDb extends AbstractPgTestIsolation
     }
 
     /**
-     * @return MockObject|ValidateTmpDraftEntriesTaskToDb
+     * @return MockObject|ValidateTmpDraftEntriesTaskToDbTest
      */
     protected function getTask()
     {

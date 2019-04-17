@@ -1,0 +1,6 @@
+contributor: J. Smith
+email: example@email.com
+institution: University of Bologna
+
+Some further remarks on features.
+In multiline mode

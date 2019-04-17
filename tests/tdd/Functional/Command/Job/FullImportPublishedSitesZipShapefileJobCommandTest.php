@@ -55,7 +55,7 @@ class FullImportPublishedSitesZipShapefileJobCommandTest extends AbstractPgTestI
         $this->executeSqlAssetFile('tdd/sql/admbnd1.sql');
         $this->executeSqlAssetFile('tdd/sql/admbnd2.sql');
         $this->executeSqlAssetFile('tdd/sql/chronology.sql');
-        $this->setUpAssets('tdd/shp/zip/full_import_job/working.shp.zip');
+        $this->setUpAssets('tdd/shp/zip/published_full_import_job/working.shp.zip');
         $tester = $this->executeCommandTester(SutCommand::getDefaultName(), ['path' => $this->zipPath]);
         $this->assertEquals(0, $tester->getStatusCode());
     }

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: petrux
- * Date: 01/02/19
- * Time: 13.25.
- */
 
 namespace App\Tests\Unit\Runner\Task\Spreadsheet;
 

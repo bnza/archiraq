@@ -122,7 +122,7 @@ trait TestWorkDirTrait
 
         $origin = $this->getAssetsDir().DIRECTORY_SEPARATOR.$origin;
         $destination = $testDir.DIRECTORY_SEPARATOR.$destination;
-        $this->getFilesystem()->copy($origin, $destination);
+        $this->getFilesystem()->copy($origin, $destination, true);
 
         return $destination;
     }

@@ -14,8 +14,6 @@ class ValidateTmpDraftEntriesTaskToSpreadsheet extends AbstractValidateTmpDraftE
 
     const ERROR_COLUMN = 'AC';
 
-    private $draftContainsErrors = false;
-
     /**
      * {@inheritdoc}
      */
@@ -61,10 +59,5 @@ class ValidateTmpDraftEntriesTaskToSpreadsheet extends AbstractValidateTmpDraftE
             $this->getJob()->getDispatcher()->dispatch(SummaryEntryEvent::NAME, $event);
             throw new JobManagerNonCriticalErrorException($entry->getMessage());
         }
-    }
-
-    public function isDraftValid(): bool
-    {
-        return !$this->draftContainsErrors;
     }
 }

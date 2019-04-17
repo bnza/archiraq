@@ -80,7 +80,7 @@ trait SpreadsheetInteractionTrait
 
     protected function writeCurrentWorksheet(Spreadsheet $spreadsheet)
     {
-        $inputFileType = IOFactory::identify($this->getSpreadsheetPath());
+        // $inputFileType = IOFactory::identify($this->getSpreadsheetPath());
         $writer = IOFactory::createWriter($spreadsheet, 'Csv');
         $writer->setPreCalculateFormulas(false);
         return $writer->save($this->getSpreadsheetPath().'.csv');
