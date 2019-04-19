@@ -35,7 +35,7 @@
                 <vl-source-osm />
             </vl-layer-tile>
             <map-layer-group-admin-bounds />
-            <map-layer-vector-wfs-vw-sites />
+            <map-layer-vector-wfs-vw-sites :zoom="zoom" />
             <the-map-layers-drawer />
         </vl-map>
         <the-map-footer />

@@ -8,6 +8,7 @@
             :visible="visible"
         >
             <vl-source-vector
+                ref="source"
                 :url="urlFunction"
                 :strategy-factory="loadingStrategyFactory"
                 :loader-factory="loaderFactory"
@@ -77,6 +78,9 @@ export default {
             if (this.isCurrentLayer && this.visible) {
                 this.setProp('selectedFeatures', features);
             }
+        },
+        typename() {
+            this.$refs.source.refresh();
         }
     },
     created() {
@@ -138,7 +142,7 @@ export default {
                 });
             };
         }
-    },
+    }
 };
 </script>
 
