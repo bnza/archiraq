@@ -1,9 +1,11 @@
 <template>
-    <v-progress-circular
-        v-if="clientHasPendingRequests"
-        indeterminate
-        color="primary"
-    />
+    <div style="min-width: 32px">
+        <v-progress-circular
+            v-if="clientHasPendingRequests"
+            indeterminate
+            color="primary"
+        />
+    </div>
 </template>
 
 <script>

@@ -35,6 +35,10 @@ export const $storeMountOptions = {
     }
 };
 
+export const resetLocaVue = () => {
+    localVue = null;
+};
+
 export const getLocalVue = () => {
     if (!localVue) {
         localVue = createLocalVue();

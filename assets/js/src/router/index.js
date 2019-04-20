@@ -6,6 +6,8 @@ import TheLoginModal from '../components/TheLoginModal';
 import TheLogoutModal from '../components/TheLogoutModal';
 import TheDataContainer from '../components/TheDataContainer';
 import DataCardContainer from '../components/DataCard/DataCardContainer';
+import MapToolbarButtons from '../components/MapToolbarButtons';
+import MapFooterData from '../components/MapFooterData';
 
 Vue.use(Router);
 
@@ -53,10 +55,16 @@ let router = new Router({
     routes: [
         {
             path: '/',
-            name: 'home',
+            redirect: { name: 'map' }
+        },
+        {
+            path: '/map',
+            name: 'map',
             components: {
                 // default: TheHomepageContent,
-                map: TheMapContainer
+                map: TheMapContainer,
+                toolbar: MapToolbarButtons,
+                footer: MapFooterData
             }
         },
         {

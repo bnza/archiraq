@@ -10,9 +10,9 @@ import MapLayerVectorWfs from './MapLayerVectorWfs';
 import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
 import {CID_MAP_LAYER_VECTOR_WFS_VW_SITES as CID} from '../utils/cids';
 
-const SITE_POLY_ZOOM_UPPER_BOUND = 10;
-const SITE_POLY_WFS_TYPENAME = 'archiraq:vw_site_poly';
-const SITE_POINT_WFS_TYPENAME = 'archiraq:vw_site_point';
+export const SITE_POLY_ZOOM_UPPER_BOUND = 10;
+export const SITE_POLY_WFS_TYPENAME = 'archiraq:vw_site_poly';
+export const SITE_POINT_WFS_TYPENAME = 'archiraq:vw_site_point';
 
 export default {
     name: CID,
@@ -31,13 +31,16 @@ export default {
     data() {
         return {
             cid: CID,
-            typename: 'archiraq:vw_site_point'
+            //typename: SITE_POINT_WFS_TYPENAME
         };
     },
     computed: {
-        CID: () => CID
+        CID: () => CID,
+        typename() {
+            return this.zoom > SITE_POLY_ZOOM_UPPER_BOUND ? SITE_POLY_WFS_TYPENAME : SITE_POINT_WFS_TYPENAME
+        }
     },
-    watch: {
+/*    watch: {
         zoom: {
             handler(value) {
                 if (value > SITE_POLY_ZOOM_UPPER_BOUND && this.typename !== SITE_POLY_WFS_TYPENAME) {
@@ -49,6 +52,6 @@ export default {
                 }
             }
         }
-    }
+    }*/
 };
 </script>

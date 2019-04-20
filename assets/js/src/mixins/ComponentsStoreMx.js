@@ -18,10 +18,6 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('components', [
-            HAS_COMPONENT,
-            GET_COMPONENT_PROP
-        ]),
         ...mapGetters({
             componentsGetComponentProp: `components/${GET_COMPONENT_PROP}`,
             componentsHasComponent: `components/${HAS_COMPONENT}`
@@ -31,27 +27,24 @@ export default {
         }
     },
     methods: {
-        ...mapMutations('components', [
-            CREATE_COMPONENT,
-            SET_COMPONENT_PROP,
-            TOGGLE_COMPONENT_PROP
-        ]),
         ...mapMutations({
+            componentsCreateComponent: `components/${CREATE_COMPONENT}`,
             componentsSetComponent: `components/${SET_COMPONENT}`,
-            componentsSetComponentProp: `components/${SET_COMPONENT_PROP}`
+            componentsSetComponentProp: `components/${SET_COMPONENT_PROP}`,
+            componentsToggleComponentProp: `components/${TOGGLE_COMPONENT_PROP}`
         }),
         getProp(prop) {
-            return this[GET_COMPONENT_PROP](this.cid, prop);
+            return this.componentsGetComponentProp(this.cid, prop);
         },
         setProp(prop, value) {
-            this[SET_COMPONENT_PROP]({
+            this.componentsSetComponentProp({
                 cid: this.cid,
                 prop: prop,
                 value: value
             });
         },
         toggleProp(prop) {
-            this[TOGGLE_COMPONENT_PROP]({
+            this.componentsToggleComponentProp({
                 cid: this.cid,
                 prop: prop
             });
@@ -63,9 +56,9 @@ export default {
         }
         if (
             this.cid
-            && !this[HAS_COMPONENT](this.cid)
+            && !this.componentsHasComponent(this.cid)
         ) {
-            this[CREATE_COMPONENT]({cid: this.cid});
+            this.componentsCreateComponent({cid: this.cid});
         }
     }
 };

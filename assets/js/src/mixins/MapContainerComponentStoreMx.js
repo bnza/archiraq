@@ -1,6 +1,4 @@
 import ComponentsStoreMx from './ComponentsStoreMx';
-import {GET_COMPONENT_PROP} from '../store/components/getters';
-import {SET_COMPONENT_PROP, TOGGLE_COMPONENT_PROP} from '../store/components/mutations';
 import {
     CID_THE_MAP_CONTAINER,
     CID_MAP_LAYER_VECTOR_WFS_VW_SITES
@@ -13,10 +11,10 @@ export default {
     computed: {
         mapContainerHeight: {
             get() {
-                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'height');
+                return this.componentsGetComponentProp(CID_THE_MAP_CONTAINER, 'height');
             },
             set(value) {
-                this[SET_COMPONENT_PROP]({
+                this.componentsSetComponentProp({
                     cid: CID_THE_MAP_CONTAINER,
                     prop: 'height',
                     value: value
@@ -25,10 +23,10 @@ export default {
         },
         mapContainerCurrentLayer: {
             get() {
-                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'currentLayer');
+                return this.componentsGetComponentProp(CID_THE_MAP_CONTAINER, 'currentLayer');
             },
             set(value) {
-                this[SET_COMPONENT_PROP]({
+                this.componentsSetComponentProp({
                     cid: CID_THE_MAP_CONTAINER,
                     prop: 'currentLayer',
                     value: value
@@ -37,10 +35,10 @@ export default {
         },
         mapContainerBaseMap: {
             get() {
-                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'baseMap');
+                return this.componentsGetComponentProp(CID_THE_MAP_CONTAINER, 'baseMap');
             },
             set(value) {
-                this[SET_COMPONENT_PROP]({
+                this.componentsSetComponentProp({
                     cid: CID_THE_MAP_CONTAINER,
                     prop: 'baseMap',
                     value: value
@@ -49,10 +47,10 @@ export default {
         },
         mapContainerAdminBounds: {
             get() {
-                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'adminBounds');
+                return this.componentsGetComponentProp(CID_THE_MAP_CONTAINER, 'adminBounds');
             },
             set(value) {
-                this[SET_COMPONENT_PROP]({
+                this.componentsSetComponentProp({
                     cid: CID_THE_MAP_CONTAINER,
                     prop: 'adminBounds',
                     value: value
@@ -61,10 +59,10 @@ export default {
         },
         mapContainerBingImagerySet: {
             get() {
-                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'bingImagerySet');
+                return this.componentsGetComponentProp(CID_THE_MAP_CONTAINER, 'bingImagerySet');
             },
             set(value) {
-                this[SET_COMPONENT_PROP]({
+                this.componentsSetComponentProp({
                     cid: CID_THE_MAP_CONTAINER,
                     prop: 'bingImagerySet',
                     value: value
@@ -73,10 +71,10 @@ export default {
         },
         mapContainerPointerCoords: {
             get() {
-                return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'pointerCoords');
+                return this.componentsGetComponentProp(CID_THE_MAP_CONTAINER, 'pointerCoords');
             },
             set(value) {
-                this[SET_COMPONENT_PROP]({
+                this.componentsSetComponentProp({
                     cid: CID_THE_MAP_CONTAINER,
                     prop: 'pointerCoords',
                     value: value
@@ -84,17 +82,17 @@ export default {
             }
         },
         mapContainerPointerCoordX() {
-            return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'pointerCoords')[0];
+            return this.componentsGetComponentProp(CID_THE_MAP_CONTAINER, 'pointerCoords')[0];
         },
         mapContainerPointerCoordY() {
-            return this[GET_COMPONENT_PROP](CID_THE_MAP_CONTAINER, 'pointerCoords')[1];
+            return this.componentsGetComponentProp(CID_THE_MAP_CONTAINER, 'pointerCoords')[1];
         },
         mapContainerVwSitesVisible: {
             get() {
-                return this[GET_COMPONENT_PROP](CID_MAP_LAYER_VECTOR_WFS_VW_SITES, 'visible');
+                return this.componentsGetComponentProp(CID_MAP_LAYER_VECTOR_WFS_VW_SITES, 'visible');
             },
             set() {
-                this[TOGGLE_COMPONENT_PROP]({
+                this.componentsToggleComponentProp({
                     cid: CID_MAP_LAYER_VECTOR_WFS_VW_SITES,
                     prop: 'visible'
                 });

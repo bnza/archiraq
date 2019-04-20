@@ -1,6 +1,8 @@
 <template>
     <v-app>
-        <the-main-toolbar />
+        <the-main-toolbar>
+            <router-view name="toolbar" />
+        </the-main-toolbar>
         <the-main-navigation-drawer />
         <v-content>
             <the-snack-bar />
@@ -23,7 +25,9 @@
                 </v-layout>
             </v-container>
         </v-content>
-        <the-main-footer />
+        <the-main-footer>
+            <router-view name="footer" />
+        </the-main-footer>
     </v-app>
 </template>
 

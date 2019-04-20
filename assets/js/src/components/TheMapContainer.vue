@@ -1,6 +1,5 @@
 <template>
     <v-card flat>
-        <the-map-toolbar />
         <vl-map
             id="map"
             ref="map"
@@ -38,7 +37,6 @@
             <map-layer-vector-wfs-vw-sites :zoom="zoom" />
             <the-map-layers-drawer />
         </vl-map>
-        <the-map-footer />
     </v-card>
 </template>
 
@@ -46,8 +44,6 @@
 import {bind, debounce} from 'lodash';
 import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
 import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx';
-import TheMapToolbar from './TheMapToolbar';
-import TheMapFooter from './TheMapFooter';
 import TheMapLayersDrawer from './TheMapLayersDrawer';
 import MapLayerGroupAdminBounds from './MapLayerGroupAdminBounds';
 import MapLayerVectorWfsVwSites from './MapLayerVectorWfsVwSites';
@@ -64,9 +60,7 @@ const center = [47.44, 33.37];
 export default {
     name: CID,
     components: {
-        TheMapToolbar,
         TheMapLayersDrawer,
-        TheMapFooter,
         MapLayerVectorWfsVwSites,
         MapLayerGroupAdminBounds,
     },

@@ -2,7 +2,6 @@
     <v-tooltip bottom>
         <template #activator="{ on: tooltip }">
             <v-btn
-                color="primary"
                 icon
                 v-on="{ ...tooltip }"
                 @click="toggleFullScreen"
@@ -20,20 +19,18 @@
 import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx';
 
 const getPixelMapHeight = (isFullScreen) => {
-    let heigth = 500;
+    let height = 500;
     if (isFullScreen) {
         const mainToolbarHeight = 64;
-        const mapToolbarHeight = 48;
-        const mapFooterHeight = 36;
         const mainFooterHeight = 36;
 
-        heigth = window.innerHeight - (mainToolbarHeight + mapToolbarHeight + mapFooterHeight + mainFooterHeight);
+        height = window.innerHeight - (mainToolbarHeight + mainFooterHeight);
     }
-    return heigth;
+    return height;
 };
 
 export default {
-    name: 'FullscreenMapButton',
+    name: 'MapToolbarFullscreenButton',
     mixins: [
         MapContainerComponentStoreMx
     ],

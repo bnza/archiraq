@@ -11,15 +11,16 @@
         />
         <v-toolbar-title>Archiraq</v-toolbar-title>
         <v-spacer />
-        <v-toolbar-title
-            v-if="authIsAuthenticated"
-            style="font-size: 1rem;"
-        >
-            {{ authGetUsername }}
-        </v-toolbar-title>
-        <v-toolbar-items>
-            <user-toolbar-list-action-menu />
-        </v-toolbar-items>
+        <slot />
+<!--        <v-toolbar-title-->
+<!--            v-if="authIsAuthenticated"-->
+<!--            style="font-size: 1rem;"-->
+<!--        >-->
+<!--            {{ authGetUsername }}-->
+<!--        </v-toolbar-title>-->
+<!--        <v-toolbar-items>-->
+<!--            <user-toolbar-list-action-menu />-->
+<!--        </v-toolbar-items>-->
     </v-toolbar>
 </template>
 
@@ -27,7 +28,6 @@
 import ComponentsStoreMx from '../mixins/ComponentsStoreMx';
 import AuthMx from '../mixins/AuthMx';
 import UserToolbarListActionMenu from './UserToolbarListActionMenu';
-import {TOGGLE_COMPONENT_PROP} from '../store/components/mutations';
 import {CID_THE_MAIN_TOOLBAR as CID, CID_THE_MAIN_NAVIGATION_DRAWER} from '../utils/cids';
 
 export default {
@@ -44,7 +44,7 @@ export default {
     },
     methods: {
         toggleMainNavigationDrawerVisibility() {
-            this[TOGGLE_COMPONENT_PROP]({cid: CID_THE_MAIN_NAVIGATION_DRAWER, prop: 'visible'});
+            this.componentsToggleComponentProp({cid: CID_THE_MAIN_NAVIGATION_DRAWER, prop: 'visible'});
         }
     }
 };

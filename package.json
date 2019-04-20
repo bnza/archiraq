@@ -20,6 +20,7 @@
         "eslint": "^5.11.0",
         "eslint-plugin-vue": "^5.0.0",
         "jest": "^23.6.0",
+        "jest-canvas-mock": "^2.0.0-beta.1",
         "jest-mock-axios": "^2.3.0",
         "jest-vue": "^0.8.2",
         "lodash": "^4.17.11",
@@ -50,21 +51,6 @@
         "test-watch": "jest assets/js/tests/unit/*.spec.js --watchAll",
         "test:unit": "jest",
         "test:e2e": "cypress open"
-    },
-    "jest": {
-        "moduleFileExtensions": [
-            "js",
-            "json",
-            "vue"
-        ],
-        "transform": {
-            ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest",
-            "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
-        },
-        "roots": [
-            "<rootDir>/assets/js/tests/unit/"
-        ],
-        "setupTestFrameworkScriptFile": "<rootDir>/assets/js/tests/unit/jest-setup.js"
     },
     "dependencies": {
         "js-cookie": "^2.2.0",

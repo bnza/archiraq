@@ -12,12 +12,8 @@
             <v-flex xs1>
                 &copy; 2019
             </v-flex>
-            <v-flex
-                xs1
-                shrink
-            >
-                <requests-overall-pending-progress />
-            </v-flex>
+            <slot /> <!-- router-view -->
+            <requests-overall-pending-progress />
         </v-layout>
     </v-footer>
 </template>

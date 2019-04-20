@@ -4,6 +4,7 @@
     >
         <v-navigation-drawer
             data-test="the-map-layers-drawer--aside"
+            right
             floating
             absolute
             :value="visible"

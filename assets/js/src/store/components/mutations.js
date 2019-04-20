@@ -28,7 +28,7 @@ export default {
     },
     [TOGGLE_COMPONENT_PROP] (state, {cid, prop}) {
         const component = getComponent(state)(cid);
-        validateProp(component, prop, 'boolean');
+        //validateProp(component, prop, 'boolean');
         Vue.set(component, prop, !component[prop]);
     },
     [SET_COMPONENT_PROP] (state, {cid, prop, value}) {
