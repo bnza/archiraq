@@ -11,16 +11,18 @@
         />
         <v-toolbar-title>Archiraq</v-toolbar-title>
         <v-spacer />
-        <slot />
-<!--        <v-toolbar-title-->
-<!--            v-if="authIsAuthenticated"-->
-<!--            style="font-size: 1rem;"-->
-<!--        >-->
-<!--            {{ authGetUsername }}-->
-<!--        </v-toolbar-title>-->
-<!--        <v-toolbar-items>-->
-<!--            <user-toolbar-list-action-menu />-->
-<!--        </v-toolbar-items>-->
+        <v-toolbar-items>
+            <slot />
+        </v-toolbar-items>
+        <!--        <v-toolbar-title-->
+        <!--            v-if="authIsAuthenticated"-->
+        <!--            style="font-size: 1rem;"-->
+        <!--        >-->
+        <!--            {{ authGetUsername }}-->
+        <!--        </v-toolbar-title>-->
+        <!--        <v-toolbar-items>-->
+        <!--            <user-toolbar-list-action-menu />-->
+        <!--        </v-toolbar-items>-->
     </v-toolbar>
 </template>
 

@@ -33,6 +33,13 @@
             >
                 <vl-source-osm />
             </vl-layer-tile>
+            <vl-layer-tile
+                id="esri"
+                data-test="base-map-tile-esri"
+                :visible="'esri'===mapContainerBaseMap"
+            >
+                <vl-source-esri />
+            </vl-layer-tile>
             <map-layer-group-admin-bounds />
             <map-layer-vector-wfs-vw-sites :zoom="zoom" />
             <the-map-layers-drawer />
@@ -47,6 +54,8 @@ import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx
 import TheMapLayersDrawer from './TheMapLayersDrawer';
 import MapLayerGroupAdminBounds from './MapLayerGroupAdminBounds';
 import MapLayerVectorWfsVwSites from './MapLayerVectorWfsVwSites';
+import VlSourceEsri from './VlSourceEsri';
+
 import {
     CID_THE_MAP_CONTAINER as CID,
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
@@ -63,6 +72,7 @@ export default {
         TheMapLayersDrawer,
         MapLayerVectorWfsVwSites,
         MapLayerGroupAdminBounds,
+        VlSourceEsri
     },
     mixins: [
         ComponentStoreVisibleMx,

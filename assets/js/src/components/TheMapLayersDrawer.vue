@@ -75,6 +75,16 @@
                     title="Base Maps"
                 >
                     <map-legend-layer-list-tile
+                        title="Esri Basemap"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerBaseMap"
+                            data-test="the-map-layers-drawer--checkbox-base-map-esri-visibility"
+                            value="esri"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
                         title="Bing Maps"
                     >
                         <v-checkbox

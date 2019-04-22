@@ -1,6 +1,7 @@
 
 import Vue from 'vue';
 import Router from 'vue-router';
+import NestedRouterViewPlaceholder from '../components/NestedRouterViewPlaceholder';
 import TheMapContainer from '../components/TheMapContainer';
 import TheLoginModal from '../components/TheLoginModal';
 import TheLogoutModal from '../components/TheLogoutModal';
@@ -10,6 +11,19 @@ import MapToolbarButtons from '../components/MapToolbarButtons';
 import MapFooterData from '../components/MapFooterData';
 
 Vue.use(Router);
+
+export const dataTableRoutes = [
+    {
+        path: ':typename(vw-site)/:action(list)',
+        name: 'map_data_vw-site_list',
+        components: {
+            default: DataCardContainer
+        },
+        props: {
+            default: true
+        }
+    }
+];
 
 export const dataRoutes = {
     path: '/:prefix(data)',
@@ -21,17 +35,20 @@ export const dataRoutes = {
         default: true,
         map: false
     },
-    children: [
-        {
-            path: ':typename(vw-site)/:action(list)',
-            components: {
-                default: DataCardContainer
-            },
-            props: {
-                default: true
-            }
-        }
-    ]
+    children: dataTableRoutes
+};
+
+export const mapDataRoutes = {
+    path: ':prefix(data)',
+    name: 'map_data_container',
+    components: {
+        default: TheDataContainer,
+    },
+    props: {
+        default: true,
+        map: false
+    },
+    children: dataTableRoutes
 };
 
 let router = new Router({
@@ -61,11 +78,14 @@ let router = new Router({
             path: '/map',
             name: 'map',
             components: {
-                // default: TheHomepageContent,
+                default: NestedRouterViewPlaceholder,
                 map: TheMapContainer,
                 toolbar: MapToolbarButtons,
                 footer: MapFooterData
-            }
+            },
+            children: [
+                mapDataRoutes
+            ]
         },
         {
             path: '/login',
@@ -81,8 +101,11 @@ let router = new Router({
                 modal: TheLogoutModal
             }
         },
-        dataRoutes,
     ]
+});
+
+router.beforeEach((to, from, next) => {
+    next();
 });
 
 export default router;
