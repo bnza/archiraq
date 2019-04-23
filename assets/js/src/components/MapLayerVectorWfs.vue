@@ -12,6 +12,8 @@
                 :url="urlFunction"
                 :strategy-factory="loadingStrategyFactory"
                 :loader-factory="loaderFactory"
+                :typename="typename"
+                :filter="filter"
                 @fetchError="displaySnackbar"
             />
         </vl-layer-vector>
@@ -20,7 +22,8 @@
 
 <script>
 import { shiftKeyOnly, singleClick } from 'ol/events/condition';
-import * as olExt from 'vuelayers/lib/ol-ext';
+import {loadingBBox} from 'vuelayers/lib/ol-ext';
+import {getFeatureRequestXmlBody} from '../utils/wfs';
 import {headers} from '../utils/http';
 import {SET_OFF} from '../store/geoserver/mutations';
 import {GET_GUEST_AUTH} from '../store/geoserver/auth/getters';
@@ -50,7 +53,8 @@ export default {
     },
     data() {
         return {
-            selectedFeatures: []
+            selectedFeatures: [],
+            filter: undefined
         };
     },
     computed: {
@@ -97,27 +101,29 @@ export default {
                     && shiftKeyOnly(olMapBrowserEvent);
         },
         urlFunction (extent, resolution, projection) {
-            return this.$store.state.geoserver.baseUrl + 'wfs?service=WFS&' +
-                    'version=1.1.0&request=GetFeature&typename=' + this.typename + '&' +
-                    'outputFormat=application/json&srsname=' + projection + '&' +
-                    'bbox=' + extent.join(',') + ',' + projection;
+            return this.$store.state.geoserver.baseUrl + 'wfs';
         },
         loadingStrategyFactory () {
             // VueLayers.olExt available only in UMD build
             // in ES build it should be imported explicitly from 'vuelayers/lib/ol-ext'
-            return olExt.loadingBBox;
+            return loadingBBox;
         },
         loaderFactory(vm) {
             return function (extent, resolution, projection) {
-                const getUrl = vm.$source.getUrl();
-                const url = getUrl(extent, resolution, projection);
-                let axiosRequestConfig = {
-                    method: 'get',
-                    url: url,
-                    headers: headers.setAuthorizationBasic(
-                        vm.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`]
-                    )
+
+                const setHeaders = (auth) => {
+                    const reqHeaders = headers.setAuthorizationBasic(auth);
+                    headers.setContentType('text/xml', reqHeaders);
+                    return reqHeaders;
                 };
+
+                let axiosRequestConfig = {
+                    method: 'post',
+                    url: vm.$source.getUrl()(extent, resolution, projection),
+                    data: getFeatureRequestXmlBody(extent, resolution, projection, vm.$attrs.typename, vm.$attrs.filter),
+                    headers: setHeaders(vm.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`])
+                };
+
                 return vm.$store.dispatch(
                     `client/${REQUEST}`,
                     axiosRequestConfig

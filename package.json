@@ -21,6 +21,7 @@
         "eslint-plugin-vue": "^5.0.0",
         "jest": "^23.6.0",
         "jest-canvas-mock": "^2.0.0-beta.1",
+        "jest-environment-jsdom-fourteen": "^0.1.0",
         "jest-mock-axios": "^2.3.0",
         "jest-vue": "^0.8.2",
         "lodash": "^4.17.11",

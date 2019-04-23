@@ -45,5 +45,13 @@ export const headers = {
                 'X-XSRF-Token': token
             }
         );
+    },
+    setContentType: (type, headers = {}) => {
+        return merge(
+            headers,
+            {
+                'Content-Type': type
+            }
+        );
     }
 };
