@@ -330,7 +330,7 @@ CREATE TABLE "geom"."site" (
 ALTER TABLE "geom"."site" OWNER TO "test_archiraq_admin";
 
 
-CREATE TABLE "geom"."vw_site" (
+CREATE TABLE "public"."vw_site" (
     "id" integer,
     "sbah_no" character varying,
     "modern_name" character varying,
@@ -343,17 +343,69 @@ CREATE TABLE "geom"."vw_site" (
     "chronology" "text",
     "surveys" "text",
     "survey_refs" "text",
-    "geom" "public"."geometry"(MultiPolygon,4326),
-    "centroid" "public"."geometry",
-    "area" double precision,
-    "length" double precision,
-    "width" double precision
+    "e" numeric,
+    "n" numeric,
+    "area" numeric,
+    "length" numeric,
+    "width" numeric
 );
 
-ALTER TABLE ONLY "geom"."vw_site" REPLICA IDENTITY NOTHING;
+ALTER TABLE ONLY "public"."vw_site" REPLICA IDENTITY NOTHING;
 
 
-ALTER TABLE "geom"."vw_site" OWNER TO "test_archiraq_admin";
+ALTER TABLE "public"."vw_site" OWNER TO "test_archiraq_admin";
+
+
+CREATE VIEW "geom"."vw_site_point" AS
+ SELECT "ws"."id",
+    "ws"."sbah_no",
+    "ws"."modern_name",
+    "ws"."nearest_city",
+    "ws"."ancient_name",
+    "ws"."district_id",
+    "ws"."district",
+    "ws"."governorate",
+    "ws"."nation",
+    "ws"."chronology",
+    "ws"."surveys",
+    "ws"."survey_refs",
+    "ws"."e",
+    "ws"."n",
+    "ws"."area",
+    "ws"."length",
+    "ws"."width",
+    "public"."st_centroid"("gs"."geom") AS "geom"
+   FROM ("public"."vw_site" "ws"
+     LEFT JOIN "geom"."site" "gs" ON (("ws"."id" = "gs"."id")));
+
+
+ALTER TABLE "geom"."vw_site_point" OWNER TO "test_archiraq_admin";
+
+
+CREATE VIEW "geom"."vw_site_poly" AS
+ SELECT "ws"."id",
+    "ws"."sbah_no",
+    "ws"."modern_name",
+    "ws"."nearest_city",
+    "ws"."ancient_name",
+    "ws"."district_id",
+    "ws"."district",
+    "ws"."governorate",
+    "ws"."nation",
+    "ws"."chronology",
+    "ws"."surveys",
+    "ws"."survey_refs",
+    "ws"."e",
+    "ws"."n",
+    "ws"."area",
+    "ws"."length",
+    "ws"."width",
+    "gs"."geom"
+   FROM ("public"."vw_site" "ws"
+     LEFT JOIN "geom"."site" "gs" ON (("ws"."id" = "gs"."id")));
+
+
+ALTER TABLE "geom"."vw_site_poly" OWNER TO "test_archiraq_admin";
 
 
 CREATE SEQUENCE "public"."seq___contribute__id"
@@ -794,7 +846,7 @@ ALTER TABLE ONLY "voc"."survey"
 
 
 CREATE RULE "_RETURN" AS
-    ON SELECT TO "geom"."vw_site" DO INSTEAD  WITH "oriented_envelop_sides" AS (
+    ON SELECT TO "public"."vw_site" DO INSTEAD  WITH "oriented_envelop_sides" AS (
          SELECT "site"."id",
             "public"."orientedenvelopesides"("site"."geom") AS "sides"
            FROM "geom"."site"
@@ -815,11 +867,11 @@ CREATE RULE "_RETURN" AS
     "string_agg"(DISTINCT ("vc"."code")::"text", ';'::"text") AS "chronology",
     "string_agg"(DISTINCT ("vs"."code")::"text", ';'::"text") AS "surveys",
     "array_to_string"("array_agg"(DISTINCT "concat_ws"('.'::"text", "vs"."code", "ss"."ref")), ';'::"text") AS "survey_refs",
-    "gs"."geom",
-    "public"."st_setsrid"("public"."st_centroid"("gs"."geom"), 4326) AS "centroid",
-    "public"."st_area"(("gs"."geom")::"public"."geography") AS "area",
-    "oes"."sides"[1] AS "length",
-    "oes"."sides"[2] AS "width"
+    "round"(("public"."st_x"("public"."st_centroid"("gs"."geom")))::numeric, 7) AS "e",
+    "round"(("public"."st_y"("public"."st_centroid"("gs"."geom")))::numeric, 7) AS "n",
+    "round"(("public"."st_area"(("gs"."geom")::"public"."geography"))::numeric, 2) AS "area",
+    "round"(("oes"."sides"[1])::numeric, 2) AS "length",
+    "round"(("oes"."sides"[2])::numeric, 2) AS "width"
    FROM ((((((((("public"."site" "s"
      LEFT JOIN "geom"."admbnd2" "ab2" ON (("s"."district_id" = "ab2"."id")))
      LEFT JOIN "geom"."admbnd1" "ab1" ON (("ab2"."admbnd1_id" = "ab1"."id")))
