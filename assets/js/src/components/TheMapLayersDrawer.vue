@@ -11,6 +11,7 @@
             width="400"
             :style="'z-index: 1; min-height: '+mapContainerHeight"
             flat
+            @input="syncVisible"
         >
             <v-list dense>
                 <map-legend-list-group

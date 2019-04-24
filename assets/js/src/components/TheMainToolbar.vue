@@ -11,7 +11,7 @@
         />
         <v-toolbar-title>Archiraq</v-toolbar-title>
         <v-spacer />
-        <v-toolbar-items>
+        <v-toolbar-items class="hidden-xs-only">
             <slot />
         </v-toolbar-items>
         <!--        <v-toolbar-title-->

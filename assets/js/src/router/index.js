@@ -9,6 +9,7 @@ import TheDataContainer from '../components/TheDataContainer';
 import DataCardContainer from '../components/DataCard/DataCardContainer';
 import MapToolbarButtons from '../components/MapToolbarButtons';
 import MapFooterData from '../components/MapFooterData';
+import MapDrawerEntries from '../components/MapDrawerEntries';
 
 Vue.use(Router);
 
@@ -79,6 +80,7 @@ let router = new Router({
             name: 'map',
             components: {
                 default: NestedRouterViewPlaceholder,
+                drawer: MapDrawerEntries,
                 map: TheMapContainer,
                 toolbar: MapToolbarButtons,
                 footer: MapFooterData

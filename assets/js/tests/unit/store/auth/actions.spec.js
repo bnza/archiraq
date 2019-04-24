@@ -33,4 +33,17 @@ describe('store/auth actions', () => {
             expect(commit).toHaveBeenCalledWith(`geoserver/auth/${SET_USER_TOKEN}`, {'auth': 'dXNlcm5hbWUyOnBhc3N3b3JkMg=='}, {'root': true});
         });
     });
+    describe(`${consts.LOGOUT}`, () => {
+        it(`dispatch "client/${XSRF_REQUEST}" action`, async () => {
+            dispatch.mockResolvedValue('User logged out');
+            const axiosRequestConfig = {method: 'post', url: 'logout'};
+            await actions[consts.LOGOUT]({dispatch, commit});
+            expect(dispatch).toHaveBeenCalledWith(`client/${XSRF_REQUEST}`, axiosRequestConfig, {root: true});
+        });
+        it(`commit "geoserver/auth/${SET_USER_TOKEN}" mutation (clean auth)`, async () => {
+            dispatch.mockResolvedValue('User logged out');
+            await await actions[consts.LOGOUT]({dispatch, commit});
+            expect(commit).toHaveBeenCalledWith(`geoserver/auth/${SET_USER_TOKEN}`, {}, {'root': true});
+        });
+    });
 });

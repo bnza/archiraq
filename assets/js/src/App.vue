@@ -3,7 +3,9 @@
         <the-main-toolbar>
             <router-view name="toolbar" />
         </the-main-toolbar>
-        <the-main-navigation-drawer />
+        <the-main-navigation-drawer>
+            <router-view name="drawer" />
+        </the-main-navigation-drawer>
         <v-content>
             <the-snack-bar />
             <v-container

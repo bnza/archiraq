@@ -10,6 +10,7 @@
  * Call the object method with the given arguments
  * @param {Object} obj
  * @param {Callee} callee
+ * @param {boolean} throws
  */
 export const callObjectMethod = (obj, callee, throws = false) => {
     let error = '';
@@ -44,5 +45,30 @@ export const callObjectMethod = (obj, callee, throws = false) => {
             console.warn(error);
         }
     }
+};
 
+/**
+ *
+ * @param {boolean} isFullScreen
+ * @return {string} the map height e.g. '500px'
+ */
+export const getMapPixelHeight = (isFullScreen) => {
+    return getMapIntPixelHeight(isFullScreen ? window.innerHeight : false) + 'px';
+};
+
+/**
+ *
+ * @param innerHeight
+ * @return {number} the map height in pixel
+ * @private
+ */
+const getMapIntPixelHeight = /*@__PURE__*/ (innerHeight) => {
+    let height = 500;
+    if (innerHeight) {
+        const mainToolbarHeight = 64;
+        const mainFooterHeight = 36;
+
+        height = innerHeight - (mainToolbarHeight + mainFooterHeight);
+    }
+    return height;
 };

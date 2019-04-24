@@ -7,9 +7,9 @@ import {WFS} from 'ol/format.js';
  * @param {string} projection
  * @param {string} typename
  * @param {Filter} filter
- * @return {{srsName: *, featureNS: string, featureTypes: *[], version: string, featurePrefix: string, outputFormat: string}}
+ * @return {{filter: Filter, srsName: string, geometryName: string, featureNS: string, bbox: float[], featureTypes: string[], featurePrefix: string, outputFormat: string}}
  */
-export const getWriteGetFeatureOptions = (extent, resolution, projection, typename, filter) => {
+export const getWriteGetFeatureOptions = /*@__PURE__*/ (extent, resolution, projection, typename, filter) => {
     return {
         featureNS: 'http://archiraq.orientlab.net',
         featurePrefix: 'archiraq',

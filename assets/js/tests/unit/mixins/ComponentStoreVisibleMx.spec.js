@@ -87,4 +87,34 @@ describe('ComponentsStoreMx', () => {
             expect(getStoreProp).toBeCalledWith(cid, 'visible');
         });
     });
+    describe('methods', () => {
+        describe('syncVisible', () => {
+            it('setProp will be called only when event value and stored one differ', () => {
+                const mountOptions = {
+                    $store: {
+                        state: {
+                            components: {
+                                all: {}
+                            }
+                        },
+                        getters: {
+                            [getNamespacedStoreProp('components', HAS_COMPONENT)]: jest.fn().mockReturnValueOnce(true)
+                        }
+                    },
+                    methods: {
+                        getProp: jest.fn().mockReturnValueOnce(false),
+                        setProp: jest.fn()
+                    }
+                };
+                const wrapper = getWrapper('shallowMount', componentOptions, mountOptions);
+                wrapper.vm.syncVisible(false);
+                // Once called in created lifecycle
+                expect(mountOptions.methods.setProp).toHaveBeenCalledTimes(1);
+                wrapper.vm.syncVisible(true);
+                expect(mountOptions.methods.setProp).toHaveBeenCalledTimes(2);
+                expect(mountOptions.methods.setProp.mock.calls[1][1]).toEqual(true);
+            });
+
+        });
+    });
 });

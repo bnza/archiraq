@@ -20,6 +20,18 @@ export default {
             }
         }
     },
+    methods: {
+        /**
+         * Syncs visible value committing it to $store.
+         * Needed when changes is triggered outside store changes e.g. open/closing TheMainNavigationDrawer
+         * @param {boolean} event
+         */
+        syncVisible(event) {
+            if (event !== this.visible) {
+                this.visible = event;
+            }
+        }
+    },
     created() {
         this.visible = this.visibleP;
     }
