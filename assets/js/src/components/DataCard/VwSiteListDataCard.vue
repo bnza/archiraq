@@ -7,6 +7,7 @@
             :total-items="totalItems"
             :headers="headers"
             :typename="typename"
+            :is-request-pending="isRequestPending"
         />
     </data-card>
 </template>

@@ -16,6 +16,10 @@ export default {
         headers: {
             type: Array,
             default: []
+        },
+        isRequestPending: {
+            type: Boolean,
+            default: false
         }
     },
 

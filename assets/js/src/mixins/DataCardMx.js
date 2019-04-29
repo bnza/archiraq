@@ -1,7 +1,6 @@
 import DataCardQueryMx from './DataCardQueryMx';
 import HttpClientMx from './HttpClientMx';
 import {getHttpQueryString} from '../utils/httpRequestQuery';
-import {navigateToQuery, getPaginatedRoute} from '../utils/spaRouteQuery';
 
 export default {
     mixins: [
@@ -19,6 +18,7 @@ export default {
             sortDefaultField: 'id',
             items: [],
             totalItems: 0,
+            isRequestPending: false
         };
     },
     methods: {
@@ -31,9 +31,15 @@ export default {
                 method: 'get',
                 url: this.getUrl(),
             };
-            const response = await this.clientRequest(axiosRequestConfig);
-            this.items = response.data.items;
-            this.totalItems = response.data.totalItems;
+            try {
+                this.isRequestPending = true;
+                const response = await this.clientRequest(axiosRequestConfig);
+                this.items = response.data.items;
+                this.totalItems = response.data.totalItems;
+            } finally {
+                this.isRequestPending = false;
+            }
+
         },
     },
     watch: {

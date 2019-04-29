@@ -4,6 +4,7 @@
         :headers="headers"
         :total-items="totalItems"
         :items="items"
+        :loading="isRequestPending"
         :pagination.sync="pagination"
     >
         <template
