@@ -1,5 +1,8 @@
 module.exports= {
     'testEnvironment': 'jest-environment-jsdom-fourteen',
+    'moduleNameMapper': {
+        '@/(.*)$': '<rootDir>/assets/js/src/$1',
+    },
     'moduleFileExtensions': [
         'js',
         'json',

@@ -9,13 +9,16 @@ beforeEach(() => {
             $store: {
                 state: {
                     components: {}
-                }
+                },
             }
         },
         propsData: {
             zoom: 6
         },
         computed: {
+            getQueryFilter() {
+                return () => {};
+            },
             componentsHasComponent() {
                 return () => true;
             },

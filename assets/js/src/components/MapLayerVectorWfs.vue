@@ -23,7 +23,7 @@
 <script>
 import { shiftKeyOnly, singleClick } from 'ol/events/condition';
 import {loadingBBox} from 'vuelayers/lib/ol-ext';
-import {getFeatureRequestXmlBody} from '../utils/wfs';
+import {getBboxFeatureRequestXmlBody} from '../utils/wfs';
 import {headers} from '../utils/http';
 import {SET_OFF} from '../store/geoserver/mutations';
 import {GET_GUEST_AUTH} from '../store/geoserver/auth/getters';
@@ -49,19 +49,22 @@ export default {
         visibleP: {
             type: Boolean,
             default: true
+        },
+        filter: {
+            type: Object,
+            default: null
         }
     },
     data() {
         return {
             selectedFeatures: [],
-            filter: undefined
         };
     },
     computed: {
         isCurrentLayer() {
             return !!this.cid
                     && this.mapContainerCurrentLayer === this.cid;
-        }
+        },
     },
     watch: {
         isCurrentLayer: function (flag) {
@@ -84,6 +87,9 @@ export default {
             }
         },
         typename() {
+            this.$refs.source.refresh();
+        },
+        filter() {
             this.$refs.source.refresh();
         }
     },
@@ -120,7 +126,7 @@ export default {
                 let axiosRequestConfig = {
                     method: 'post',
                     url: vm.$source.getUrl()(extent, resolution, projection),
-                    data: getFeatureRequestXmlBody(extent, resolution, projection, vm.$attrs.typename, vm.$attrs.filter),
+                    data: getBboxFeatureRequestXmlBody(extent, resolution, projection, vm.$attrs.typename, vm.$attrs.filter),
                     headers: setHeaders(vm.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`])
                 };
 

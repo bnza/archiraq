@@ -1,6 +1,9 @@
 <template>
     <data-card>
-        <vw-site-list-data-card-toolbar slot="toolbar" />
+        <vw-site-list-data-card-toolbar
+            slot="toolbar"
+            @openModal="openModal"
+        />
         <vw-site-list-data-card-table
             slot="data"
             :items="items"
@@ -9,6 +12,19 @@
             :typename="typename"
             :is-request-pending="isRequestPending"
         />
+        <component
+            :is="modalComponent"
+            v-if="modalComponent"
+            slot="modal"
+            :visible.sync="isModalVisible"
+            @submit="$refs.filter.submit()"
+            @clear="$refs.filter.clear()"
+        >
+            <vw-site-condition-rows
+                ref="filter"
+                slot="filter"
+            />
+        </component>
     </data-card>
 </template>
 
@@ -16,9 +32,11 @@
 import DataCard from './DataCard';
 import VwSiteListDataCardToolbar from './VwSiteListDataCardToolbar';
 import VwSiteListDataCardTable from './VwSiteListDataCardTable';
-import DataCardMx from '../../mixins/DataCardMx';
+import WfsDataCardMx from '@/mixins/WfsDataCardMx';
 
-import {CID_VW_SITE_LIST_DATA_CARD as CID} from '../../utils/cids';
+import {pascalCase} from '@/utils/utils';
+import {CID_VW_SITE_LIST_DATA_CARD as CID} from '@/utils/cids';
+import {SITE_POINT_WFS_TYPENAME, SITE_POLY_WFS_TYPENAME} from '@/components/MapLayerVectorWfsVwSites';
 
 const headers = [
     {
@@ -73,20 +91,44 @@ export default {
     components: {
         DataCard,
         VwSiteListDataCardToolbar,
-        VwSiteListDataCardTable
+        VwSiteListDataCardTable,
+        DataCardFilterDialog: () => import(
+            /* webpackChunkName: "DataCardFilterDialog" */
+            './DataCardFilterDialog'
+        ),
+        VwSiteConditionRows: () => import(
+            /* webpackChunkName: "VwSiteDataCardFilterDialog" */
+            './FilterDialogEntry/VwSiteConditionRows'
+        )
     },
     mixins: [
-        DataCardMx
+        WfsDataCardMx
     ],
     data() {
         return {
             cid: CID,
-            headers: headers
+            headers: headers,
+            modalComponent: '',
+            isModalVisible: false
         };
+    },
+    computed: {
+        hitsTypeName() {
+            return SITE_POINT_WFS_TYPENAME;
+        },
+        limitTypeName() {
+            return SITE_POLY_WFS_TYPENAME;
+        }
+    },
+    methods: {
+        openModal(event) {
+            const type = pascalCase(event);
+            this.modalComponent = `DataCard${type}Dialog`;
+            this.isModalVisible = true;
+        },
+        closeModal() {
+            this.isModalVisible = false;
+        }
     }
 };
 </script>
-
-<style scoped>
-
-</style>

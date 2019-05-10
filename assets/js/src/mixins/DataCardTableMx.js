@@ -11,11 +11,15 @@ export default {
         },
         items: {
             type: Array,
-            default: []
+            default() {
+                return [];
+            }
         },
         headers: {
             type: Array,
-            default: []
+            default() {
+                return [];
+            }
         },
         isRequestPending: {
             type: Boolean,

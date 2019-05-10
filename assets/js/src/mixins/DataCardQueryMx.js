@@ -1,8 +1,9 @@
-import {mapGetters, mapMutations} from 'vuex';
-import {GET_PAGINATION} from '../store/query/getters';
-import {SET_PAGINATION} from '../store/query/mutations';
+import QueryMx from '@/mixins/QueryMx';
 
 export default {
+    mixins: [
+        QueryMx
+    ],
     props: {
         typename  : {
             type: String,
@@ -10,9 +11,6 @@ export default {
         },
     },
     computed: {
-        ...mapGetters({
-            getPagination: `query/${GET_PAGINATION}`
-        }),
         pagination: {
             get() {
                 return this.getPagination(this.typename);
@@ -20,11 +18,14 @@ export default {
             set(pagination) {
                 this.setPagination({typename: this.typename, pagination: pagination});
             }
+        },
+        filter: {
+            get() {
+                return this.getQueryFilter(this.typename);
+            },
+            set(filter) {
+                this.setQueryFilter({typename: this.typename, filter: filter});
+            }
         }
     },
-    methods: {
-        ...mapMutations({
-            setPagination: `query/${SET_PAGINATION}`
-        })
-    }
 };

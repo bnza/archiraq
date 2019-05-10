@@ -1,5 +1,5 @@
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
-
+import {camelCase, upperFirst} from 'lodash';
 /**
  * @typedef {Object} Callee
  * @property {string} method the object method which will be called
@@ -72,3 +72,7 @@ const getMapIntPixelHeight = /*@__PURE__*/ (innerHeight) => {
     }
     return height;
 };
+
+export const pascalCase = (string) => {
+    return upperFirst(camelCase(string));
+}

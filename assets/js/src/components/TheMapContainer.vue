@@ -147,7 +147,7 @@ export default {
             storeCoords(pixel);
         },
         zoomToItemGeometry(item) {
-            this.$refs.view.fit(JSON.parse(item.geom));
+            this.$refs.view.fit(item.geom);
         }
     },
 };

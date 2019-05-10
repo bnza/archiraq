@@ -14,6 +14,7 @@
         <v-card-actions>
             <slot name="actions" />
         </v-card-actions>
+        <slot name="modal" />
     </v-card>
 </template>
 

@@ -21,7 +21,8 @@ describe('DataCardContainer', () => {
                     {
                         $store: {
                             getters: {
-                                'query/getPagination': jest.fn()
+                                'query/getPagination': jest.fn(),
+                                'query/getFilter': jest.fn()
                             }
                         },
                         mocks: {
@@ -50,7 +51,8 @@ describe('DataCardContainer', () => {
                 {
                     $store: {
                         getters: {
-                            'query/getPagination': jest.fn()
+                            'query/getPagination': jest.fn(),
+                            'query/getFilter': null
                         }
                     },
                     mocks: {

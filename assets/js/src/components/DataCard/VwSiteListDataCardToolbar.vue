@@ -1,6 +1,8 @@
 <template>
     <v-fragment>
-        <v-toolbar-side-icon />
+        <vw-site-table-action-menu
+            @openModal="$emit('openModal', $event)"
+        />
 
         <v-toolbar-title>Site</v-toolbar-title>
     </v-fragment>
@@ -8,10 +10,12 @@
 
 <script>
 import {Fragment as VFragment} from 'vue-fragment';
+import VwSiteTableActionMenu from './ListRowMenu/VwSiteTableActionMenu';
 export default {
     name: 'VwSiteDataCardToolbar',
     components: {
-        VFragment
+        VFragment,
+        VwSiteTableActionMenu
     }
 };
 </script>

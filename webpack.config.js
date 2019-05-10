@@ -1,4 +1,10 @@
+/* global module, __dirname */
 const Encore = require('@symfony/webpack-encore');
+const path = require('path');
+
+if (!Encore.isRuntimeEnvironmentConfigured()) {
+    Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
+}
 
 Encore
     // directory where compiled assets will be stored
@@ -59,6 +65,6 @@ Encore
 
 let config = Encore.getWebpackConfig();
 
-// config.resolve.alias['vue$'] = 'vue/dist/vue.runtime.esm.js'
-
+//config.resolve.alias['vue$'] = 'vue/dist/vue.js';
+config.resolve.alias['@'] = path.resolve(__dirname, 'assets/js/src');
 module.exports = config;
