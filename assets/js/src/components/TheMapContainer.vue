@@ -41,7 +41,10 @@
                 <vl-source-esri />
             </vl-layer-tile>
             <map-layer-group-admin-bounds />
-            <map-layer-vector-wfs-vw-sites :zoom="zoom" />
+            <map-layer-vector-wfs-vw-sites
+                ref="layerVwSite"
+                :zoom="zoom"
+            />
             <the-map-layers-drawer />
         </vl-map>
     </v-card>
@@ -128,18 +131,6 @@ export default {
         });
     },
     methods: {
-        // /**
-        //  * @see https://openlayers.org/en/latest/apidoc/module-ol_render_Event-RenderEvent.html
-        //  * @param {ol.render.Event} renderEvent
-        //  */
-        // updateSizeOnHeightChange(renderEvent) {
-        //     if (this.$refs.map.$map) {
-        //         const height = renderEvent.context.canvas.height+'px';
-        //         if (height !== this.mapContainerHeight) {
-        //             this.$refs.map.$map.updateSize();
-        //         }
-        //     }
-        // },
         storePointerCoords({pixel}) {
             const storeCoords = debounce(bind(function (pixel) {
                 this.mapContainerPointerCoords =  this.$refs.map.getCoordinateFromPixel(pixel);
@@ -148,6 +139,11 @@ export default {
         },
         zoomToItemGeometry(item) {
             this.$refs.view.fit(item.geom);
+        },
+        zoomToLayer(layerId) {
+            const layer = this.$refs.map.getLayerById(layerId);
+            const extent = layer.getSource().getExtent();
+            this.$refs.view.fit(extent);
         }
     },
 };

@@ -1,7 +1,6 @@
 <template>
-    <v-layout
-        row
-        wrap
+    <predicate-row-layout
+        :is-valid="isPredicateValid"
     >
         <v-flex xs1>
             <negate-predicate-switch
@@ -23,10 +22,11 @@
         <v-flex xs4>
             <slot name="select" />
         </v-flex>
-    </v-layout>
+    </predicate-row-layout>
 </template>
 
 <script>
+import PredicateRowLayout from './PredicateRowLayout';
 import AttributeTextField from './AttributeTextField';
 import NegatePredicateSwitch from './NegatePredicateSwitch';
 import BinaryPredicateMx from '@/mixins/CQL/BinaryPredicateMx';
@@ -34,6 +34,7 @@ import BinaryPredicateMx from '@/mixins/CQL/BinaryPredicateMx';
 export default {
     name: 'StringMultiplePredicateRow',
     components: {
+        PredicateRowLayout,
         AttributeTextField,
         NegatePredicateSwitch
     },

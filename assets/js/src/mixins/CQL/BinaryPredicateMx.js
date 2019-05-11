@@ -12,8 +12,10 @@ export default {
         hasLeftOperand() {
             return !!this.expressions[0];
         },
+        //@TODO improve observable check
         hasRightOperand() {
-            return !!this.expressions[1];
+            let operand = this.expressions[1];
+            return !!operand && !!this.expressions[1].length;
         },
         isPredicateValid() {
             return !!this.operator &&  this.hasLeftOperand && this.hasRightOperand;

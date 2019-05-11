@@ -5,6 +5,7 @@
         :toggle-condition="toggleCondition"
     >
         <vl-layer-vector
+            :id="cid"
             :visible="visible"
         >
             <vl-source-vector

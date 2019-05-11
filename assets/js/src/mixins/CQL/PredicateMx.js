@@ -27,6 +27,9 @@ export default {
         }
     },
     computed: {
+        isPredicateValidColor() {
+            return this.isPredicateValid ? 'blue lighten-5' : 'white';
+        },
         isPredicateValid() {
             throw new Error('You must implement "isPredicateValid" method in your component!');
         },

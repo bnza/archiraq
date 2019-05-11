@@ -1,7 +1,6 @@
 <template>
-    <v-layout
-        row
-        wrap
+    <predicate-row-layout
+        :is-valid="isPredicateValid"
     >
         <v-flex xs1>
             <negate-predicate-switch
@@ -24,10 +23,11 @@
                 @input="setPredicateExpression"
             />
         </v-flex>
-    </v-layout>
+    </predicate-row-layout>
 </template>
 
 <script>
+import PredicateRowLayout from './PredicateRowLayout';
 import AttributeTextField from './AttributeTextField';
 import StringLiteralTextField from './StringLiteralTextField';
 import StringOperatorSelectInput from './StringOperatorSelectInput';
@@ -37,6 +37,7 @@ import BinaryPredicateMx from '@/mixins/CQL/BinaryPredicateMx';
 export default {
     name: 'StringPredicateRow',
     components: {
+        PredicateRowLayout,
         AttributeTextField,
         NegatePredicateSwitch,
         StringLiteralTextField,
