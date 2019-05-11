@@ -53,12 +53,8 @@ export default {
             deep: true
         },
         filter: {
-            handler: function (pagination) {
-                if (pagination) {
-                    //const route = getPaginatedRoute(this.$route, pagination);
-                    //navigateToQuery(this.$router, route);
-                    this.fetch();
-                }
+            handler: function () {
+                this.fetch();
             },
             deep: true
         },

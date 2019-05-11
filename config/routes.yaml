@@ -17,4 +17,9 @@ data__crud__read:
         entityName: '[\w\-?]+'
         id: '\d+'
 
+district_get_names:
+    path:       /data/geom-district/names
+    controller: App\Controller\DataCrudController::getDistrictNames
+    methods:    [GET]
+
 

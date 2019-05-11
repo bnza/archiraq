@@ -8,6 +8,7 @@ class DataCrudController extends AbstractCrudController
 
     private $entitiesMap = [
         'geom-nation' => 'App\\Entity\\Geom\\NationBoundaryEntity',
+        'geom-district' => 'App\\Entity\\Geom\\DistrictBoundaryEntity',
         'vw-site' => 'App\\Entity\\View\\SiteEntity'
     ];
 
@@ -22,5 +23,11 @@ class DataCrudController extends AbstractCrudController
             return $this->entitiesMap[$entityName];
         }
         throw new \InvalidArgumentException("\"$entityName\" is not mapped in this controller");
+    }
+
+    public function getDistrictNames()
+    {
+        $data = $this->getRepository('geom-district')->getDistrictNames();
+        return $this->respond($data);
     }
 }

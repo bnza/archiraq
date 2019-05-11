@@ -6,13 +6,14 @@ import auth from './auth';
 import client from './client';
 import components from './components';
 import geoserver from './geoserver';
+import vocabulary from './vocabulary';
 import query from './query';
 
 Vue.use(Vuex);
 
 export const state = {
     bingApiKey: '',
-    xsrfToken: ''
+    xsrfToken: '',
 };
 
 const options = {
@@ -24,6 +25,7 @@ const options = {
         client: client,
         components: components,
         geoserver: geoserver,
+        vocabulary: vocabulary,
         query: query,
     }
 };

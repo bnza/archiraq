@@ -37,4 +37,15 @@ class DistrictBoundaryRepository extends AbstractCrudRepository
 
         return $district;
     }
+
+    public function getDistrictNames()
+    {
+        return array_map(function ($district) {
+            return [
+                'id' => $district->getId(),
+                'name' => $district->getName(),
+                'governorate' => $district->getGovernorate()->getName()
+            ];
+        }, $this->findBy([], ['name'=>'ASC']));
+    }
 }

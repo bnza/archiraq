@@ -6,17 +6,25 @@
             predicate-attribute-label="Modern Name"
             @change="setCondition"
         />
+        <vw-site-district-predicate-row
+            :predicate-index="1"
+            @change="setCondition"
+        />
     </div>
 </template>
 
 <script>
 import StringPredicateRow from '@/components/DataCard/FilterDialogEntry/StringPredicateRow';
+import VwSiteDistrictPredicateRow from '@/components/DataCard/FilterDialogEntry/VwSiteDistrictPredicateRow';
 import ConditionMx from '@/mixins/CQL/ConditionMx';
 import QueryMx from '@/mixins/QueryMx';
 
 export default {
     name: 'VwSiteDataCardRow',
-    components: {StringPredicateRow},
+    components: {
+        VwSiteDistrictPredicateRow,
+        StringPredicateRow,
+    },
     mixins: [
         QueryMx,
         ConditionMx

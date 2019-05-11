@@ -10,6 +10,16 @@ const getAndFilterString = (filter) => {
 
 /**
  *
+ * @param {Or} filter
+ * @return {string}
+ */
+const getOrFilterString = (filter) => {
+    const conditions = filter.conditions.map(getFilterString);
+    return conditions.join(' OR ');
+};
+
+/**
+ *
  * @param {And} filter
  * @return {string}
  */
@@ -39,6 +49,7 @@ const getPropertyIsLikeFilterString = (filter) => {
 const functions = {
     getAndFilterString,
     getNotFilterString,
+    getOrFilterString,
     getPropertyIsEqualToFilterString,
     getPropertyIsLikeFilterString
 };

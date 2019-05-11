@@ -16,8 +16,12 @@ export default {
     methods: {
         getConditions() {
             const conditions = [];
+            let condition;
             for (let key in this.conditions) {
-                conditions.push(this.conditions[key]);
+                condition = this.conditions[key];
+                if (condition) {
+                    conditions.push(condition);
+                }
             }
             return conditions;
         },
