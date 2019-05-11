@@ -8,7 +8,7 @@
                 color="primary"
                 icon
                 flat
-                @click="$router.push(`/map/${prefix}/${table}/${action}#data-table`)"
+                @click="openAttributeTable"
             >
                 <v-icon>list</v-icon>
             </v-btn>
@@ -32,6 +32,19 @@ export default {
         action: {
             type: String,
             default: 'list'
+        }
+    },
+    methods: {
+        openAttributeTable() {
+            const path = `/map/${this.prefix}/${this.table}/${this.action}#data-table`;
+
+            const pattern = new RegExp('^'+path);
+            if (this.$route.fullPath.match(pattern)) {
+                document.getElementById('data-table').scrollIntoView({behavior: 'smooth'});
+            } else {
+                this.$router.push(path);
+            }
+
         }
     }
 };

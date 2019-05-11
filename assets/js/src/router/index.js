@@ -51,25 +51,32 @@ export const mapDataRoutes = {
     },
     children: dataTableRoutes
 };
+const scrollBehavior = function(to, from, savedPosition) {
+    if (savedPosition) {
+        // savedPosition is only available for popstate navigations.
+        return savedPosition;
+    } else {
+
+
+        // scroll to anchor by returning the selector
+        if (to.hash) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    /*const position = {};
+                    position.selector = to.hash;
+
+                    resolve(position);*/
+                    const position = window.scrollTo({ top: document.querySelector(to.hash).offsetTop, behavior: 'smooth' });
+                    resolve(position);
+                }, 500);
+            });
+
+        }
+    }
+};
 
 let router = new Router({
-    scrollBehavior: function(to, from, savedPosition) {
-        if (savedPosition) {
-            // savedPosition is only available for popstate navigations.
-            return savedPosition;
-        } else {
-            const position = {};
-
-            // scroll to anchor by returning the selector
-            if (to.hash) {
-                position.selector = to.hash;
-
-                // if the returned position is falsy or an empty object,
-                // will retain current scroll position.
-                return position;
-            }
-        }
-    },
+    scrollBehavior,
     routes: [
         {
             path: '/',
