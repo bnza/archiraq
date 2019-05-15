@@ -54,6 +54,7 @@
         "test:e2e": "cypress open"
     },
     "dependencies": {
+        "core-js": "3",
         "js-cookie": "^2.2.0",
         "qs": "^6.6.0",
         "vue": "^2.6",
