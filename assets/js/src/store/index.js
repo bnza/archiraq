@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import {vuexCookie} from '@/store/persistence';
 import actions from './actions';
 import mutations from './mutations';
 import auth from './auth';
@@ -27,7 +28,8 @@ const options = {
         geoserver: geoserver,
         vocabulary: vocabulary,
         query: query,
-    }
+    },
+    plugins: [vuexCookie.plugin]
 };
 
 export default new Vuex.Store(options);

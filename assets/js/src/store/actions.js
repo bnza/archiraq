@@ -11,9 +11,6 @@ export default {
         commit(SET_BING_API_KEY, bingApiKey);
         commit(`geoserver/${SET_BASE_URL}`, geoServer.baseUrl);
         commit(`geoserver/auth/${SET_GUEST_TOKEN_AUTH}`, {auth: geoServer.guestAuth});
-        if (geoServer.token) {
-            commit(`geoserver/auth/${SET_USER_TOKEN}`, geoServer.token);
-        }
         dispatch(`vocabulary/${FETCH_DISTRICTS}`);
     },
 };

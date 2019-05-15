@@ -10,18 +10,7 @@
                 bingApiKey: '{{ bing_api_key }}',
                 geoServer: {
                     baseUrl: '{{ geoserver.base_url }}',
-                    guestAuth: '{{ geoserver.guest_auth|base64_encode }}',
-                    {% if is_granted("ROLE_USER") %}
-                    token: {
-                        username: '{{ app.user.username }}',
-                        roles: [
-                            {% for role in app.user.roles %}
-                            '{{ role|e }}',
-                            {% endfor %}
-                        ],
-                        auth: '{{ app.token.getAuth() }}'
-                    }
-                    {% endif %}
+                    guestAuth: '{{ geoserver.guest_auth|base64_encode }}'
                 }
             }
     </script>

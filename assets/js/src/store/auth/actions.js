@@ -15,7 +15,7 @@ export default {
 
         return dispatch(`client/${XSRF_REQUEST}`, axiosRequestConfig, {root: true}).then((response) => {
             const auth = btoa(`${credentials.username}:${credentials.password}`);
-            commit(`geoserver/auth/${SET_USER_TOKEN}`, {auth}, {root: true});
+            commit(`geoserver/auth/${SET_USER_TOKEN}`, {auth, roles: response.data.roles}, {root: true});
             return response.data;
         });
     },

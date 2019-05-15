@@ -18,7 +18,7 @@ describe('store/auth actions', () => {
                 username: 'username2',
                 password: 'password2'
             };
-            dispatch.mockResolvedValue({username: 'username2'});
+            dispatch.mockResolvedValue({data: {username: 'username2', roles: []}});
             const axiosRequestConfig = {data: 'username=username2&password=password2', method: 'post', url: 'login'};
             await actions[consts.LOGIN]({dispatch, commit}, credentials);
             expect(dispatch).toHaveBeenCalledWith(`client/${XSRF_REQUEST}`, axiosRequestConfig, {root: true});
@@ -28,9 +28,9 @@ describe('store/auth actions', () => {
                 username: 'username2',
                 password: 'password2'
             };
-            dispatch.mockResolvedValue({username: 'username2'});
+            dispatch.mockResolvedValue({data: {username: 'username2', roles: ['aRole']}});
             await actions[consts.LOGIN]({dispatch, commit}, credentials);
-            expect(commit).toHaveBeenCalledWith(`geoserver/auth/${SET_USER_TOKEN}`, {'auth': 'dXNlcm5hbWUyOnBhc3N3b3JkMg=='}, {'root': true});
+            expect(commit).toHaveBeenCalledWith(`geoserver/auth/${SET_USER_TOKEN}`, {'auth': 'dXNlcm5hbWUyOnBhc3N3b3JkMg==', roles: ['aRole']}, {'root': true});
         });
     });
     describe(`${consts.LOGOUT}`, () => {

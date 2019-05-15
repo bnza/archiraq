@@ -1,15 +1,17 @@
 import {clone} from 'lodash';
-import * as mutations from '../../../src/store/mutations';
-import {SET_BASE_URL} from '../../../src/store/geoserver/mutations';
-import {SET_GUEST_TOKEN_AUTH} from '../../../src/store/geoserver/auth/mutations';
-import actions, * as consts from '../../../src/store/actions';
-import {state as baseState} from '../../../src/store/index';
+import * as mutations from '@/store/mutations';
+import {SET_BASE_URL} from '@/store/geoserver/mutations';
+import {FETCH_DISTRICTS} from '@/store/vocabulary/actions';
+import actions, * as consts from '@/store/actions';
+import {state as baseState} from '@/store/index';
 
 let commit;
+let dispatch;
 let state;
 
 beforeEach(() => {
     commit = jest.fn();
+    dispatch = jest.fn();
     state = clone(baseState);
 });
 
@@ -24,20 +26,20 @@ describe('[root] store actions', () => {
     };
     describe(`${consts.SET_ENV_DATA}`, () => {
         it(`commit "${mutations.SET_XSRF_TOKEN}"`, () => {
-            actions[consts.SET_ENV_DATA]({commit, state}, envData);
+            actions[consts.SET_ENV_DATA]({commit, dispatch, state}, envData);
             expect(commit).toHaveBeenCalledWith(mutations.SET_XSRF_TOKEN, envData.xsrfToken);
         });
         it(`commit "${mutations.SET_BING_API_KEY}"`, () => {
-            actions[consts.SET_ENV_DATA]({commit, state}, envData);
+            actions[consts.SET_ENV_DATA]({commit, dispatch, state}, envData);
             expect(commit).toHaveBeenCalledWith(mutations.SET_BING_API_KEY, envData.bingApiKey);
         });
         it(`commit "geoserver/${SET_BASE_URL}"`, () => {
-            actions[consts.SET_ENV_DATA]({commit, state}, envData);
+            actions[consts.SET_ENV_DATA]({commit, dispatch, state}, envData);
             expect(commit).toHaveBeenCalledWith(`geoserver/${SET_BASE_URL}`, envData.geoServer.baseUrl);
         });
-        it(`commit "geoserver/auth/${SET_GUEST_TOKEN_AUTH}"`, () => {
-            actions[consts.SET_ENV_DATA]({commit, state}, envData);
-            expect(commit).toHaveBeenCalledWith(`geoserver/auth/${SET_GUEST_TOKEN_AUTH}`, {auth: envData.geoServer.guestAuth});
+        it(`dispatch "vocabulary/${FETCH_DISTRICTS}"`, () => {
+            actions[consts.SET_ENV_DATA]({commit, dispatch, state}, envData);
+            expect(dispatch).toHaveBeenCalledWith(`vocabulary/${FETCH_DISTRICTS}`);
         });
     });
 });
