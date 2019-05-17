@@ -1187,7 +1187,7 @@
     source-map "~0.6.1"
     vue-template-es2015-compiler "^1.9.0"
 
-"@vue/test-utils@^1.0.0-beta.27":
+"@vue/test-utils@^1.0.0-beta.29":
   version "1.0.0-beta.29"
   resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-1.0.0-beta.29.tgz#c942cf25e891cf081b6a03332b4ae1ef430726f0"
   integrity sha512-yX4sxEIHh4M9yAbLA/ikpEnGKMNBCnoX98xE1RwxfhQVcn0MaXNSj1Qmac+ZydTj6VBSEVukchBogXBTwc+9iA==
@@ -10130,7 +10130,7 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"
   integrity sha512-KmvZVtmM26BQOMK1rwUZsrqxEGeKiYSZGA7SNWE6uExx8UX/cj9hq2MRV/wWC3Cq6AoeDGk57rL9YMFRel/q+g==
 
-vue-jest@^3.0.2:
+vue-jest@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/vue-jest/-/vue-jest-3.0.4.tgz#b6a2b0d874968f26fa775ac901903fece531e08b"
   integrity sha512-PY9Rwt4OyaVlA+KDJJ0614CbEvNOkffDI9g9moLQC/2DDoo0YrqZm7dHi13Q10uoK5Nt5WCYFdeAheOExPah0w==
@@ -10146,7 +10146,7 @@ vue-jest@^3.0.2:
     tsconfig "^7.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-loader@^15.4.2:
+vue-loader@^15.7.0:
   version "15.7.0"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.7.0.tgz#27275aa5a3ef4958c5379c006dd1436ad04b25b3"
   integrity sha512-x+NZ4RIthQOxcFclEcs8sXGEWqnZHodL2J9Vq+hUz+TDZzBaDIh1j3d9M2IUlTjtrHTZy4uMuRdTi8BGws7jLA==
@@ -10170,7 +10170,7 @@ vue-style-loader@^4.1.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-template-compiler@^2.5.21:
+vue-template-compiler@^2.6.10:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.6.10.tgz#323b4f3495f04faa3503337a82f5d6507799c9cc"
   integrity sha512-jVZkw4/I/HT5ZMvRnhv78okGusqe0+qH2A0Em0Cp8aq78+NK9TII263CDVz2QXZsIT+yyV/gZc/j/vlwa+Epyg==
@@ -10209,7 +10209,7 @@ vuelidate@^0.7:
   resolved "https://registry.yarnpkg.com/vuelidate/-/vuelidate-0.7.4.tgz#5a0e54be09ac0192f1aa3387d74b92e0945bf8aa"
   integrity sha512-QHZWYOL325Zo+2K7VBNEJTZ496Kd8Z31p85aQJFldKudUUGBmgw4zu4ghl4CyqPwjRCmqZ9lDdx4FSdMnu4fGg==
 
-vuetify-scss@^1.2.11:
+vuetify-scss@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/vuetify-scss/-/vuetify-scss-1.4.0.tgz#4b5cace35403a002c3cdd1b002ad97643e63d7f4"
   integrity sha512-4GFB+/oJzgD6bDI5TX3g5u6HKfcO604CSXs+RlAb+6huo3uoWMIGR725v0xoO8kahDMzdenHuAPIQGM16LkoUA==
@@ -10375,7 +10375,7 @@ webpack-manifest-plugin@^2.0.2:
     lodash ">=3.5 <5"
     tapable "^1.0.0"
 
-webpack-notifier@^1.6.0:
+webpack-notifier@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/webpack-notifier/-/webpack-notifier-1.7.0.tgz#4e03ea3ba1c0588d863935363f145d067815068a"
   integrity sha512-L3UKrl500xk0VDYKkwQxy5/BPhBWsZ2xHsAx2Qe3dVKYUEk9+y690RcNTMIUcVOK2fRgK7KK3PA4ccOq1h+fTg==
