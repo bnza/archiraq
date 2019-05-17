@@ -1,5 +1,5 @@
 /* global context, cy */
-import {getDataTestSelector} from '../../unit/utils';
+import {getDataTestSelector} from '../../../unit/utils';
 const TID_DRAWER = 'the-main-navigation-drawer--aside';
 const TID_SIDE_ICON = 'the-main-toolbar--side-icon';
 

@@ -1,6 +1,6 @@
 /* global context, cy */
-import {getDataTestSelector} from '../../unit/utils';
-const TID_SIDE_ICON = 'the-map-toolbar--side-icon';
+import {getDataTestSelector} from '../../../unit/utils';
+const TID_DRAWER_TOGGLE_BUTTON = 'icon--map-toggle-map-drawer';
 const TID_TILE_GROUP_BASE_MAP = 'map-legend-list-group--base-maps';
 const TID_CHECKBOX_BING = 'the-map-layers-drawer--checkbox-base-map-bing-visibility';
 const TID_CHECKBOX_OSM = 'the-map-layers-drawer--checkbox-base-map-osm-visibility';
@@ -8,12 +8,15 @@ const TID_CHECKBOX_OSM = 'the-map-layers-drawer--checkbox-base-map-osm-visibilit
 
 context('<TheMapLayersDrawer>', () => {
     beforeEach(() => {
-        cy.visit('http://archiraq.local');
+        cy.server();
+        cy.route('POST', 'http://localhost:8080/geoserver/wfs');
+        cy.visit('http://archiraq.local/#/map');
     });
 
     it('click base map <MapLegendLayerListTile> checkbox will toggle visibility', () => {
+
         //Opening drawer
-        let cyButtonSelector = getDataTestSelector(TID_SIDE_ICON);
+        let cyButtonSelector = getDataTestSelector(TID_DRAWER_TOGGLE_BUTTON);
 
         cy.get(cyButtonSelector).click();
 

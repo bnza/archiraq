@@ -7,7 +7,11 @@
                 @click="toggleMapLayersDrawerVisibility"
             >
                 <slot name="activator">
-                    <v-icon>{{ icon }}</v-icon>
+                    <v-icon
+                        data-test="icon--map-toggle-map-drawer"
+                    >
+                        {{ icon }}
+                    </v-icon>
                 </slot>
             </v-btn>
         </template>

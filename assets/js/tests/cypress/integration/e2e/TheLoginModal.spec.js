@@ -1,5 +1,5 @@
 /* global context, cy */
-import {getDataTestSelector} from '../../unit/utils';
+import {getDataTestSelector} from '../../../unit/utils';
 const TID_USERNAME = 'v-text-field--username';
 const TID_PASSWORD = 'v-text-field--password';
 const TID_SUBMIT = 'v-btn--submit';

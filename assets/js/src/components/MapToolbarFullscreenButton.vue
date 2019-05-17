@@ -7,7 +7,11 @@
                 @click="toggleFullScreen"
             >
                 <slot name="activator">
-                    <v-icon>{{ icon }}</v-icon>
+                    <v-icon
+                        data-test="icon--map-toggle-fullscreen"
+                    >
+                        {{ icon }}
+                    </v-icon>
                 </slot>
             </v-btn>
         </template>
@@ -25,7 +29,3 @@ export default {
     ]
 };
 </script>
-
-<style scoped>
-
-</style>

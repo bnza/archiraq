@@ -1,3 +1,4 @@
+/* global Cypress, cy */
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -33,4 +34,11 @@ Cypress.Commands.add('simulateOpenLayersEvent', (ol, map, type, x, y, opt_shiftK
         x,
         y
     );
+});
+
+Cypress.Commands.add('signIn', ({ email, password }) => {
+    cy.visit('/sign-in');
+    cy.get('input[name="email"]').type(email);
+    cy.get('input[name="password"]').type(password);
+    cy.get('form').submit();
 });

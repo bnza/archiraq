@@ -1,5 +1,5 @@
 /* global context, cy */
-import {getDataTestSelector} from '../../unit/utils';
+import {getDataTestSelector} from '../../../unit/utils';
 
 
 context('<TheMapToolbar>', () => {

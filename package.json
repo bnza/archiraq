@@ -9,11 +9,10 @@
         "@babel/runtime": "^7.4",
         "@symfony/webpack-encore": "^0.27",
         "@vue/test-utils": "^1.0.0-beta.29",
-        "babel-core": "7.0.0-bridge.0",
         "babel-eslint": "^10.0.1",
         "babel-jest": "^24.8",
         "babel-plugin-dynamic-import-node": "^2.2.0",
-        "cypress": "^3.1.4",
+        "cypress": "^3.2.0",
         "eslint": "^5.11.0",
         "eslint-plugin-vue": "^5.0.0",
         "jest": "^24.8",
@@ -40,7 +39,8 @@
         "build": "encore production --progress",
         "test-watch": "jest assets/js/tests/unit/*.spec.js --watchAll",
         "test:unit": "jest",
-        "test:e2e": "cypress open"
+        "test:integration": "cypress run --spec \"assets/js/tests/cypress/integration/integration**/*\"",
+        "test:e2e:open": "cypress open"
     },
     "dependencies": {
         "axios": "^0.18.0",
