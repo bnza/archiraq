@@ -13,8 +13,6 @@ module.exports = function (api) {
 
     if (api.env('test')) {
         plugins.push(['dynamic-import-node']);
-    } else {
-        plugins.push(['@babel/plugin-syntax-dynamic-import']);
     }
 
     api.cache(false);
