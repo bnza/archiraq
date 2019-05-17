@@ -2,19 +2,18 @@ module.exports = function (api) {
 
     const presets = [
         ['@babel/preset-env', {
-            useBuiltIns: 'entry',
+            targets: {node: 'current'},
+            useBuiltIns: 'usage',
             corejs: 3
         }]
     ];
 
-    const plugins = [
-        ['@babel/plugin-transform-runtime']
-    ];
+    const plugins = [];
 
     if (api.env('test')) {
         plugins.push(['dynamic-import-node']);
     } else {
-        plugins.push(['@babel/plugin-syntax-dynamic-import']);
+        plugins.push(['@babel/plugin-transform-runtime']);
     }
 
     api.cache(false);
