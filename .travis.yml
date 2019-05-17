@@ -22,8 +22,7 @@ matrix:
             node_js:
                 - "8"
             script:
-                - yarn list
-                - yarn test:unit
+                - NODE_ENV=test yarn test:unit
 
         -   language: php
             sudo: false
