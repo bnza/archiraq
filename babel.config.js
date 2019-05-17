@@ -9,10 +9,6 @@ module.exports = function (api) {
 
     const plugins = [];
 
-/*    const plugins = [
-        ['@babel/plugin-transform-runtime']
-    ];*/
-
     if (api.env('test')) {
         plugins.push(['dynamic-import-node']);
     } else {

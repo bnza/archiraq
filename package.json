@@ -6,10 +6,9 @@
         "@babel/core": "^7.4",
         "@babel/plugin-transform-runtime": "^7.4",
         "@babel/preset-env": "^7.4",
-        "@babel/runtime": "^7.3.1",
+        "@babel/runtime": "^7.4",
         "@symfony/webpack-encore": "^0.27",
         "@vue/test-utils": "^1.0.0-beta.27",
-        "axios": "^0.18.0",
         "babel-eslint": "^10.0.1",
         "babel-jest": "^23.6.0",
         "babel-plugin-dynamic-import-node": "^2.2.0",
@@ -21,10 +20,7 @@
         "jest-environment-jsdom-fourteen": "^0.1.0",
         "jest-mock-axios": "^2.3.0",
         "jest-vue": "^0.8.2",
-        "lodash": "^4.17.11",
-        "material-icons": "^0.2.3",
         "node-sass": "^4.11.0",
-        "ol": "^5.3.0",
         "regenerator-runtime": "^0.13.1",
         "sass-loader": "^7.0.1",
         "style-loader": "^0.23.1",
@@ -33,9 +29,7 @@
         "vue-template-compiler": "^2.5.21",
         "vuetify-scss": "^1.2.11",
         "vuex-mock-store": "^0.0.7",
-        "webpack-notifier": "^1.6.0",
-        "whatwg-fetch": "^3.0.0",
-        "xml-js": "^1.6.8"
+        "webpack-notifier": "^1.6.0"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -49,8 +43,12 @@
         "test:e2e": "cypress open"
     },
     "dependencies": {
+        "axios": "^0.18.0",
         "core-js": "3",
         "js-cookie": "^2.2.0",
+        "lodash": "^4.17.11",
+        "material-icons": "^0.2.3",
+        "ol": "^5.3.0",
         "qs": "^6.6.0",
         "vue": "^2.6",
         "vue-fragment": "^1.5.0",
@@ -60,6 +58,7 @@
         "vuetify": "^1.5",
         "vuex": "^3.0.1",
         "vuex-persist": "^2.0.0",
-        "vuex-router-sync": "^5.0.0"
+        "vuex-router-sync": "^5.0.0",
+        "xml-js": "^1.6.8"
     }
 }
