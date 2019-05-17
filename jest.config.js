@@ -21,5 +21,5 @@ module.exports= {
     'setupFiles': [
         'jest-canvas-mock', // <- the new mock
     ],
-    'setupTestFrameworkScriptFile': '<rootDir>/assets/js/tests/unit/jest-setup.js'
+    'setupFilesAfterEnv': ['<rootDir>/assets/js/tests/unit/jest-setup.js']
 };
