@@ -1,13 +1,24 @@
 <template>
-    <map-layer-vector-wfs
-        :cid-p="CID"
-        :typename="typename"
-        :visible-p="true"
-        :filter="filter"
-    />
+    <div>
+        <app-interaction-select
+            :layer-cid="CID"
+        >
+            <div slot-scope="props">
+                <vw-site-popup-data-card :feature="props.feature" />
+            </div>
+        </app-interaction-select>
+        <map-layer-vector-wfs
+            :cid-p="CID"
+            :typename="typename"
+            :visible-p="true"
+            :filter="filter"
+        />
+    </div>
 </template>
 <script>
 import MapLayerVectorWfs from '@/components/MapLayerVectorWfs';
+import AppInteractionSelect from '@/components/DataCard/Interaction/AppInteractionSelect';
+import VwSitePopupDataCard from '@/components/DataCard/Interaction/VwSitePopupDataCard';
 import ComponentStoreVisibleMx from '@/mixins/ComponentStoreVisibleMx';
 import QueryMx from '@/mixins/QueryMx';
 import {CID_MAP_LAYER_VECTOR_WFS_VW_SITES as CID} from '@/utils/cids';
@@ -19,7 +30,9 @@ export const SITE_POINT_WFS_TYPENAME = 'archiraq:vw_site_point';
 export default {
     name: CID,
     components: {
-        MapLayerVectorWfs
+        AppInteractionSelect,
+        MapLayerVectorWfs,
+        VwSitePopupDataCard
     },
     mixins: [
         ComponentStoreVisibleMx,

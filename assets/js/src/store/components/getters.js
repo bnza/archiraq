@@ -16,9 +16,6 @@ export default {
     [GET_COMPONENT]: getComponent,
     [GET_COMPONENT_PROP]: (state, getter) => (id, prop) => {
         const component = getter[GET_COMPONENT](id);
-/*        if (!component.hasOwnProperty(prop)) {
-            throw new ReferenceError(`No "${prop}" property in "${id}" component found`);
-        }*/
         return component[prop];
     }
 };

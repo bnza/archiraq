@@ -1,28 +1,22 @@
 <template>
-    <vl-interaction-select
-        :features.sync="selectedFeatures"
-        :condition="selectCondition"
-        :toggle-condition="toggleCondition"
+    <vl-layer-vector
+        :id="cid"
+        :visible="visible"
     >
-        <vl-layer-vector
-            :id="cid"
-            :visible="visible"
-        >
-            <vl-source-vector
-                ref="source"
-                :url="urlFunction"
-                :strategy-factory="loadingStrategyFactory"
-                :loader-factory="loaderFactory"
-                :typename="typename"
-                :filter="filter"
-                @fetchError="displaySnackbar"
-            />
-        </vl-layer-vector>
-    </vl-interaction-select>
+        <vl-source-vector
+            ref="source"
+            :url="urlFunction"
+            :strategy-factory="loadingStrategyFactory"
+            :loader-factory="loaderFactory"
+            :typename="typename"
+            :filter="filter"
+            @fetchError="displaySnackbar"
+        />
+    </vl-layer-vector>
 </template>
 
 <script>
-import { shiftKeyOnly, singleClick } from 'ol/events/condition';
+
 import {loadingBBox} from 'vuelayers/lib/ol-ext';
 import {getBboxFeatureRequestXmlBody} from '../utils/wfs';
 import {headers} from '../utils/http';
@@ -56,11 +50,6 @@ export default {
             default: null
         }
     },
-    data() {
-        return {
-            selectedFeatures: [],
-        };
-    },
     computed: {
         isCurrentLayer() {
             return !!this.cid
@@ -68,25 +57,6 @@ export default {
         },
     },
     watch: {
-        isCurrentLayer: function (flag) {
-            if (flag) {
-                this.selectedFeatures = this.getProp('selectedFeatures');
-            } else {
-                this.selectedFeatures = [];
-            }
-        },
-        visible: function (flag) {
-            if (flag) {
-                this.selectedFeatures = this.getProp('selectedFeatures');
-            } else {
-                this.selectedFeatures = [];
-            }
-        },
-        selectedFeatures: function (features) {
-            if (this.isCurrentLayer && this.visible) {
-                this.setProp('selectedFeatures', features);
-            }
-        },
         typename() {
             this.$refs.source.refresh();
         },
@@ -96,17 +66,8 @@ export default {
     },
     created() {
         this.visible = this.visibleP;
-        this.setProp('selectedFeatures', this.selectedFeatures);
     },
     methods: {
-        selectCondition(olMapBrowserEvent)  {
-            return this.isCurrentLayer
-                    && singleClick(olMapBrowserEvent);
-        },
-        toggleCondition(olMapBrowserEvent)  {
-            return this.isCurrentLayer
-                    && shiftKeyOnly(olMapBrowserEvent);
-        },
         urlFunction (extent, resolution, projection) {
             return this.$store.state.geoserver.baseUrl + 'wfs';
         },

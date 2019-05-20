@@ -5,6 +5,7 @@
             flat
             :color="color"
             :dark="dark"
+            :height="height"
         >
             <slot name="toolbar" />
         </v-toolbar>
@@ -25,6 +26,10 @@ export default {
         color: {
             type: String,
             default: 'green lighten-4'
+        },
+        height: {
+            type: Number,
+            default: undefined
         },
         dark: {
             type: Boolean,
