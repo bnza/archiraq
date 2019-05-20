@@ -28,7 +28,7 @@ export default {
         getAndCondition() {
             const conditions = this.getConditions();
             if (conditions) {
-                return conditions.length === 1 ? conditions[0] : and(conditions);
+                return conditions.length === 1 ? conditions[0] : and(...conditions);
             }
             return null;
         },
