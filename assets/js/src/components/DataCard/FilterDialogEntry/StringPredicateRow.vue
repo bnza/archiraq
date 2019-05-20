@@ -4,7 +4,7 @@
     >
         <v-flex xs1>
             <negate-predicate-switch
-                @change="setNegatePredicate"
+                :value.sync="predicate.negate"
             />
         </v-flex>
         <v-flex xs3>
@@ -12,15 +12,15 @@
                 :predicate-attribute-label="predicateAttributeLabel"
             />
         </v-flex>
-
         <v-flex xs4>
             <string-operator-select-input
-                @input="setPredicateOperator"
+                :value.sync="predicate.operator"
             />
         </v-flex>
         <v-flex xs4>
             <string-literal-text-field
-                @input="setPredicateExpression"
+                :value="predicate.expressions[1]"
+                @update:value="setPredicateExpression"
             />
         </v-flex>
     </predicate-row-layout>
@@ -32,7 +32,7 @@ import AttributeTextField from './AttributeTextField';
 import StringLiteralTextField from './StringLiteralTextField';
 import StringOperatorSelectInput from './StringOperatorSelectInput';
 import NegatePredicateSwitch from './NegatePredicateSwitch';
-import BinaryPredicateMx from '@/mixins/CQL/BinaryPredicateMx';
+import PredicateMx from '@/mixins/CQL/PredicateMx';
 
 export default {
     name: 'StringPredicateRow',
@@ -44,7 +44,7 @@ export default {
         StringOperatorSelectInput
     },
     mixins: [
-        BinaryPredicateMx
+        PredicateMx
     ]
 };
 </script>

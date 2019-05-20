@@ -4,7 +4,7 @@
     >
         <v-flex xs1>
             <negate-predicate-switch
-                @change="setNegatePredicate"
+                :value.sync="predicate.negate"
             />
         </v-flex>
         <v-flex xs3>
@@ -29,7 +29,7 @@
 import PredicateRowLayout from './PredicateRowLayout';
 import AttributeTextField from './AttributeTextField';
 import NegatePredicateSwitch from './NegatePredicateSwitch';
-import BinaryPredicateMx from '@/mixins/CQL/BinaryPredicateMx';
+import PredicateMx from '@/mixins/CQL/PredicateMx';
 
 export default {
     name: 'StringMultiplePredicateRow',
@@ -39,10 +39,10 @@ export default {
         NegatePredicateSwitch
     },
     mixins: [
-        BinaryPredicateMx
+        PredicateMx
     ],
     created() {
         this.setPredicateOperator('MultipleEqualToFilter');
-    }
+    },
 };
 </script>

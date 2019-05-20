@@ -75,4 +75,19 @@ const getMapIntPixelHeight = /*@__PURE__*/ (innerHeight) => {
 
 export const pascalCase = (string) => {
     return upperFirst(camelCase(string));
-}
+};
+
+/**
+ * Check given array index existence
+ * @param {Array} arr - The array to check
+ * @param {Number|Number[]} idx - Index[es]
+ * @return {boolean}
+ */
+export const arrayHasIndex = (arr, idx) => {
+    if (Array.isArray(idx)) {
+        return idx.reduce((hasIndex, i) => {
+            return hasIndex && arrayHasIndex(arr, i);
+        }, true);
+    }
+    return arr[idx] !== void 0;
+};

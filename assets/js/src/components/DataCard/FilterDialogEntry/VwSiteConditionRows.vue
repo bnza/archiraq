@@ -1,13 +1,14 @@
 <template>
     <div>
         <string-predicate-row
-            :predicate-index="0"
-            predicate-attribute-name="modern_name"
+            :predicate-p="conditions.modernName"
+            predicate-key="modernName"
             predicate-attribute-label="Modern Name"
             @change="setCondition"
         />
         <vw-site-district-predicate-row
-            :predicate-index="1"
+            :predicate-p="conditions.district"
+            predicate-key="district"
             @change="setCondition"
         />
     </div>
@@ -18,6 +19,23 @@ import StringPredicateRow from '@/components/DataCard/FilterDialogEntry/StringPr
 import VwSiteDistrictPredicateRow from '@/components/DataCard/FilterDialogEntry/VwSiteDistrictPredicateRow';
 import ConditionMx from '@/mixins/CQL/ConditionMx';
 import QueryMx from '@/mixins/QueryMx';
+import {QUERY_TYPENAME_VW_SITES} from '@/utils/cids';
+
+
+const defaultConditions = () => {
+    return {
+        district: {
+            negate: false,
+            expressions: ['district', []],
+            operator: 'MultipleEqualToFilter'
+        },
+        modernName: {
+            negate: false,
+            expressions: ['modern_name'],
+            operator: ''
+        }
+    };
+};
 
 export default {
     name: 'VwSiteDataCardRow',
@@ -29,12 +47,23 @@ export default {
         QueryMx,
         ConditionMx
     ],
+    created() {
+        // Retrieve from store
+        let conditions = Object.assign(defaultConditions(), this.getQueryConditions(QUERY_TYPENAME_VW_SITES));
+        this.conditions = conditions;
+    },
     methods: {
+        getQueryTypeName() {
+            return QUERY_TYPENAME_VW_SITES;
+        },
         submit() {
-            this.setQueryFilter({typename: 'vw-site', filter: this.getAndCondition()});
+            this.setQueryConditions(this.conditions);
+            this.setQueryFilter(this.getAndConditionsFilter());
         },
         clear() {
-            this.setQueryFilter({typename: 'vw-site', filter: null});
+            this.conditions = defaultConditions();
+            this.setQueryConditions(this.conditions);
+            this.setQueryFilter(null);
         }
     }
 };

@@ -1,7 +1,7 @@
 <template>
     <v-select
         ref="select"
-        v-model="value"
+        :value="value"
         :items="items"
         label="Operator"
         :hint="hint"
@@ -13,9 +13,14 @@
 <script>
 export default {
     name: 'StringOperatorSelectInput',
+    props: {
+        value: {
+            type: String,
+            required: true
+        }
+    },
     data() {
         return {
-            value: {},
             items: [
                 {
                     text: '',
@@ -48,7 +53,7 @@ export default {
     },
     methods: {
         emitInputValue(value) {
-            this.$emit('input', value);
+            this.$emit('update:value', value);
         }
     }
 };

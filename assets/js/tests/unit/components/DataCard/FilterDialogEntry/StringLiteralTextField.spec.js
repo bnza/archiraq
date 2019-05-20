@@ -19,7 +19,7 @@ describe('StringLiteralTextField', () => {
             });
             const textField = wrapper.find({ref: 'field'});
             textField.vm.$emit('input', 'text value');
-            expect(wrapper.emitted().input[0]).toEqual(['text value']);
+            expect(wrapper.emitted()['update:value'][0]).toEqual(['text value']);
         });
     });
 });

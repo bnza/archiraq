@@ -6,32 +6,25 @@ describe('ConditionMx', () => {
         describe('setCondition', () => {
             it('set "conditions" when value is truthy', () => {
                 const $this = {conditions:{}, $set: Vue.set};
-                ConditionMx.methods.setCondition.apply($this, [2, 'a condition']);
-                expect($this.conditions).toHaveProperty('k2');
-                expect($this.conditions.k2).toEqual('a condition');
+                ConditionMx.methods.setCondition.apply($this, [{key:'aKey', predicate: 'a condition'}]);
+                expect($this.conditions).toHaveProperty('aKey');
+                expect($this.conditions.aKey).toEqual('a condition');
             });
             it('call "unsetCondition" when value is null', () => {
                 const $this = {
                     unsetCondition: jest.fn(),
                 };
-                ConditionMx.methods.setCondition.apply($this, [4, null]);
-                expect($this.unsetCondition).toHaveBeenCalledWith(4);
+                ConditionMx.methods.setCondition.apply($this, [{key:'aKey', predicate: null}]);
+                expect($this.unsetCondition).toHaveBeenCalledWith('aKey');
             });
         });
         describe('unsetCondition', () => {
             it('unset "conditions" property as expected', () => {
-                const $this = {conditions:{k4: 'a value', k6: 'another value'}};
-                ConditionMx.methods.unsetCondition.apply($this, [4]);
-                expect($this.conditions).not.toHaveProperty('k4');
-                expect($this.conditions).toHaveProperty('k6');
-                expect($this.conditions.k6).toEqual('another value');
-            });
-        });
-        describe('getCondition', () => {
-            it('get conditions\' array', () => {
-                const $this = {conditions:{k4: 'a value', k6: 'another value'}};
-                const conditions = ConditionMx.methods.getConditions.apply($this, [4]);
-                expect(conditions).toEqual(['a value', 'another value']);
+                const $this = {conditions:{aKey: 'a value', anotherKey: 'another value'}};
+                ConditionMx.methods.unsetCondition.apply($this, ['aKey']);
+                expect($this.conditions).not.toHaveProperty('aKey');
+                expect($this.conditions).toHaveProperty('anotherKey');
+                expect($this.conditions.anotherKey).toEqual('another value');
             });
         });
     });

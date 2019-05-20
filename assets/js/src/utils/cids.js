@@ -13,3 +13,5 @@ export const CID_THE_MAP_LAYERS_DRAWER = 'TheMapLayersDrawer';
 export const CID_THE_MAP_TOOLBAR = 'TheMapToolbar';
 export const CID_THE_SNACKBAR = 'TheSnackbar';
 export const CID_VW_SITE_LIST_DATA_CARD = 'VwSiteListDataCard';
+
+export const QUERY_TYPENAME_VW_SITES = 'vw-site';

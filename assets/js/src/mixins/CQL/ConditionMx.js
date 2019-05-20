@@ -1,9 +1,7 @@
 import Vue from 'vue';
+import {getNullableWfsFilter, getConditionsWfsFilters} from '@/utils/WFS/filter';
 import {and} from 'ol/format/filter';
 
-const getIndexKey = /*@ PURE*/ function (index) {
-    return `k${index}`;
-};
 /**
  * @see https://docs.geoserver.org/stable/en/user/filter/ecql_reference.html
  */
@@ -14,37 +12,43 @@ export default {
         };
     },
     methods: {
-        getConditions() {
-            const conditions = [];
-            let condition;
-            for (let key in this.conditions) {
-                condition = this.conditions[key];
-                if (condition) {
-                    conditions.push(condition);
-                }
-            }
-            return conditions;
+        /**
+         *
+         * @param key
+         * @return {Filter|null}
+         */
+        getFilter(key) {
+            return this.conditions.hasOwnProperty(key) ?
+                getNullableWfsFilter(this.conditions[key]) :
+                null;
         },
-        getAndCondition() {
-            const conditions = this.getConditions();
-            if (conditions) {
+        /**
+         * @return {Filter[]}
+         */
+        getConditionsFilters() {
+            return getConditionsWfsFilters(this.conditions);
+        },
+        /**
+         * @return {null|And} - The ol And filter or null
+         */
+        getAndConditionsFilter() {
+            const conditions = this.getConditionsFilters();
+            if (conditions.length) {
                 return conditions.length === 1 ? conditions[0] : and(...conditions);
             }
             return null;
         },
-        setCondition(index, condition) {
-            if (condition === null) {
-                this.unsetCondition(index);
+        setCondition({key, predicate}) {
+            if (predicate === null) {
+                this.unsetCondition(key);
             } else {
-                this.$set(this.conditions, getIndexKey(index), condition);
+                this.$set(this.conditions, key, predicate);
             }
         },
-        unsetCondition(index) {
-            const key = getIndexKey(index);
+        unsetCondition(key) {
             if (this.conditions.hasOwnProperty(key)) {
                 Vue.delete(this.conditions, key);
             }
         },
-
     }
 };

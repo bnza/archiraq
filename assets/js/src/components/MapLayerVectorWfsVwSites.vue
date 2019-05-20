@@ -21,7 +21,7 @@ import AppInteractionSelect from '@/components/DataCard/Interaction/AppInteracti
 import VwSitePopupDataCard from '@/components/DataCard/Interaction/VwSitePopupDataCard';
 import ComponentStoreVisibleMx from '@/mixins/ComponentStoreVisibleMx';
 import QueryMx from '@/mixins/QueryMx';
-import {CID_MAP_LAYER_VECTOR_WFS_VW_SITES as CID} from '@/utils/cids';
+import {CID_MAP_LAYER_VECTOR_WFS_VW_SITES as CID, QUERY_TYPENAME_VW_SITES} from '@/utils/cids';
 
 export const SITE_POLY_ZOOM_UPPER_BOUND = 10;
 export const SITE_POLY_WFS_TYPENAME = 'archiraq:vw_site_poly';
@@ -56,15 +56,20 @@ export default {
         },
         filter: {
             get() {
-                return this.getQueryFilter('vw-site');
+                return this.getQueryFilter(QUERY_TYPENAME_VW_SITES);
             },
-            set(value) {
-                this.setQueryFilter({typename: 'vw-site', filter: value});
+            set(filter) {
+                this.setQueryFilter(filter);
             }
         }
     },
     created() {
         this.filter = null;
+    },
+    methods: {
+        getQueryTypeName() {
+            return QUERY_TYPENAME_VW_SITES;
+        },
     }
 };
 </script>

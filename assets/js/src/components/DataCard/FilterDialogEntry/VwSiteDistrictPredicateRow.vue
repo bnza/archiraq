@@ -1,13 +1,15 @@
 <template>
     <string-multiple-predicate-row
         ref="predicate"
-        :predicate-index="predicateIndex"
+        :predicate-p="predicateP"
+        :predicate-key="predicateKey"
         predicate-attribute-name="district"
         predicate-attribute-label="District"
-        @change="$emit('change', predicateIndex, arguments[1])"
+        @change="$emit('change', $event)"
     >
         <v-select
             slot="select"
+            v-model="value"
             :items="districts"
             item-text="name"
             item-value="name"
@@ -25,14 +27,31 @@ export default {
         StringMultiplePredicateRow
     },
     props: {
-        predicateIndex: {
-            type: Number,
+        predicateP: {
+            type: Object,
+            default: () => {}
+        },
+        predicateKey: {
+            type: String,
             required: true
-        }
+        },
+    },
+    data() {
+        return {
+            value: []
+        };
     },
     computed: {
         districts() {
             return this.$store.state.vocabulary.districts;
+        }
+    },
+    watch: {
+        predicateP: {
+            handler(predicate) {
+                this.value = predicate.expressions[1];
+            },
+            deep: true
         }
     },
     methods: {

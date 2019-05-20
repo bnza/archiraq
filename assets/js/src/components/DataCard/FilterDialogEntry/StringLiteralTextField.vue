@@ -1,7 +1,7 @@
 <template>
     <v-text-field
         ref="field"
-        v-model="value"
+        :value="value"
         label="Value"
         clearable
         @input="emitInputValue"
@@ -11,14 +11,15 @@
 <script>
 export default {
     name: 'StringLiteralTextField',
-    data() {
-        return {
-            value: ''
-        };
+    props: {
+        value: {
+            type: String,
+            default: ''
+        }
     },
     methods: {
         emitInputValue(value) {
-            this.$emit('input', value);
+            this.$emit('update:value', value);
         }
     }
 };

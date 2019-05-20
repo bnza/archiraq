@@ -17,31 +17,31 @@ describe('StringPredicateListTile', () => {
     describe('children event handling', () => {
         const mountOptions = {
             propsData: {
-                predicateIndex: 0,
+                predicateKey: 'pKey',
                 predicateAttributeLabel: 'Label'
             }
         };
+        let wrapper;
+        beforeEach(() => {
+            wrapper = getVuetifyWrapper('shallowMount', StringPredicateRow, mountOptions);
+        });
         it('StringOperatorSelectInput @input set "operator" property', () => {
-
-            const wrapper = getVuetifyWrapper('shallowMount', StringPredicateRow, mountOptions);
-            const select = wrapper.find(StringOperatorSelectInput);
-            select.vm.$emit('input', 'EqualToFilter');
-            expect(wrapper.vm.operator).toEqual('EqualToFilter');
+            const child = wrapper.find(StringOperatorSelectInput);
+            child.vm.$emit('update:value', 'EqualToFilter');
+            expect(wrapper.vm.predicate.operator).toEqual('EqualToFilter');
         });
         it('StringLiteralTextField @input set "expressions[1]" property', () => {
-            const wrapper = getVuetifyWrapper('shallowMount', StringPredicateRow, mountOptions);
-            const select = wrapper.find(StringLiteralTextField);
-            select.vm.$emit('input', 'text value');
-            expect(wrapper.vm.expressions[1]).toEqual('text value');
+            const child = wrapper.find(StringLiteralTextField);
+            child.vm.$emit('update:value', 'text value');
+            expect(wrapper.vm.predicate.expressions[1]).toEqual('text value');
         });
         it('NegatePredicateSwitch @change set "negate" property', () => {
-            const wrapper = getVuetifyWrapper('shallowMount', StringPredicateRow, mountOptions);
-            expect(wrapper.vm.negate).toEqual(false);
-            const _switch = wrapper.find(NegatePredicateSwitch);
-            _switch.vm.$emit('change', true);
-            expect(wrapper.vm.negate).toEqual(true);
-            _switch.vm.$emit('change', false);
-            expect(wrapper.vm.negate).toEqual(false);
+            expect(wrapper.vm.predicate.negate).toEqual(false);
+            const child = wrapper.find(NegatePredicateSwitch);
+            child.vm.$emit('update:value', true);
+            expect(wrapper.vm.predicate.negate).toEqual(true);
+            child.vm.$emit('update:value', false);
+            expect(wrapper.vm.predicate.negate).toEqual(false);
         });
     });
 });

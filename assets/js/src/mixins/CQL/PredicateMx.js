@@ -1,28 +1,40 @@
-import {lowerFirst} from 'lodash';
-import {getWfsFilter} from '@/utils/WFS/filter';
+import StaticMx from '@/mixins/StaticMx';
+import {getNullableWfsFilter} from '@/utils/WFS/filter';
 
+const defaultPredicate = () => {
+    return {
+        negate: false,
+        expressions: [],
+        operator: ''
+    };
+};
+
+const setPredicateFromProp = (vm, predicate) => {
+
+};
 
 /**
  * @see https://docs.geoserver.org/stable/en/user/filter/ecql_reference.html
  */
 export default {
+    mixins: [
+        StaticMx
+    ],
     data() {
         return {
-            negate: false,
-            expressions: [],
-            operator: '',
-
+            predicate: {}
         };
     },
     props: {
-        predicateAttributeName: {
-            type: String
+        predicateP: {
+            type: Object,
+            default: () => {}
         },
         predicateAttributeLabel: {
             type: String
         },
-        predicateIndex: {
-            type: Number,
+        predicateKey: {
+            type: String,
             required: true
         }
     },
@@ -31,45 +43,53 @@ export default {
             return this.isPredicateValid ? 'blue lighten-5' : 'white';
         },
         isPredicateValid() {
-            throw new Error('You must implement "isPredicateValid" method in your component!');
+            return !!getNullableWfsFilter(this.predicate);
         },
-        predicate() {
-            return this.isPredicateValid ? this.getFilter() : null;
-        },
-        predicateAttribute: {
+        attribute: {
             get() {
-                return this.expressions[0];
+                return this.predicate.expressions[0];
             },
             set(value) {
-                this.expressions[0] = value;
+                this.predicate.expressions[0] = value;
             }
         }
     },
     methods: {
         setNegatePredicate(flag) {
-            this.negate = flag;
+            this.$set(this.predicate, 'negate', flag);
         },
         setPredicateOperator(operator) {
-            this.operator = operator;
+            this.$set(this.predicate, 'operator', operator);
         },
         setPredicateExpression(expression, index=1) {
-            this.expressions[index] = expression;
-            this.expressions = this.expressions.slice();
-        },
-        getFilter() {
-            const filterFn = lowerFirst(this.operator);
-            return this.operator ? getWfsFilter(filterFn, this.expressions, this.negate) : null;
-        }
-    },
-    created() {
-        if (this.predicateAttributeName) {
-            this.predicateAttribute = this.predicateAttributeName;
+            this.predicate.expressions[index] = expression;
+            this.$set(this.predicate, 'expressions', this.predicate.expressions.slice());
         }
     },
     watch: {
-        predicate: function (predicate) {
-            this.$emit('change', this.predicateIndex, predicate);
+        predicate: {
+            handler: function (predicate) {
+                if (this.$static.predicatePropChanged) {
+                    this.$static.predicatePropChanged = false;
+                } else {
+                    predicate.isValid = this.isPredicateValid;
+                    this.$emit('change', {key: this.predicateKey, predicate});
+                }
+            },
+            deep: true
         },
-        deep: true
+        predicateP: {
+            handler: function (predicate) {
+                this.$static.predicatePropChanged = true;
+                this.predicate = Object.assign(defaultPredicate(), predicate);
+            },
+            deep: true,
+            immediate: true
+        }
+    },
+    static() {
+        return {
+            predicatePropChanged: false
+        };
     }
 };

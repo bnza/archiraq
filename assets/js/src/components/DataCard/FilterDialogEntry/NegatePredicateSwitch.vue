@@ -1,7 +1,7 @@
 <template>
     <v-switch
         ref="switch"
-        v-model="value"
+        :value="value"
         label="Not"
         @change="emitChangeValue"
     />
@@ -10,14 +10,15 @@
 <script>
 export default {
     name: 'NegatePredicateSwitch',
-    data() {
-        return {
-            value: false
-        };
+    props: {
+        value: {
+            type: Boolean,
+            required: true
+        }
     },
     methods: {
         emitChangeValue(value) {
-            this.$emit('change', value);
+            this.$emit('update:value', value);
         }
     }
 };

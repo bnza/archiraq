@@ -10,12 +10,13 @@ import DataCardContainer from '../components/DataCard/DataCardContainer';
 import MapToolbarButtons from '../components/MapToolbarButtons';
 import MapFooterData from '../components/MapFooterData';
 import MapDrawerEntries from '../components/MapDrawerEntries';
+import {QUERY_TYPENAME_VW_SITES} from '@/utils/cids';
 
 Vue.use(Router);
 
 export const dataTableRoutes = [
     {
-        path: ':typename(vw-site)/:action(list)',
+        path: `:typename(${QUERY_TYPENAME_VW_SITES})/:action(list)`,
         name: 'map_data_vw-site_list',
         components: {
             default: DataCardContainer

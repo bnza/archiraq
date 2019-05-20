@@ -1,5 +1,6 @@
 import mutations from './mutations';
 import getters from './getters';
+import {QUERY_TYPENAME_VW_SITES} from '@/utils/cids';
 
 export const defaultPagination =  {
     page: 1,
@@ -9,9 +10,10 @@ export const defaultPagination =  {
 };
 
 export const state = {
-    'vw-site': {
+    [QUERY_TYPENAME_VW_SITES]: {
         pagination: defaultPagination,
-        filter: {}
+        filter: {},
+        conditions: {}
     }
 };
 
