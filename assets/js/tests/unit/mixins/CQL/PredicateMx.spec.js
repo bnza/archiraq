@@ -1,4 +1,4 @@
-import PredicateMx from '../../../../src/mixins/CQL/PredicateMx';
+import PredicateMx from '@/mixins/CQL/PredicateMx';
 import {getWrapper} from '../../components/utils';
 
 let componentOptions;
@@ -61,9 +61,7 @@ describe('PredicateMx', () => {
                 const wrapper = getWrapper('shallowMount', componentOptions, mountOptions);
                 expect(wrapper.vm.isPredicateValidColor).toEqual('white');
             });
-        })
-
-
+        });
     });
     describe('methods', () => {
         describe('setNegatePredicate', () => {

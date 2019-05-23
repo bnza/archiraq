@@ -1,12 +1,14 @@
 <template>
-    <div>
+    <div data-test="vw-site-table--condition-rows">
         <string-predicate-row
+            data-test="modernName"
             :predicate-p="conditions.modernName"
             predicate-key="modernName"
             predicate-attribute-label="Modern Name"
             @change="setCondition"
         />
         <vw-site-district-predicate-row
+            data-test="district"
             :predicate-p="conditions.district"
             predicate-key="district"
             @change="setCondition"
@@ -38,7 +40,7 @@ const defaultConditions = () => {
 };
 
 export default {
-    name: 'VwSiteDataCardRow',
+    name: 'VwSiteConditionRows',
     components: {
         VwSiteDistrictPredicateRow,
         StringPredicateRow,

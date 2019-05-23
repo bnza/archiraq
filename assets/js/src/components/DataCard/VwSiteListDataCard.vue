@@ -1,5 +1,5 @@
 <template>
-    <data-card>
+    <data-card data-test="vw-site-table--data-card">
         <vw-site-list-data-card-toolbar
             slot="toolbar"
             @openModal="openModal"
