@@ -6,7 +6,6 @@
         label="Operator"
         :hint="hint"
         persistent-hint
-        attach
         @input="emitInputValue"
     />
 </template>

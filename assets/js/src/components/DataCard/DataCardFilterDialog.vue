@@ -18,6 +18,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-btn
+                    data-test="clear"
                     flat
                     color="primary"
                     @click="$emit('clear')"
@@ -25,6 +26,7 @@
                     Clear
                 </v-btn>
                 <v-btn
+                    data-test="submit"
                     flat
                     color="primary"
                     @click="$emit('submit')"

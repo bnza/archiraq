@@ -14,7 +14,6 @@
             item-text="name"
             item-value="name"
             multiple
-            attach
             @input="setPredicateExpression"
         />
     </string-multiple-predicate-row>
