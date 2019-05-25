@@ -1,7 +1,7 @@
 <template>
     <v-switch
         ref="switch"
-        :value="value"
+        :input-value="value"
         label="Not"
         @change="emitChangeValue"
     />
