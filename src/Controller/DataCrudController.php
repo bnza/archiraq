@@ -9,6 +9,7 @@ class DataCrudController extends AbstractCrudController
     private $entitiesMap = [
         'geom-nation' => 'App\\Entity\\Geom\\NationBoundaryEntity',
         'geom-district' => 'App\\Entity\\Geom\\DistrictBoundaryEntity',
+        'voc-chronology' => 'App\\Entity\\Voc\\ChronologyEntity',
         'vw-site' => 'App\\Entity\\View\\SiteEntity'
     ];
 
@@ -27,7 +28,13 @@ class DataCrudController extends AbstractCrudController
 
     public function getDistrictNames()
     {
-        $data = $this->getRepository('geom-district')->getDistrictNames();
+        $data = $this->getRepository('geom-district')->getEntries();
+        return $this->respond($data);
+    }
+
+    public function getChronologyNames()
+    {
+        $data = $this->getRepository('voc-chronology')->getEntries();
         return $this->respond($data);
     }
 }

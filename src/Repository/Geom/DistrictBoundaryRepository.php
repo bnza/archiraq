@@ -4,7 +4,6 @@ namespace App\Repository\Geom;
 
 use App\Entity\Geom\DistrictBoundaryEntity;
 use App\Repository\AbstractCrudRepository;
-use Doctrine\ORM\NoResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class DistrictBoundaryRepository extends AbstractCrudRepository
@@ -38,14 +37,16 @@ class DistrictBoundaryRepository extends AbstractCrudRepository
         return $district;
     }
 
-    public function getDistrictNames()
+    public function getEntries(): array
     {
-        return array_map(function ($district) {
-            return [
-                'id' => $district->getId(),
-                'name' => $district->getName(),
-                'governorate' => $district->getGovernorate()->getName()
-            ];
-        }, $this->findBy([], ['name'=>'ASC']));
+        return array_map(
+            function ($entity) {
+                /* @var DistrictBoundaryEntity $entity */
+                return [
+                    'id' => $entity->getId(),
+                    'name' => $entity->getName(),
+                    'governorate' => $entity->getGovernorate()->getName(),
+                ];
+            }, $this->findBy([], ['name' => 'ASC']));
     }
 }

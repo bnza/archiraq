@@ -17,4 +17,19 @@ class ChronologyRepository extends AbstractCrudRepository
     {
         return (bool) $this->findOneBy(['code' => $code]);
     }
+
+    public function getEntries(): array
+    {
+        return array_map(
+            function ($entity) {
+                /* @var ChronologyEntity $entity */
+                return [
+                    'id' => $entity->getId(),
+                    'code' => $entity->getCode(),
+                    'name' => $entity->getName(),
+                    'date_low' => $entity->getDateLow(),
+                    'date_high' => $entity->getDateHigh(),
+                ];
+            }, $this->findBy([], ['date_low' => 'ASC', 'date_high' => 'DESC']));
+    }
 }

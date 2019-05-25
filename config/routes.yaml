@@ -17,9 +17,15 @@ data__crud__read:
         entityName: '[\w\-?]+'
         id: '\d+'
 
+chronology_get_names:
+    path:       /data/voc-chronology/names
+    controller: App\Controller\DataCrudController::getChronologyNames
+    methods:    [GET]
+
 district_get_names:
     path:       /data/geom-district/names
     controller: App\Controller\DataCrudController::getDistrictNames
     methods:    [GET]
+
 
 

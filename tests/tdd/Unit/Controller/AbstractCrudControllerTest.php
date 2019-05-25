@@ -9,6 +9,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class AbstractCrudControllerTest extends \PHPUnit\Framework\TestCase
 {
@@ -92,5 +93,24 @@ class AbstractCrudControllerTest extends \PHPUnit\Framework\TestCase
         $response = $this->controller->read('some-entity', 3);
         $this->assertEquals($expectedStatus, $response->getStatusCode());
         $this->assertEquals($expectedContent, $response->getContent());
+    }
+
+    public function testMethodListWillReturnExpectedResponseOnError() {
+        /** @var AbstractCrudRepository|MockObject $repo */
+        $repo = $this->getMockForAbstractClass(
+            AbstractCrudRepository::class,
+            [],
+            '',
+            false,
+            true,
+            true,
+            ['findByAsArray']
+        );
+        $repo->method('findByAsArray')->willThrowException(new \LogicException('some weird error'));
+        $this->controller->getEntityManager()->method('getRepository')->willReturn($repo);
+        $request = $this->createMock(Request::class);
+        $response = $this->controller->list($request, 'some-entity');
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertEquals('{"errors":"some weird error"}', $response->getContent());
     }
 }
