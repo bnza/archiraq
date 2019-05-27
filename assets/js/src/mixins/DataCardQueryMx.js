@@ -24,7 +24,7 @@ export default {
                 return this.getQueryFilter(this.typename);
             },
             set(filter) {
-                this.setQueryFilter({typename: this.typename, filter: filter});
+                this.setQueryFilter(filter);
             }
         }
     },

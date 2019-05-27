@@ -21,7 +21,7 @@
                     data-test="clear"
                     flat
                     color="primary"
-                    @click="$emit('clear')"
+                    @click="$emit('action', {method: 'clear'})"
                 >
                     Clear
                 </v-btn>
@@ -29,7 +29,7 @@
                     data-test="submit"
                     flat
                     color="primary"
-                    @click="$emit('submit')"
+                    @click="$emit('action', {method: 'submit'})"
                 >
                     Submit
                 </v-btn>
@@ -40,7 +40,7 @@
 
 <script>
 export default {
-    name: 'VwSiteDataCardFilterDialog',
+    name: 'DataCardFilterDialog',
     props: {
         visible: {
             type: Boolean,

@@ -7,9 +7,6 @@ export default {
         DataCardMx
     ],
     computed: {
-        hitsTypeName() {
-            return this.typename;
-        },
         limitTypeName() {
             return this.typename;
         }
@@ -23,7 +20,6 @@ export default {
             let axiosRequestConfig = {
                 method: 'get',
                 url: this.getUrl(),
-                //data: getLimitFeatureRequestXmlBody('EPSG:4326', this.limitTypeName, this.filter),
                 headers: setWfsGetFeaturePostRequestHeaders({}, this.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`])
             };
             try {

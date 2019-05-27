@@ -8,6 +8,11 @@ import {HAS_COMPONENT} from '../../../src/store/components/getters';
 let localVue;
 const logError = console.error;
 
+export const StubComponent = {
+    template: '<div data-test="stub"/>',
+    methods: {}
+};
+
 export const catchLocalVueDuplicateVueBug = () => {
     console.error = (...args) => {
         if (

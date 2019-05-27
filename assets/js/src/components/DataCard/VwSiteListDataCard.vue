@@ -14,15 +14,15 @@
         />
         <component
             :is="modalComponent"
-            v-if="modalComponent"
+            v-if="modalComponentType"
             slot="modal"
             :visible.sync="isModalVisible"
-            @submit="$refs.filter.submit()"
-            @clear="$refs.filter.clear()"
+            @action="executeModalSlotMethod"
         >
-            <vw-site-condition-rows
-                ref="filter"
-                slot="filter"
+            <component
+                :is="modalSlotComponent"
+                ref="modalSlot"
+                :slot="modalComponentType"
             />
         </component>
     </data-card>
@@ -32,11 +32,12 @@
 import DataCard from './DataCard';
 import VwSiteListDataCardToolbar from './VwSiteListDataCardToolbar';
 import VwSiteListDataCardTable from './VwSiteListDataCardTable';
+import DataCardDynamicModalMx from '@/mixins/DataCardDynamicModalMx';
 import WfsDataCardMx from '@/mixins/WfsDataCardMx';
 
-import {pascalCase} from '@/utils/utils';
 import {CID_VW_SITE_LIST_DATA_CARD as CID} from '@/utils/cids';
-import {SITE_POINT_WFS_TYPENAME, SITE_POLY_WFS_TYPENAME} from '@/components/MapLayerVectorWfsVwSites';
+import {SITE_POLY_WFS_TYPENAME} from '@/components/MapLayerVectorWfsVwSites';
+
 
 const headers = [
     {
@@ -96,39 +97,25 @@ export default {
             /* webpackChunkName: "DataCardFilterDialog" */
             './DataCardFilterDialog'
         ),
-        VwSiteConditionRows: () => import(
+        DataCardFilterDialogSlot: () => import(
             /* webpackChunkName: "VwSiteDataCardFilterDialog" */
             './FilterDialogEntry/VwSiteConditionRows'
         )
     },
     mixins: [
+        DataCardDynamicModalMx,
         WfsDataCardMx
     ],
     data() {
         return {
             cid: CID,
             headers: headers,
-            modalComponent: '',
-            isModalVisible: false
         };
     },
     computed: {
-        hitsTypeName() {
-            return SITE_POINT_WFS_TYPENAME;
-        },
         limitTypeName() {
             return SITE_POLY_WFS_TYPENAME;
         }
     },
-    methods: {
-        openModal(event) {
-            const type = pascalCase(event);
-            this.modalComponent = `DataCard${type}Dialog`;
-            this.isModalVisible = true;
-        },
-        closeModal() {
-            this.isModalVisible = false;
-        }
-    }
 };
 </script>

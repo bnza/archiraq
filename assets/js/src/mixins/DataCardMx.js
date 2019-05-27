@@ -7,12 +7,6 @@ export default {
         DataCardQueryMx,
         HttpClientMx,
     ],
-    props: {
-        action: {
-            type: String,
-            required: true
-        },
-    },
     data() {
         return {
             sortDefaultField: 'id',

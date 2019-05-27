@@ -1,4 +1,5 @@
 {
+  "baseUrl": "http://archiraq.local",
   "fixturesFolder": "assets/js/tests/cypress/fixtures",
   "integrationFolder": "assets/js/tests/cypress/integration",
   "pluginsFile": "assets/js/tests/cypress/plugins/index.js",

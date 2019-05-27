@@ -12,7 +12,7 @@ afterAll(() => {
     resetConsoleError();
 });
 
-const Stub = { template: '<div data-test="stub"/>' }
+const Stub = { template: '<div data-test="stub"/>' };
 
 describe('StringLiteralTextField', () => {
     beforeEach(() => {
