@@ -6,7 +6,7 @@
         predicate-attribute-label="District"
         @change="$emit('change', $event)"
     >
-        <v-select
+        <v-autocomplete
             ref="select"
             slot="select"
             menu-props="{attach: true}"

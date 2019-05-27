@@ -13,7 +13,11 @@ context('Window', () => {
         cy.route('tiles.virtualearth.net/tiles/**', '@bingImageryMetadata')
         cy.route('data/geom-district/names', '@blankTile');
         cy.route('GET','_wdt/**', '');
-        cy.visit(baseUrl);
+        cy.visit(baseUrl, {
+            onBeforeLoad (win) {
+                delete win.fetch;
+            },
+        });
     });
 
     it('cy.window() - get the global window object', () => {

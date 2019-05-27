@@ -22,7 +22,7 @@ const defaultMountOptions = {
             }
         }
     },
-    stubs: {VSelect: Stub},
+    stubs: {VAutocomplete: Stub},
     propsData: {
         predicateKey: 'pKey',
     }

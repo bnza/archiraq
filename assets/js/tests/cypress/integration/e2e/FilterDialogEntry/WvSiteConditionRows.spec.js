@@ -7,7 +7,7 @@ const TID_DIALOG_CONDITION_ROWS = 'vw-site-table--condition-rows';
 
 const emptyFeatureCollection = {'type':'FeatureCollection','features':[],'totalFeatures':0,'numberMatched':0,'numberReturned':0,'timeStamp':'2019-05-24T19:36:15.334Z','crs':null};
 const districts = [{'id':78,'name':'Abu Al-Khaseeb','governorate':'Basrah'},{'id':80,'name':'Abu Ghraib','governorate':'Baghdad'},{'id':109,'name':'Adhamia','governorate':'Baghdad'},{'id':48,'name':'Afaq','governorate':'Qadissiya'},{'id':36,'name':'Ain Al-Tamur','governorate':'Kerbala'},{'id':27,'name':'Akre','governorate':'Ninewa'}];
-const chronologies = [{'id':2,'code':'UBA','name':'UBAID','date_low':-6500,'date_high':-4000},,{'id':11,'code':'EDA','name':'EARLY DYNASTIC','date_low':-2900,'date_high':-2350},{'id':17,'code':'AKK','name':'AKKADIAN/POST AKKADIAN','date_low':-2350,'date_high':-2100},,{'id':36,'code':'ISLA','name':'ISLAMIC','date_low':650,'date_high':1500}];
+const chronologies = [{'id':2,'code':'UBA','name':'UBAID','date_low':-6500,'date_high':-4000},{'id':11,'code':'EDA','name':'EARLY DYNASTIC','date_low':-2900,'date_high':-2350},{'id':17,'code':'AKK','name':'AKKADIAN/POST AKKADIAN','date_low':-2350,'date_high':-2100},{'id':36,'code':'ISLA','name':'ISLAMIC','date_low':650,'date_high':1500}];
 
 const inputAlias = (conditionKey, inputKey) => {
     return `__${conditionKey}__${inputKey}__`;
@@ -20,6 +20,7 @@ const conditionAlias = (conditionKey) => {
 const openDialog = () => {
     cy.get(getDataTestSelector(TID_DATA_CARD)).find('.v-toolbar__content .v-icon').click();
     cy.get(getDataTestSelector(TID_ACTION_MENU)).find ('> :nth-child(1)').click();
+    cy.wait(100);
 };
 
 const setAliases = () => {
@@ -36,7 +37,7 @@ const getConditionInput = function(conditionKey, inputKey)  {
     return getCondition(conditionKey).find(conditionInputs[conditionKey][inputKey].selector).as(inputAlias(conditionKey, inputKey));
 };
 
-const checkConditionValues = (conditionKey, valueKey) => {
+const testConditionValues = (conditionKey, valueKey) => {
     for (let inputKey in conditionInputs[conditionKey]) {
         const conditionInputItem = conditionInputs[conditionKey][inputKey];
         if (conditionInputItem.hasOwnProperty(valueKey)) {
@@ -61,6 +62,7 @@ const setConditionValues = function(conditionKey, valueKey)  {
             let fn = inputItem.inputFn;
             let value = inputItem.hasOwnProperty(valueKey) ? inputItem[valueKey] : [];
             if (typeof(fn) === 'function') {
+                //console.log(fn, conditionKey, inputKey, value);
                 fn(conditionKey, inputKey, value);
             } else {
                 getConditionInput(conditionKey, inputKey)[fn](...value);
@@ -82,13 +84,18 @@ const getSwitchValue = function ($input) {
     return $input.prop('checked');
 };
 
+const setSwitchValue = function (conditionKey, inputKey, inputValue) {
+    getConditionInput(conditionKey, inputKey).check({force:true});
+};
+
+
 const conditionInputs = {
     modernName: {                                                           //conditionKey
         negate: {
             selector: '> :nth-child(1) input',
             defaultValue: [getSwitchValue, false],
-            inputFn: 'check',
-            inputValue: [{force: true}],
+            inputFn: setSwitchValue,
+            inputValue: [true],
             displayValue: [getSwitchValue, true]
         },
         attribute: {
@@ -113,8 +120,8 @@ const conditionInputs = {
         negate: {
             selector: '> :nth-child(1) input',
             defaultValue: [getSwitchValue, false],
-            inputFn: 'check',
-            inputValue: [{force: true}],
+            inputFn: setSwitchValue,
+            inputValue: [true],
             displayValue: [getSwitchValue, true]
         },
         attribute: {
@@ -136,8 +143,8 @@ const conditionInputs = {
         negate: {
             selector: '> :nth-child(1) input',
             defaultValue: [getSwitchValue, false],
-            inputFn: 'check',
-            inputValue: [{force: true}],
+            inputFn: setSwitchValue,
+            inputValue: [true],
             displayValue: [getSwitchValue, true]
         },
         attribute: {
@@ -159,10 +166,8 @@ const conditionInputs = {
 
 context('<VwSiteConditionRows>', () => {
     beforeEach(() => {
-
         cy.server();
-
-        cy.route('GET','_wdt/**', '');
+        cy.route('GET','_wdt/!**', '');
         cy.route('data/geom-district/names', districts);
         cy.route('data/voc-chronology/names', chronologies);
         cy.route('POST','/geoserver/wfs', emptyFeatureCollection).as('wfsPost');
@@ -171,9 +176,9 @@ context('<VwSiteConditionRows>', () => {
         setAliases();
     });
 
-    it.skip('when open has default condition values', () => {
+    it('when open has default condition values', () => {
         for (let conditionKey in conditionInputs) {
-            checkConditionValues(conditionKey, 'defaultValue');
+            testConditionValues(conditionKey, 'defaultValue');
             cy.get(`@${conditionAlias(conditionKey)}`).should('not.have.class','valid');
         }
     });
@@ -185,18 +190,18 @@ context('<VwSiteConditionRows>', () => {
         }
     });
 
-    it.skip('"clear" button will restore default values', function()  {
+    it('"clear" button will restore default values', function()  {
         for (let conditionKey in conditionInputs) {
             setConditionValues(conditionKey, 'inputValue');
         }
         cy.get('@dialog').find(getDataTestSelector('clear')).click();
         for (let conditionKey in conditionInputs) {
-            checkConditionValues(conditionKey, 'defaultValue');
+            testConditionValues(conditionKey, 'defaultValue');
             cy.get(`@${conditionAlias(conditionKey)}`).should('not.have.class','valid');
         }
     });
 
-    it.skip('"submit" button will XHR request', function()  {
+    it('"submit" button will XHR request', function()  {
         for (let conditionKey in conditionInputs) {
             setConditionValues(conditionKey, 'inputValue');
         }
@@ -209,16 +214,17 @@ context('<VwSiteConditionRows>', () => {
         });
     });
 
-    it.skip('submitted values will be shown when dialog re-open', function()  {
+    it('submitted values will be shown when dialog re-open', function()  {
         for (let conditionKey in conditionInputs) {
             setConditionValues(conditionKey, 'inputValue');
+            //cy.get(`@${conditionAlias(conditionKey)}`).should('not.have.class','valid');
         }
         cy.get('@dialog').find(getDataTestSelector('submit')).click();
         cy.visit('http://archiraq.local/#/map');
         cy.visit('http://archiraq.local/#/map/data/vw-site/list#data-table');
         openDialog();
         for (let conditionKey in conditionInputs) {
-            checkConditionValues(conditionKey, 'displayValue');
+            testConditionValues(conditionKey, 'displayValue');
         }
 
     });

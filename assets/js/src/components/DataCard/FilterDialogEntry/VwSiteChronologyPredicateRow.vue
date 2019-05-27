@@ -6,16 +6,17 @@
         predicate-attribute-label="Chronology"
         @change="$emit('change', $event)"
     >
-        <v-select
+        <v-autocomplete
             ref="select"
             slot="select"
-            menu-props="{attach: true}"
             v-model="value"
+            menu-props="{attach: true}"
             :items="chronologies"
             item-text="name"
             item-value="code"
             multiple
             @input="setPredicateExpression"
+            @keydown.enter="$refs.select.menuIsActive = false"
         />
     </string-multiple-predicate-row>
 </template>
