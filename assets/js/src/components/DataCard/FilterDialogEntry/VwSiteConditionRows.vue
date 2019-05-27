@@ -13,11 +13,18 @@
             predicate-key="district"
             @change="setCondition"
         />
+        <vw-site-chronology-predicate-row
+            data-test="chronology"
+            :predicate-p="conditions.chronology"
+            predicate-key="chronology"
+            @change="setCondition"
+        />
     </div>
 </template>
 
 <script>
 import StringPredicateRow from '@/components/DataCard/FilterDialogEntry/StringPredicateRow';
+import VwSiteChronologyPredicateRow from '@/components/DataCard/FilterDialogEntry/VwSiteChronologyPredicateRow';
 import VwSiteDistrictPredicateRow from '@/components/DataCard/FilterDialogEntry/VwSiteDistrictPredicateRow';
 import ConditionMx from '@/mixins/CQL/ConditionMx';
 import QueryMx from '@/mixins/QueryMx';
@@ -26,6 +33,11 @@ import {QUERY_TYPENAME_VW_SITES} from '@/utils/cids';
 
 const defaultConditions = () => {
     return {
+        chronology: {
+            negate: false,
+            expressions: ['chronology', []],
+            operator: 'MultipleIsInsensitiveLikeFilter'
+        },
         district: {
             negate: false,
             expressions: ['district', []],
@@ -42,6 +54,7 @@ const defaultConditions = () => {
 export default {
     name: 'VwSiteConditionRows',
     components: {
+        VwSiteChronologyPredicateRow,
         VwSiteDistrictPredicateRow,
         StringPredicateRow,
     },

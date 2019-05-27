@@ -3,7 +3,7 @@
         ref="predicate"
         :predicate-p="predicateP"
         :predicate-key="predicateKey"
-        predicate-attribute-label="District"
+        predicate-attribute-label="Chronology"
         @change="$emit('change', $event)"
     >
         <v-select
@@ -11,9 +11,9 @@
             slot="select"
             menu-props="{attach: true}"
             v-model="value"
-            :items="districts"
+            :items="chronologies"
             item-text="name"
-            item-value="name"
+            item-value="code"
             multiple
             @input="setPredicateExpression"
         />
@@ -24,7 +24,7 @@
 import NestedSlotPredicateMx from '@/mixins/CQL/NestedSlotPredicateMx';
 import StringMultiplePredicateRow from '@/components/DataCard/FilterDialogEntry/StringMultiplePredicateRow';
 export default {
-    name: 'VwSiteDistrictPredicateRow',
+    name: 'VwSiteChronologyPredicateRow',
     components: {
         StringMultiplePredicateRow
     },
@@ -32,8 +32,8 @@ export default {
         NestedSlotPredicateMx
     ],
     computed: {
-        districts() {
-            return this.$store.state.vocabulary.districts;
+        chronologies() {
+            return this.$store.state.vocabulary.chronologies;
         }
     },
 };

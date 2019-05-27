@@ -1,6 +1,7 @@
 <template>
     <v-select
         ref="select"
+        menu-props="{attach: true}"
         :value="value"
         :items="items"
         label="Operator"

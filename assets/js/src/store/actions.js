@@ -1,7 +1,7 @@
 import {SET_BING_API_KEY, SET_XSRF_TOKEN} from './mutations';
 import {SET_BASE_URL} from './geoserver/mutations';
-import {FETCH_DISTRICTS} from '@/store/vocabulary/actions';
-import {SET_GUEST_TOKEN_AUTH, SET_USER_TOKEN} from './geoserver/auth/mutations';
+import {FETCH_DISTRICTS, FETCH_CHRONOLOGIES} from '@/store/vocabulary/actions';
+import {SET_GUEST_TOKEN_AUTH} from './geoserver/auth/mutations';
 
 export const SET_ENV_DATA = 'setEnvData';
 
@@ -12,5 +12,6 @@ export default {
         commit(`geoserver/${SET_BASE_URL}`, geoServer.baseUrl);
         commit(`geoserver/auth/${SET_GUEST_TOKEN_AUTH}`, {auth: geoServer.guestAuth});
         dispatch(`vocabulary/${FETCH_DISTRICTS}`);
+        dispatch(`vocabulary/${FETCH_CHRONOLOGIES}`);
     },
 };

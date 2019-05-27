@@ -1,4 +1,4 @@
-import {lowerFirst} from 'lodash';
+import {lowerFirst, cloneDeep} from 'lodash';
 import {not, or, like, equalTo} from 'ol/format/filter';
 import {arrayHasIndex} from '@/utils/utils';
 
@@ -16,6 +16,15 @@ import {arrayHasIndex} from '@/utils/utils';
  * Two item array used by binary comparision operators in the form [attribute, value]
  * @typedef {Array} CQLBinaryExpressions
  */
+
+/**
+ * Wrap like filter pattern with "%" wildcard
+ * @param pattern
+ * @return {string}
+ */
+export const wildcardWrap = /*@__PURE__*/(pattern) => {
+    return `%${pattern}%`;
+};
 
 /**
  *
@@ -54,14 +63,38 @@ const equalToFilter = /*@__PURE__*/(expressions, negate) => {
  * @param {boolean} negate
  */
 const multipleEqualToFilter = /*@__PURE__*/(expressions, negate) => {
-    if (!binaryPredicateIsValid(expressions)) {
+    const _expressions = cloneDeep(expressions);
+    if (!binaryPredicateIsValid(_expressions)) {
         return null;
     }
-    if (expressions[1].length === 1) {
-        return equalToFilter(expressions, negate);
+    if (_expressions[1].length === 1) {
+        _expressions[1] = _expressions[1].pop();
+        return equalToFilter(_expressions, negate);
     }
-    const filters = expressions[1].map((expression) => {
-        return equalTo(expressions[0], expression);
+    const filters = _expressions[1].map((expression) => {
+        return equalTo(_expressions[0], expression, true);
+    });
+    const filter = or(...filters);
+    return maybeNegate(filter, negate);
+};
+
+
+/**
+ *
+ * @param {CQLBinaryExpressions} expressions
+ * @param {boolean} negate
+ */
+const multipleIsInsensitiveLikeFilter = /*@__PURE__*/(expressions, negate) => {
+    let _expressions = cloneDeep(expressions);
+    if (!binaryPredicateIsValid(_expressions)) {
+        return null;
+    }
+    if (_expressions[1].length === 1) {
+        _expressions[1] = wildcardWrap(_expressions[1].pop());
+        return isInsensitiveLikeFilter(_expressions, negate);
+    }
+    const filters = _expressions[1].map((expression) => {
+        return likeFilter([_expressions[0], wildcardWrap(expression)], false);
     });
     const filter = or(...filters);
     return maybeNegate(filter, negate);
@@ -101,7 +134,8 @@ const wfsFilters = {
     equalToFilter,
     isInsensitiveLikeFilter,
     isLikeFilter,
-    multipleEqualToFilter
+    multipleEqualToFilter,
+    multipleIsInsensitiveLikeFilter
 };
 
 /**
@@ -123,7 +157,9 @@ export const getWfsFilter = /*@__PURE__*/ (filter, expressions, negate = false) 
 export const getNullableWfsFilter = condition => {
     try {
         const filterFn = lowerFirst(condition.operator);
-        return condition.operator ? getWfsFilter(filterFn, condition.expressions, condition.negate) : null;
+        return condition.operator
+            ? getWfsFilter(filterFn, condition.expressions, condition.negate)
+            : null;
     } catch (e) {
         return null;
     }

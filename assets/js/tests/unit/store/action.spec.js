@@ -1,7 +1,7 @@
 import {clone} from 'lodash';
 import * as mutations from '@/store/mutations';
 import {SET_BASE_URL} from '@/store/geoserver/mutations';
-import {FETCH_DISTRICTS} from '@/store/vocabulary/actions';
+import {FETCH_DISTRICTS, FETCH_CHRONOLOGIES} from '@/store/vocabulary/actions';
 import actions, * as consts from '@/store/actions';
 import {state as baseState} from '@/store/index';
 
@@ -40,6 +40,10 @@ describe('[root] store actions', () => {
         it(`dispatch "vocabulary/${FETCH_DISTRICTS}"`, () => {
             actions[consts.SET_ENV_DATA]({commit, dispatch, state}, envData);
             expect(dispatch).toHaveBeenCalledWith(`vocabulary/${FETCH_DISTRICTS}`);
+        });
+        it(`dispatch "vocabulary/${FETCH_CHRONOLOGIES}"`, () => {
+            actions[consts.SET_ENV_DATA]({commit, dispatch, state}, envData);
+            expect(dispatch).toHaveBeenCalledWith(`vocabulary/${FETCH_CHRONOLOGIES}`);
         });
     });
 });

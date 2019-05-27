@@ -42,7 +42,7 @@ export default {
         PredicateMx
     ],
     created() {
-        this.setPredicateOperator('MultipleEqualToFilter');
+        this.setPredicateOperator(this.predicate.operator);
     },
 };
 </script>
