@@ -20,6 +20,10 @@ export default {
                 conditions
             });
         },
+        /**
+         *
+         * @param {module:ol/format/filter/Filter} filter
+         */
         setQueryFilter(filter) {
             this.setQueryFilterFn({
                 typename: this.getQueryTypeName(),

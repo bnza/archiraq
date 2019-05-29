@@ -29,7 +29,7 @@ export default {
             return getConditionsWfsFilters(this.conditions);
         },
         /**
-         * @return {?And} - The ol And filter or null
+         * @return {?module:ol/format/filter/And} - The ol And filter or null
          */
         getAndConditionsFilter() {
             const conditions = this.getConditionsFilters();

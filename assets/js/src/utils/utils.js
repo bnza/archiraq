@@ -81,6 +81,7 @@ export const pascalCase = (string) => {
  * Check given array index existence
  * @param {Array} arr - The array to check
  * @param {Number|Number[]} idx - Index[es]
+ *
  * @return {boolean}
  */
 export const arrayHasIndex = (arr, idx) => {
@@ -90,4 +91,26 @@ export const arrayHasIndex = (arr, idx) => {
         }, true);
     }
     return arr[idx] !== void 0;
+};
+
+/**
+ * Downloads URI as an attachment
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a
+ * @param {String} uri - The resource URI
+ * @param {String} filename - The "download" <a> attribute value
+ * @param {HTMLElement} el - The element where to append the temporary <a>
+ */
+export const downloadAttachment = (uri, filename='', el=null) => {
+    el = el || document.body;
+    const a = document.createElement('a');
+    a.setAttribute('href', uri);
+    a.setAttribute('download', filename);
+    a.setAttribute('target', '_blank');
+
+    a.style.display = 'none';
+    el.appendChild(a);
+
+    a.click();
+
+    el.removeChild(a);
 };

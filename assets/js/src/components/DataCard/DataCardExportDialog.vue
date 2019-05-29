@@ -4,7 +4,7 @@
     >
         <v-toolbar>
             <v-toolbar-title flat>
-                Filter features
+                Export features
             </v-toolbar-title>
         </v-toolbar>
         <v-card>
@@ -13,25 +13,35 @@
                     fluid
                     grid-list-xl
                 >
-                    <slot name="filter" />
+                    <slot name="export" />
+                    <v-progress-linear
+                        v-if="isRequestPending"
+                        :indeterminate="true"
+                    />
+                    <div
+                        v-else
+                        style="margin: 16px 0; height: 7px"
+                    />
                 </v-container>
             </v-card-text>
             <v-card-actions>
                 <v-btn
-                    data-test="clear"
+                    :disabled="isRequestPending"
+                    data-test="close"
                     flat
                     color="primary"
-                    @click="$emit('action', {method: 'clear'})"
+                    @click="isDialogActive = false"
                 >
-                    Clear
+                    Close
                 </v-btn>
                 <v-btn
-                    data-test="submit"
+                    :disabled="isRequestPending"
+                    data-test="export"
                     flat
                     color="primary"
-                    @click="$emit('action', {method: 'submit'})"
+                    @click="$emit('action', {method: 'export'})"
                 >
-                    Submit
+                    Export
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -41,10 +51,10 @@
 <script>
 import DataCardDialogMx from '@/mixins/DataCardDialogMx';
 export default {
-    name: 'DataCardFilterDialog',
+    name: 'DataCardExportDialog',
     mixins: [
         DataCardDialogMx
-    ]
+    ],
 };
 </script>
 

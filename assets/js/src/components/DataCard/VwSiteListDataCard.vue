@@ -16,6 +16,7 @@
             :is="modalComponent"
             v-if="modalComponentType"
             slot="modal"
+            :is-request-pending="isModalRequestPending"
             :visible.sync="isModalVisible"
             @action="executeModalSlotMethod"
         >
@@ -23,6 +24,8 @@
                 :is="modalSlotComponent"
                 ref="modalSlot"
                 :slot="modalComponentType"
+                :is-request-pending.sync="isModalRequestPending"
+                :modal-props="modalProps"
             />
         </component>
     </data-card>
@@ -35,7 +38,7 @@ import VwSiteListDataCardTable from './VwSiteListDataCardTable';
 import DataCardDynamicModalMx from '@/mixins/DataCardDynamicModalMx';
 import WfsDataCardMx from '@/mixins/WfsDataCardMx';
 
-import {CID_VW_SITE_LIST_DATA_CARD as CID} from '@/utils/cids';
+import {CID_VW_SITE_LIST_DATA_CARD as CID, QUERY_TYPENAME_VW_SITES} from '@/utils/cids';
 import {SITE_POLY_WFS_TYPENAME} from '@/components/MapLayerVectorWfsVwSites';
 
 
@@ -93,9 +96,17 @@ export default {
         DataCard,
         VwSiteListDataCardToolbar,
         VwSiteListDataCardTable,
+        DataCardExportDialog: () => import(
+            /* webpackChunkName: "DataCardFilterDialog" */
+            './DataCardExportDialog'
+        ),
         DataCardFilterDialog: () => import(
             /* webpackChunkName: "DataCardFilterDialog" */
             './DataCardFilterDialog'
+        ),
+        DataCardExportDialogSlot: () => import(
+            /* webpackChunkName: "VwSiteDataCardFilterDialog" */
+            './ExportDialog/VwSiteExportDialogContent'
         ),
         DataCardFilterDialogSlot: () => import(
             /* webpackChunkName: "VwSiteDataCardFilterDialog" */
@@ -115,6 +126,15 @@ export default {
     computed: {
         limitTypeName() {
             return SITE_POLY_WFS_TYPENAME;
+        },
+        modalProps() {
+            const modalProps = {
+                export: {
+                    typename: SITE_POLY_WFS_TYPENAME,
+                    queryTypename: QUERY_TYPENAME_VW_SITES
+                }
+            };
+            return modalProps.hasOwnProperty(this.modalComponentType) ? modalProps[this.modalComponentType] : {};
         }
     },
 };

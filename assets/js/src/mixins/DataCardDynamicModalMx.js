@@ -18,7 +18,8 @@ export default {
     data() {
         return {
             modalComponentType: '',
-            isModalVisible: false
+            isModalVisible: false,
+            isModalRequestPending: false
         };
     },
     computed: {

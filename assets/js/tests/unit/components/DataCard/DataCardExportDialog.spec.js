@@ -1,4 +1,4 @@
-import DataCardFilterDialog from '@/components/DataCard/DataCardFilterDialog';
+import DataCardExportDialog from '@/components/DataCard/DataCardExportDialog';
 import {getVuetifyWrapper, catchLocalVueDuplicateVueBug, resetConsoleError} from '../../components/utils';
 
 let wrapper;
@@ -20,24 +20,24 @@ beforeEach(() => {
     };
     wrapper = getVuetifyWrapper(
         'shallowMount',
-        DataCardFilterDialog,
+        DataCardExportDialog,
         mountOptions
     );
 });
 
 
-describe('DataCardFilterDialog', () => {
+describe('DataCardExportDialog', () => {
     describe('child components events', () => {
-        describe('<submit> button', () => {
+        describe('<export> button', () => {
             it('@click $emit "action" event', () => {
-                wrapper.find('[data-test="submit"]').vm.$emit('click');
-                expect(wrapper.emitted('action')[0]).toEqual([{method: 'submit'}]);
+                wrapper.find('[data-test="export"]').vm.$emit('click');
+                expect(wrapper.emitted('action')[0]).toEqual([{method: 'export'}]);
             });
         });
         describe('<clear> button', () => {
             it('@click $emit "action" event', () => {
-                wrapper.find('[data-test="clear"]').vm.$emit('click');
-                expect(wrapper.emitted('action')[0]).toEqual([{method: 'clear'}]);
+                wrapper.find('[data-test="close"]').vm.$emit('click');
+                expect(wrapper.emitted('update:visible')[0]).toEqual([false]);
             });
         });
     });

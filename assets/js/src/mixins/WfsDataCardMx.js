@@ -1,6 +1,6 @@
 import {GET_GUEST_AUTH} from '@/store/geoserver/auth/getters';
 import DataCardMx from '@/mixins/DataCardMx';
-import {getWfsGetFeatureQueryString, setWfsGetFeaturePostRequestHeaders, mapWfsFeatureToTableItem} from '@/utils/wfs';
+import {getFeatureQueryString, setWfsGetFeatureRequestHeaders, mapWfsFeatureToTableItem} from '@/utils/wfs';
 
 export default {
     mixins: [
@@ -14,13 +14,18 @@ export default {
     methods: {
         getUrl() {
             return this.$store.state.geoserver.baseUrl + 'wfs?' +
-                getWfsGetFeatureQueryString('EPSG:4326', this.limitTypeName, this.filter, this.pagination);
+                getFeatureQueryString({
+                    typename: this.limitTypeName,
+                    filter: this.filter,
+                    pagination: this.pagination
+                });
         },
+        //@TODO check exceptions
         fetch: async function () {
             let axiosRequestConfig = {
                 method: 'get',
                 url: this.getUrl(),
-                headers: setWfsGetFeaturePostRequestHeaders({}, this.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`])
+                headers: setWfsGetFeatureRequestHeaders({}, this.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`])
             };
             try {
                 this.isRequestPending = true;
