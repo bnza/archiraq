@@ -3,6 +3,7 @@
         ref="content"
         row
         wrap
+        data-test="vw-site-table--export-content"
     >
         <v-radio-group
             v-model="format"

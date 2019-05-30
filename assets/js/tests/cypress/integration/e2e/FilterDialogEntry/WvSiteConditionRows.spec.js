@@ -166,12 +166,7 @@ const conditionInputs = {
 
 context('<VwSiteConditionRows>', () => {
     beforeEach(() => {
-        cy.server();
-        cy.route('GET','_wdt/!**', '');
-        cy.route('data/geom-district/names', districts);
-        cy.route('data/voc-chronology/names', chronologies);
-        cy.route('POST','/geoserver/wfs', emptyFeatureCollection).as('wfsPost');
-        cy.route(/geoserver\/wfs/, emptyFeatureCollection).as('wfsGet');
+        cy.setUpFunctionalTestRoutes();
         cy.visit('http://archiraq.local/#/map/data/vw-site/list#data-table');
         setAliases();
     });
@@ -205,10 +200,10 @@ context('<VwSiteConditionRows>', () => {
         for (let conditionKey in conditionInputs) {
             setConditionValues(conditionKey, 'inputValue');
         }
-        cy.get('@dialog').find(getDataTestSelector('submit')).click();
         cy.wait('@wfsGet').then(function (xhr) {
             expect(xhr.url).not.to.match(/cql_filter=/);
         });
+        cy.get('@dialog').find(getDataTestSelector('submit')).click();
         cy.wait('@wfsGet').then(function (xhr) {
             expect(xhr.url).to.match(/cql_filter=/);
         });

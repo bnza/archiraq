@@ -5,9 +5,7 @@ import {SET_USER_TOKEN} from '@/store/geoserver/auth/mutations';
 export const vuexCookie = new VuexPersistence({
     restoreState: (key) => Cookies.getJSON(key),
     saveState: (key, state) =>
-        Cookies.set(key, state, {
-            expires: 3
-        }),
+        Cookies.set(key, state),
     reducer: (state) => ({
         geoserver: {
             auth: {
