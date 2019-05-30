@@ -97,6 +97,14 @@ services:
                 arguments:
                     - '@Bnza\JobManagerBundle\Summary\Summary'
 
+    App\Event\EnvDataListenerEventSubscriber:
+        arguments:
+            $envData:
+                bingApiKey: '%env(BING_API_KEY)%'
+                geoServer:
+                    baseUrl: '%env(GEOSERVER_BASE_URL)%'
+                    guestAuth: '%env(GEOSERVER_GUEST_AUTH)%'
+
     App\Security\Guard\GeoServerDigest1Authenticator:
         arguments:
             - '@router'

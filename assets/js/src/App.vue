@@ -52,14 +52,13 @@ const setEnvData = ($store) => {
  * @return {{bingApiKey, geoServer}|*|{}}
  */
 const getEnvData = () => {
-    const envData = window.envData || {};
+    const envData = JSON.parse(Cookies.get('env-data'));
     envData.xsrfToken = Cookies.get('xsrf-token');
     return envData;
 };
 
 const clearEnvData = () =>  {
-    delete window.envData;
-    document.getElementById('env-data').remove();
+    Cookies.remove('env-data');
     Cookies.remove('xsrf-token');
 };
 
