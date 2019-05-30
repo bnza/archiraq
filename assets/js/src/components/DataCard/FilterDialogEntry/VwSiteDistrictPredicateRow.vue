@@ -9,7 +9,7 @@
         <v-autocomplete
             ref="select"
             slot="select"
-            menu-props="{attach: true}"
+            :attach="true"
             v-model="value"
             :items="districts"
             item-text="name"

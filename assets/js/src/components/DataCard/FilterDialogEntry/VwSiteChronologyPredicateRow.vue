@@ -10,7 +10,7 @@
             ref="select"
             slot="select"
             v-model="value"
-            menu-props="{attach: true}"
+            :attach="true"
             :items="chronologies"
             item-text="name"
             item-value="code"

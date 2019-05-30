@@ -49,5 +49,7 @@ export default {
 </script>
 
 <style scoped>
-
+    >>> .v-dialog {
+        overflow-y: inherit;
+    }
 </style>
