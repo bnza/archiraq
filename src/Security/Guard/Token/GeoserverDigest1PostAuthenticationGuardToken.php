@@ -34,21 +34,17 @@ class GeoserverDigest1PostAuthenticationGuardToken extends PostAuthenticationGua
     /**
      * {@inheritdoc}
      */
-    public function serialize()
+    public function __serialize(): array
     {
-        $serialized = [$this->auth, parent::serialize(true)];
-
-        //return $this->doSerialize($serialized, \func_num_args() ? \func_get_arg(0) : null);
-
-        return serialize($serialized);
+        return [$this->auth, parent::__serialize()];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function unserialize($serialized)
+    public function __unserialize(array $data): void
     {
-        list($this->auth, $parentStr) = \is_array($serialized) ? $serialized : unserialize($serialized);
-        parent::unserialize($parentStr);
+        [$this->auth, $parentData] = $data;
+        parent::__unserialize($parentData);
     }
 }
