@@ -124,13 +124,9 @@ class GeoServerDigest1Authenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $f = function ($role) {
-            return $role->getRole();
-        };
-
         return new JsonResponse([
                 'username' => $token->getUsername(),
-                'roles' => array_map($f, $token->getRoles())
+                'roles' => $token->getRoleNames()
             ]
         );
     }
