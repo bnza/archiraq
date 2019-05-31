@@ -3,7 +3,6 @@
 
 namespace App\Tests\Functional\Security\Guard;
 
-use Symfony\Bundle\FrameworkBundle\Client;
 use App\Tests\Functional\PgTestIsolationTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -11,11 +10,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class GeoServerDigest1AuthenticatorTest extends WebTestCase
 {
     use PgTestIsolationTrait;
-
-    /**
-     * @var Client
-     */
-    private static $client;
 
     /**
      * @var string

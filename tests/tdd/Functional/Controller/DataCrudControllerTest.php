@@ -2,18 +2,12 @@
 
 namespace App\Tests\Functional\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Client;
 use App\Tests\Functional\PgTestIsolationTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DataCrudControllerTest extends WebTestCase
 {
     use PgTestIsolationTrait;
-
-    /**
-     * @var Client
-     */
-    private static $client;
 
     public static function setUpBeforeClass()
     {

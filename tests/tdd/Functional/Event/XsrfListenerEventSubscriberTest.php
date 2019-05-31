@@ -3,16 +3,11 @@
 
 namespace App\Tests\Functional\Event;
 
-use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class XsrfListenerEventSubscriberTest extends WebTestCase
 {
-    /**
-     * @var Client
-     */
-    private static $client;
 
     public static function setUpBeforeClass()
     {
