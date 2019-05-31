@@ -46,7 +46,7 @@ EOF
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'remoteSensing' => false,
-                    'compilationDate' => new \DateTime(),
+                    'compilationDate' => '2018-11-28',
                     'ancientName' => 'Ancient Name',
                     'ancientNameUncertain' => true,
                     'sbahNo' => null,
@@ -87,8 +87,8 @@ EOF
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'remoteSensing' => true,
-                    'compilationDate' => new \DateTime(),
                     'ancientName' => 'Ancient Name',
+                    'compilationDate' => '2018-11-28',
                     'ancientNameUncertain' => false,
                     'sbahNo' => 'SBAH.1123',
                     'cadastre' => 'cadastre value',
@@ -104,6 +104,7 @@ EOF
      *
      * @param array $draft
      * @param array $expected
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
      */
     public function testMethodNormalizeWillReturnExpectedValue(array $draft, array $expected)
     {
@@ -114,7 +115,7 @@ EOF
         ];
         $serializer = new Serializer([new GetSetMethodNormalizer()]);
         $draft = $serializer->denormalize($draft, DraftEntity::class);
-        $expected['compilationDate'] = \DateTime::createFromFormat('Y-m-d', '2018-11-28');
+        $expected['compilationDate'] = \DateTime::createFromFormat('Y-m-d', $expected['compilationDate']);
         $expected = $serializer->denormalize($expected, SiteEntity::class);
 
         $district = new DistrictBoundaryEntity();
@@ -129,10 +130,14 @@ EOF
         $converter = new TmpDraftToSiteConverter($em);
 
         $actual = $converter->convert($draft);
+
         $this->assertInstanceOf(DistrictBoundaryEntity::class, $actual->getDistrict());
         $this->assertInstanceOf(SiteBoundaryEntity::class, $actual->getGeom());
         $expected->setDistrict($district);
         $expected->setGeom($actual->getGeom());
+        //Fix test time inconsistency
+        $this->assertEquals($expected->getCompilationDate()->format('Y-m-d'), $actual->getCompilationDate()->format('Y-m-d'));
+        $expected->setCompilationDate($actual->getCompilationDate());
         $this->assertEquals($expected, $actual);
     }
 }
