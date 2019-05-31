@@ -112,7 +112,7 @@ EOT;
         if ($diffs) {
             $entry = new ErrorEntry($this, 'Shapefile and Spreadsheet entries does not match', $diffs);
             $event = new SummaryEntryEvent($entry);
-            $this->getJob()->getDispatcher()->dispatch(SummaryEntryEvent::NAME, $event);
+            $this->getJob()->getDispatcher()->dispatch($event, SummaryEntryEvent::NAME);
             throw new JobManagerNonCriticalErrorException($entry->getMessage());
         }
     }

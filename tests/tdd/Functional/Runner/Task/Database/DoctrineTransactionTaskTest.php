@@ -65,14 +65,14 @@ class DoctrineTransactionTaskTest extends AbstractPgTestIsolation
         $this->runTask([], ['commit']);
         $task = $this->getTask();
         $task->expects($this->once())->method('commit');
-        $task->getJob()->getDispatcher()->dispatch(JobEndedEvent::NAME, new JobEndedEvent($task->getJob()));
+        $task->getJob()->getDispatcher()->dispatch(new JobEndedEvent($task->getJob()), JobEndedEvent::NAME);
     }
 
     public function testDispatchingJobEndedEventWillRevertTransactionNestingLevel()
     {
         $this->runTask();
         $task = $this->getTask();
-        $task->getJob()->getDispatcher()->dispatch(JobEndedEvent::NAME, new JobEndedEvent($task->getJob()));
+        $task->getJob()->getDispatcher()->dispatch(new JobEndedEvent($task->getJob()), JobEndedEvent::NAME);
         $this->assertEquals($this->nestingLevel, $this->getEntityManager()->getConnection()->getTransactionNestingLevel());
     }
 

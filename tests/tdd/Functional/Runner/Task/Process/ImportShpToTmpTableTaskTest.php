@@ -48,7 +48,7 @@ class ImportShpToTmpTableTaskTest extends AbstractPgTestIsolation
         $this->shapeFolder = 'simple';
         $this->runTask();
         $this->assertTableExists($this->getTask()->getTableName());
-        $this->getTask()->getJob()->getDispatcher()->dispatch(JobEndedEvent::NAME, new JobEndedEvent($this->getTask()->getJob()));
+        $this->getTask()->getJob()->getDispatcher()->dispatch( new JobEndedEvent($this->getTask()->getJob()), JobEndedEvent::NAME);
         $this->assertTableNotExists($this->getTask()->getTableName());
     }
 

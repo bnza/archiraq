@@ -105,7 +105,7 @@ class ValidateTmpDraftEntriesTaskToCsv extends AbstractValidateTmpDraftEntriesTa
             $this->writeCurrentWorksheet($this->getSpreadsheet());
             $entry = new ErrorEntry($this, 'Draft validation failed');
             $event = new SummaryEntryEvent($entry);
-            $this->getJob()->getDispatcher()->dispatch(SummaryEntryEvent::NAME, $event);
+            $this->getJob()->getDispatcher()->dispatch($event, SummaryEntryEvent::NAME);
             throw new JobManagerNonCriticalErrorException($entry->getMessage());
         }
     }

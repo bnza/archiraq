@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bnza/job-manager.git",
-                "reference": "947262dc0ee6f1bda618b4fb4a2a2990a6151b8f"
+                "reference": "55d326ba1fc2d8699b96620f5a2e522b8d4b07ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bnza/job-manager/zipball/947262dc0ee6f1bda618b4fb4a2a2990a6151b8f",
-                "reference": "947262dc0ee6f1bda618b4fb4a2a2990a6151b8f",
+                "url": "https://api.github.com/repos/bnza/job-manager/zipball/55d326ba1fc2d8699b96620f5a2e522b8d4b07ef",
+                "reference": "55d326ba1fc2d8699b96620f5a2e522b8d4b07ef",
                 "shasum": ""
             },
             "require": {
@@ -51,7 +51,7 @@
                 "runner",
                 "task"
             ],
-            "time": "2019-05-31T14:37:33+00:00"
+            "time": "2019-05-31T16:15:44+00:00"
         },
         {
             "name": "bnza/spgsp",
