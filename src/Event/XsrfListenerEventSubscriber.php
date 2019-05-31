@@ -6,8 +6,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class XsrfListenerEventSubscriber implements EventSubscriberInterface
 {
@@ -29,7 +29,7 @@ class XsrfListenerEventSubscriber implements EventSubscriberInterface
         $this->manager = $provider;
     }
 
-    protected function refreshToken(FilterResponseEvent $e)
+    protected function refreshToken(ResponseEvent $e)
     {
         $cookie = Cookie::create(
             'xsrf-token',
@@ -48,7 +48,7 @@ class XsrfListenerEventSubscriber implements EventSubscriberInterface
             );
     }
 
-    public function onKernelRequest(GetResponseEvent $e)
+    public function onKernelRequest(RequestEvent $e)
     {
         if (in_array($e->getRequest()->getMethod(), array('POST', 'PUT', 'DELETE', 'PATCH'))) {
             $token = $this->manager->getToken('archiraq');
@@ -64,7 +64,7 @@ class XsrfListenerEventSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function onKernelResponse(FilterResponseEvent $e)
+    public function onKernelResponse(ResponseEvent $e)
     {
         if (
             $e->getRequest()->isMethod('GET') && '/' === $e->getRequest()->getPathInfo()

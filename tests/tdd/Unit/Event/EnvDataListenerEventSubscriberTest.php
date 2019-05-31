@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Tests\Unit\Env;
+namespace App\Tests\Unit\Event;
 
 use App\Event\EnvDataListenerEventSubscriber;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class EnvDataListenerEventSubscriberTest extends \PHPUnit\Framework\TestCase
 {
@@ -44,7 +44,7 @@ class EnvDataListenerEventSubscriberTest extends \PHPUnit\Framework\TestCase
         /**
          * @var FilterResponseEvent|MockObject
          */
-        $event = $this->getMockBuilder(FilterResponseEvent::class)
+        $event = $this->getMockBuilder(ResponseEvent::class)
             ->disableOriginalConstructor()
             ->setMethods(['getRequest', 'getResponse'])
             ->getMock();
