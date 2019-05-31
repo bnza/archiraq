@@ -25,11 +25,11 @@
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerVwSitesVisible"
+                            :hide-details="true"
                             data-test="the-map-layers-drawer--checkbox-vw-sites"
                         />
-                        <open-attribute-table-button
+                        <wv-site-layer-action-menu
                             slot="action"
-                            table="vw-site"
                         />
                     </map-legend-layer-list-tile>
                 </map-legend-list-group>
@@ -44,6 +44,7 @@
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerAdminBounds"
+                            :hide-details="true"
                             data-test="the-map-layers-drawer--checkbox-admin-bounds-0-visibility"
                             :value="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0"
                         />
@@ -55,6 +56,7 @@
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerAdminBounds"
+                            :hide-details="true"
                             data-test="the-map-layers-drawer--checkbox-admin-bounds-1-visibility"
                             :value="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1"
                         />
@@ -81,6 +83,7 @@
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerBaseMap"
+                            :hide-details="true"
                             data-test="the-map-layers-drawer--checkbox-base-map-esri-visibility"
                             value="esri"
                         />
@@ -91,6 +94,7 @@
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerBaseMap"
+                            :hide-details="true"
                             data-test="the-map-layers-drawer--checkbox-base-map-bing-visibility"
                             value="bing"
                         />
@@ -107,6 +111,7 @@
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerBaseMap"
+                            :hide-details="true"
                             data-test="the-map-layers-drawer--checkbox-base-map-osm-visibility"
                             value="osm"
                         />
@@ -121,10 +126,10 @@
 import MapLegendLayerListTile from './MapLegendLayerListTile';
 import MapLegendListGroup from './MapLegendListGroup';
 import MapLayerSettingsDialog from './MapLayerSettingsDialog';
-import OpenAttributeTableButton from './OpenAttributeTableButton';
 import BingBaseMapSettingsDialogLayout from './BingBaseMapSettingsDialogLayout';
-import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
-import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx';
+import WvSiteLayerActionMenu from '@/components/DataCard/ListRowMenu/WvSiteLayerActionMenu';
+import ComponentStoreVisibleMx from '@/mixins/ComponentStoreVisibleMx';
+import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 import {
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
@@ -139,7 +144,7 @@ export default {
         MapLegendLayerListTile,
         MapLegendListGroup,
         MapLayerSettingsDialog,
-        OpenAttributeTableButton,
+        WvSiteLayerActionMenu,
         BingBaseMapSettingsDialogLayout
     },
     mixins: [
@@ -159,4 +164,3 @@ export default {
     }
 };
 </script>
-

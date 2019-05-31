@@ -9,12 +9,13 @@
                 <template #activator="{ on: tooltip }">
                     <v-btn
                         color="primary"
-                        dark
+                        :dark="dark"
+                        :flat="!dark"
                         :icon="isIcon"
                         v-on="{ ...tooltip, ...menu }"
                     >
                         <slot name="activator">
-                            <v-icon>menu</v-icon>
+                            <v-icon>{{ icon }}</v-icon>
                         </slot>
                     </v-btn>
                 </template>
@@ -34,6 +35,14 @@ export default {
             default: 'Actions'
         },
         isIcon: {
+            type: Boolean,
+            default: true
+        },
+        icon: {
+            type: String,
+            default: 'menu'
+        },
+        dark: {
             type: Boolean,
             default: true
         }
