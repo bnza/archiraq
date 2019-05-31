@@ -20,7 +20,7 @@ class XsrfListenerEventSubscriber implements EventSubscriberInterface
     {
         return array(
             'kernel.request' => array('onKernelRequest', 1000),
-            'kernel.response' => 'onKernelResponse'
+            'kernel.response' => 'onKernelResponse',
         );
     }
 
@@ -29,19 +29,22 @@ class XsrfListenerEventSubscriber implements EventSubscriberInterface
         $this->manager = $provider;
     }
 
-    protected function refreshToken(FilterResponseEvent $e) {
+    protected function refreshToken(FilterResponseEvent $e)
+    {
+        $cookie = Cookie::create(
+            'xsrf-token',
+            $this->manager->refreshToken('archiraq'),
+            0,
+            '/',
+            null,
+            false,
+            false
+        );
         $e
             ->getResponse()
             ->headers
             ->setCookie(
-                new Cookie(
-                    'xsrf-token',
-                    $this->manager->refreshToken('archiraq'),
-                    0,
-                    '/',
-                    null,
-                    false,
-                    false)
+                $cookie
             );
     }
 
@@ -55,6 +58,7 @@ class XsrfListenerEventSubscriber implements EventSubscriberInterface
                 || $token->getValue() !== $e->getRequest()->headers->get('x-xsrf-token')
             ) {
                 $e->setResponse(new Response('The XSRF token is invalid', 412));
+
                 return;
             }
         }
@@ -63,8 +67,8 @@ class XsrfListenerEventSubscriber implements EventSubscriberInterface
     public function onKernelResponse(FilterResponseEvent $e)
     {
         if (
-            $e->getRequest()->isMethod('GET') && $e->getRequest()->getPathInfo() === '/'
-            || $e->getRequest()->isMethod('POST') && $e->getRequest()->getPathInfo() === '/logout'
+            $e->getRequest()->isMethod('GET') && '/' === $e->getRequest()->getPathInfo()
+            || $e->getRequest()->isMethod('POST') && '/logout' === $e->getRequest()->getPathInfo()
         ) {
             $this->refreshToken($e);
         }

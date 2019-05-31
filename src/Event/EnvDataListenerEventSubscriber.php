@@ -27,18 +27,20 @@ class EnvDataListenerEventSubscriber implements EventSubscriberInterface
     }
 
     protected function refreshData(FilterResponseEvent $e) {
+        $cookie = Cookie::create(
+            'env-data',
+            json_encode($this->envData),
+            0,
+            '/',
+            null,
+            false,
+            false
+        );
         $e
             ->getResponse()
             ->headers
             ->setCookie(
-                new Cookie(
-                    'env-data',
-                    json_encode($this->envData),
-                    0,
-                    '/',
-                    null,
-                    false,
-                    false)
+                $cookie
             );
     }
 
