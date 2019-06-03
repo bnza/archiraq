@@ -57,22 +57,14 @@ export default {
     },
     watch: {
         isCurrentLayer: function (flag) {
-            if (flag) {
-                this.selectedFeatures = this.componentsGetComponentProp(this.layerCid, 'selectedFeatures');
-            } else {
-                this.selectedFeatures = [];
-            }
+            this.toggleSelectedFeatures(flag);
         },
         visible: function (flag) {
-            if (flag) {
-                this.selectedFeatures = this.componentsGetComponentProp(this.layerCid, 'selectedFeatures');
-            } else {
-                this.selectedFeatures = [];
-            }
+            this.toggleSelectedFeatures(flag);
         },
         selectedFeatures: function (features) {
             if (this.isCurrentLayer && this.visible) {
-                this.componentsGetComponentProp({
+                this.componentsSetComponentProp({
                     cid: this.layerCid,
                     prop: 'selectedFeatures',
                     value: features
@@ -93,6 +85,13 @@ export default {
             return this.isCurrentLayer
                 && shiftKeyOnly(olMapBrowserEvent);
         },
+        toggleSelectedFeatures(flag) {
+            if (flag) {
+                this.selectedFeatures = this.componentsGetComponentProp(this.layerCid, 'selectedFeatures');
+            } else {
+                this.selectedFeatures = [];
+            }
+        }
     },
 };
 </script>
@@ -101,6 +100,7 @@ export default {
     /deep/ .v-card {
         bottom: 12px;
         left: -50px;
+        border-radius: 5px;
     }
     /deep/ .v-card:after, .v-card:before {
         top: 100%;

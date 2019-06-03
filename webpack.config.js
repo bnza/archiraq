@@ -67,4 +67,5 @@ let config = Encore.getWebpackConfig();
 
 //config.resolve.alias['vue$'] = 'vue/dist/vue.js';
 config.resolve.alias['@'] = path.resolve(__dirname, 'assets/js/src');
+config.resolve.alias['@tests'] = path.resolve(__dirname, 'assets/js/tests');
 module.exports = config;

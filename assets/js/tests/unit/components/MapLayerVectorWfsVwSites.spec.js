@@ -1,5 +1,6 @@
-import MapLayerVectorWfsVwSites, {SITE_POINT_WFS_TYPENAME, SITE_POLY_WFS_TYPENAME} from '../../../src/components/MapLayerVectorWfsVwSites';
+import MapLayerVectorWfsVwSites, {SITE_POINT_WFS_TYPENAME, SITE_POLY_WFS_TYPENAME} from '@/components/MapLayerVectorWfsVwSites';
 import {getWrapper, resetLocaVue} from '../components/utils';
+import VueLayers from 'vuelayers';
 
 let mountOptions = {};
 
@@ -28,7 +29,10 @@ beforeEach(() => {
                 },
                 set() {}
             }
-        }
+        },
+        plugins: [
+            VueLayers
+        ]
     };
     resetLocaVue();
 });

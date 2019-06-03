@@ -13,6 +13,18 @@
             @fetchError="displaySnackbar"
         />
         <slot name="style" />
+        <app-interaction-select
+            :layer-cid="cid"
+        >
+            <template
+                slot-scope="props"
+            >
+                <slot
+                    :feature="props.feature"
+                    name="select"
+                />
+            </template>
+        </app-interaction-select>
     </vl-layer-vector>
 </template>
 
@@ -20,17 +32,21 @@
 
 import {loadingBBox} from 'vuelayers/lib/ol-ext';
 import {getBboxFeatureRequestXmlBody} from '../utils/wfs';
-import {headers} from '../utils/http';
-import {SET_OFF} from '../store/geoserver/mutations';
-import {GET_GUEST_AUTH} from '../store/geoserver/auth/getters';
-import {REQUEST} from '../store/client/actions';
-import HttpClientMx from '../mixins/HttpClientMx';
-import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx';
-import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
-import SnackbarComponentStoreMx from '../mixins/SnackbarComponentStoreMx';
+import {headers} from '@/utils/http';
+import {SET_OFF} from '@/store/geoserver/mutations';
+import {GET_GUEST_AUTH} from '@/store/geoserver/auth/getters';
+import {REQUEST} from '@/store/client/actions';
+import AppInteractionSelect from '@/components/DataCard/Interaction/AppInteractionSelect';
+import HttpClientMx from '@/mixins/HttpClientMx';
+import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
+import ComponentStoreVisibleMx from '@/mixins/ComponentStoreVisibleMx';
+import SnackbarComponentStoreMx from '@/mixins/SnackbarComponentStoreMx';
 
 export default {
     name: 'MapLayerVectorWfs',
+    components: {
+        AppInteractionSelect
+    },
     mixins: [
         MapContainerComponentStoreMx,
         ComponentStoreVisibleMx,

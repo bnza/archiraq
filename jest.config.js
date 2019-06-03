@@ -2,6 +2,8 @@ module.exports= {
     'testEnvironment': 'jest-environment-jsdom-fourteen',
     'moduleNameMapper': {
         '@/(.*)$': '<rootDir>/assets/js/src/$1',
+        '@tests/(.*)$': '<rootDir>/assets/js/tests/$1',
+        '^ol-tilecache$': 'ol-tilecache/dist/bundle.es.js'
     },
     'moduleFileExtensions': [
         'js',
@@ -13,7 +15,7 @@ module.exports= {
         '^.+\\.jsx?$': 'babel-jest'
     },
     'transformIgnorePatterns': [
-        'node_modules/(?!(ol|vuelayers|@babel)/)'
+        'node_modules/(?!(ol|ol-tilecache|vuelayers|@babel|rxjs)/)'
     ],
     'roots': [
         '<rootDir>/assets/js/tests/unit/'
