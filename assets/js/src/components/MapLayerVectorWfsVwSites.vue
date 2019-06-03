@@ -12,7 +12,22 @@
             :typename="typename"
             :visible-p="true"
             :filter="filter"
-        />
+        >
+            <vl-style-box slot="style">
+                <vl-style-circle :radius="3">
+                    <vl-style-stroke
+                        :width="1"
+                        color="white"
+                    />
+                    <vl-style-fill color="rgb(255,152,0.5)" />
+                </vl-style-circle>
+                <vl-style-stroke
+                    color="#FF9800"
+                    :width="3"
+                />
+                <vl-style-fill color="rgba(255,255,255,0.5)" />
+            </vl-style-box>
+        </map-layer-vector-wfs>
     </div>
 </template>
 <script>

@@ -12,6 +12,7 @@
             :filter="filter"
             @fetchError="displaySnackbar"
         />
+        <slot name="style" />
     </vl-layer-vector>
 </template>
 
