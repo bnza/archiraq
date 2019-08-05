@@ -62,7 +62,7 @@ class JobController
         AuthorizationCheckerInterface $checker,
         string $id
     ) {
-        if (!$checker->isGranted('ROLE_USER')) {
+        if (!$checker->isGranted('ROLE_EDITOR')) {
             $this->setStatusCode(403);
             $this->respondWithErrors('Access Denied.');
         }
@@ -79,7 +79,7 @@ class JobController
         AuthorizationCheckerInterface $checker,
         string $id
     ) {
-        if (!$checker->isGranted('ROLE_USER')) {
+        if (!$checker->isGranted('ROLE_EDITOR')) {
             $this->setStatusCode(403);
             $this->respondWithErrors('Access Denied.');
         }
