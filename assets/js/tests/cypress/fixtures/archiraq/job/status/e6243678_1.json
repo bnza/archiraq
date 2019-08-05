@@ -1,0 +1,38 @@
+{
+  "id": "e6243678cde0be2501a4cdab9c0db3da6b3c55a6",
+  "status": {
+    "value": 4,
+    "isRunning": true,
+    "isCancelled": false,
+    "isSuccessful": false,
+    "isError": true
+  },
+  "tasks": {
+    "0": {
+      "job": "e6243678cde0be2501a4cdab9c0db3da6b3c55a6",
+      "num": 0,
+      "id": "e6243678cde0be2501a4cdab9c0db3da6b3c55a6.0",
+      "status": {
+        "value": 4,
+        "isRunning": false,
+        "isCancelled": false,
+        "isSuccessful": false,
+        "isError": false
+      },
+      "error": "",
+      "class": "App\\Runner\\Task\\Database\\DoctrineTransactionTask",
+      "name": "app:task:db:doctrine-transaction",
+      "currentStepNum": 1,
+      "stepsNum": 1,
+      "description": "Envelopes job in doctrine transaction",
+      "message": ""
+    }
+  },
+  "error": "",
+  "class": "App\\Runner\\Job\\FullImportRemoteSensingZipShapefile",
+  "name": "app:job:import:full-remote-sensing-sites-zip",
+  "currentStepNum": 2,
+  "stepsNum": 10,
+  "description": "Importing remote sensing found sites zip file into to \u0022public\u0022.site\u0022",
+  "message": ""
+}

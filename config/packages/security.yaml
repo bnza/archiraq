@@ -25,7 +25,7 @@ security:
                 target: /logoutSuccess
             guard:
                 authenticators:
-                    - app.geoserver_digest1_authenticator
+                    - App\Security\Guard\GeoServerDigest1Authenticator
             provider: app_user_provider
 
     # Easy way to control access for large sections of your site

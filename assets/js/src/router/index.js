@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from '@/store';
 import NestedRouterViewPlaceholder from '@/components/NestedRouterViewPlaceholder';
+import ContributeUpload from '@/components/ContributeUpload';
 import TheMapContainer from '@/components/TheMapContainer';
 import TheLoginModal from '@/components/TheLoginModal';
 import TheLogoutModal from '@/components/TheLogoutModal';
@@ -14,6 +15,7 @@ import {QUERY_TYPENAME_VW_SITES} from '@/utils/cids';
 import {displaySnackbarFn} from '@/mixins/SnackbarComponentStoreMx';
 import {ROLE_GUEST, ROLE_USER, ROLE_EDITOR, ROLE_ADMIN} from '@/store/auth';
 import {isAuthenticated} from '@/store/auth/getters';
+import ContributeUploadStatus from '@/components/ContributeUploadStatus';
 
 /**
  * @typedef {import('@/mixins/SnackbarComponentStoreMx')} SnackbarOptions
@@ -28,19 +30,19 @@ import {isAuthenticated} from '@/store/auth/getters';
 
 Vue.use(Router);
 
-export const uploadDataRoutes = [
+/*export const contributeRoutes = [
     {
-        path: ':prefix(upload)/contribute',
-        name: 'upload_contribute',
+        path: ':prefix(contribute)/upload/select',
+        name: 'contribute_upload_select',
         components: {
-            modal: TheLogoutModal
+            modal: TheDataContainer
         },
         meta: {
             requiresAuthenticated: true,
             requiresRole: ROLE_EDITOR
         }
     }
-];
+];*/
 
 export const dataTableRoutes = [
     {
@@ -54,6 +56,39 @@ export const dataTableRoutes = [
         }
     }
 ];
+
+export const contributeRoutes = {
+    path: '/:prefix(contribute)',
+    components: {
+        default: TheDataContainer,
+    },
+    props: {
+        default: true,
+        map: false
+    },
+    children: [
+        {
+            path: 'upload/:type(survey|remote-sensing)/:format(zip-shapefile)',
+            name: 'contribute_upload',
+            components: {
+                default: ContributeUpload
+            },
+            props: {
+                default: true
+            }
+        },
+        {
+            path: ':id/status',
+            name: 'contribute_status',
+            components: {
+                default: ContributeUploadStatus
+            },
+            props: {
+                default: true
+            }
+        }
+    ],
+};
 
 export const dataRoutes = {
     path: '/:prefix(data)',
@@ -126,6 +161,7 @@ let router = new Router({
                 mapDataRoutes
             ]
         },
+        contributeRoutes,
         {
             path: '/login',
             name: 'login',

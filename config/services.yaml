@@ -12,18 +12,8 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
-
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller'
-        tags: ['controller.service_arguments']
+        bind:
+            $baseWorkDir: '%work_dir%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
@@ -37,6 +27,24 @@ services:
             $env: '%env(APP_ENV)%'
             $tempDir: ''
             $workDir: '%work_dir%'
+
+    Bnza\JobManagerBundle\Runner\JobFactory:
+        arguments:
+            $om: '@Bnza\JobManagerBundle\ObjectManager\TmpFs\ObjectManager'
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Runner\Job\ImportFileJobFactory:
+        arguments:
+            $factory: '@Bnza\JobManagerBundle\Runner\JobFactory'
+
+    App\Security\Guard\GeoServerDigest1Authenticator:
+        arguments:
+            $encoder: '@App\Security\Core\Encoder\GeoServerDigest1Encoder'
 
     App\Command\Job\FullImportPublishedSitesZipShapefileJobCommand:
         shared: false
@@ -105,13 +113,19 @@ services:
                     baseUrl: '%env(GEOSERVER_BASE_URL)%'
                     guestAuth: '%env(GEOSERVER_GUEST_AUTH)%'
 
-    App\Security\Guard\GeoServerDigest1Authenticator:
-        arguments:
-            - '@router'
-            - '@App\Security\Core\Encoder\GeoServerDigest1Encoder'
-            - '@doctrine.orm.entity_manager'
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
 
-    app.geoserver_digest1_authenticator:
-        alias: App\Security\Guard\GeoServerDigest1Authenticator
+    App\Controller\JobController:
+        arguments:
+            $om: '@Bnza\JobManagerBundle\ObjectManager\TmpFs\ObjectManager'
+        tags: ['controller.service_arguments']
+
+
+
+
 
 

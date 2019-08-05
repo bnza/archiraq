@@ -26,7 +26,7 @@ class FullImportPublishedSitesZipShapefileJob extends AbstractImportPublishedSit
 
     public function getDescription(): string
     {
-        return 'Importing published sites zip file into to "public".site"';
+        return 'Importing published sites zip file into to "public"."site"';
     }
 
     public function getSteps(): iterable

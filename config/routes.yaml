@@ -17,6 +17,32 @@ data__crud__read:
         entityName: '[\w\-?]+'
         id: '\d+'
 
+job_generate_id:
+    path:       /job/id/generate
+    controller: App\Controller\JobController::generateId
+    methods:    [GET]
+
+job_get_status:
+    path:       /job/{id}/status
+    controller: App\Controller\JobController::getJobStatus
+    methods:    [GET]
+    requirements:
+        id: '[a-f0-9]{40}'
+
+job_contribute_import_full_survey_zip_shapefile:
+    path:       /job/contribute/import/fullSurveyZipShapefile/{id}
+    controller: App\Controller\JobController::fullImportPublishedSitesZipShapefile
+    methods:    [POST]
+    requirements:
+        id: '[a-f0-9]{40}'
+
+job_contribute_import_full_rs_zip_shapefile:
+    path:       /job/contribute/import/fullRemoteSensingZipShapefile/{id}
+    controller: App\Controller\JobController::fullImportRemoteSensingSitesZipShapefile
+    methods:    [POST]
+    requirements:
+        id: '[a-f0-9]{40}'
+
 chronology_get_names:
     path:       /data/voc-chronology/names
     controller: App\Controller\DataCrudController::getChronologyNames
@@ -26,6 +52,3 @@ district_get_names:
     path:       /data/geom-district/names
     controller: App\Controller\DataCrudController::getDistrictNames
     methods:    [GET]
-
-
-

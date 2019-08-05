@@ -26,7 +26,7 @@ class FullImportRemoteSensingZipShapefile extends AbstractImportRemoteSensingSit
 
     public function getDescription(): string
     {
-        return 'Importing remote sensing found sites zip file into to "public".site"';
+        return 'Importing remote sensing found sites zip file into to "public"."site"';
     }
 
     public function getSteps(): iterable

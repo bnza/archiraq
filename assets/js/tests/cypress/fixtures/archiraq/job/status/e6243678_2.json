@@ -1,0 +1,57 @@
+{
+  "id": "e6243678cde0be2501a4cdab9c0db3da6b3c55a6",
+  "status": {
+    "value": 4,
+    "isRunning": false,
+    "isCancelled": false,
+    "isSuccessful": false,
+    "isError": true
+  },
+  "tasks": {
+    "0": {
+      "job": "e6243678cde0be2501a4cdab9c0db3da6b3c55a6",
+      "num": 0,
+      "id": "e6243678cde0be2501a4cdab9c0db3da6b3c55a6.0",
+      "status": {
+        "value": 4,
+        "isRunning": false,
+        "isCancelled": false,
+        "isSuccessful": false,
+        "isError": true
+      },
+      "error": "RuntimeException: Failed to open \u0022\/var\/www\/local\/archiraq\/var\/work\/dev\/e6243678cde0be2501a4cdab9c0db3da6b3c55a6\/phpHCw80D\u0022: error code [] in \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/Zip\/ZipTrait.php:55\nStack trace:\n#0 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/Zip\/ZipExtractToTask.php(99): Bnza\\JobManagerBundle\\Runner\\Task\\Zip\\ZipExtractToTask-\u003EgetZipArchiveNumFiles()\n#1 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/RunnableTrait.php(38): Bnza\\JobManagerBundle\\Runner\\Task\\Zip\\ZipExtractToTask-\u003EBnza\\JobManagerBundle\\Runner\\Task\\Zip\\{closure}(\u0027\/var\/www\/local\/...\u0027)\n#2 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/RunnableTrait.php(96): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003EcountStepsNum()\n#3 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/AbstractTask.php(142): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003EgetStepsNum()\n#4 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/AbstractTask.php(63): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003EsetStepsNum()\n#5 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Job\/AbstractJob.php(522): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003Erun()\n#6 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Job\/AbstractJob.php(160): Bnza\\JobManagerBundle\\Runner\\Job\\AbstractJob-\u003ErunTask(3, Array)\n#7 \/var\/www\/local\/archiraq\/src\/Controller\/JobController.php(75): Bnza\\JobManagerBundle\\Runner\\Job\\AbstractJob-\u003Erun()\n#8 \/var\/www\/local\/archiraq\/src\/Controller\/JobController.php(126): App\\Controller\\JobController-\u003ErunFullImportZipShapefileJob(\u0027App\\\\Runner\\\\Job\\\\...\u0027, \u0027e6243678cde0be2...\u0027, Object(Symfony\\Component\\HttpFoundation\\Request))\n#9 \/var\/www\/local\/archiraq\/vendor\/symfony\/http-kernel\/HttpKernel.php(151): App\\Controller\\JobController-\u003EfullImportRemoteSensingSitesZipShapefile(Object(Symfony\\Component\\HttpFoundation\\Request), \u0027e6243678cde0be2...\u0027)\n#10 \/var\/www\/local\/archiraq\/vendor\/symfony\/http-kernel\/HttpKernel.php(68): Symfony\\Component\\HttpKernel\\HttpKernel-\u003EhandleRaw(Object(Symfony\\Component\\HttpFoundation\\Request), 1)\n#11 \/var\/www\/local\/archiraq\/vendor\/symfony\/http-kernel\/Kernel.php(198): Symfony\\Component\\HttpKernel\\HttpKernel-\u003Ehandle(Object(Symfony\\Component\\HttpFoundation\\Request), 1, true)\n#12 \/var\/www\/local\/archiraq\/public\/index.php(25): Symfony\\Component\\HttpKernel\\Kernel-\u003Ehandle(Object(Symfony\\Component\\HttpFoundation\\Request))\n#13 {main}",
+      "class": "App\\Runner\\Task\\Database\\DoctrineTransactionTask",
+      "name": "app:task:db:doctrine-transaction",
+      "currentStepNum": 1,
+      "stepsNum": 1,
+      "description": "Envelopes job in doctrine transaction",
+      "message": ""
+    },
+    "2": {
+      "job": "e6243678cde0be2501a4cdab9c0db3da6b3c55a6",
+      "num": 2,
+      "id": "e6243678cde0be2501a4cdab9c0db3da6b3c55a6.2",
+      "status": {
+        "value": 4,
+        "isRunning": false,
+        "isCancelled": false,
+        "isSuccessful": false,
+        "isError": true
+      },
+      "error": "RuntimeException: Failed to open \u0022\/var\/www\/local\/archiraq\/var\/work\/dev\/e6243678cde0be2501a4cdab9c0db3da6b3c55a6\/phpHCw80D\u0022: error code [] in \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/Zip\/ZipTrait.php:55\nStack trace:\n#0 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/Zip\/ZipExtractToTask.php(99): Bnza\\JobManagerBundle\\Runner\\Task\\Zip\\ZipExtractToTask-\u003EgetZipArchiveNumFiles()\n#1 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/RunnableTrait.php(38): Bnza\\JobManagerBundle\\Runner\\Task\\Zip\\ZipExtractToTask-\u003EBnza\\JobManagerBundle\\Runner\\Task\\Zip\\{closure}(\u0027\/var\/www\/local\/...\u0027)\n#2 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/RunnableTrait.php(96): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003EcountStepsNum()\n#3 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/AbstractTask.php(142): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003EgetStepsNum()\n#4 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/AbstractTask.php(63): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003EsetStepsNum()\n#5 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Job\/AbstractJob.php(522): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003Erun()\n#6 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Job\/AbstractJob.php(160): Bnza\\JobManagerBundle\\Runner\\Job\\AbstractJob-\u003ErunTask(3, Array)\n#7 \/var\/www\/local\/archiraq\/src\/Controller\/JobController.php(75): Bnza\\JobManagerBundle\\Runner\\Job\\AbstractJob-\u003Erun()\n#8 \/var\/www\/local\/archiraq\/src\/Controller\/JobController.php(126): App\\Controller\\JobController-\u003ErunFullImportZipShapefileJob(\u0027App\\\\Runner\\\\Job\\\\...\u0027, \u0027e6243678cde0be2...\u0027, Object(Symfony\\Component\\HttpFoundation\\Request))\n#9 \/var\/www\/local\/archiraq\/vendor\/symfony\/http-kernel\/HttpKernel.php(151): App\\Controller\\JobController-\u003EfullImportRemoteSensingSitesZipShapefile(Object(Symfony\\Component\\HttpFoundation\\Request), \u0027e6243678cde0be2...\u0027)\n#10 \/var\/www\/local\/archiraq\/vendor\/symfony\/http-kernel\/HttpKernel.php(68): Symfony\\Component\\HttpKernel\\HttpKernel-\u003EhandleRaw(Object(Symfony\\Component\\HttpFoundation\\Request), 1)\n#11 \/var\/www\/local\/archiraq\/vendor\/symfony\/http-kernel\/Kernel.php(198): Symfony\\Component\\HttpKernel\\HttpKernel-\u003Ehandle(Object(Symfony\\Component\\HttpFoundation\\Request), 1, true)\n#12 \/var\/www\/local\/archiraq\/public\/index.php(25): Symfony\\Component\\HttpKernel\\Kernel-\u003Ehandle(Object(Symfony\\Component\\HttpFoundation\\Request))\n#13 {main}",
+      "class": "Bnza\\JobManagerBundle\\Runner\\Task\\FileSystem\\RenameTask",
+      "name": "bnza:task:filesystem:rename",
+      "currentStepNum": 1,
+      "stepsNum": 1,
+      "description": "Renaming file[s]",
+      "message": "\/var\/www\/local\/archiraq\/var\/work\/dev\/e6243678cde0be2501a4cdab9c0db3da6b3c55a6\/phpHCw80D"
+    }
+  },
+  "error": "RuntimeException: Failed to open \u0022\/var\/www\/local\/archiraq\/var\/work\/dev\/e6243678cde0be2501a4cdab9c0db3da6b3c55a6\/phpHCw80D\u0022: error code [] in \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/Zip\/ZipTrait.php:55\nStack trace:\n#0 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/Zip\/ZipExtractToTask.php(99): Bnza\\JobManagerBundle\\Runner\\Task\\Zip\\ZipExtractToTask-\u003EgetZipArchiveNumFiles()\n#1 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/RunnableTrait.php(38): Bnza\\JobManagerBundle\\Runner\\Task\\Zip\\ZipExtractToTask-\u003EBnza\\JobManagerBundle\\Runner\\Task\\Zip\\{closure}(\u0027\/var\/www\/local\/...\u0027)\n#2 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/RunnableTrait.php(96): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003EcountStepsNum()\n#3 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/AbstractTask.php(142): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003EgetStepsNum()\n#4 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Task\/AbstractTask.php(63): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003EsetStepsNum()\n#5 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Job\/AbstractJob.php(522): Bnza\\JobManagerBundle\\Runner\\Task\\AbstractTask-\u003Erun()\n#6 \/var\/www\/local\/archiraq\/vendor\/bnza\/job-manager\/src\/Runner\/Job\/AbstractJob.php(160): Bnza\\JobManagerBundle\\Runner\\Job\\AbstractJob-\u003ErunTask(3, Array)\n#7 \/var\/www\/local\/archiraq\/src\/Controller\/JobController.php(75): Bnza\\JobManagerBundle\\Runner\\Job\\AbstractJob-\u003Erun()\n#8 \/var\/www\/local\/archiraq\/src\/Controller\/JobController.php(126): App\\Controller\\JobController-\u003ErunFullImportZipShapefileJob(\u0027App\\\\Runner\\\\Job\\\\...\u0027, \u0027e6243678cde0be2...\u0027, Object(Symfony\\Component\\HttpFoundation\\Request))\n#9 \/var\/www\/local\/archiraq\/vendor\/symfony\/http-kernel\/HttpKernel.php(151): App\\Controller\\JobController-\u003EfullImportRemoteSensingSitesZipShapefile(Object(Symfony\\Component\\HttpFoundation\\Request), \u0027e6243678cde0be2...\u0027)\n#10 \/var\/www\/local\/archiraq\/vendor\/symfony\/http-kernel\/HttpKernel.php(68): Symfony\\Component\\HttpKernel\\HttpKernel-\u003EhandleRaw(Object(Symfony\\Component\\HttpFoundation\\Request), 1)\n#11 \/var\/www\/local\/archiraq\/vendor\/symfony\/http-kernel\/Kernel.php(198): Symfony\\Component\\HttpKernel\\HttpKernel-\u003Ehandle(Object(Symfony\\Component\\HttpFoundation\\Request), 1, true)\n#12 \/var\/www\/local\/archiraq\/public\/index.php(25): Symfony\\Component\\HttpKernel\\Kernel-\u003Ehandle(Object(Symfony\\Component\\HttpFoundation\\Request))\n#13 {main}",
+  "class": "App\\Runner\\Job\\FullImportRemoteSensingZipShapefile",
+  "name": "app:job:import:full-remote-sensing-sites-zip",
+  "currentStepNum": 3,
+  "stepsNum": 10,
+  "description": "Importing remote sensing found sites zip file into to \u0022public\u0022.site\u0022",
+  "message": ""
+}

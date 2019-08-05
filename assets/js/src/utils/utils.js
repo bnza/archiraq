@@ -114,3 +114,70 @@ export const downloadAttachment = (uri, filename='', el=null) => {
 
     el.removeChild(a);
 };
+
+/**
+ * Returns the human readable text status
+ * @param status
+ * @return {string}
+ */
+export const getStatusText  = (status) => {
+    let text = 'NONE';
+    if (status.isRunning) {
+        text =  'RUNNING';
+    } else if (status.isError) {
+        text =  'ERROR';
+    } else if (status.isCancelled) {
+        text =  'CANCELLED';
+    } else if (status.isSuccessful) {
+        text =  'SUCCESS';
+    }
+    return text;
+};
+
+/**
+ *
+ * @param status
+ * @return {string}
+ */
+export const getStatusIcon = (status) => {
+    let icon = 'help_outline';
+    if (status.isRunning) {
+        icon =  'settings_backup_restore';
+    } else if (status.isError) {
+        icon =  'error_outline';
+    } else if (status.isCancelled) {
+        icon =  'highlight_off';
+    } else if (status.isSuccessful) {
+        icon =  'check_circle_outline';
+    }
+    return icon;
+};
+
+/**
+ *
+ * @param status
+ * @return {string}
+ */
+export const getStatusColor = (status) => {
+    let color = 'grey';
+    if (status.isRunning) {
+        color =  'indigo darken2';
+    } else if (status.isError) {
+        color =  'red darken2';
+    } else if (status.isCancelled) {
+        color =  'red darken2';
+    } else if (status.isSuccessful) {
+        color =  'green darken2';
+    }
+    return color;
+};
+
+/**
+ * Return the runnable (job, task) progress percentage
+ * @param runnable
+ * @param precision
+ * @return {string}
+ */
+export const getProgressPercentage = (runnable, precision = 2) => {
+    return Math.floor( runnable.currentStepNum / runnable.stepsNum * 100).toFixed(precision);
+}

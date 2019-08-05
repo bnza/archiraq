@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bnza/job-manager.git",
-                "reference": "55d326ba1fc2d8699b96620f5a2e522b8d4b07ef"
+                "reference": "0356035baa3eb63e27a4e76b2d43c99a093d671e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bnza/job-manager/zipball/55d326ba1fc2d8699b96620f5a2e522b8d4b07ef",
-                "reference": "55d326ba1fc2d8699b96620f5a2e522b8d4b07ef",
+                "url": "https://api.github.com/repos/bnza/job-manager/zipball/0356035baa3eb63e27a4e76b2d43c99a093d671e",
+                "reference": "0356035baa3eb63e27a4e76b2d43c99a093d671e",
                 "shasum": ""
             },
             "require": {
@@ -30,6 +30,8 @@
                 "symfony/console": "~4.3",
                 "symfony/dependency-injection": "~4.3",
                 "symfony/framework-bundle": "~4.3",
+                "symfony/property-access": "^4.3",
+                "symfony/serializer": "^4.3",
                 "symfony/yaml": "~4.3"
             },
             "require-dev": {
@@ -51,7 +53,7 @@
                 "runner",
                 "task"
             ],
-            "time": "2019-05-31T16:15:44+00:00"
+            "time": "2019-08-05T15:01:27+00:00"
         },
         {
             "name": "bnza/spgsp",

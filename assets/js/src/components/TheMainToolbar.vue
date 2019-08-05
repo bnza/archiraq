@@ -9,7 +9,9 @@
             data-test="the-main-toolbar--side-icon"
             @click.stop="toggleMainNavigationDrawerVisibility"
         />
-        <v-toolbar-title>Archiraq</v-toolbar-title>
+        <router-link id="toolbarHomeLink" to="/">
+            <v-toolbar-title>Archiraq</v-toolbar-title>
+        </router-link>
         <v-spacer />
         <v-toolbar-items class="hidden-xs-only">
             <slot />
@@ -40,3 +42,10 @@ export default {
     }
 };
 </script>
+
+<style>
+    #toolbarHomeLink {
+        color: white;
+        text-decoration: none;
+    }
+</style>

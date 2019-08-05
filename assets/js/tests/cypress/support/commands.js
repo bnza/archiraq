@@ -48,7 +48,6 @@ const cookieLocalSignIn = ({ user, password, roles=[]}) => {
 };
 Cypress.Commands.add('cookieLocalSignIn', cookieLocalSignIn);
 
-
 Cypress.Commands.add('setUpFunctionalTestRoutes', () => {
     cy.fixture('geoserver/wfs/emptyFeatureCollection.json').as('wfsEmptyFeatureCollection');
     cy.fixture('archiraq/geomDistrictNames.json').as('districtNames');
@@ -60,9 +59,17 @@ Cypress.Commands.add('setUpFunctionalTestRoutes', () => {
     cy.route('POST',/geoserver\/wfs/, '@wfsEmptyFeatureCollection').as('wfsPost');
     cy.route(/geoserver\/wfs/, '@wfsEmptyFeatureCollection').as('wfsGet');
     cy.route('Imagery/Metadata/**', '@bingImageryMetadata');
-    cy.route('tiles.virtualearth.net/tiles/**', '@bingImageryMetadata')
+    cy.route('tiles.virtualearth.net/tiles/**', '@bingImageryMetadata');
     cy.route('data/geom-district/names', '@someDistrictNames');
     cy.route('data/voc-chronology/names', '@someVocChronologies');
 
     cy.route('GET','_wdt/**', '');
+});
+
+Cypress.Commands.add('containsElementTestId', (testId) => {
+    return cy.contains(`[data-test="${testId}"]`);
+});
+
+Cypress.Commands.add('getElementByTestId', (testId) => {
+    return cy.get(`[data-test="${testId}"]`);
 });
