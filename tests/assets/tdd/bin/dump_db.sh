@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd ${DIR}/../../../../;
+cd "${DIR}/../../../../" || exit;
 source .env.local
-pg_dump --clean --if-exists --schema-only --quote-all-identifiers --no-password -d ${DATABASE_URL}\
+pg_dump --clean --if-exists --schema-only --quote-all-identifiers --no-password -d "${DATABASE_URL}"\
     | grep -v -E "^(SELECT\ pg_catalog\.set_config\('search_path)"\
     | grep -v -E '^(DROP|CREATE\ EXTENSION|COMMENT\ ON\ EXTENSION)'\
     | grep -v -E '^(CREATE\ SCHEMA\ "public")'\

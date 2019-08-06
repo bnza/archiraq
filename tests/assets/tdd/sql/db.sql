@@ -5,6 +5,7 @@ SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -164,6 +165,62 @@ $$;
 
 
 ALTER FUNCTION "public"."orientedenvelopesides"("g" "public"."geometry") OWNER TO "test_archiraq_admin";
+
+
+CREATE FUNCTION "public"."site_features_to_string"("features_epigraphic" boolean, "features_ancient_structures" boolean, "features_paleochannels" boolean) RETURNS character varying
+    LANGUAGE "plpgsql"
+    AS $$DECLARE
+	features varchar[];
+	results varchar;
+BEGIN
+	IF features_epigraphic THEN
+		features := array_append(features, 'epigraphic');
+	END IF;
+	IF features_ancient_structures THEN
+		features := array_append(features, 'structures');
+	END IF;
+	IF features_paleochannels THEN
+		features := array_append(features, 'paleochannels');
+	END IF;
+	RETURN array_to_string(features, ';');
+END;$$;
+
+
+ALTER FUNCTION "public"."site_features_to_string"("features_epigraphic" boolean, "features_ancient_structures" boolean, "features_paleochannels" boolean) OWNER TO "test_archiraq_admin";
+
+
+
+
+
+CREATE FUNCTION "public"."site_threats_to_string"("threats_natural_dunes" boolean, "threats_looting" boolean, "threats_cultivation_trenches" boolean, "threats_modern_structures" boolean, "threats_modern_canals" boolean) RETURNS character varying
+    LANGUAGE "plpgsql"
+    AS $$
+DECLARE
+	threats varchar[];
+BEGIN
+	IF threats_natural_dunes THEN
+		threats := array_append(threats, 'dunes');
+	END IF;
+	IF threats_looting THEN
+		threats := array_append(threats, 'looting');
+	END IF;
+	IF threats_cultivation_trenches THEN
+		threats := array_append(threats, 'cultivation');
+	END IF;
+	IF threats_modern_structures THEN
+		threats := array_append(threats, 'structures');
+	END IF;
+		IF threats_modern_canals THEN
+		threats := array_append(threats, 'canals');
+	END IF;
+	RETURN array_to_string(threats, ';');
+END;$$;
+
+
+ALTER FUNCTION "public"."site_threats_to_string"("threats_natural_dunes" boolean, "threats_looting" boolean, "threats_cultivation_trenches" boolean, "threats_modern_structures" boolean, "threats_modern_canals" boolean) OWNER TO "test_archiraq_admin";
+
+
+
 
 SET default_tablespace = '';
 
@@ -332,7 +389,9 @@ ALTER TABLE "geom"."site" OWNER TO "test_archiraq_admin";
 
 CREATE TABLE "public"."vw_site" (
     "id" integer,
+    "contribute_id" integer,
     "sbah_no" character varying,
+    "cadastre" character varying,
     "modern_name" character varying,
     "nearest_city" character varying,
     "ancient_name" "text",
@@ -343,6 +402,11 @@ CREATE TABLE "public"."vw_site" (
     "chronology" "text",
     "surveys" "text",
     "survey_refs" "text",
+    "features" character varying,
+    "threats" character varying,
+    "remote_sensing" boolean,
+    "survey_verified_on_field" boolean,
+    "remarks" "text",
     "e" numeric,
     "n" numeric,
     "area" numeric,
@@ -358,7 +422,9 @@ ALTER TABLE "public"."vw_site" OWNER TO "test_archiraq_admin";
 
 CREATE VIEW "geom"."vw_site_point" AS
  SELECT "ws"."id",
+    "ws"."contribute_id",
     "ws"."sbah_no",
+    "ws"."cadastre",
     "ws"."modern_name",
     "ws"."nearest_city",
     "ws"."ancient_name",
@@ -369,6 +435,11 @@ CREATE VIEW "geom"."vw_site_point" AS
     "ws"."chronology",
     "ws"."surveys",
     "ws"."survey_refs",
+    "ws"."features",
+    "ws"."threats",
+    "ws"."remote_sensing",
+    "ws"."survey_verified_on_field",
+    "ws"."remarks",
     "ws"."e",
     "ws"."n",
     "ws"."area",
@@ -384,7 +455,9 @@ ALTER TABLE "geom"."vw_site_point" OWNER TO "test_archiraq_admin";
 
 CREATE VIEW "geom"."vw_site_poly" AS
  SELECT "ws"."id",
+    "ws"."contribute_id",
     "ws"."sbah_no",
+    "ws"."cadastre",
     "ws"."modern_name",
     "ws"."nearest_city",
     "ws"."ancient_name",
@@ -395,6 +468,11 @@ CREATE VIEW "geom"."vw_site_poly" AS
     "ws"."chronology",
     "ws"."surveys",
     "ws"."survey_refs",
+    "ws"."features",
+    "ws"."threats",
+    "ws"."remote_sensing",
+    "ws"."survey_verified_on_field",
+    "ws"."remarks",
     "ws"."e",
     "ws"."n",
     "ws"."area",
@@ -852,7 +930,9 @@ CREATE RULE "_RETURN" AS
            FROM "geom"."site"
         )
  SELECT "s"."id",
+    "s"."contribute_id",
     "s"."sbah_no",
+    "s"."cadastre",
     "s"."modern_name",
     "s"."nearest_city",
     (("s"."ancient_name")::"text" ||
@@ -867,6 +947,11 @@ CREATE RULE "_RETURN" AS
     "string_agg"(DISTINCT ("vc"."code")::"text", ';'::"text") AS "chronology",
     "string_agg"(DISTINCT ("vs"."code")::"text", ';'::"text") AS "surveys",
     "array_to_string"("array_agg"(DISTINCT "concat_ws"('.'::"text", "vs"."code", "ss"."ref")), ';'::"text") AS "survey_refs",
+    "public"."site_features_to_string"("s"."features_epigraphic", "s"."features_ancient_structures", "s"."features_paleochannels") AS "features",
+    "public"."site_threats_to_string"("s"."threats_natural_dunes", "s"."threats_looting", "s"."threats_cultivation_trenches", "s"."threats_modern_structures", "s"."threats_modern_canals") AS "threats",
+    "s"."remote_sensing",
+    "s"."survey_verified_on_field",
+    "s"."remarks",
     "round"(("public"."st_x"("public"."st_centroid"("gs"."geom")))::numeric, 7) AS "e",
     "round"(("public"."st_y"("public"."st_centroid"("gs"."geom")))::numeric, 7) AS "n",
     "round"(("public"."st_area"(("gs"."geom")::"public"."geography"))::numeric, 2) AS "area",
