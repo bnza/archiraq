@@ -4,6 +4,7 @@
 namespace App\Tests\Functional\Security\Guard;
 
 use App\Tests\Functional\PgTestIsolationTrait;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
@@ -12,14 +13,19 @@ class GeoServerDigest1AuthenticatorTest extends WebTestCase
     use PgTestIsolationTrait;
 
     /**
+     * @var KernelBrowser
+     */
+    private static $localClient;
+
+    /**
      * @var string
      */
     private $xsrfToken;
 
     public static function setUpBeforeClass()
     {
-        self::$client = self::createClient();
-        self::$client->disableReboot();
+        self::$localClient = self::createClient();
+        self::$localClient->disableReboot();
         self::setUpDatabaseSchema();
     }
 
@@ -42,7 +48,7 @@ class GeoServerDigest1AuthenticatorTest extends WebTestCase
     {
         $this->executeSqlAssetFile('tdd/sql/test/security_geoserver_digest1_authenticator/user.sql');
         $this->setXsrfToken();
-        self::$client->request(
+        self::$localClient->request(
             'POST',
             '/login',
             [
@@ -54,14 +60,14 @@ class GeoServerDigest1AuthenticatorTest extends WebTestCase
                 'HTTP_x-xsrf-token' => $this->xsrfToken
             ]
         );
-        $response = self::$client->getResponse();
+        $response = self::$localClient->getResponse();
         $this->assertTrue($response->isSuccessful());
     }
 
     private function setXsrfToken()
     {
-        self::$client->request('GET', '/');
-        $cookies = self::$client->getResponse()->headers->getCookies(ResponseHeaderBag::COOKIES_ARRAY);
+        self::$localClient->request('GET', '/');
+        $cookies = self::$localClient->getResponse()->headers->getCookies(ResponseHeaderBag::COOKIES_ARRAY);
         $this->xsrfToken = $cookies['']['/']['xsrf-token']->getValue();
     }
 

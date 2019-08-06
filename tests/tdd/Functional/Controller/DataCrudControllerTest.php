@@ -4,15 +4,21 @@ namespace App\Tests\Functional\Controller;
 
 use App\Tests\Functional\PgTestIsolationTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 class DataCrudControllerTest extends WebTestCase
 {
     use PgTestIsolationTrait;
 
+    /**
+     * @var KernelBrowser
+     */
+    private static $localClient;
+
     public static function setUpBeforeClass()
     {
-        self::$client = self::createClient();
-        self::$client->disableReboot();
+        self::$localClient = self::createClient();
+        self::$localClient->disableReboot();
         self::setUpDatabaseSchema();
     }
 
@@ -47,7 +53,7 @@ class DataCrudControllerTest extends WebTestCase
      */
     public function testMethodReadWillReturnJsonResponse(string $url)
     {
-        self::$client->request('GET', $url);
-        $this->assertTrue(self::$client->getResponse()->isSuccessful());
+        self::$localClient->request('GET', $url);
+        $this->assertTrue(self::$localClient->getResponse()->isSuccessful());
     }
 }
