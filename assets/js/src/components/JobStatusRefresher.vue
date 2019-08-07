@@ -27,6 +27,9 @@ export default {
             if (job.status.isRunning) {
                 setTimeout(this.refreshJob, 500);
             }
+        },
+        id: function() {
+            this.refreshJob();
         }
     },
     mounted() {
@@ -44,7 +47,7 @@ export default {
                 this.job = response.data;
             });
         }
-    },
+    }
 };
 </script>
 

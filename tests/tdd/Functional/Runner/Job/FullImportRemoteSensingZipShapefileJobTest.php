@@ -2,7 +2,7 @@
 
 namespace App\Tests\Functional\Runner\Job;
 
-use App\Runner\Job\FullImportRemoteSensingZipShapefile;
+use App\Runner\Job\FullImportRemoteSensingZipShapefileJob;
 use App\Tests\Functional\AbstractPgTestIsolation;
 use Bnza\JobManagerBundle\ObjectManager\TmpFS\ObjectManager;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -66,10 +66,10 @@ class FullImportRemoteSensingZipShapefileJobTest extends AbstractPgTestIsolation
 
     protected function getJobClassName(): string
     {
-        return FullImportRemoteSensingZipShapefile::class;
+        return FullImportRemoteSensingZipShapefileJob::class;
     }
 
-    protected function getJob(): FullImportRemoteSensingZipShapefile
+    protected function getJob(): FullImportRemoteSensingZipShapefileJob
     {
         return $this->job;
     }

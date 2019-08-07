@@ -43,6 +43,13 @@ job_contribute_import_full_rs_zip_shapefile:
     requirements:
         id: '[a-f0-9]{40}'
 
+job_contribute_rs_draft_errors:
+    path:       /job/contribute/{id}/remote-sensing/draft-errors
+    controller: App\Controller\JobController::getContributeRemoteSensingDraftError
+    methods:    [GET]
+    requirements:
+        id: '[a-f0-9]{40}'
+
 chronology_get_names:
     path:       /data/voc-chronology/names
     controller: App\Controller\DataCrudController::getChronologyNames

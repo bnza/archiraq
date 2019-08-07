@@ -13,6 +13,8 @@ use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column;
+use PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter\Column\Rule;
 
 trait SpreadsheetInteractionTrait
 {
@@ -78,11 +80,21 @@ trait SpreadsheetInteractionTrait
         return $spreadsheet->getProperties();
     }
 
-    protected function writeCurrentWorksheet(Spreadsheet $spreadsheet)
+    protected function writeCurrentWorksheet(Spreadsheet $spreadsheet, string $errorColumn)
     {
-        // $inputFileType = IOFactory::identify($this->getSpreadsheetPath());
+        $highestRow = $this->spreadsheet->getActiveSheet()->getHighestDataRow();
+        //$dims = $spreadsheet->getActiveSheet()->calculateWorksheetDimension();
+        $spreadsheet->getActiveSheet()->setAutoFilter('A1:'.$errorColumn.$highestRow);
+        $autoFilter = $spreadsheet->getActiveSheet()->getAutoFilter();
+        $columnFilter = $autoFilter->getColumn($errorColumn);
+        $columnFilter->setFilterType(Column::AUTOFILTER_FILTERTYPE_FILTER);
+        $columnFilter->createRule()
+            ->setRule(
+                Rule::AUTOFILTER_COLUMN_RULE_NOTEQUAL,
+                ''
+            );
         $writer = IOFactory::createWriter($spreadsheet, 'Csv');
         $writer->setPreCalculateFormulas(false);
-        return $writer->save($this->getSpreadsheetPath().'.csv');
+        return $writer->save(dirname($this->getSpreadsheetPath()).DIRECTORY_SEPARATOR.'validationErrors.csv');
     }
 }

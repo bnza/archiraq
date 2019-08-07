@@ -13,7 +13,7 @@ use App\Runner\Task\ValidatorTrait;
 use Bnza\JobManagerBundle\Runner\Task\FileSystem\RenameTask;
 use Bnza\JobManagerBundle\Runner\Task\Zip\ZipExtractToTask;
 
-class FullImportRemoteSensingZipShapefile extends AbstractImportRemoteSensingSitesZipShapefileJob
+class FullImportRemoteSensingZipShapefileJob extends AbstractImportRemoteSensingSitesZipShapefileJob
 {
     use ValidatorTrait;
 

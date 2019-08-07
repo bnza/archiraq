@@ -156,7 +156,7 @@
 
 <script>
 import TaskProgress from '@/components/TaskProgress';
-import {getStatusText, getStatusColor, getStatusIcon, getProgressPercentage} from '@/utils/utils';
+import {getStatusText, getStatusColor, getStatusIcon, getJobProgressPercentage} from '@/utils/utils';
 
 export default {
     name: 'JobStatus',
@@ -180,7 +180,7 @@ export default {
             return getStatusIcon(this.job.status);
         },
         overallProgress() {
-            return getProgressPercentage(this.job);
+            return getJobProgressPercentage(this.job);
         }
     },
 };

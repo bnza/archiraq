@@ -17,7 +17,8 @@ class SiteEntityDenormalizerTest extends \PHPUnit\Framework\TestCase
                 [
                     'id' => 1,
                     'entryId' => 'AKK.001',
-                    'remoteSensing' => 'y',
+                    'remoteSensing' => 'n',
+                    'survey' => 'n',
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'compilationDate' => '2018-11-28',
@@ -40,7 +41,7 @@ class SiteEntityDenormalizerTest extends \PHPUnit\Framework\TestCase
                 [
                     'id' => 1,
                     'entryId' => 'AKK.001',
-                    'remoteSensing' => 'n',
+                    'remoteSensing' => false,
                     'modernName' => 'Tell Harba',
                     'compiler' => 'A. Name',
                     'compilationDate' => '',

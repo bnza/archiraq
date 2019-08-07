@@ -76,9 +76,11 @@
 
 
 <script>
+import FileSaver from 'file-saver';
 import UploadButton from 'vuetify-upload-button';
 import {REQUEST, XSRF_REQUEST} from '@/store/client/actions';
 import {upperFirst, camelCase, startCase} from 'lodash';
+
 export default {
     name: 'ContributeUpload',
     components: {
@@ -129,6 +131,24 @@ export default {
                 vm.contributeId = response.data;
             });
         },
+        getContributeDraftErrors () {
+            const vm = this;
+            let axiosRequestConfig = {
+                method: 'get',
+                url: `/job/contribute/${this.contributeId}/${this.type}/draft-errors`,
+                responseType: 'blob',
+            };
+            return this.$store.dispatch(
+                `client/${REQUEST}`,
+                axiosRequestConfig
+            ).then((response) => {
+                FileSaver.saveAs(
+                    new Blob([response.data]),
+                    'validationErrors.csv',
+                    {type: `${response.data.type}`}
+                );
+            });
+        },
         upload() {
             const vm = this;
             const formData = new FormData();
@@ -148,6 +168,12 @@ export default {
                         if (vm.uploadProgress === 100) {
                             vm.$router.push(`/contribute/${vm.contributeId}/status`);
                         }
+                    }
+                }
+            ).catch(
+                (error) => {
+                    if (error.response && error.response.data.errors === 'Draft validation failed') {
+                        vm.getContributeDraftErrors();
                     }
                 }
             ).finally(

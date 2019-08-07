@@ -180,4 +180,18 @@ export const getStatusColor = (status) => {
  */
 export const getProgressPercentage = (runnable, precision = 2) => {
     return Math.floor( runnable.currentStepNum / runnable.stepsNum * 100).toFixed(precision);
-}
+};
+
+/**
+ * Return the runnable (job, task) progress percentage
+ * @param job
+ * @param precision
+ * @return {string}
+ */
+export const getJobProgressPercentage = (job, precision = 2) => {
+    if (job.status.isSuccessful) {
+        return '100.00';
+    }
+    let currentTaskProgress = parseFloat(getProgressPercentage(job.tasks[job.currentStepNum]))/job.stepsNum;
+    return (parseFloat(getProgressPercentage(job, precision)) + currentTaskProgress).toFixed();
+};
