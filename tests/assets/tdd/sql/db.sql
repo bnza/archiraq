@@ -219,6 +219,7 @@ CREATE FUNCTION "geom"."update_mat_site_by_index"("new_site_id" integer, "old_si
     AS $$BEGIN
 	DELETE FROM geom.mat_site WHERE id = old_site_id;
 	IF EXISTS (SELECT FROM public.vw_site WHERE id = new_site_id) THEN
+		DELETE FROM geom.mat_site WHERE id = new_site_id;
 		INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(new_site_id);
 	END IF;
 END;$$;
@@ -282,7 +283,7 @@ begin
 	p3 = ST_PointN(l, 3)::geography;
 	length1 := ST_Distance(p1,p2,true);
 	length2 := ST_Distance(p2,p3,true);
-	return ARRAY[GREATEST(length1,length2), LEAST(length1,length2)];				 
+	return ARRAY[GREATEST(length1,length2), LEAST(length1,length2)];
 end;
 $$;
 
@@ -421,7 +422,7 @@ CREATE TABLE "admin"."users" (
 ALTER TABLE "admin"."users" OWNER TO "test_archiraq_admin";
 
 
-COMMENT ON TABLE "admin"."users" IS 'Geoserver JDBC user/group service compliant table 
+COMMENT ON TABLE "admin"."users" IS 'Geoserver JDBC user/group service compliant table
 @see https://docs.geoserver.org/stable/en/user/security/usergrouprole/usergroupservices.html';
 
 
@@ -504,37 +505,6 @@ CREATE TABLE "geom"."site" (
 
 
 ALTER TABLE "geom"."site" OWNER TO "test_archiraq_admin";
-
-
-CREATE VIEW "public"."vw_site" AS
-SELECT
-    NULL::integer AS "id",
-    NULL::integer AS "contribute_id",
-    NULL::character varying AS "sbah_no",
-    NULL::character varying AS "cadastre",
-    NULL::character varying AS "modern_name",
-    NULL::character varying AS "nearest_city",
-    NULL::"text" AS "ancient_name",
-    NULL::integer AS "district_id",
-    NULL::character varying AS "district",
-    NULL::character varying AS "governorate",
-    NULL::character varying AS "nation",
-    NULL::"text" AS "chronology",
-    NULL::"text" AS "surveys",
-    NULL::"text" AS "survey_refs",
-    NULL::character varying AS "features",
-    NULL::character varying AS "threats",
-    NULL::boolean AS "remote_sensing",
-    NULL::boolean AS "survey_verified_on_field",
-    NULL::"text" AS "remarks",
-    NULL::numeric AS "e",
-    NULL::numeric AS "n",
-    NULL::numeric AS "area",
-    NULL::numeric AS "length",
-    NULL::numeric AS "width";
-
-
-ALTER TABLE "public"."vw_site" OWNER TO "test_archiraq_admin";
 
 
 CREATE VIEW "geom"."vw_site_point" AS

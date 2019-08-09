@@ -87,7 +87,8 @@ class CompareShpAndSpreadsheetsEntriesTaskTest extends AbstractPgTestIsolation
         $this->setUpTask();
         $this->fillShpTables();
         $this->fillDraftTable();
-        $this->assertEquals($draftDiffs, $this->getTask()->getSpreadsheetDifference(), 'Spreadsheet diffs does not match');
+        $actual = $this->getTask()->getSpreadsheetDifference();
+        $this->assertEquals(sort($draftDiffs), sort($actual), 'Spreadsheet diffs does not match');
         $this->assertEquals($shpDiffs, $this->getTask()->getShapefileDifference(), 'Shapefile diffs does not match');
     }
 
