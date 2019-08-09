@@ -12,7 +12,7 @@
         <ini name="error_reporting" value="-1" />
         <env name="APP_ENV" value="test" />
         <env name="SHELL_VERBOSITY" value="-1" />
-        <env name="DATABASE_URL" value="postgresql://test_archiraq_admin:password@localhost:5432/test_archiraq" />
+        <env name="DATABASE_URL" value="postgresql://test_archiraq_admin:password@localhost:5433/test_archiraq" />
         <env name="BING_API_KEY" value="BingApiKey" />
         <env name="GEOSERVER_BASE_URL" value="http://localhost:8080" />
         <env name="GEOSERVER_GUEST_AUTH" value="some:auth" />
