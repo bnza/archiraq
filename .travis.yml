@@ -23,8 +23,8 @@ before_script:
     - sudo mv postgresql.conf /etc/postgresql/11/main
     - sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
 #    - sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
-    - sudo echo 'local   all             all                                     trust' > /etc/postgresql/*/main/pg_hba.conf
-    - sudo echo 'host    all             all             127.0.0.1/32            trust' > /etc/postgresql/*/main/pg_hba.conf
+    - sudo echo 'local   all             all                                     trust' > /etc/postgresql/11/main/pg_hba.conf
+    - sudo echo 'host    all             all             127.0.0.1/32            trust' > /etc/postgresql/11/main/pg_hba.conf
     - sudo cat /etc/postgresql/11/main/pg_hba.conf
     - sudo service postgresql start
     - export PATH="/usr/lib/postgresql/11/bin:$PATH"
