@@ -2,6 +2,7 @@
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -21,6 +22,32 @@ ALTER TABLE IF EXISTS ONLY "public"."draft" DROP CONSTRAINT IF EXISTS "fk___publ
 ALTER TABLE IF EXISTS ONLY "geom"."site" DROP CONSTRAINT IF EXISTS "fk___geom__site___public__site";
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd2" DROP CONSTRAINT IF EXISTS "fk___geom__admbnd2___admbnd1_id__admbnd1_id";
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd1" DROP CONSTRAINT IF EXISTS "fk___admbnd1__admbnd0_code__admbnd0__code";
+CREATE OR REPLACE VIEW "public"."vw_site" AS
+SELECT
+    NULL::integer AS "id",
+    NULL::integer AS "contribute_id",
+    NULL::character varying AS "sbah_no",
+    NULL::character varying AS "cadastre",
+    NULL::character varying AS "modern_name",
+    NULL::character varying AS "nearest_city",
+    NULL::"text" AS "ancient_name",
+    NULL::integer AS "district_id",
+    NULL::character varying AS "district",
+    NULL::character varying AS "governorate",
+    NULL::character varying AS "nation",
+    NULL::"text" AS "chronology",
+    NULL::"text" AS "surveys",
+    NULL::"text" AS "survey_refs",
+    NULL::character varying AS "features",
+    NULL::character varying AS "threats",
+    NULL::boolean AS "remote_sensing",
+    NULL::boolean AS "survey_verified_on_field",
+    NULL::"text" AS "remarks",
+    NULL::numeric AS "e",
+    NULL::numeric AS "n",
+    NULL::numeric AS "area",
+    NULL::numeric AS "length",
+    NULL::numeric AS "width";
 ALTER TABLE IF EXISTS ONLY "voc"."survey" DROP CONSTRAINT IF EXISTS "uq___voc__survey__name";
 ALTER TABLE IF EXISTS ONLY "voc"."chronology" DROP CONSTRAINT IF EXISTS "uq___voc__chronology___name";
 ALTER TABLE IF EXISTS ONLY "voc"."chronology" DROP CONSTRAINT IF EXISTS "uq___voc__chronology___code";
@@ -40,6 +67,7 @@ ALTER TABLE IF EXISTS ONLY "public"."contribute" DROP CONSTRAINT IF EXISTS "pk__
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd2" DROP CONSTRAINT IF EXISTS "uq___geom__admbnd2__admbnd1_id__name";
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd1" DROP CONSTRAINT IF EXISTS "uq___admbnd1__admbnd0_code__name";
 ALTER TABLE IF EXISTS ONLY "geom"."site" DROP CONSTRAINT IF EXISTS "pk___geom__site";
+ALTER TABLE IF EXISTS ONLY "geom"."mat_site" DROP CONSTRAINT IF EXISTS "pk___geom__mat_site";
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd0" DROP CONSTRAINT IF EXISTS "pk___geom__admbndo";
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd2" DROP CONSTRAINT IF EXISTS "pk___geom__admbnd2";
 ALTER TABLE IF EXISTS ONLY "geom"."admbnd1" DROP CONSTRAINT IF EXISTS "pk___geom__admbnd1";
@@ -70,13 +98,6 @@ ALTER SCHEMA "geom" OWNER TO "test_archiraq_admin";
 
 
 
-
-
-
-
-
-
-
 CREATE SCHEMA "tmp";
 
 
@@ -97,11 +118,113 @@ ALTER SCHEMA "voc" OWNER TO "test_archiraq_admin";
 
 
 
+SET default_tablespace = '';
+
+SET default_with_oids = false;
 
 
+CREATE TABLE "geom"."mat_site" (
+    "id" integer NOT NULL,
+    "contribute_id" integer,
+    "sbah_no" character varying,
+    "cadastre" character varying,
+    "modern_name" character varying,
+    "nearest_city" character varying,
+    "ancient_name" "text",
+    "district_id" integer,
+    "district" character varying,
+    "governorate" character varying,
+    "nation" character varying,
+    "chronology" "text",
+    "surveys" "text",
+    "survey_refs" "text",
+    "features" character varying,
+    "threats" character varying,
+    "remote_sensing" boolean,
+    "survey_verified_on_field" boolean,
+    "remarks" "text",
+    "e" numeric,
+    "n" numeric,
+    "area" numeric,
+    "length" numeric,
+    "width" numeric,
+    "centroid" "public"."geometry"(Point,4326),
+    "geom" "public"."geometry"(MultiPolygon,4326)
+);
 
 
+ALTER TABLE "geom"."mat_site" OWNER TO "test_archiraq_admin";
 
+
+CREATE FUNCTION "geom"."select_vw_site_by_index"("site_id" integer) RETURNS "geom"."mat_site"
+    LANGUAGE "sql"
+    AS $$SELECT ws.*, st_centroid(gs.geom) AS centroid, gs.geom FROM public.vw_site ws
+     LEFT JOIN geom.site gs ON ws.id = gs.id WHERE ws.id=site_id;$$;
+
+
+ALTER FUNCTION "geom"."select_vw_site_by_index"("site_id" integer) OWNER TO "test_archiraq_admin";
+
+
+CREATE FUNCTION "geom"."tf___delete_geom_mat_site"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    AS $$BEGIN
+	DELETE FROM geom.mat_site WHERE id = OLD.id;
+	RETURN OLD;
+END$$;
+
+
+ALTER FUNCTION "geom"."tf___delete_geom_mat_site"() OWNER TO "test_archiraq_admin";
+
+
+CREATE FUNCTION "geom"."tf___insert_into_geom_mat_site"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    AS $$BEGIN
+	INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(NEW.id);
+	RETURN NEW;
+END;$$;
+
+
+ALTER FUNCTION "geom"."tf___insert_into_geom_mat_site"() OWNER TO "test_archiraq_admin";
+
+
+CREATE FUNCTION "geom"."tf___update_geom_mat_site"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    AS $$BEGIN
+	PERFORM geom.update_mat_site_by_index(NEW.id, OLD.id);
+	RETURN NEW;
+END$$;
+
+
+ALTER FUNCTION "geom"."tf___update_geom_mat_site"() OWNER TO "test_archiraq_admin";
+
+
+CREATE FUNCTION "geom"."tf___update_geom_mat_site_child"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    AS $$BEGIN
+	IF NOT NEW.site_id IS NULL THEN
+		PERFORM geom.update_mat_site_by_index(NEW.site_id, NEW.site_id);
+	END IF;
+	IF (OLD.site_id IS NOT NULL AND OLD.site_id IS DISTINCT FROM NEW.site_id) THEN
+		PERFORM geom.update_mat_site_by_index(OLD.site_id, OLD.site_id);
+	END IF;
+	RETURN NEW;
+END$$;
+
+
+ALTER FUNCTION "geom"."tf___update_geom_mat_site_child"() OWNER TO "test_archiraq_admin";
+
+
+CREATE FUNCTION "geom"."update_mat_site_by_index"("new_site_id" integer, "old_site_id" integer) RETURNS "void"
+    LANGUAGE "plpgsql"
+    AS $$BEGIN
+	DELETE FROM geom.mat_site WHERE id = old_site_id;
+	IF EXISTS (SELECT FROM public.vw_site WHERE id = new_site_id) THEN
+		INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(new_site_id);
+	END IF;
+END;$$;
+
+
+ALTER FUNCTION "geom"."update_mat_site_by_index"("new_site_id" integer, "old_site_id" integer) OWNER TO "test_archiraq_admin";
 
 
 CREATE FUNCTION "public"."orientedenvelope"("g" "public"."geometry") RETURNS "public"."geometry"
@@ -221,10 +344,6 @@ ALTER FUNCTION "public"."site_threats_to_string"("threats_natural_dunes" boolean
 
 
 
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
 
 
 CREATE TABLE "admin"."group_members" (
@@ -387,34 +506,32 @@ CREATE TABLE "geom"."site" (
 ALTER TABLE "geom"."site" OWNER TO "test_archiraq_admin";
 
 
-CREATE TABLE "public"."vw_site" (
-    "id" integer,
-    "contribute_id" integer,
-    "sbah_no" character varying,
-    "cadastre" character varying,
-    "modern_name" character varying,
-    "nearest_city" character varying,
-    "ancient_name" "text",
-    "district_id" integer,
-    "district" character varying,
-    "governorate" character varying,
-    "nation" character varying,
-    "chronology" "text",
-    "surveys" "text",
-    "survey_refs" "text",
-    "features" character varying,
-    "threats" character varying,
-    "remote_sensing" boolean,
-    "survey_verified_on_field" boolean,
-    "remarks" "text",
-    "e" numeric,
-    "n" numeric,
-    "area" numeric,
-    "length" numeric,
-    "width" numeric
-);
-
-ALTER TABLE ONLY "public"."vw_site" REPLICA IDENTITY NOTHING;
+CREATE VIEW "public"."vw_site" AS
+SELECT
+    NULL::integer AS "id",
+    NULL::integer AS "contribute_id",
+    NULL::character varying AS "sbah_no",
+    NULL::character varying AS "cadastre",
+    NULL::character varying AS "modern_name",
+    NULL::character varying AS "nearest_city",
+    NULL::"text" AS "ancient_name",
+    NULL::integer AS "district_id",
+    NULL::character varying AS "district",
+    NULL::character varying AS "governorate",
+    NULL::character varying AS "nation",
+    NULL::"text" AS "chronology",
+    NULL::"text" AS "surveys",
+    NULL::"text" AS "survey_refs",
+    NULL::character varying AS "features",
+    NULL::character varying AS "threats",
+    NULL::boolean AS "remote_sensing",
+    NULL::boolean AS "survey_verified_on_field",
+    NULL::"text" AS "remarks",
+    NULL::numeric AS "e",
+    NULL::numeric AS "n",
+    NULL::numeric AS "area",
+    NULL::numeric AS "length",
+    NULL::numeric AS "width";
 
 
 ALTER TABLE "public"."vw_site" OWNER TO "test_archiraq_admin";
@@ -484,6 +601,138 @@ CREATE VIEW "geom"."vw_site_poly" AS
 
 
 ALTER TABLE "geom"."vw_site_poly" OWNER TO "test_archiraq_admin";
+
+
+CREATE VIEW "geom"."vw_site_rs_point" AS
+ SELECT "ms"."id",
+    "ms"."contribute_id",
+    "ms"."sbah_no",
+    "ms"."cadastre",
+    "ms"."modern_name",
+    "ms"."nearest_city",
+    "ms"."ancient_name",
+    "ms"."district_id",
+    "ms"."district",
+    "ms"."governorate",
+    "ms"."nation",
+    "ms"."chronology",
+    "ms"."surveys",
+    "ms"."survey_refs",
+    "ms"."features",
+    "ms"."threats",
+    "ms"."remote_sensing",
+    "ms"."survey_verified_on_field",
+    "ms"."remarks",
+    "ms"."e",
+    "ms"."n",
+    "ms"."area",
+    "ms"."length",
+    "ms"."width",
+    "ms"."centroid" AS "geom"
+   FROM "geom"."mat_site" "ms"
+  WHERE ("ms"."remote_sensing" = true);
+
+
+ALTER TABLE "geom"."vw_site_rs_point" OWNER TO "test_archiraq_admin";
+
+
+CREATE VIEW "geom"."vw_site_rs_poly" AS
+ SELECT "ms"."id",
+    "ms"."contribute_id",
+    "ms"."sbah_no",
+    "ms"."cadastre",
+    "ms"."modern_name",
+    "ms"."nearest_city",
+    "ms"."ancient_name",
+    "ms"."district_id",
+    "ms"."district",
+    "ms"."governorate",
+    "ms"."nation",
+    "ms"."chronology",
+    "ms"."surveys",
+    "ms"."survey_refs",
+    "ms"."features",
+    "ms"."threats",
+    "ms"."remote_sensing",
+    "ms"."survey_verified_on_field",
+    "ms"."remarks",
+    "ms"."e",
+    "ms"."n",
+    "ms"."area",
+    "ms"."length",
+    "ms"."width",
+    "ms"."geom"
+   FROM "geom"."mat_site" "ms"
+  WHERE ("ms"."remote_sensing" = true);
+
+
+ALTER TABLE "geom"."vw_site_rs_poly" OWNER TO "test_archiraq_admin";
+
+
+CREATE VIEW "geom"."vw_site_survey_point" WITH ("security_barrier"='false') AS
+ SELECT "ms"."id",
+    "ms"."contribute_id",
+    "ms"."sbah_no",
+    "ms"."cadastre",
+    "ms"."modern_name",
+    "ms"."nearest_city",
+    "ms"."ancient_name",
+    "ms"."district_id",
+    "ms"."district",
+    "ms"."governorate",
+    "ms"."nation",
+    "ms"."chronology",
+    "ms"."surveys",
+    "ms"."survey_refs",
+    "ms"."features",
+    "ms"."threats",
+    "ms"."remote_sensing",
+    "ms"."survey_verified_on_field",
+    "ms"."remarks",
+    "ms"."e",
+    "ms"."n",
+    "ms"."area",
+    "ms"."length",
+    "ms"."width",
+    "ms"."centroid" AS "geom"
+   FROM "geom"."mat_site" "ms"
+  WHERE ("ms"."remote_sensing" = false);
+
+
+ALTER TABLE "geom"."vw_site_survey_point" OWNER TO "test_archiraq_admin";
+
+
+CREATE VIEW "geom"."vw_site_survey_poly" AS
+ SELECT "ms"."id",
+    "ms"."contribute_id",
+    "ms"."sbah_no",
+    "ms"."cadastre",
+    "ms"."modern_name",
+    "ms"."nearest_city",
+    "ms"."ancient_name",
+    "ms"."district_id",
+    "ms"."district",
+    "ms"."governorate",
+    "ms"."nation",
+    "ms"."chronology",
+    "ms"."surveys",
+    "ms"."survey_refs",
+    "ms"."features",
+    "ms"."threats",
+    "ms"."remote_sensing",
+    "ms"."survey_verified_on_field",
+    "ms"."remarks",
+    "ms"."e",
+    "ms"."n",
+    "ms"."area",
+    "ms"."length",
+    "ms"."width",
+    "ms"."geom"
+   FROM "geom"."mat_site" "ms"
+  WHERE ("ms"."remote_sensing" = false);
+
+
+ALTER TABLE "geom"."vw_site_survey_poly" OWNER TO "test_archiraq_admin";
 
 
 CREATE SEQUENCE "public"."seq___contribute__id"
@@ -825,6 +1074,11 @@ ALTER TABLE ONLY "geom"."admbnd0"
 
 
 
+ALTER TABLE ONLY "geom"."mat_site"
+    ADD CONSTRAINT "pk___geom__mat_site" PRIMARY KEY ("id");
+
+
+
 ALTER TABLE ONLY "geom"."site"
     ADD CONSTRAINT "pk___geom__site" PRIMARY KEY ("id");
 
@@ -923,8 +1177,16 @@ ALTER TABLE ONLY "voc"."survey"
 
 
 
-CREATE RULE "_RETURN" AS
-    ON SELECT TO "public"."vw_site" DO INSTEAD  WITH "oriented_envelop_sides" AS (
+CREATE INDEX "idx___geom__mat_site___geom" ON "geom"."mat_site" USING "gist" ("geom");
+
+
+
+CREATE INDEX "idx___geom__mat_site___remote_sensing" ON "geom"."mat_site" USING "btree" ("remote_sensing");
+
+
+
+CREATE OR REPLACE VIEW "public"."vw_site" AS
+ WITH "oriented_envelop_sides" AS (
          SELECT "site"."id",
             "public"."orientedenvelopesides"("site"."geom") AS "sides"
            FROM "geom"."site"
@@ -968,6 +1230,30 @@ CREATE RULE "_RETURN" AS
      LEFT JOIN "geom"."site" "gs" ON (("s"."id" = "gs"."id")))
      LEFT JOIN "oriented_envelop_sides" "oes" ON (("s"."id" = "oes"."id")))
   GROUP BY "s"."id", "ab2"."id", "ab2"."name", "ab1"."name", "ab0"."name", "gs"."geom", "oes"."sides";
+
+
+
+CREATE TRIGGER "tr_aud___update_geom_mat_site___geom" AFTER INSERT OR DELETE OR UPDATE ON "geom"."site" FOR EACH ROW EXECUTE PROCEDURE "geom"."tf___update_geom_mat_site"();
+
+
+
+CREATE TRIGGER "tr_ad___delete_geom_mat_site" AFTER DELETE ON "public"."site" FOR EACH ROW EXECUTE PROCEDURE "geom"."tf___delete_geom_mat_site"();
+
+
+
+CREATE TRIGGER "tr_ai___insert_into_geom_mat_site" AFTER INSERT ON "public"."site" FOR EACH ROW EXECUTE PROCEDURE "geom"."tf___insert_into_geom_mat_site"();
+
+
+
+CREATE TRIGGER "tr_au___update_geom_mat_site" AFTER UPDATE ON "public"."site" FOR EACH ROW EXECUTE PROCEDURE "geom"."tf___update_geom_mat_site"();
+
+
+
+CREATE TRIGGER "tr_aud___update_geom_mat_site___chronology" AFTER INSERT OR DELETE OR UPDATE ON "public"."site_chronology" FOR EACH ROW EXECUTE PROCEDURE "geom"."tf___update_geom_mat_site_child"();
+
+
+
+CREATE TRIGGER "tr_aud___update_geom_mat_site___survey" AFTER INSERT OR DELETE OR UPDATE ON "public"."site_survey" FOR EACH ROW EXECUTE PROCEDURE "geom"."tf___update_geom_mat_site_child"();
 
 
 
@@ -1028,13 +1314,6 @@ ALTER TABLE ONLY "tmp"."draft"
 
 ALTER TABLE ONLY "tmp"."draft_error"
     ADD CONSTRAINT "fk___tmp__draft_error___tmp__draft" FOREIGN KEY ("draft_id") REFERENCES "tmp"."draft"("id") MATCH FULL ON UPDATE CASCADE ON DELETE CASCADE;
-
-
-
-REVOKE ALL ON SCHEMA "public" FROM PUBLIC;
-REVOKE ALL ON SCHEMA "public" FROM "postgres";
-GRANT ALL ON SCHEMA "public" TO "postgres";
-GRANT ALL ON SCHEMA "public" TO PUBLIC;
 
 
 

@@ -4,12 +4,12 @@ services:
     - postgresql
 
 addons:
-    postgresql: "9.5"
+    postgresql: "11"
     apt:
         update: true
         packages:
             -   postgis
-            -   postgresql-9.5-postgis-2.4
+            -   postgresql-11-postgis-2.5
 
 before_script:
     -   psql -U postgres -f tests/assets/tdd/sql/su.sql
