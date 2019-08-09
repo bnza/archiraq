@@ -24,6 +24,8 @@ before_script:
     - sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
     - sudo service postgresql restart 11
     - export PATH="/usr/lib/postgresql/11/bin:$PATH"
+    - psql -U postgres -p 5432 -W -c "SELECT version();"
+    - psql -U postgres -p 5433 -W -c "SELECT version();"
     - psql -U postgres -f tests/assets/tdd/sql/su.sql
 
 matrix:
