@@ -34,9 +34,9 @@ before_script:
 #    - sudo cat /etc/postgresql/11/main/pg_hba.conf
 #    - sudo service postgresql start 11
 #    - export PATH="/usr/lib/postgresql/11/bin:$PATH"
-    -  sudo cp tests/assets/tdd/sql/su.sql su.sql
-    -  sudo chown postgres su.sql
-    -  sudo -u postgres psql -f su.sql
+    -  sudo cp tests/assets/tdd/sql/su.sql /tmp/su.sql
+    -  sudo chown postgres /tmp/su.sql
+    -  sudo -u postgres psql -f /tmp/su.sql
 
 matrix:
     fast_finish: true
