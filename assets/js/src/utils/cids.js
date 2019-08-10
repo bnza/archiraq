@@ -13,5 +13,12 @@ export const CID_THE_MAP_LAYERS_DRAWER = 'TheMapLayersDrawer';
 export const CID_THE_MAP_TOOLBAR = 'TheMapToolbar';
 export const CID_THE_SNACKBAR = 'TheSnackbar';
 export const CID_VW_SITE_LIST_DATA_CARD = 'VwSiteListDataCard';
+export const CID_VW_SITE_SURVEY_LIST_DATA_CARD = 'VwSiteSurveyListDataCard';
+export const CID_VW_SITE_RS_LIST_DATA_CARD = 'VwSiteRsListDataCard';
 
 export const QUERY_TYPENAME_VW_SITES = 'vw-site';
+export const QUERY_TYPENAME_VW_SITES_SURVEY = 'vw-site-survey';
+export const QUERY_TYPENAME_VW_SITES_RS = 'vw-site-rs';
+
+export const WFS_TYPENAME_VW_SITES_SURVEY = 'vw_site_survey';
+export const WFS_TYPENAME_VW_SITES_RS = 'vw_site_rs';

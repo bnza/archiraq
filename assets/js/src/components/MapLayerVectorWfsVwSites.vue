@@ -1,7 +1,7 @@
 <template>
     <div>
         <map-layer-vector-wfs
-            :cid-p="CID"
+            :cid-p="baseTypename"
             :typename="typename"
             :visible-p="true"
             :filter="filter"
@@ -30,15 +30,14 @@
     </div>
 </template>
 <script>
+import {kebabCase} from 'lodash';
 import MapLayerVectorWfs from '@/components/MapLayerVectorWfs';
 import VwSitePopupDataCard from '@/components/DataCard/Interaction/VwSitePopupDataCard';
 import ComponentStoreVisibleMx from '@/mixins/ComponentStoreVisibleMx';
 import QueryMx from '@/mixins/QueryMx';
-import {CID_MAP_LAYER_VECTOR_WFS_VW_SITES as CID, QUERY_TYPENAME_VW_SITES} from '@/utils/cids';
+import {CID_MAP_LAYER_VECTOR_WFS_VW_SITES as CID} from '@/utils/cids';
 
 export const SITE_POLY_ZOOM_UPPER_BOUND = 10;
-export const SITE_POLY_WFS_TYPENAME = 'archiraq:vw_site_poly';
-export const SITE_POINT_WFS_TYPENAME = 'archiraq:vw_site_point';
 
 export default {
     name: CID,
@@ -51,6 +50,14 @@ export default {
         QueryMx
     ],
     props: {
+        baseTypenamePrefix: {
+            type: String,
+            default: 'archiraq'
+        },
+        baseTypename: {
+            type: String,
+            required: true
+        },
         zoom: {
             type: Number,
             required: true
@@ -63,25 +70,29 @@ export default {
     },
     computed: {
         CID: () => CID,
+        queryTypename() {
+            return kebabCase(this.baseTypename);
+        },
         typename() {
-            return this.zoom > SITE_POLY_ZOOM_UPPER_BOUND ? SITE_POLY_WFS_TYPENAME : SITE_POINT_WFS_TYPENAME;
+            const suffix = this.zoom > SITE_POLY_ZOOM_UPPER_BOUND
+                ? 'poly'
+                : 'point';
+            return `${this.baseTypenamePrefix}:${this.baseTypename}_${suffix}`;
         },
         filter: {
             get() {
-                return this.getQueryFilter(QUERY_TYPENAME_VW_SITES);
+                return this.getQueryFilter(this.queryTypename);
             },
             set(filter) {
-                this.setQueryFilter(filter);
+                this.setQueryFilterFn({
+                    typename: this.queryTypename,
+                    filter
+                });
             }
         }
     },
     created() {
         this.filter = null;
-    },
-    methods: {
-        getQueryTypeName() {
-            return QUERY_TYPENAME_VW_SITES;
-        },
     }
 };
 </script>

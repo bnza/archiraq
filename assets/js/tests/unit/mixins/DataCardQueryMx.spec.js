@@ -13,7 +13,7 @@ let getFilter;
 export const getDefaultMountOptions = () => {
     return {
         propsData: {
-            typename: 'vw-site'
+            queryTypename: 'some-query-name'
         },
         $store: {
             state: {
@@ -42,7 +42,7 @@ describe('DataCardQueryMx', () => {
             it('get()', () => {
                 const wrapper = getWrapper('mount', componentOptions, mountOptions);
                 wrapper.vm.pagination;
-                expect(getPagination).toBeCalledWith('vw-site');
+                expect(getPagination).toBeCalledWith('some-query-name');
 
             });
             it('set()', () => {
@@ -50,7 +50,7 @@ describe('DataCardQueryMx', () => {
                 wrapper.vm.pagination = {value: 'Some value'};
                 expect(wrapper.vm.$store.commit).toHaveBeenCalledWith(
                     getNamespacedStoreProp('query', SET_PAGINATION),
-                    {typename:'vw-site', pagination:{value: 'Some value'}}
+                    {typename:'some-query-name', pagination:{value: 'Some value'}}
                 );
             });
         });
@@ -58,16 +58,16 @@ describe('DataCardQueryMx', () => {
             it('get()', () => {
                 const wrapper = getWrapper('mount', componentOptions, mountOptions);
                 wrapper.vm.filter;
-                expect(getFilter).toBeCalledWith('vw-site');
+                expect(getFilter).toBeCalledWith('some-query-name');
 
             });
             it('set()', () => {
                 const wrapper = getWrapper('mount', componentOptions, mountOptions);
-                wrapper.setMethods({getQueryTypeName: jest.fn().mockReturnValue('mock-type-name')});
+                //wrapper.setMethods({getQueryTypeName: jest.fn().mockReturnValue('mock-type-name')});
                 wrapper.vm.filter = {value: 'Some value'};
                 expect(wrapper.vm.$store.commit).toHaveBeenCalledWith(
                     getNamespacedStoreProp('query', SET_FILTER),
-                    {typename:'mock-type-name', filter:{value: 'Some value'}}
+                    {typename:'some-query-name', filter:{value: 'Some value'}}
                 );
             });
         });

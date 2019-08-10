@@ -26,7 +26,7 @@ context('<VwSiteExportDialogContent>', () => {
     context('Dialog', () => {
         beforeEach(() => {
             cy.cookieLocalSignIn('aUser', 'thePasswd', ['ROLE_USER']);
-            cy.visit('http://archiraq.local/#/map/data/vw-site/list#data-table');
+            cy.visit('http://archiraq.local/#/map/data/vw-site-survey/list#data-table');
             setAliases();
         });
 

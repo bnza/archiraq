@@ -9,7 +9,7 @@
             :items="items"
             :total-items="totalItems"
             :headers="headers"
-            :typename="typename"
+            :query-typename="queryTypename"
             :is-request-pending="isRequestPending"
         />
         <component
@@ -32,14 +32,14 @@
 </template>
 
 <script>
+import {snakeCase} from 'lodash';
 import DataCard from './DataCard';
 import VwSiteListDataCardToolbar from './VwSiteListDataCardToolbar';
 import VwSiteListDataCardTable from './VwSiteListDataCardTable';
 import DataCardDynamicModalMx from '@/mixins/DataCardDynamicModalMx';
 import WfsDataCardMx from '@/mixins/WfsDataCardMx';
 
-import {CID_VW_SITE_LIST_DATA_CARD as CID, QUERY_TYPENAME_VW_SITES} from '@/utils/cids';
-import {SITE_POLY_WFS_TYPENAME} from '@/components/MapLayerVectorWfsVwSites';
+import {CID_VW_SITE_LIST_DATA_CARD as CID} from '@/utils/cids';
 
 
 const headers = [
@@ -124,14 +124,19 @@ export default {
         };
     },
     computed: {
-        limitTypeName() {
-            return SITE_POLY_WFS_TYPENAME;
+        typename() {
+            const typename = snakeCase(this.queryTypename);
+            return `archiraq:${typename}_poly`;
         },
         modalProps() {
             const modalProps = {
+                filter: {
+                    typename: this.typename,
+                    queryTypename: this.queryTypename
+                },
                 export: {
-                    typename: SITE_POLY_WFS_TYPENAME,
-                    queryTypename: QUERY_TYPENAME_VW_SITES
+                    typename: this.typename,
+                    queryTypename: this.queryTypename
                 }
             };
             return modalProps.hasOwnProperty(this.modalComponentType) ? modalProps[this.modalComponentType] : {};

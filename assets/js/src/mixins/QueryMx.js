@@ -16,7 +16,7 @@ export default {
         },
         setQueryConditions(conditions) {
             this.setQueryConditionsFn({
-                typename: this.getQueryTypeName(),
+                typename: this.queryTypename,
                 conditions
             });
         },
@@ -26,7 +26,7 @@ export default {
          */
         setQueryFilter(filter) {
             this.setQueryFilterFn({
-                typename: this.getQueryTypeName(),
+                typename: this.queryTypename,
                 filter
             });
         },

@@ -3,7 +3,7 @@
         :is="dataComponent"
         id="data-table"
         :action="action"
-        :typename="typename"
+        :query-typename="queryTypename"
     />
 </template>
 
@@ -16,6 +16,14 @@ export default {
     name: 'DataCardContainer',
     components: {
         VwSiteListDataCard: () => import(
+            /* webpackChunkName: "VwSiteListDataCard" */
+            './VwSiteListDataCard'
+        ),
+        VwSiteSurveyListDataCard: () => import(
+            /* webpackChunkName: "VwSiteListDataCard" */
+            './VwSiteListDataCard'
+        ),
+        VwSiteRsListDataCard: () => import(
             /* webpackChunkName: "VwSiteListDataCard" */
             './VwSiteListDataCard'
         )
@@ -31,7 +39,7 @@ export default {
     },
     computed: {
         dataComponent() {
-            const chunks = [this.typename, this.action, 'DataCard'];
+            const chunks = [this.queryTypename, this.action, 'DataCard'];
             return chunks.map(this.pascalCase).join('');
         }
     },

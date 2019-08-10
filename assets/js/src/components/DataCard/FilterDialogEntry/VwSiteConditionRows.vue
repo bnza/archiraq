@@ -62,15 +62,26 @@ export default {
         QueryMx,
         ConditionMx
     ],
+    props: {
+        modalProps: {
+            type: Object,
+            required: true,
+            validator: function (value) {
+                return value.hasOwnProperty('queryTypename');
+            }
+        }
+    },
+    computed: {
+        queryTypename() {
+            return this.modalProps.queryTypename;
+        }
+    },
     created() {
         // Retrieve from store
-        let conditions = Object.assign(defaultConditions(), this.getQueryConditions(QUERY_TYPENAME_VW_SITES));
+        let conditions = Object.assign(defaultConditions(), this.getQueryConditions(this.queryTypename));
         this.conditions = conditions;
     },
     methods: {
-        getQueryTypeName() {
-            return QUERY_TYPENAME_VW_SITES;
-        },
         submit() {
             this.setQueryConditions(this.conditions);
             this.setQueryFilter(this.getAndConditionsFilter());

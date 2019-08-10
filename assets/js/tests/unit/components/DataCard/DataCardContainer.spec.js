@@ -32,12 +32,12 @@ describe('DataCardContainer', () => {
                         },
                         propsData: {
                             action: 'list',
-                            typename: 'vw-site'
+                            queryTypename: 'vw-site-survey'
                         }
                     });
                 expect(wrapper.vm.$store.commit).toHaveBeenCalledWith(
                     getNamespacedStoreProp('query', SET_PAGINATION),
-                    {typename:'vw-site', pagination:{page: '1'}}
+                    {typename:'vw-site-survey', pagination:{page: '1'}}
                 );
             });
         });
@@ -62,10 +62,10 @@ describe('DataCardContainer', () => {
                     },
                     propsData: {
                         action: 'list',
-                        typename: 'vw-site'
+                        queryTypename: 'vw-site-survey'
                     }
                 });
-            expect(wrapper.vm.dataComponent).toEqual('VwSiteListDataCard');
+            expect(wrapper.vm.dataComponent).toEqual('VwSiteSurveyListDataCard');
         });
     });
 });

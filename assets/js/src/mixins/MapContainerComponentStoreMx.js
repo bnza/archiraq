@@ -1,7 +1,9 @@
 import ComponentsStoreMx from './ComponentsStoreMx';
 import {
     CID_THE_MAP_CONTAINER,
-    CID_MAP_LAYER_VECTOR_WFS_VW_SITES
+    CID_MAP_LAYER_VECTOR_WFS_VW_SITES,
+    WFS_TYPENAME_VW_SITES_RS,
+    WFS_TYPENAME_VW_SITES_SURVEY
 } from '../utils/cids';
 
 export default {
@@ -94,6 +96,28 @@ export default {
             set() {
                 this.componentsToggleComponentProp({
                     cid: CID_MAP_LAYER_VECTOR_WFS_VW_SITES,
+                    prop: 'visible'
+                });
+            }
+        },
+        mapContainerVwSitesSurveyVisible: {
+            get() {
+                return this.componentsGetComponentProp(WFS_TYPENAME_VW_SITES_SURVEY, 'visible');
+            },
+            set() {
+                this.componentsToggleComponentProp({
+                    cid: WFS_TYPENAME_VW_SITES_SURVEY,
+                    prop: 'visible'
+                });
+            }
+        },
+        mapContainerVwSitesRemoteSensingVisible: {
+            get() {
+                return this.componentsGetComponentProp(WFS_TYPENAME_VW_SITES_RS, 'visible');
+            },
+            set() {
+                this.componentsToggleComponentProp({
+                    cid: WFS_TYPENAME_VW_SITES_RS,
                     prop: 'visible'
                 });
             }

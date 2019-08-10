@@ -7,7 +7,7 @@
         <v-list data-test="vw-site-layer--action-menu">
             <v-list-tile
                 data-test="openAttributeTable"
-                @click="openAttributeTable({table: 'vw-site'})"
+                @click="openAttributeTable({table: table})"
             >
                 <v-list-tile-action>
                     <v-icon>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import {kebabCase} from 'lodash';
 import OpenAttributeTableMx from '@/mixins/OpenAttributeTableMx';
 import ListRowActionsMenu from './ListRowActionsMenu';
 export default {
@@ -33,7 +34,18 @@ export default {
     },
     mixins: [
         OpenAttributeTableMx
-    ]
+    ],
+    props: {
+        typename: {
+            type: String,
+            required: true
+        }
+    },
+    computed: {
+        table() {
+            return kebabCase(this.typename);
+        }
+    }
 };
 </script>
 

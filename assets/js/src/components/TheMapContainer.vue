@@ -43,6 +43,12 @@
             <map-layer-group-admin-bounds />
             <map-layer-vector-wfs-vw-sites
                 ref="layerVwSite"
+                :base-typename="WFS_TYPENAME_VW_SITES_SURVEY"
+                :zoom="zoom"
+            />
+            <map-layer-vector-wfs-vw-sites
+                ref="layerVwSiteRs"
+                :base-typename="WFS_TYPENAME_VW_SITES_RS"
                 :zoom="zoom"
             />
             <the-map-layers-drawer />
@@ -62,7 +68,11 @@ import VlSourceEsri from './VlSourceEsri';
 import {
     CID_THE_MAP_CONTAINER as CID,
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
-    CID_MAP_LAYER_VECTOR_WFS_VW_SITES
+    CID_MAP_LAYER_VECTOR_WFS_VW_SITES,
+    WFS_TYPENAME_VW_SITES_SURVEY,
+    WFS_TYPENAME_VW_SITES_RS,
+    QUERY_TYPENAME_VW_SITES_RS,
+    QUERY_TYPENAME_VW_SITES_SURVEY
 } from '../utils/cids';
 import {callObjectMethod} from '../utils/utils';
 
@@ -90,6 +100,8 @@ export default {
         };
     },
     computed: {
+        WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY,
+        WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
         bingApiKey() {
             return this.$store.state.bingApiKey;
         }

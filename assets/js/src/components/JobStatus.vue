@@ -48,7 +48,6 @@
         <v-layout
             row
             wrap
-            data-test="statusJobRow"
         >
             <v-flex
                 xs3

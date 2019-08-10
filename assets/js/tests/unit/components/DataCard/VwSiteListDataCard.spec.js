@@ -1,13 +1,9 @@
 import VwSiteListDataCard from '@/components/DataCard/VwSiteListDataCard';
-import DataCardFilterDialog from '@/components/DataCard/DataCardFilterDialog';
-import {SITE_POLY_WFS_TYPENAME} from '@/components/MapLayerVectorWfsVwSites';
 import {
     getVuetifyWrapper,
     catchLocalVueDuplicateVueBug,
     resetConsoleError,
 } from '../../components/utils';
-import {getNamespacedStoreProp} from '../../utils';
-import {GET_PAGINATION, GET_FILTER} from '@/store/query/getters';
 
 let wrapper;
 let mountOptions;
@@ -27,7 +23,7 @@ const getMountOptions = () => {
             filter: () => {}
         },
         propsData: {
-            typename: 'mock:typename'
+            queryTypename: 'mock-typename'
         },
         stubs: {
             DataCardExportDialog: '<div data-test="export" />',
@@ -61,17 +57,27 @@ describe('VwSiteListDataCard', () => {
         });
     });
     describe('computed', () => {
-        it('"limitTypeName"', () => {
-            expect(VwSiteListDataCard.computed.limitTypeName.apply({})).toEqual(SITE_POLY_WFS_TYPENAME);
+        beforeEach(() => {
+            mountOptions = getMountOptions();
+            wrapper = getVuetifyWrapper(
+                'shallowMount',
+                VwSiteListDataCard,
+                mountOptions
+            );
         });
         it.each([
-            ['filter', {}],
+            ['filter', {
+                'queryTypename': 'mock-typename',
+                'typename': 'archiraq:mock_typename_poly'
+            }],
             ['export', {
-                'queryTypename': 'vw-site',
-                'typename': 'archiraq:vw_site_poly'
+                'queryTypename': 'mock-typename',
+                'typename': 'archiraq:mock_typename_poly'
             }],
         ])('when "modalComponentType" is %s then "modalProps" is %o', (modalComponentType, expected) => {
-            expect(VwSiteListDataCard.computed.modalProps.apply({modalComponentType})).toEqual(expected);
+            //expect(VwSiteListDataCard.computed.modalProps.apply({modalComponentType})).toEqual(expected);
+            wrapper.setData({ modalComponentType: modalComponentType })
+            expect(wrapper.vm.modalProps).toEqual(expected);
         });
     });
 });

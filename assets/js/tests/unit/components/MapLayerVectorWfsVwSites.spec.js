@@ -1,4 +1,4 @@
-import MapLayerVectorWfsVwSites, {SITE_POINT_WFS_TYPENAME, SITE_POLY_WFS_TYPENAME} from '@/components/MapLayerVectorWfsVwSites';
+import MapLayerVectorWfsVwSites from '@/components/MapLayerVectorWfsVwSites';
 import {getWrapper, resetLocaVue} from '../components/utils';
 import VueLayers from 'vuelayers';
 
@@ -14,7 +14,9 @@ beforeEach(() => {
             }
         },
         propsData: {
-            zoom: 6
+            zoom: 6,
+            baseTypename: 'some_wfs_site',
+            baseTypenamePrefix: 'pfx'
         },
         computed: {
             getQueryFilter() {
@@ -41,9 +43,9 @@ describe('MapLayerVectorWfsVwSites', () => {
     describe('computed', () => {
         it('"typename" change to "archiraq:vw_site_polys" when > 10', () => {
             const wrapper = getWrapper('shallowMount', MapLayerVectorWfsVwSites, mountOptions);
-            expect(wrapper.vm.typename).toEqual(SITE_POINT_WFS_TYPENAME);
+            expect(wrapper.vm.typename).toEqual('pfx:some_wfs_site_point');
             wrapper.setProps({ zoom: 11 });
-            expect(wrapper.vm.typename).toEqual(SITE_POLY_WFS_TYPENAME);
+            expect(wrapper.vm.typename).toEqual('pfx:some_wfs_site_poly');
         });
     });
 });

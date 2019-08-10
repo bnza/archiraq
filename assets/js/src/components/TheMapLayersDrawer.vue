@@ -19,17 +19,33 @@
                     title="Sites"
                 >
                     <map-legend-layer-list-tile
-                        title="Sites"
-                        :layer-cid="CID_MAP_LAYER_VECTOR_WFS_VW_SITES"
+                        title="Survey"
+                        :layer-cid="WFS_TYPENAME_VW_SITES_SURVEY"
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerVwSitesVisible"
+                            v-model="mapContainerVwSitesSurveyVisible"
                             :hide-details="true"
                             data-test="the-map-layers-drawer--checkbox-vw-sites"
                         />
                         <wv-site-layer-action-menu
                             slot="action"
+                            :typename="WFS_TYPENAME_VW_SITES_SURVEY"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="Remote Sensing"
+                        :layer-cid="WFS_TYPENAME_VW_SITES_RS"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerVwSitesRemoteSensingVisible"
+                            :hide-details="true"
+                            data-test="the-map-layers-drawer--checkbox-vw-sites"
+                        />
+                        <wv-site-layer-action-menu
+                            slot="action"
+                            :typename="WFS_TYPENAME_VW_SITES_RS"
                         />
                     </map-legend-layer-list-tile>
                 </map-legend-list-group>
@@ -135,7 +151,9 @@ import {
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
     CID_MAP_LAYER_VECTOR_WFS_VW_SITES,
-    CID_THE_MAP_LAYERS_DRAWER as CID
+    CID_THE_MAP_LAYERS_DRAWER as CID,
+    WFS_TYPENAME_VW_SITES_RS,
+    WFS_TYPENAME_VW_SITES_SURVEY
 } from '../utils/cids';
 
 export default {
@@ -160,7 +178,9 @@ export default {
         CID_MAP_LAYER_VECTOR_WFS_VW_SITES: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES,
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
-        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2
+        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
+        WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
+        WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY
     }
 };
 </script>

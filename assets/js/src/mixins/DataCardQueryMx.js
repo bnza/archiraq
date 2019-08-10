@@ -5,7 +5,7 @@ export default {
         QueryMx
     ],
     props: {
-        typename  : {
+        queryTypename  : {
             type: String,
             required: true
         },
@@ -13,15 +13,15 @@ export default {
     computed: {
         pagination: {
             get() {
-                return this.getPagination(this.typename);
+                return this.getPagination(this.queryTypename);
             },
             set(pagination) {
-                this.setPagination({typename: this.typename, pagination: pagination});
+                this.setPagination({typename: this.queryTypename, pagination: pagination});
             }
         },
         filter: {
             get() {
-                return this.getQueryFilter(this.typename);
+                return this.getQueryFilter(this.queryTypename);
             },
             set(filter) {
                 this.setQueryFilter(filter);

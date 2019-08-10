@@ -6,16 +6,11 @@ export default {
     mixins: [
         DataCardMx
     ],
-    computed: {
-        limitTypeName() {
-            return this.typename;
-        }
-    },
     methods: {
         getUrl() {
             return this.$store.state.geoserver.baseUrl + 'wfs?' +
                 getFeatureQueryString({
-                    typename: this.limitTypeName,
+                    typename: this.typename,
                     filter: this.filter,
                     pagination: this.pagination
                 });

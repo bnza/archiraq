@@ -13,7 +13,9 @@
                 offset-xs1
                 offset-lg2
             >
-                <h3>Job <span class="indigo--text text--darken-2">{{ id }}</span> status</h3>
+                <h3 data-test="statusJobRow">
+                    Job <span class="indigo--text text--darken-2">{{ id }}</span> status
+                </h3>
             </v-flex>
         </v-layout>
         <job-status-refresher :id="id" />

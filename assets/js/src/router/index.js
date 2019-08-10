@@ -11,7 +11,7 @@ import DataCardContainer from '@/components/DataCard/DataCardContainer';
 import MapToolbarButtons from '@/components/MapToolbarButtons';
 import MapFooterData from '@/components/MapFooterData';
 import MapDrawerEntries from '@/components/MapDrawerEntries';
-import {QUERY_TYPENAME_VW_SITES} from '@/utils/cids';
+import {QUERY_TYPENAME_VW_SITES, QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS} from '@/utils/cids';
 import {displaySnackbarFn} from '@/mixins/SnackbarComponentStoreMx';
 import {ROLE_GUEST, ROLE_USER, ROLE_EDITOR, ROLE_ADMIN} from '@/store/auth';
 import {isAuthenticated} from '@/store/auth/getters';
@@ -46,7 +46,7 @@ Vue.use(Router);
 
 export const dataTableRoutes = [
     {
-        path: `:typename(${QUERY_TYPENAME_VW_SITES})/:action(list)`,
+        path: `:queryTypename(${QUERY_TYPENAME_VW_SITES_SURVEY}|${QUERY_TYPENAME_VW_SITES_RS})/:action(list)`,
         name: 'map_data_vw-site_list',
         components: {
             default: DataCardContainer

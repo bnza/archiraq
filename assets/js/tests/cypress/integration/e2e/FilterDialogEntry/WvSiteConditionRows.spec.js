@@ -167,7 +167,7 @@ const conditionInputs = {
 context('<VwSiteConditionRows>', () => {
     beforeEach(() => {
         cy.setUpFunctionalTestRoutes();
-        cy.visit('http://archiraq.local/#/map/data/vw-site/list#data-table');
+        cy.visit('http://archiraq.local/#/map/data/vw-site-survey/list#data-table');
         setAliases();
     });
 
@@ -216,7 +216,7 @@ context('<VwSiteConditionRows>', () => {
         }
         cy.get('@dialog').find(getDataTestSelector('submit')).click();
         cy.visit('http://archiraq.local/#/map');
-        cy.visit('http://archiraq.local/#/map/data/vw-site/list#data-table');
+        cy.visit('http://archiraq.local/#/map/data/vw-site-survey/list#data-table');
         openDialog();
         for (let conditionKey in conditionInputs) {
             testConditionValues(conditionKey, 'displayValue');
