@@ -98,6 +98,13 @@ ALTER SCHEMA "geom" OWNER TO "test_archiraq_admin";
 
 
 
+
+
+
+
+
+
+
 CREATE SCHEMA "tmp";
 
 
@@ -108,6 +115,12 @@ CREATE SCHEMA "voc";
 
 
 ALTER SCHEMA "voc" OWNER TO "test_archiraq_admin";
+
+
+
+
+
+
 
 
 
@@ -190,7 +203,9 @@ ALTER FUNCTION "geom"."tf___insert_into_geom_mat_site"() OWNER TO "test_archiraq
 CREATE FUNCTION "geom"."tf___update_geom_mat_site"() RETURNS "trigger"
     LANGUAGE "plpgsql"
     AS $$BEGIN
-	PERFORM geom.update_mat_site_by_index(NEW.id, OLD.id);
+	DELETE FROM geom.mat_site WHERE id = OLD.id;
+	DELETE FROM geom.mat_site WHERE id = NEW.id;
+	INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(NEW.id);
 	RETURN NEW;
 END$$;
 
@@ -198,14 +213,32 @@ END$$;
 ALTER FUNCTION "geom"."tf___update_geom_mat_site"() OWNER TO "test_archiraq_admin";
 
 
+CREATE FUNCTION "geom"."tf___update_geom_mat_site___geom"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    AS $$BEGIN
+	IF TG_OP <> 'INSERT' THEN
+		DELETE FROM geom.mat_site WHERE id = OLD.id;
+	END IF;
+	IF TG_OP <> 'DELETE' THEN
+		DELETE FROM geom.mat_site WHERE id = NEW.id;
+		INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(NEW.id);
+	END IF;
+	RETURN NEW;
+END$$;
+
+
+ALTER FUNCTION "geom"."tf___update_geom_mat_site___geom"() OWNER TO "test_archiraq_admin";
+
+
 CREATE FUNCTION "geom"."tf___update_geom_mat_site_child"() RETURNS "trigger"
     LANGUAGE "plpgsql"
     AS $$BEGIN
-	IF NOT NEW.site_id IS NULL THEN
-		PERFORM geom.update_mat_site_by_index(NEW.site_id, NEW.site_id);
+	IF TG_OP <> 'INSERT' THEN
+		DELETE FROM geom.mat_site WHERE id = OLD.site_id;
 	END IF;
-	IF (OLD.site_id IS NOT NULL AND OLD.site_id IS DISTINCT FROM NEW.site_id) THEN
-		PERFORM geom.update_mat_site_by_index(OLD.site_id, OLD.site_id);
+	IF TG_OP <> 'DELETE' THEN
+		DELETE FROM geom.mat_site WHERE id = NEW.site_id;
+		INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(NEW.site_id);
 	END IF;
 	RETURN NEW;
 END$$;
@@ -1203,7 +1236,7 @@ CREATE OR REPLACE VIEW "public"."vw_site" AS
 
 
 
-CREATE TRIGGER "tr_aud___update_geom_mat_site___geom" AFTER INSERT OR DELETE OR UPDATE ON "geom"."site" FOR EACH ROW EXECUTE PROCEDURE "geom"."tf___update_geom_mat_site"();
+CREATE TRIGGER "tr_aud___update_geom_mat_site___geom" AFTER INSERT OR DELETE OR UPDATE ON "geom"."site" FOR EACH ROW EXECUTE PROCEDURE "geom"."tf___update_geom_mat_site___geom"();
 
 
 
@@ -1284,6 +1317,10 @@ ALTER TABLE ONLY "tmp"."draft"
 
 ALTER TABLE ONLY "tmp"."draft_error"
     ADD CONSTRAINT "fk___tmp__draft_error___tmp__draft" FOREIGN KEY ("draft_id") REFERENCES "tmp"."draft"("id") MATCH FULL ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+GRANT ALL ON SCHEMA "public" TO PUBLIC;
 
 
 
