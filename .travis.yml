@@ -17,6 +17,7 @@ addons:
         packages:
 #            -   postgresql-11
 #            -   postgresql-client-11
+            -   postgis
             -   postgresql-10-postgis-2.5
             -   postgresql-10-postgis-2.5-scripts
 
