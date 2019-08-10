@@ -1,35 +1,44 @@
 dist: bionic
 
-#services:
-#    - postgresql
+env:
+    global:
+        - PGPORT=5433
 
-#addons:
-    #postgresql: "11"
-#    apt:
-#        update: true
-#        packages:
-#            -   postgis
-#            -   postgresql-11-postgis-2.5
+services:
+    - postgresql
+
+addons:
+    postgresql: "11"
+    apt:
+        sources:
+            -   sourceline: deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
+                key_url: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
+        update: true
+        packages:
+            -   postgresql-11
+            -   postgresql-client-11
+            -   postgresql-11-postgis-2.5
+            -   postgresql-11-postgis-2.5-scripts
 
 before_script:
-    - sudo service postgresql stop
-    - sudo apt-get --yes remove postgresql\*
-    - sudo apt-get install wget ca-certificates
-    - wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-    - sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
-    - sudo apt install -yq --no-install-suggests --no-install-recommends postgresql-11-postgis-2.5-scripts postgresql-11 postgresql-client-11 postgresql-11-postgis-2.5
-    - sed -e 's/^port.*/port = 5432/' /etc/postgresql/11/main/postgresql.conf > postgresql.conf
-    - sudo chown postgres postgresql.conf
-    - sudo mv postgresql.conf /etc/postgresql/11/main
+#    - sudo service postgresql stop
+#    - sudo apt-get --yes remove postgresql\*
+#    - sudo apt-get install wget ca-certificates
+#    - wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+#    - sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+#    - sudo apt install -yq --no-install-suggests --no-install-recommends postgresql-11-postgis-2.5-scripts postgresql-11 postgresql-client-11 postgresql-11-postgis-2.5
+#    - sed -e 's/^port.*/port = 5432/' /etc/postgresql/11/main/postgresql.conf > postgresql.conf
+#    - sudo chown postgres postgresql.conf
+#    - sudo mv postgresql.conf /etc/postgresql/11/main
 #    - sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
 #    - sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
-    - sudo echo 'local   all             all                                     trust' > pg_hba.conf
-    - sudo echo 'host    all             all             127.0.0.1/32            trust' >> pg_hba.conf
-    - sudo cp pg_hba.conf /etc/postgresql/11/main/pg_hba.conf
-    - sudo cat /etc/postgresql/11/main/pg_hba.conf
-    - sudo service postgresql start
-    - export PATH="/usr/lib/postgresql/11/bin:$PATH"
-    - psql -U postgres -f tests/assets/tdd/sql/su.sql
+#    - sudo echo 'local   all             all                                     trust' > pg_hba.conf
+#    - sudo echo 'host    all             all             127.0.0.1/32            trust' >> pg_hba.conf
+#    - sudo cp pg_hba.conf /etc/postgresql/11/main/pg_hba.conf
+#    - sudo cat /etc/postgresql/11/main/pg_hba.conf
+#    - sudo service postgresql start 11
+#    - export PATH="/usr/lib/postgresql/11/bin:$PATH"
+    - sudo -u postgres psql -f tests/assets/tdd/sql/su.sql
 
 matrix:
     fast_finish: true
