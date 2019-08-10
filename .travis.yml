@@ -3,6 +3,10 @@ dist: bionic
 services:
     - postgresql
 
+env:
+    global:
+        - PGPORT=5433
+
 addons:
     postgresql: "11"
     apt:
