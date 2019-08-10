@@ -3,58 +3,28 @@ dist: bionic
 services:
     - postgresql
 
-#env:
-#    global:
-#        - PGPORT=5433
-
 addons:
     postgresql: "10"
     apt:
-#        sources:
-#            -   sourceline: deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
-#                key_url: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
         update: true
         packages:
-#            -   postgresql-11
-#            -   postgresql-client-11
             -   postgis
             -   postgresql-10-postgis-2.5
             -   postgresql-10-postgis-2.5-scripts
 
 before_script:
-#    -  sudo cp tests/assets/tdd/sql/su.sql /tmp/su.sql
-#    -  sudo chown postgres /tmp/su.sql
-#    -  sudo -u postgres psql -f /tmp/su.sql
     -   psql -U postgres -f tests/assets/tdd/sql/su.sql
 
 matrix:
     fast_finish: true
     include:
-#        -   language: node_js
-#            sudo: false
-#            node_js:
-#                - "8"
-#            script:
-#                - NODE_ENV=test yarn test:unit
+        -   language: node_js
+            sudo: false
+            node_js:
+                - "8"
+            script:
+                - NODE_ENV=test yarn test:unit
 
-#        -   language: php
-#            sudo: false
-#            php:
-#                -   "7.1"
-#            cache:
-#                directories:
-#                    -   $HOME/.composer/cache/files
-#                    -   $HOME/symfony-bridge/.phpunit
-#            before_install:
-#                -   echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-#                -   if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-#                -   if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
-#                -   if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
-#            install:
-#                -   COMPOSER_MEMORY_LIMIT=-1 composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
-#            script:
-#                -   bin/phpunit -v $PHPUNIT_FLAGS
-#
         -   language: php
             sudo: false
             php:
@@ -73,42 +43,22 @@ matrix:
             script:
                 - bin/phpunit -v $PHPUNIT_FLAGS
 
-#        -   language: php
-#            sudo: false
-#            php:
-#                - "7.2"
-#            env:
-#                - COVERAGE=true PHPUNIT_FLAGS="--coverage-text"
-#            cache:
-#                directories:
-#                    - $HOME/.composer/cache/files
-#                    - $HOME/symfony-bridge/.phpunit
-#            before_install:
-#                - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-#                - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-#                - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
-#                - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
-#            install:
-#                - COMPOSER_MEMORY_LIMIT=-1 composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
-#            script:
-#                - bin/phpunit -v $PHPUNIT_FLAGS
-
-#        -   language: php
-#            sudo: false
-#            php:
-#                - "7.2"
-#            env:
-#                - COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
-#            cache:
-#                directories:
-#                    - $HOME/.composer/cache/files
-#                    - $HOME/symfony-bridge/.phpunit
-#            before_install:
-#                - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-#                - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-#                - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
-#                - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
-#            install:
-#                - COMPOSER_MEMORY_LIMIT=-1 composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
-#            script:
-#                - bin/phpunit -v $PHPUNIT_FLAGS
+        -   language: php
+            sudo: false
+            php:
+                - "7.2"
+            env:
+                - COVERAGE=true PHPUNIT_FLAGS="--coverage-text"
+            cache:
+                directories:
+                    - $HOME/.composer/cache/files
+                    - $HOME/symfony-bridge/.phpunit
+            before_install:
+                - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+                - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+                - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
+                - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+            install:
+                - COMPOSER_MEMORY_LIMIT=-1 composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
+            script:
+                - bin/phpunit -v $PHPUNIT_FLAGS
