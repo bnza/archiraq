@@ -1,22 +1,66 @@
 <template>
     <div data-test="vw-site-table--condition-rows">
         <string-predicate-row
+            v-if="rowPredicateIsVisible('modernName')"
+            class="predicate-row"
             data-test="modernName"
             :predicate-p="conditions.modernName"
             predicate-key="modernName"
             predicate-attribute-label="Modern Name"
             @change="setCondition"
         />
+        <string-predicate-row
+            v-if="rowPredicateIsVisible('ancientName')"
+            class="predicate-row"
+            data-test="ancientName"
+            :predicate-p="conditions.ancientName"
+            predicate-key="ancientName"
+            predicate-attribute-label="Ancient Name"
+            @change="setCondition"
+        />
+        <string-predicate-row
+            v-if="rowPredicateIsVisible('nearestCity')"
+            class="predicate-row"
+            data-test="nearestCity"
+            :predicate-p="conditions.nearestCity"
+            predicate-key="nearestCity"
+            predicate-attribute-label="Nearest City"
+            @change="setCondition"
+        />
         <vw-site-district-predicate-row
+            v-if="rowPredicateIsVisible('district')"
+            class="predicate-row"
             data-test="district"
             :predicate-p="conditions.district"
             predicate-key="district"
             @change="setCondition"
         />
         <vw-site-chronology-predicate-row
+            v-if="rowPredicateIsVisible('chronology')"
+            class="predicate-row"
             data-test="chronology"
             :predicate-p="conditions.chronology"
             predicate-key="chronology"
+            @change="setCondition"
+        />
+        <string-multiple-predicate-row
+            v-if="rowPredicateIsVisible('features')"
+            class="predicate-row"
+            data-test="features"
+            :predicate-p="conditions.features"
+            predicate-key="features"
+            :values="siteFeatures"
+            predicate-attribute-label="Features"
+            @change="setCondition"
+        />
+        <string-multiple-predicate-row
+            v-if="rowPredicateIsVisible('threats')"
+            class="predicate-row"
+            data-test="threats"
+            :predicate-p="conditions.threats"
+            predicate-key="threats"
+            :values="siteThreats"
+            predicate-attribute-label="Threats"
             @change="setCondition"
         />
     </div>
@@ -24,11 +68,22 @@
 
 <script>
 import StringPredicateRow from '@/components/DataCard/FilterDialogEntry/StringPredicateRow';
+import StringMultiplePredicateRow from '@/components/DataCard/FilterDialogEntry/StringMultiplePredicateRow';
 import VwSiteChronologyPredicateRow from '@/components/DataCard/FilterDialogEntry/VwSiteChronologyPredicateRow';
 import VwSiteDistrictPredicateRow from '@/components/DataCard/FilterDialogEntry/VwSiteDistrictPredicateRow';
 import ConditionMx from '@/mixins/CQL/ConditionMx';
 import QueryMx from '@/mixins/QueryMx';
+import {QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS} from '@/utils/cids';
 
+const predicateRowsVisibility = {
+    chronology: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
+    district: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
+    modernName: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
+    ancientName: [QUERY_TYPENAME_VW_SITES_SURVEY],
+    nearestCity: [QUERY_TYPENAME_VW_SITES_SURVEY],
+    threats: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
+    features: [QUERY_TYPENAME_VW_SITES_SURVEY],
+};
 
 const defaultConditions = () => {
     return {
@@ -46,6 +101,26 @@ const defaultConditions = () => {
             negate: false,
             expressions: ['modern_name'],
             operator: ''
+        },
+        ancientName: {
+            negate: false,
+            expressions: ['ancient_name'],
+            operator: ''
+        },
+        nearestCity: {
+            negate: false,
+            expressions: ['nearest_city'],
+            operator: ''
+        },
+        features: {
+            negate: false,
+            expressions: ['features'],
+            operator: 'MultipleIsInsensitiveLikeFilter'
+        },
+        threats: {
+            negate: false,
+            expressions: ['threats'],
+            operator: 'MultipleIsInsensitiveLikeFilter'
         }
     };
 };
@@ -53,6 +128,7 @@ const defaultConditions = () => {
 export default {
     name: 'VwSiteConditionRows',
     components: {
+        StringMultiplePredicateRow,
         VwSiteChronologyPredicateRow,
         VwSiteDistrictPredicateRow,
         StringPredicateRow,
@@ -73,6 +149,22 @@ export default {
     computed: {
         queryTypename() {
             return this.modalProps.queryTypename;
+        },
+        siteFeatures() {
+            return [
+                {text: 'ancient structures', value: 'structures'},
+                {text: 'epigraphic', value: 'epigraphic'},
+                {text: 'paleochannels', value: 'paleochannels'}
+            ];
+        },
+        siteThreats() {
+            return [
+                {text: 'cultivation', value: 'cultivation'},
+                {text: 'dunes', value: 'dunes'},
+                {text: 'looting', value: 'looting'},
+                {text: 'modern canals', value: 'canals'},
+                {text: 'modern structures', value: 'structures'}
+            ];
         }
     },
     created() {
@@ -81,6 +173,9 @@ export default {
         this.conditions = conditions;
     },
     methods: {
+        rowPredicateIsVisible(key) {
+            return predicateRowsVisibility[key].indexOf(this.queryTypename) > -1;
+        },
         submit() {
             this.setQueryConditions(this.conditions);
             this.setQueryFilter(this.getAndConditionsFilter());
@@ -93,3 +188,9 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+    >>> .predicate-row {
+        margin: -0.75rem auto !important;
+    }
+</style>

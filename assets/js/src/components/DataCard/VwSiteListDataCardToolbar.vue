@@ -5,7 +5,7 @@
             @zoomToLayer="zoomToLayer"
         />
 
-        <v-toolbar-title>Site</v-toolbar-title>
+        <v-toolbar-title>{{title}}</v-toolbar-title>
     </v-fragment>
 </template>
 
@@ -13,6 +13,7 @@
 import {Fragment as VFragment} from 'vue-fragment';
 import VwSiteTableActionMenu from './ListRowMenu/VwSiteTableActionMenu';
 import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
+import {WFS_TYPENAME_VW_SITES_SURVEY, WFS_TYPENAME_VW_SITES_RS} from '@/utils/cids';
 
 export default {
     name: 'VwSiteDataCardToolbar',
@@ -27,6 +28,15 @@ export default {
         layerId: {
             type: String,
             required: true
+        }
+    },
+    computed: {
+        title() {
+            const titles = {
+                [WFS_TYPENAME_VW_SITES_SURVEY]: 'Sites (survey)',
+                [WFS_TYPENAME_VW_SITES_RS]: 'Sites (remote sensing)',
+            };
+            return titles[this.layerId] || 'Sites';
         }
     },
     methods: {

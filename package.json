@@ -39,6 +39,7 @@
         "build": "encore production --progress",
         "test-watch": "jest assets/js/tests/unit/*.spec.js --watchAll",
         "test:unit": "jest",
+        "test:unit:coverage": "jest --coverage",
         "test:integration": "cypress run --spec \"assets/js/tests/cypress/integration/integration**/*\"",
         "test:e2e": "cypress run --spec \"assets/js/tests/cypress/integration/e2e/**\"",
         "test:e2e:open": "cypress open"

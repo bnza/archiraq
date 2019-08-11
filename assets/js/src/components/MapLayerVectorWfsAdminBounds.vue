@@ -7,7 +7,7 @@ export default {
     computed: {
         visible: {
             get() {
-                return !!this.cid && this.cid === this.mapContainerAdminBounds;
+                return  this.mapContainerAdminBounds === this.cid;
             },
             set(value) {
                 let currentAdminBoundsLayer;

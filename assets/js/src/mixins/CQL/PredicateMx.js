@@ -9,10 +9,6 @@ const defaultPredicate = () => {
     };
 };
 
-const setPredicateFromProp = (vm, predicate) => {
-
-};
-
 /**
  * @see https://docs.geoserver.org/stable/en/user/filter/ecql_reference.html
  */

@@ -20,7 +20,18 @@
             />
         </v-flex>
         <v-flex xs4>
-            <slot name="select" />
+            <slot name="select">
+                <v-autocomplete
+                    ref="select"
+                    :value="predicate.expressions[1]"
+                    :attach="true"
+                    :items="values"
+                    item-text="text"
+                    item-value="value"
+                    multiple
+                    @input="setPredicateExpression"
+                />
+            </slot>
         </v-flex>
     </predicate-row-layout>
 </template>
@@ -41,6 +52,14 @@ export default {
     mixins: [
         PredicateMx
     ],
+    props: {
+        values: {
+            type: Array,
+            default() {
+                return [];
+            }
+        }
+    },
     created() {
         this.setPredicateOperator(this.predicate.operator);
     },

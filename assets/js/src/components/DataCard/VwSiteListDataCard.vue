@@ -40,143 +40,7 @@ import VwSiteListDataCardTable from './VwSiteListDataCardTable';
 import DataCardDynamicModalMx from '@/mixins/DataCardDynamicModalMx';
 import WfsDataCardMx from '@/mixins/WfsDataCardMx';
 
-import {CID_VW_SITE_LIST_DATA_CARD as CID, HEADERS_VW_SITE_LIST_DATA_CARD_TABLE, QUERY_TYPENAME_VW_SITES_RS, QUERY_TYPENAME_VW_SITES_SURVEY} from '@/utils/cids';
-
-
-/*export const headers = {
-    [QUERY_TYPENAME_VW_SITES_SURVEY]: [
-        {
-            text: 'id',
-            value: 'id'
-        },
-        {
-            text: 'SBAH (no)',
-            value: 'sbah_no'
-        },
-        {
-            text: 'cadastre',
-            value: 'cadastre'
-        },
-        {
-            text: 'modern name',
-            value: 'modern_name'
-        },
-        {
-            text: 'nearest city',
-            value: 'nearest_city'
-        },
-        {
-            text: 'ancient name',
-            value: 'ancient_name'
-        },
-        {
-            text: 'district',
-            value: 'district'
-        },
-        {
-            text: 'governorate',
-            value: 'governorate'
-        },
-        {
-            text: 'nation',
-            value: 'nation'
-        },
-        {
-            text: 'chronology',
-            value: 'chronology'
-        },
-        {
-            text: 'surveys',
-            value: 'survey_refs'
-        },
-        {
-            text: 'threats',
-            value: 'threats'
-        },
-        {
-            text: 'features',
-            value: 'features'
-        },
-        {
-            text: 'E',
-            value: 'e'
-        },
-        {
-            text: 'N',
-            value: 'n'
-        },
-        {
-            text: 'length (m)',
-            value: 'length'
-        },
-        {
-            text: 'width (m)',
-            value: 'width'
-        },
-        {
-            text: 'area (ha)',
-            value: 'area'
-        },
-        {
-            text: 'remarks',
-            value: 'remarks'
-        },
-    ],
-    [QUERY_TYPENAME_VW_SITES_RS]: [
-        {
-            text: 'id',
-            value: 'id'
-        },
-        {
-            text: 'modern name',
-            value: 'modern_name'
-        },
-        {
-            text: 'ancient name',
-            value: 'ancient_name'
-        },
-        {
-            text: 'district',
-            value: 'district'
-        },
-        {
-            text: 'governorate',
-            value: 'governorate'
-        },
-        {
-            text: 'nation',
-            value: 'nation'
-        },
-        {
-            text: 'threats',
-            value: 'threats'
-        },
-        {
-            text: 'E',
-            value: 'e'
-        },
-        {
-            text: 'N',
-            value: 'n'
-        },
-        {
-            text: 'length (m)',
-            value: 'length'
-        },
-        {
-            text: 'width (m)',
-            value: 'width'
-        },
-        {
-            text: 'area (ha)',
-            value: 'area'
-        },
-        {
-            text: 'remarks',
-            value: 'remarks'
-        },
-    ]
-};*/
+import {CID_VW_SITE_LIST_DATA_CARD as CID, HEADERS_VW_SITE_LIST_DATA_CARD_TABLE} from '@/utils/cids';
 
 export default {
     name: CID,
@@ -208,7 +72,6 @@ export default {
     data() {
         return {
             cid: CID,
-            headers: HEADERS_VW_SITE_LIST_DATA_CARD_TABLE[this.queryTypename],
         };
     },
     computed: {
@@ -222,15 +85,18 @@ export default {
         typename() {
             return `archiraq:${this.baseTypename}_poly`;
         },
+        headers() {
+            return  HEADERS_VW_SITE_LIST_DATA_CARD_TABLE[this.queryTypename];
+        },
         modalProps() {
             const modalProps = {
                 filter: {
                     typename: this.typename,
-                    queryTypename: this.queryTypename
+                    queryTypename: this.queryTypename,
                 },
                 export: {
                     typename: this.typename,
-                    queryTypename: this.queryTypename
+                    queryTypename: this.queryTypename,
                 }
             };
             return modalProps.hasOwnProperty(this.modalComponentType) ? modalProps[this.modalComponentType] : {};

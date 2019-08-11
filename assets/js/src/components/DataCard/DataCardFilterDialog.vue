@@ -1,6 +1,7 @@
 <template>
     <v-dialog
         v-model="isDialogActive"
+        fullscreen
     >
         <v-toolbar>
             <v-toolbar-title flat>
@@ -32,6 +33,14 @@
                     @click="$emit('action', {method: 'submit'})"
                 >
                     Submit
+                </v-btn>
+                <v-btn
+                    data-test="close"
+                    flat
+                    color="primary"
+                    @click="isDialogActive = false"
+                >
+                    Close
                 </v-btn>
             </v-card-actions>
         </v-card>
