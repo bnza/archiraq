@@ -46,10 +46,7 @@ Encore
 
     // enables Sass/SCSS support
     .enableSassLoader()
-/*    .addLoader({
-        test: /\.styl$/,
-        loader: 'style-loader!css-loader!stylus-loader'
-    })*/
+
 
 // uncomment if you use TypeScript
 //.enableTypeScriptLoader()

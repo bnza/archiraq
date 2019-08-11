@@ -70,12 +70,12 @@ export const HEADERS_VW_SITE_LIST_DATA_CARD_TABLE = {
             value: 'survey_refs'
         },
         {
-            text: 'threats',
-            value: 'threats'
-        },
-        {
             text: 'features',
             value: 'features'
+        },
+        {
+            text: 'threats',
+            value: 'threats'
         },
         {
             text: 'E',
