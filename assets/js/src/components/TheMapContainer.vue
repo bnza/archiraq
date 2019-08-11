@@ -43,12 +43,16 @@
             <map-layer-group-admin-bounds />
             <map-layer-vector-wfs-vw-sites
                 ref="layerVwSite"
+                :cid-p="WFS_TYPENAME_VW_SITES_SURVEY"
                 :base-typename="WFS_TYPENAME_VW_SITES_SURVEY"
+                feature-color="#EF6C00"
                 :zoom="zoom"
             />
             <map-layer-vector-wfs-vw-sites
                 ref="layerVwSiteRs"
+                :cid-p="WFS_TYPENAME_VW_SITES_RS"
                 :base-typename="WFS_TYPENAME_VW_SITES_RS"
+                feature-color="#8E24AA"
                 :zoom="zoom"
             />
             <the-map-layers-drawer />
@@ -68,11 +72,8 @@ import VlSourceEsri from './VlSourceEsri';
 import {
     CID_THE_MAP_CONTAINER as CID,
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
-    CID_MAP_LAYER_VECTOR_WFS_VW_SITES,
     WFS_TYPENAME_VW_SITES_SURVEY,
     WFS_TYPENAME_VW_SITES_RS,
-    QUERY_TYPENAME_VW_SITES_RS,
-    QUERY_TYPENAME_VW_SITES_SURVEY
 } from '../utils/cids';
 import {callObjectMethod} from '../utils/utils';
 
@@ -127,7 +128,7 @@ export default {
     created() {
         this.mapContainerHeight = HEIGHT;
         this.mapContainerAdminBounds = CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2;
-        this.mapContainerCurrentLayer = CID_MAP_LAYER_VECTOR_WFS_VW_SITES;
+        this.mapContainerCurrentLayer = WFS_TYPENAME_VW_SITES_SURVEY;
         this.mapContainerPointerCoords = center;
         this.mapContainerBaseMap = 'bing';
         this.mapContainerBingImagerySet = 'AerialWithLabels';

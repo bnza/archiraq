@@ -13,7 +13,6 @@
 import {Fragment as VFragment} from 'vue-fragment';
 import VwSiteTableActionMenu from './ListRowMenu/VwSiteTableActionMenu';
 import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
-import {CID_MAP_LAYER_VECTOR_WFS_VW_SITES} from '@/utils/cids';
 
 export default {
     name: 'VwSiteDataCardToolbar',
@@ -24,9 +23,15 @@ export default {
     mixins: [
         MapContainerComponentStoreMx
     ],
+    props: {
+        layerId: {
+            type: String,
+            required: true
+        }
+    },
     methods: {
         zoomToLayer() {
-            this.mapContainerCallMethod('zoomToLayer', CID_MAP_LAYER_VECTOR_WFS_VW_SITES);
+            this.mapContainerCallMethod('zoomToLayer', this.layerId);
         }
     }
 };

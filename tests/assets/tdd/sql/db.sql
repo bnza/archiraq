@@ -131,6 +131,21 @@ ALTER SCHEMA "voc" OWNER TO "test_archiraq_admin";
 
 
 
+
+CREATE FUNCTION "geom"."refresh_mat_site"() RETURNS "void"
+    LANGUAGE "plpgsql"
+    AS $$DECLARE
+    id integer;
+BEGIN
+	TRUNCATE geom.mat_site;
+	FOR id IN SELECT * FROM public.vw_site ORDER BY id LOOP
+		INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(id);
+	END LOOP;
+END;$$;
+
+
+ALTER FUNCTION "geom"."refresh_mat_site"() OWNER TO "test_archiraq_admin";
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -538,7 +553,6 @@ CREATE TABLE "geom"."site" (
 
 
 ALTER TABLE "geom"."site" OWNER TO "test_archiraq_admin";
-
 
 CREATE VIEW "geom"."vw_site_point" AS
  SELECT "ws"."id",
@@ -1188,7 +1202,7 @@ CREATE INDEX "idx___geom__mat_site___remote_sensing" ON "geom"."mat_site" USING 
 
 
 
-CREATE OR REPLACE VIEW "public"."vw_site" AS
+CREATE OR REPLACE VIEW "public"."vw_site" WITH ("security_barrier"='false') AS
  WITH "oriented_envelop_sides" AS (
          SELECT "site"."id",
             "public"."orientedenvelopesides"("site"."geom") AS "sides"
@@ -1219,7 +1233,7 @@ CREATE OR REPLACE VIEW "public"."vw_site" AS
     "s"."remarks",
     "round"(("public"."st_x"("public"."st_centroid"("gs"."geom")))::numeric, 7) AS "e",
     "round"(("public"."st_y"("public"."st_centroid"("gs"."geom")))::numeric, 7) AS "n",
-    "round"(("public"."st_area"(("gs"."geom")::"public"."geography"))::numeric, 2) AS "area",
+    "round"((("public"."st_area"(("gs"."geom")::"public"."geography") / (10000)::double precision))::numeric, 3) AS "area",
     "round"(("oes"."sides"[1])::numeric, 2) AS "length",
     "round"(("oes"."sides"[2])::numeric, 2) AS "width"
    FROM ((((((((("public"."site" "s"

@@ -94,28 +94,6 @@ export const arrayHasIndex = (arr, idx) => {
 };
 
 /**
- * Downloads URI as an attachment
- * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a
- * @param {String} uri - The resource URI
- * @param {String} filename - The "download" <a> attribute value
- * @param {HTMLElement} el - The element where to append the temporary <a>
- */
-export const downloadAttachment = (uri, filename='', el=null) => {
-    el = el || document.body;
-    const a = document.createElement('a');
-    a.setAttribute('href', uri);
-    a.setAttribute('download', filename);
-    a.setAttribute('target', '_blank');
-
-    a.style.display = 'none';
-    el.appendChild(a);
-
-    a.click();
-
-    el.removeChild(a);
-};
-
-/**
  * Returns the human readable text status
  * @param status
  * @return {string}
@@ -172,6 +150,10 @@ export const getStatusColor = (status) => {
     return color;
 };
 
+const getProgressPercentageFloat = (runnable) => {
+    return runnable.currentStepNum / runnable.stepsNum * 100;
+};
+
 /**
  * Return the runnable (job, task) progress percentage
  * @param runnable
@@ -179,7 +161,7 @@ export const getStatusColor = (status) => {
  * @return {string}
  */
 export const getProgressPercentage = (runnable, precision = 2) => {
-    return Math.floor( runnable.currentStepNum / runnable.stepsNum * 100).toFixed(precision);
+    return getProgressPercentageFloat(runnable).toFixed(precision);
 };
 
 /**
@@ -189,9 +171,9 @@ export const getProgressPercentage = (runnable, precision = 2) => {
  * @return {string}
  */
 export const getJobProgressPercentage = (job, precision = 2) => {
-    if (job.status.isSuccessful) {
-        return '100.00';
+    if (job.hasOwnProperty('status') && job.status.isSuccessful) {
+        return (100).toFixed(precision);
     }
-    let currentTaskProgress = parseFloat(getProgressPercentage(job.tasks[job.currentStepNum]))/job.stepsNum;
-    return (parseFloat(getProgressPercentage(job, precision)) + currentTaskProgress).toFixed();
+    let currentTaskProgress = getProgressPercentageFloat(job.tasks[job.currentStepNum])/job.stepsNum;
+    return (getProgressPercentageFloat(job) + currentTaskProgress).toFixed(precision);
 };

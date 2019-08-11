@@ -1,5 +1,5 @@
 import {getFilterString} from '@/utils/WFS/cql';
-import {and, not, like, equalTo} from 'ol/format/filter';
+import {and, not, like, equalTo, or} from 'ol/format/filter';
 
 describe('getFilterString', () => {
     it('And', () => {
@@ -24,5 +24,11 @@ describe('getFilterString', () => {
     it('PropertyIsLike (case insensitive)', () => {
         const filter = like('propertyName', 'value', null, null, null, false);
         expect(getFilterString(filter)).toEqual('propertyName ILIKE \'value\'');
+    });
+    it('Or', () => {
+        const equalTo1 = equalTo('propertyName', 'value');
+        const like1 = equalTo('propertyName', 'value');
+        const filter = or(equalTo1, like1);
+        expect(getFilterString(filter)).toEqual('propertyName = \'value\' OR propertyName = \'value\'');
     });
 });

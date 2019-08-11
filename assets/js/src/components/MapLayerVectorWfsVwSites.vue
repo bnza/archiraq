@@ -12,10 +12,10 @@
                         :width="1"
                         color="white"
                     />
-                    <vl-style-fill color="rgb(255,152,0.5)" />
+                    <vl-style-fill :color="featureColor" />
                 </vl-style-circle>
                 <vl-style-stroke
-                    color="#FF9800"
+                    :color="featureColor"
                     :width="3"
                 />
                 <vl-style-fill color="rgba(255,255,255,0.5)" />
@@ -50,6 +50,10 @@ export default {
         QueryMx
     ],
     props: {
+        featureColor: {
+            type: String,
+            required: true
+        },
         baseTypenamePrefix: {
             type: String,
             default: 'archiraq'
@@ -69,7 +73,6 @@ export default {
         };
     },
     computed: {
-        CID: () => CID,
         queryTypename() {
             return kebabCase(this.baseTypename);
         },

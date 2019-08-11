@@ -1,8 +1,8 @@
-import DataCardQueryMx from './DataCardQueryMx';
+import DataCardTableRowMx from './DataCardTableRowMx';
 
 export default {
     mixins: [
-        DataCardQueryMx
+        DataCardTableRowMx
     ],
     props: {
         totalItems: {
@@ -15,16 +15,9 @@ export default {
                 return [];
             }
         },
-        headers: {
-            type: Array,
-            default() {
-                return [];
-            }
-        },
         isRequestPending: {
             type: Boolean,
             default: false
         }
-    },
-
+    }
 };

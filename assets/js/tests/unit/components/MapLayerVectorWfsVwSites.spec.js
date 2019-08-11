@@ -14,6 +14,7 @@ beforeEach(() => {
             }
         },
         propsData: {
+            featureColor: 'white',
             zoom: 6,
             baseTypename: 'some_wfs_site',
             baseTypenamePrefix: 'pfx'

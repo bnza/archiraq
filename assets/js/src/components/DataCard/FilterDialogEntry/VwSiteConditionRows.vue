@@ -28,7 +28,6 @@ import VwSiteChronologyPredicateRow from '@/components/DataCard/FilterDialogEntr
 import VwSiteDistrictPredicateRow from '@/components/DataCard/FilterDialogEntry/VwSiteDistrictPredicateRow';
 import ConditionMx from '@/mixins/CQL/ConditionMx';
 import QueryMx from '@/mixins/QueryMx';
-import {QUERY_TYPENAME_VW_SITES} from '@/utils/cids';
 
 
 const defaultConditions = () => {

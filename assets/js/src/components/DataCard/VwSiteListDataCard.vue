@@ -2,6 +2,7 @@
     <data-card data-test="vw-site-table--data-card">
         <vw-site-list-data-card-toolbar
             slot="toolbar"
+            :layer-id="baseTypename"
             @openModal="openModal"
         />
         <vw-site-list-data-card-table
@@ -39,56 +40,143 @@ import VwSiteListDataCardTable from './VwSiteListDataCardTable';
 import DataCardDynamicModalMx from '@/mixins/DataCardDynamicModalMx';
 import WfsDataCardMx from '@/mixins/WfsDataCardMx';
 
-import {CID_VW_SITE_LIST_DATA_CARD as CID} from '@/utils/cids';
+import {CID_VW_SITE_LIST_DATA_CARD as CID, HEADERS_VW_SITE_LIST_DATA_CARD_TABLE, QUERY_TYPENAME_VW_SITES_RS, QUERY_TYPENAME_VW_SITES_SURVEY} from '@/utils/cids';
 
 
-const headers = [
-    {
-        text: 'id',
-        value: 'id'
-    },
-    {
-        text: 'SBAH (no)',
-        value: 'sbah_no'
-    },
-    {
-        text: 'modern name',
-        value: 'modern_name'
-    },
-    {
-        text: 'nearest city',
-        value: 'nearest_city'
-    },
-    {
-        text: 'ancient name',
-        value: 'ancient_name'
-    },
-    {
-        text: 'district',
-        value: 'district'
-    },
-    {
-        text: 'governorate',
-        value: 'governorate'
-    },
-    {
-        text: 'nation',
-        value: 'nation'
-    },
-    {
-        text: 'chronology',
-        value: 'chronology'
-    },
-    {
-        text: 'surveys',
-        value: 'surveyRefs'
-    },
-    {
-        text: 'area',
-        value: 'area'
-    },
-
-];
+/*export const headers = {
+    [QUERY_TYPENAME_VW_SITES_SURVEY]: [
+        {
+            text: 'id',
+            value: 'id'
+        },
+        {
+            text: 'SBAH (no)',
+            value: 'sbah_no'
+        },
+        {
+            text: 'cadastre',
+            value: 'cadastre'
+        },
+        {
+            text: 'modern name',
+            value: 'modern_name'
+        },
+        {
+            text: 'nearest city',
+            value: 'nearest_city'
+        },
+        {
+            text: 'ancient name',
+            value: 'ancient_name'
+        },
+        {
+            text: 'district',
+            value: 'district'
+        },
+        {
+            text: 'governorate',
+            value: 'governorate'
+        },
+        {
+            text: 'nation',
+            value: 'nation'
+        },
+        {
+            text: 'chronology',
+            value: 'chronology'
+        },
+        {
+            text: 'surveys',
+            value: 'survey_refs'
+        },
+        {
+            text: 'threats',
+            value: 'threats'
+        },
+        {
+            text: 'features',
+            value: 'features'
+        },
+        {
+            text: 'E',
+            value: 'e'
+        },
+        {
+            text: 'N',
+            value: 'n'
+        },
+        {
+            text: 'length (m)',
+            value: 'length'
+        },
+        {
+            text: 'width (m)',
+            value: 'width'
+        },
+        {
+            text: 'area (ha)',
+            value: 'area'
+        },
+        {
+            text: 'remarks',
+            value: 'remarks'
+        },
+    ],
+    [QUERY_TYPENAME_VW_SITES_RS]: [
+        {
+            text: 'id',
+            value: 'id'
+        },
+        {
+            text: 'modern name',
+            value: 'modern_name'
+        },
+        {
+            text: 'ancient name',
+            value: 'ancient_name'
+        },
+        {
+            text: 'district',
+            value: 'district'
+        },
+        {
+            text: 'governorate',
+            value: 'governorate'
+        },
+        {
+            text: 'nation',
+            value: 'nation'
+        },
+        {
+            text: 'threats',
+            value: 'threats'
+        },
+        {
+            text: 'E',
+            value: 'e'
+        },
+        {
+            text: 'N',
+            value: 'n'
+        },
+        {
+            text: 'length (m)',
+            value: 'length'
+        },
+        {
+            text: 'width (m)',
+            value: 'width'
+        },
+        {
+            text: 'area (ha)',
+            value: 'area'
+        },
+        {
+            text: 'remarks',
+            value: 'remarks'
+        },
+    ]
+};*/
 
 export default {
     name: CID,
@@ -120,13 +208,19 @@ export default {
     data() {
         return {
             cid: CID,
-            headers: headers,
+            headers: HEADERS_VW_SITE_LIST_DATA_CARD_TABLE[this.queryTypename],
         };
     },
     computed: {
+        /**
+         * Base typename: query name like string (e.g. "base_type_name") used as map layer id
+         * @return {string}
+         */
+        baseTypename() {
+            return snakeCase(this.queryTypename);
+        },
         typename() {
-            const typename = snakeCase(this.queryTypename);
-            return `archiraq:${typename}_poly`;
+            return `archiraq:${this.baseTypename}_poly`;
         },
         modalProps() {
             const modalProps = {

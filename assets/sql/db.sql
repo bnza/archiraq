@@ -101,6 +101,14 @@ COMMENT ON SCHEMA "geom" IS 'Geometry tables schema';
 
 
 
+
+
+
+
+COMMENT ON SCHEMA "public" IS 'standard public schema';
+
+
+
 CREATE SCHEMA "tmp";
 
 
@@ -121,6 +129,27 @@ COMMENT ON SCHEMA "voc" IS 'Vocabularies schema';
 
 
 
+
+
+
+
+
+
+
+
+CREATE FUNCTION "geom"."refresh_mat_site"() RETURNS "void"
+    LANGUAGE "plpgsql"
+    AS $$DECLARE
+    id integer;
+BEGIN
+	TRUNCATE geom.mat_site;
+	FOR id IN SELECT * FROM public.vw_site ORDER BY id LOOP
+		INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(id);
+	END LOOP;
+END;$$;
+
+
+ALTER FUNCTION "geom"."refresh_mat_site"() OWNER TO "archiraq_admin";
 
 SET default_tablespace = '';
 
@@ -194,7 +223,9 @@ ALTER FUNCTION "geom"."tf___insert_into_geom_mat_site"() OWNER TO "archiraq_admi
 CREATE FUNCTION "geom"."tf___update_geom_mat_site"() RETURNS "trigger"
     LANGUAGE "plpgsql"
     AS $$BEGIN
-	PERFORM geom.update_mat_site_by_index(NEW.id, OLD.id);
+	DELETE FROM geom.mat_site WHERE id = OLD.id;
+	DELETE FROM geom.mat_site WHERE id = NEW.id;
+	INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(NEW.id);
 	RETURN NEW;
 END$$;
 
@@ -202,14 +233,32 @@ END$$;
 ALTER FUNCTION "geom"."tf___update_geom_mat_site"() OWNER TO "archiraq_admin";
 
 
+CREATE FUNCTION "geom"."tf___update_geom_mat_site___geom"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    AS $$BEGIN
+	IF TG_OP <> 'INSERT' THEN
+		DELETE FROM geom.mat_site WHERE id = OLD.id;
+	END IF;
+	IF TG_OP <> 'DELETE' THEN
+		DELETE FROM geom.mat_site WHERE id = NEW.id;
+		INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(NEW.id);
+	END IF;
+	RETURN NEW;
+END$$;
+
+
+ALTER FUNCTION "geom"."tf___update_geom_mat_site___geom"() OWNER TO "archiraq_admin";
+
+
 CREATE FUNCTION "geom"."tf___update_geom_mat_site_child"() RETURNS "trigger"
     LANGUAGE "plpgsql"
     AS $$BEGIN
-	IF NOT NEW.site_id IS NULL THEN
-		PERFORM geom.update_mat_site_by_index(NEW.site_id, NEW.site_id);
+	IF TG_OP <> 'INSERT' THEN
+		DELETE FROM geom.mat_site WHERE id = OLD.site_id;
 	END IF;
-	IF (OLD.site_id IS NOT NULL AND OLD.site_id IS DISTINCT FROM NEW.site_id) THEN
-		PERFORM geom.update_mat_site_by_index(OLD.site_id, OLD.site_id);
+	IF TG_OP <> 'DELETE' THEN
+		DELETE FROM geom.mat_site WHERE id = NEW.site_id;
+		INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(NEW.site_id);
 	END IF;
 	RETURN NEW;
 END$$;
@@ -223,6 +272,7 @@ CREATE FUNCTION "geom"."update_mat_site_by_index"("new_site_id" integer, "old_si
     AS $$BEGIN
 	DELETE FROM geom.mat_site WHERE id = old_site_id;
 	IF EXISTS (SELECT FROM public.vw_site WHERE id = new_site_id) THEN
+		DELETE FROM geom.mat_site WHERE id = new_site_id;
 		INSERT INTO geom.mat_site SELECT * FROM geom.select_vw_site_by_index(new_site_id);
 	END IF;
 END;$$;
@@ -511,7 +561,6 @@ CREATE TABLE "geom"."site" (
 
 
 ALTER TABLE "geom"."site" OWNER TO "archiraq_admin";
-
 
 CREATE VIEW "geom"."vw_site_point" AS
  SELECT "ws"."id",
@@ -1163,7 +1212,7 @@ CREATE INDEX "idx___geom__mat_site___remote_sensing" ON "geom"."mat_site" USING 
 
 
 
-CREATE OR REPLACE VIEW "public"."vw_site" AS
+CREATE OR REPLACE VIEW "public"."vw_site" WITH ("security_barrier"='false') AS
  WITH "oriented_envelop_sides" AS (
          SELECT "site"."id",
             "public"."orientedenvelopesides"("site"."geom") AS "sides"
@@ -1194,7 +1243,7 @@ CREATE OR REPLACE VIEW "public"."vw_site" AS
     "s"."remarks",
     "round"(("public"."st_x"("public"."st_centroid"("gs"."geom")))::numeric, 7) AS "e",
     "round"(("public"."st_y"("public"."st_centroid"("gs"."geom")))::numeric, 7) AS "n",
-    "round"(("public"."st_area"(("gs"."geom")::"public"."geography"))::numeric, 2) AS "area",
+    "round"((("public"."st_area"(("gs"."geom")::"public"."geography") / (10000)::double precision))::numeric, 3) AS "area",
     "round"(("oes"."sides"[1])::numeric, 2) AS "length",
     "round"(("oes"."sides"[2])::numeric, 2) AS "width"
    FROM ((((((((("public"."site" "s"
@@ -1211,7 +1260,7 @@ CREATE OR REPLACE VIEW "public"."vw_site" AS
 
 
 
-CREATE TRIGGER "tr_aud___update_geom_mat_site___geom" AFTER INSERT OR DELETE OR UPDATE ON "geom"."site" FOR EACH ROW EXECUTE PROCEDURE "geom"."tf___update_geom_mat_site"();
+CREATE TRIGGER "tr_aud___update_geom_mat_site___geom" AFTER INSERT OR DELETE OR UPDATE ON "geom"."site" FOR EACH ROW EXECUTE PROCEDURE "geom"."tf___update_geom_mat_site___geom"();
 
 
 
@@ -1292,6 +1341,10 @@ ALTER TABLE ONLY "tmp"."draft"
 
 ALTER TABLE ONLY "tmp"."draft_error"
     ADD CONSTRAINT "fk___tmp__draft_error___tmp__draft" FOREIGN KEY ("draft_id") REFERENCES "tmp"."draft"("id") MATCH FULL ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+GRANT ALL ON SCHEMA "public" TO PUBLIC;
 
 
 

@@ -22,3 +22,138 @@ export const QUERY_TYPENAME_VW_SITES_RS = 'vw-site-rs';
 
 export const WFS_TYPENAME_VW_SITES_SURVEY = 'vw_site_survey';
 export const WFS_TYPENAME_VW_SITES_RS = 'vw_site_rs';
+
+export const HEADERS_VW_SITE_LIST_DATA_CARD_TABLE = {
+    [QUERY_TYPENAME_VW_SITES_SURVEY]: [
+        {
+            text: 'id',
+            value: 'id'
+        },
+        {
+            text: 'SBAH (no)',
+            value: 'sbah_no'
+        },
+        {
+            text: 'cadastre',
+            value: 'cadastre'
+        },
+        {
+            text: 'modern name',
+            value: 'modern_name'
+        },
+        {
+            text: 'nearest city',
+            value: 'nearest_city'
+        },
+        {
+            text: 'ancient name',
+            value: 'ancient_name'
+        },
+        {
+            text: 'district',
+            value: 'district'
+        },
+        {
+            text: 'governorate',
+            value: 'governorate'
+        },
+        {
+            text: 'nation',
+            value: 'nation'
+        },
+        {
+            text: 'chronology',
+            value: 'chronology'
+        },
+        {
+            text: 'surveys',
+            value: 'survey_refs'
+        },
+        {
+            text: 'threats',
+            value: 'threats'
+        },
+        {
+            text: 'features',
+            value: 'features'
+        },
+        {
+            text: 'E',
+            value: 'e'
+        },
+        {
+            text: 'N',
+            value: 'n'
+        },
+        {
+            text: 'length (m)',
+            value: 'length'
+        },
+        {
+            text: 'width (m)',
+            value: 'width'
+        },
+        {
+            text: 'area (ha)',
+            value: 'area'
+        },
+        {
+            text: 'remarks',
+            value: 'remarks'
+        },
+    ],
+    [QUERY_TYPENAME_VW_SITES_RS]: [
+        {
+            text: 'id',
+            value: 'id'
+        },
+        {
+            text: 'modern name',
+            value: 'modern_name'
+        },
+        {
+            text: 'ancient name',
+            value: 'ancient_name'
+        },
+        {
+            text: 'district',
+            value: 'district'
+        },
+        {
+            text: 'governorate',
+            value: 'governorate'
+        },
+        {
+            text: 'nation',
+            value: 'nation'
+        },
+        {
+            text: 'threats',
+            value: 'threats'
+        },
+        {
+            text: 'E',
+            value: 'e'
+        },
+        {
+            text: 'N',
+            value: 'n'
+        },
+        {
+            text: 'length (m)',
+            value: 'length'
+        },
+        {
+            text: 'width (m)',
+            value: 'width'
+        },
+        {
+            text: 'area (ha)',
+            value: 'area'
+        },
+        {
+            text: 'remarks',
+            value: 'remarks'
+        },
+    ]
+};

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import MapContainerComponentStoreMx from '../../../mixins/MapContainerComponentStoreMx';
+import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 import ListRowActionsMenu from './ListRowActionsMenu';
 export default {
     name: 'VwSiteListRowActionMenu',
