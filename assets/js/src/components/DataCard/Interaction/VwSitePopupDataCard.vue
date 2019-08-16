@@ -6,9 +6,11 @@
         <v-toolbar-title
             slot="toolbar"
         >
-            Site
+            {{title}}
         </v-toolbar-title>
-        <vw-site-popup-item-data-card
+        <component
+            :is="dataComponent"
+            id="data-table"
             slot="data"
             :feature="feature"
         />
@@ -17,19 +19,55 @@
 
 <script>
 import DataCard from '@/components/DataCard/DataCard';
-import VwSitePopupItemDataCard from '@/components/DataCard/Interaction/VwSitePopupItemDataCard';
+import VwSiteSurveyPopupItemDataCard from '@/components/DataCard/Interaction/VwSiteSurveyPopupItemDataCard';
+import VwSiteRsPopupItemDataCard from '@/components/DataCard/Interaction/VwSiteRsPopupItemDataCard';
+import {
+    QUERY_TYPENAME_VW_SITES_RS,
+    QUERY_TYPENAME_VW_SITES_SURVEY,
+    TITLE_TYPENAME_VW_SITES,
+    TITLE_TYPENAME_VW_SITES_RS,
+    TITLE_TYPENAME_VW_SITES_SURVEY
+} from '@/utils/cids';
+
 export default {
     name: 'VwSitePopupDataCard',
     components: {
         DataCard,
-        VwSitePopupItemDataCard
+        VwSiteSurveyPopupItemDataCard,
+        VwSiteRsPopupItemDataCard
     },
     props: {
         feature: {
             type: Object,
             required: true
         }
-    }
+    },
+    computed: {
+        queryTypename() {
+            return this.feature.properties.remote_sensing ? QUERY_TYPENAME_VW_SITES_RS : QUERY_TYPENAME_VW_SITES_SURVEY;
+        },
+        title() {
+            let title;
+            switch (this.feature.properties.remote_sensing) {
+            case true:
+                title = TITLE_TYPENAME_VW_SITES_RS;
+                break;
+            case false:
+                title = TITLE_TYPENAME_VW_SITES_SURVEY;
+                break;
+            default:
+                title = TITLE_TYPENAME_VW_SITES;
+            }
+            return title;
+        },
+        dataComponent() {
+            return {
+                [QUERY_TYPENAME_VW_SITES_RS]: VwSiteRsPopupItemDataCard,
+                [QUERY_TYPENAME_VW_SITES_SURVEY]: VwSiteSurveyPopupItemDataCard,
+            }[this.queryTypename];
+        }
+    },
+
 };
 </script>
 

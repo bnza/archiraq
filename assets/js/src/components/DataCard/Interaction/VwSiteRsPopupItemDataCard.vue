@@ -5,34 +5,32 @@
             :value="properties.district"
         />
         <popup-text-field
-            label="Chronology"
-            :value="properties.chronology"
+            label="Threats"
+            :value="properties.threats"
         />
         <popup-text-field
-            label="Surveys"
-            :value="properties.survey_refs"
+            label="Verified on field"
+            :value="properties.survey_verified_on_field"
+        />
+        <popup-text-field
+            label="Area (ha)"
+            :value="properties.area"
         />
     </div>
 </template>
 <script>
 import PopupTextField from '@/components/DataCard/Interaction/PopupTextField';
+import VwSitePopupItemDataCardMx from '@/mixins/VwSitePopupItemDataCardMx';
+
 export default {
 
-    name: 'VwSitePopupItemDataCard',
+    name: 'VwSiteRsPopupItemDataCard',
     components: {
         PopupTextField
     },
-    props: {
-        feature: {
-            type: Object,
-            required: true
-        }
-    },
-    computed: {
-        properties() {
-            return this.feature.properties || {};
-        }
-    }
+    mixins: [
+        VwSitePopupItemDataCardMx
+    ]
 };
 </script>
 

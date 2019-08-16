@@ -23,6 +23,10 @@ export const QUERY_TYPENAME_VW_SITES_RS = 'vw-site-rs';
 export const WFS_TYPENAME_VW_SITES_SURVEY = 'vw_site_survey';
 export const WFS_TYPENAME_VW_SITES_RS = 'vw_site_rs';
 
+export const TITLE_TYPENAME_VW_SITES = 'Sites';
+export const TITLE_TYPENAME_VW_SITES_SURVEY = 'Sites (survey)';
+export const TITLE_TYPENAME_VW_SITES_RS = 'Sites (remote sensing)';
+
 export const HEADERS_VW_SITE_LIST_DATA_CARD_TABLE = {
     [QUERY_TYPENAME_VW_SITES_SURVEY]: [
         {
@@ -157,3 +161,5 @@ export const HEADERS_VW_SITE_LIST_DATA_CARD_TABLE = {
         },
     ]
 };
+
+
