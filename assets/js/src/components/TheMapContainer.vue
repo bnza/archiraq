@@ -62,8 +62,9 @@
 
 <script>
 import {bind, debounce} from 'lodash';
-import ComponentStoreVisibleMx from '../mixins/ComponentStoreVisibleMx';
-import MapContainerComponentStoreMx from '../mixins/MapContainerComponentStoreMx';
+import {getMapPixelHeight} from '@/utils/utils';
+import ComponentStoreVisibleMx from '@/mixins/ComponentStoreVisibleMx';
+import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 import TheMapLayersDrawer from './TheMapLayersDrawer';
 import MapLayerGroupAdminBounds from './MapLayerGroupAdminBounds';
 import MapLayerVectorWfsVwSites from './MapLayerVectorWfsVwSites';
@@ -126,7 +127,7 @@ export default {
         }
     },
     created() {
-        this.mapContainerHeight = HEIGHT;
+        this.resizeMap(true);
         this.mapContainerAdminBounds = CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2;
         this.mapContainerCurrentLayer = WFS_TYPENAME_VW_SITES_SURVEY;
         this.mapContainerPointerCoords = center;
@@ -135,6 +136,7 @@ export default {
         this.mapContainerCallee = null;
     },
     mounted() {
+        window.addEventListener('resize', this.resizeMap);
         // get vl-map by ref="map" and await ol.Map creation
         this.$refs.map.$createPromise.then(() => {
             this.center = center;
@@ -143,7 +145,13 @@ export default {
             }
         });
     },
+    destroyed() {
+        window.removeEventListener('resize', this.resizeMap);
+    },
     methods: {
+        isFullScreen() {
+            return this.mapContainerHeight === HEIGHT;
+        },
         storePointerCoords({pixel}) {
             const storeCoords = debounce(bind(function (pixel) {
                 this.mapContainerPointerCoords =  this.$refs.map.getCoordinateFromPixel(pixel);
@@ -157,6 +165,11 @@ export default {
             const layer = this.$refs.map.getLayerById(layerId);
             const extent = layer.getSource().getExtent();
             this.$refs.view.fit(extent);
+        },
+        resizeMap(force = false) {
+            if (force || this.isFullScreen()) {
+                this.mapContainerHeight = getMapPixelHeight(true);
+            }
         }
     },
 };
