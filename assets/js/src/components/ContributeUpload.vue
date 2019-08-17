@@ -11,7 +11,9 @@
                 xs10
                 offset-xs1
             >
-                <h3>{{ startCase(type) }} {{ startCase(format) }} contribute upload</h3>
+                <h3 data-test="contribute-upload-title">
+                    {{ startCase(type) }} {{ startCase(format) }} contribute upload
+                </h3>
             </v-flex>
         </v-layout><v-layout
             row
@@ -79,13 +81,18 @@
 import FileSaver from 'file-saver';
 import UploadButton from 'vuetify-upload-button';
 import {REQUEST, XSRF_REQUEST} from '@/store/client/actions';
-import {upperFirst, camelCase, startCase} from 'lodash';
+import HttpClientMx from '@/mixins/HttpClientMx';
+import {pascalCase} from '@/utils/utils';
+import {startCase} from 'lodash';
 
 export default {
     name: 'ContributeUpload',
     components: {
         'upload-btn': UploadButton
     },
+    mixins: [
+        HttpClientMx
+    ],
     props: {
         type: {
             type: String,
@@ -106,8 +113,8 @@ export default {
     },
     computed: {
         uploadUrl() {
-            let type = upperFirst(camelCase(this.type));
-            let format = upperFirst(camelCase(this.format));
+            let type = pascalCase(this.type);
+            let format = pascalCase(this.format);
             return `/job/contribute/import/full${type}${format}/${this.contributeId}`;
         },
     },
@@ -121,27 +128,21 @@ export default {
         },
         getContributeId () {
             const vm = this;
-            return this.$store.dispatch(
-                `client/${REQUEST}`,
-                {
-                    method: 'get',
-                    url: '/job/id/generate'
-                }
-            ).then((response) => {
+            const axiosRequestConfig = {
+                method: 'get',
+                url: '/job/id/generate'
+            };
+            return this.clientRequest(axiosRequestConfig).then((response) => {
                 vm.contributeId = response.data;
             });
         },
         getContributeDraftErrors () {
-            const vm = this;
             let axiosRequestConfig = {
                 method: 'get',
                 url: `/job/contribute/${this.contributeId}/${this.type}/draft-errors`,
                 responseType: 'blob',
             };
-            return this.$store.dispatch(
-                `client/${REQUEST}`,
-                axiosRequestConfig
-            ).then((response) => {
+            return this.clientRequest(axiosRequestConfig).then((response) => {
                 FileSaver.saveAs(
                     new Blob([response.data]),
                     'validationErrors.csv',
@@ -154,33 +155,33 @@ export default {
             const formData = new FormData();
             formData.append('contribute', this.file);
             this.isRequestPending = true;
-            this.$store.dispatch(
-                `client/${XSRF_REQUEST}`,
-                {
-                    method: 'post',
-                    url: this.uploadUrl,
-                    data: formData,
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    onUploadProgress: function(progressEvent) {
-                        vm.uploadProgress = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
-                        if (vm.uploadProgress === 100) {
-                            vm.$router.push(`/contribute/${vm.contributeId}/status`);
+            let axiosRequestConfig = {
+                method: 'post',
+                url: this.uploadUrl,
+                data: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                onUploadProgress: function(progressEvent) {
+                    vm.uploadProgress = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
+                    if (vm.uploadProgress === 100) {
+                        vm.$router.push(`/contribute/${vm.contributeId}/status`);
+                    }
+                }
+            };
+
+            return this.clientXsrfRequest(axiosRequestConfig)
+                .catch(
+                    (error) => {
+                        if (error.response && error.response.data.errors === 'Draft validation failed') {
+                            vm.getContributeDraftErrors();
                         }
                     }
-                }
-            ).catch(
-                (error) => {
-                    if (error.response && error.response.data.errors === 'Draft validation failed') {
-                        vm.getContributeDraftErrors();
+                ).finally(
+                    () => {
+                        vm.isRequestPending = false;
                     }
-                }
-            ).finally(
-                () => {
-                    vm.isRequestPending = false;
-                }
-            );
+                );
         }
     }
 };
