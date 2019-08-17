@@ -13,6 +13,7 @@ export const CID_THE_MAP_LAYERS_DRAWER = 'TheMapLayersDrawer';
 export const CID_THE_MAP_TOOLBAR = 'TheMapToolbar';
 export const CID_THE_SNACKBAR = 'TheSnackbar';
 export const CID_VW_SITE_LIST_DATA_CARD = 'VwSiteListDataCard';
+export const CID_VW_SITE_READ_DATA_CARD = 'VwSiteReadDataCard';
 export const CID_VW_SITE_SURVEY_LIST_DATA_CARD = 'VwSiteSurveyListDataCard';
 export const CID_VW_SITE_RS_LIST_DATA_CARD = 'VwSiteRsListDataCard';
 

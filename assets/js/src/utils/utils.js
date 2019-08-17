@@ -177,3 +177,13 @@ export const getJobProgressPercentage = (job, precision = 2) => {
     let currentTaskProgress = getProgressPercentageFloat(job.tasks[job.currentStepNum])/job.stepsNum;
     return (getProgressPercentageFloat(job) + currentTaskProgress).toFixed(precision);
 };
+
+/**
+ * Returns a year using canonical form
+ * @param {Number} year
+ * @return {string}
+ */
+export const yearToCanonicalString = (year) => {
+    year = Math.round(year);
+    return year < 0 ? `${Math.abs(year)} b.C.` : `${year} a.D.`;
+};

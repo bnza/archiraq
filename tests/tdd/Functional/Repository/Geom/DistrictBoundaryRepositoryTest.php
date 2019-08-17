@@ -52,16 +52,19 @@ class DistrictBoundaryRepositoryTest extends AbstractPgTestIsolation
                 'id' => 4,
                 'name' => 'Hatra',
                 'governorate' => 'Ninewa',
+                'nation' => 'Iraq'
             ],
             [
                 'id' => 3,
                 'name' => 'Sinjar',
                 'governorate' => 'Ninewa',
+                'nation' => 'Iraq'
             ],
             [
                 'id' => 2,
                 'name' => 'Tilkaif',
                 'governorate' => 'Ninewa',
+                'nation' => 'Iraq'
             ],
         ], $repo->getEntries());
     }

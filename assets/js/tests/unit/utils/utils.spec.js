@@ -1,5 +1,14 @@
 /* global global */
-import {getMapPixelHeight, arrayHasIndex, getStatusText, getStatusColor, getStatusIcon, getProgressPercentage, getJobProgressPercentage} from '@/utils/utils';
+import {
+    getMapPixelHeight,
+    arrayHasIndex,
+    getStatusText,
+    getStatusColor,
+    getStatusIcon,
+    getProgressPercentage,
+    getJobProgressPercentage,
+    yearToCanonicalString
+} from '@/utils/utils';
 
 describe('"getMapPixelHeight"', () => {
     it('returns default value if "isFullScreen" flag is false', () => {
@@ -75,5 +84,15 @@ describe('"getJobProgressPercentage"', () => {
         [{currentStepNum: 1, stepsNum: 4, tasks: [null,{currentStepNum: 1, stepsNum: 6}]}, 2, '29.17'],
     ])('getJobProgressPercentage(%o, %i) returns \'%s\'' , (job, precision, expected) => {
         expect(getJobProgressPercentage(job, precision)).toEqual(expected);
+    });
+});
+
+describe('"yearToCanonicalString"', () => {
+    it.each([
+        [-120, '120 b.C.'],
+        [200, '200 a.D.'],
+        [150.2, '150 a.D.']
+    ])('yearToCanonicalString(%i) returns \'%s\'' , (year, expected) => {
+        expect(yearToCanonicalString(year)).toEqual(expected);
     });
 });

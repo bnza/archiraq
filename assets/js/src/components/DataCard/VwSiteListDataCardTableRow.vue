@@ -3,7 +3,10 @@
         <td
             class="text-xs-center"
         >
-            <vw-site-list-row-action-menu :item="item" />
+            <vw-site-list-row-action-menu
+                :item="item"
+                @navigateToItemForm="$emit('navigateToItemForm')"
+            />
         </td>
         <td
             v-if="headersHaveElement('contribute_id')"
@@ -166,7 +169,7 @@ export default {
             return undefined !== this.headers.find((element) => {
                 return element.value === value;
             });
-        }
+        },
     }
 };
 </script>

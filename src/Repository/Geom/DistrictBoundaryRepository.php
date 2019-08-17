@@ -46,6 +46,7 @@ class DistrictBoundaryRepository extends AbstractCrudRepository
                     'id' => $entity->getId(),
                     'name' => $entity->getName(),
                     'governorate' => $entity->getGovernorate()->getName(),
+                    'nation' => $entity->getGovernorate()->getNation()->getName()
                 ];
             }, $this->findBy([], ['name' => 'ASC']));
     }

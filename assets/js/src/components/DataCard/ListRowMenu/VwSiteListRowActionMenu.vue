@@ -10,6 +10,15 @@
                     <v-list-tile-title>Zoom to feature</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
+            <v-list-tile @click="$emit('navigateToItemForm')">
+                <v-list-tile-action>
+                    <v-icon>arrow_forward</v-icon>
+                </v-list-tile-action>
+
+                <v-list-tile-content>
+                    <v-list-tile-title>Show more</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
         </v-list>
     </list-row-actions-menu>
 </template>
@@ -37,7 +46,7 @@ export default {
         zoomToItemFeature() {
             this.mapContainerCallMethod('zoomToItemGeometry', this.item);
             this.$vuetify.goTo('#map');
-        }
+        },
     }
 };
 </script>

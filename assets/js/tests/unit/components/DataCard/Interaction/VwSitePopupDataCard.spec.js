@@ -8,7 +8,12 @@ import {
     TITLE_TYPENAME_VW_SITES_RS,
     TITLE_TYPENAME_VW_SITES_SURVEY
 } from '@/utils/cids';
-import {getVuetifyWrapper, catchLocalVueDuplicateVueBug, resetConsoleError} from '../../../components/utils';
+import {
+    getVuetifyWrapper,
+    catchLocalVueDuplicateVueBug,
+    resetConsoleError,
+    getWrapper
+} from '../../../components/utils';
 
 let mountOptions;
 let wrapper;
@@ -33,6 +38,12 @@ describe('VwSitePopupDataCard', () => {
     });
     describe('computed', () => {
         describe('queryTypename', () => {
+            it('"dataItemRoute"', () => {
+                mountOptions.propsData.feature.properties.remote_sensing = false;
+                mountOptions.propsData.feature.properties.id = 123;
+                wrapper = getVuetifyWrapper('shallowMount', VwSitePopupDataCard, mountOptions);
+                expect(wrapper.vm.dataItemRoute).toEqual('/map/data/vw-site-survey/123/read#item-form');
+            });
             it.each([
                 [true, QUERY_TYPENAME_VW_SITES_RS],
                 [false, QUERY_TYPENAME_VW_SITES_SURVEY],

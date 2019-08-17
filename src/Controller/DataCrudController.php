@@ -9,6 +9,7 @@ class DataCrudController extends AbstractCrudController
     private $entitiesMap = [
         'geom-nation' => 'App\\Entity\\Geom\\NationBoundaryEntity',
         'geom-district' => 'App\\Entity\\Geom\\DistrictBoundaryEntity',
+        'site' => 'App\\Entity\\SiteEntity',
         'voc-chronology' => 'App\\Entity\\Voc\\ChronologyEntity',
         'vw-site' => 'App\\Entity\\View\\SiteEntity'
     ];

@@ -1,9 +1,6 @@
 <template>
     <v-fragment>
-        <vw-site-table-action-menu
-            @openModal="$emit('openModal', $event)"
-            @zoomToLayer="zoomToLayer"
-        />
+        <vw-site-form-action-menu />
 
         <v-toolbar-title>{{ title }}</v-toolbar-title>
     </v-fragment>
@@ -11,7 +8,7 @@
 
 <script>
 import {Fragment as VFragment} from 'vue-fragment';
-import VwSiteTableActionMenu from './ListRowMenu/VwSiteTableActionMenu';
+import VwSiteFormActionMenu from './ListRowMenu/VwSiteFormActionMenu';
 import VwSiteActionDataCardToolbarMx from '@/mixins/DataCard/VwSiteActionDataCardToolbarMx';
 import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 
@@ -19,17 +16,12 @@ export default {
     name: 'VwSiteDataCardToolbar',
     components: {
         VFragment,
-        VwSiteTableActionMenu
+        VwSiteFormActionMenu
     },
     mixins: [
         VwSiteActionDataCardToolbarMx,
         MapContainerComponentStoreMx
     ],
-    methods: {
-        zoomToLayer() {
-            this.mapContainerCallMethod('zoomToLayer', this.layerId);
-        }
-    }
 };
 </script>
 

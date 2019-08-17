@@ -1,5 +1,8 @@
 <template>
-    <data-card data-test="vw-site-table--data-card">
+    <data-card
+        id="data-table"
+        data-test="vw-site-table--data-card"
+    >
         <vw-site-list-data-card-toolbar
             slot="toolbar"
             :layer-id="baseTypename"
@@ -33,11 +36,11 @@
 </template>
 
 <script>
-import {snakeCase} from 'lodash';
 import DataCard from './DataCard';
 import VwSiteListDataCardToolbar from './VwSiteListDataCardToolbar';
 import VwSiteListDataCardTable from './VwSiteListDataCardTable';
 import DataCardDynamicModalMx from '@/mixins/DataCardDynamicModalMx';
+import VwSiteActionDataCardMx from '@/mixins/DataCard/VwSiteActionDataCardMx';
 import WfsDataCardMx from '@/mixins/WfsDataCardMx';
 
 import {CID_VW_SITE_LIST_DATA_CARD as CID, HEADERS_VW_SITE_LIST_DATA_CARD_TABLE} from '@/utils/cids';
@@ -66,25 +69,11 @@ export default {
         )
     },
     mixins: [
+        VwSiteActionDataCardMx,
         DataCardDynamicModalMx,
         WfsDataCardMx
     ],
-    data() {
-        return {
-            cid: CID,
-        };
-    },
     computed: {
-        /**
-         * Base typename: query name like string (e.g. "base_type_name") used as map layer id
-         * @return {string}
-         */
-        baseTypename() {
-            return snakeCase(this.queryTypename);
-        },
-        typename() {
-            return `archiraq:${this.baseTypename}_poly`;
-        },
         headers() {
             return  HEADERS_VW_SITE_LIST_DATA_CARD_TABLE[this.queryTypename];
         },

@@ -30,20 +30,6 @@ import ContributeUploadStatus from '@/components/ContributeUploadStatus';
 
 Vue.use(Router);
 
-/*export const contributeRoutes = [
-    {
-        path: ':prefix(contribute)/upload/select',
-        name: 'contribute_upload_select',
-        components: {
-            modal: TheDataContainer
-        },
-        meta: {
-            requiresAuthenticated: true,
-            requiresRole: ROLE_EDITOR
-        }
-    }
-];*/
-
 export const dataTableRoutes = [
     {
         path: `:queryTypename(${QUERY_TYPENAME_VW_SITES_SURVEY}|${QUERY_TYPENAME_VW_SITES_RS})/:action(list)`,
@@ -54,7 +40,18 @@ export const dataTableRoutes = [
         props: {
             default: true
         }
-    }
+    },
+    {
+        path: `:queryTypename(${QUERY_TYPENAME_VW_SITES_SURVEY}|${QUERY_TYPENAME_VW_SITES_RS})/:itemId(\\d+)/:action(read)`,
+        name: 'map_data_vw-site_read',
+        components: {
+            default: DataCardContainer
+        },
+        props: {
+            default: true
+        }
+    },
+
 ];
 
 export const contributeRoutes = {

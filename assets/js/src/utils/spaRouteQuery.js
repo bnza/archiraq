@@ -62,3 +62,7 @@ export const getPaginationFromRouteQuery = (route) => {
 export const navigateToQuery = (router, route) => {
     router.push(getFullPathFromRoute(route));
 };
+
+export const getMapDataItemFullPath = (queryTypename, itemId) => {
+    return `/map/data/${queryTypename}/${itemId}/read#item-form`;
+};

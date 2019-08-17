@@ -1,9 +1,9 @@
 <template>
     <component
         :is="dataComponent"
-        id="data-table"
         :action="action"
         :query-typename="queryTypename"
+        :item-id="itemId"
     />
 </template>
 
@@ -26,6 +26,14 @@ export default {
         VwSiteRsListDataCard: () => import(
             /* webpackChunkName: "VwSiteListDataCard" */
             './VwSiteListDataCard'
+        ),
+        VwSiteSurveyReadDataCard: () => import(
+            /* webpackChunkName: "VwSiteReadDataCard" */
+            './VwSiteReadDataCard'
+        ),
+        VwSiteRsReadDataCard: () => import(
+            /* webpackChunkName: "VwSiteReadDataCard" */
+            './VwSiteReadDataCard'
         )
     },
     mixins: [
@@ -36,6 +44,10 @@ export default {
             type: String,
             required: true
         },
+        itemId: {
+            type: String,
+            default: ''
+        }
     },
     computed: {
         dataComponent() {

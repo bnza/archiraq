@@ -1,5 +1,5 @@
 import {mapActions, mapGetters} from 'vuex';
-import {REQUEST} from '../store/client/actions';
+import {REQUEST, XSRF_REQUEST} from '../store/client/actions';
 import {HAS_PENDING_REQUESTS, PENDING_REQUESTS_NUM} from '../store/client/getters';
 
 export default {
@@ -11,7 +11,8 @@ export default {
     },
     methods: {
         ...mapActions({
-            clientRequest: `client/${REQUEST}`
+            clientRequest: `client/${REQUEST}`,
+            clientXsrfRequest: `client/${XSRF_REQUEST}`
         })
     }
 };

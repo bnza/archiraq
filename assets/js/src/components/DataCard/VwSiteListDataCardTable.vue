@@ -15,6 +15,7 @@
             <vw-site-list-data-card-table-row
                 :headers="headers"
                 :item="props.item"
+                @navigateToItemForm="navigateToItemForm(props.item.id)"
             />
         </template>
     </v-data-table>
@@ -24,6 +25,7 @@
 
 import VwSiteListDataCardTableRow from '@/components/DataCard/VwSiteListDataCardTableRow';
 import DataCardTableMx from '../../mixins/DataCardTableMx';
+import {getMapDataItemFullPath} from '@/utils/spaRouteQuery';
 
 export default {
     name: 'VwSiteDataCardTable',
@@ -32,7 +34,12 @@ export default {
     },
     mixins: [
         DataCardTableMx
-    ]
+    ],
+    methods: {
+        navigateToItemForm(itemId) {
+            this.$router.push(getMapDataItemFullPath(this.queryTypename, itemId));
+        }
+    }
 };
 </script>
 
