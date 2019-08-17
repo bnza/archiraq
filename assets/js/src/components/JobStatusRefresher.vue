@@ -2,15 +2,19 @@
     <job-status
         v-if="job"
         :job="job"
+        @cancelJob="cancelJob"
     />
 </template>
 
 <script>
-import {REQUEST} from '@/store/client/actions';
+import HttpClientMx from '@/mixins/HttpClientMx';
 import JobStatus from '@/components/JobStatus';
 export default {
     name: 'JobStatusRefresher',
     components: {JobStatus},
+    mixins: [
+        HttpClientMx
+    ],
     props: {
         id: {
             type: String,
@@ -37,16 +41,23 @@ export default {
     },
     methods: {
         refreshJob() {
-            return this.$store.dispatch(
-                `client/${REQUEST}`,
-                {
-                    method: 'get',
-                    url: `/job/${this.id}/status`
-                }
-            ).then((response) => {
+            const axiosRequestConfig = {
+                method: 'get',
+                url: `/job/${this.id}/status`
+            };
+            return this.clientRequest(axiosRequestConfig).then((response) => {
                 this.job = response.data;
             });
-        }
+        },
+        cancelJob() {
+            const axiosRequestConfig = {
+                method: 'put',
+                url: `/job/${this.id}/cancel`
+            };
+            return this.clientXsrfRequest(axiosRequestConfig).then(() => {
+                this.refreshJob();
+            });
+        },
     }
 };
 </script>

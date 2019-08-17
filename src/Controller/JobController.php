@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Bnza\JobManagerBundle\Exception\JobManagerEntityNotFoundException;
+use Bnza\JobManagerBundle\Info\JobInfo;
 use Bnza\JobManagerBundle\ObjectManager\ObjectManagerInterface;
 use Bnza\JobManagerBundle\Serializer\JobConverter;
 use Bnza\JobManagerBundle\Runner\Job\JobInterface;
@@ -133,5 +134,23 @@ class JobController
 
         $converter = new JobConverter();
         return $this->respond($converter->normalize($job));
+    }
+
+    public function cancelJob(
+        AuthorizationCheckerInterface $checker,
+        string $id
+    ) {
+        try {
+            if (!$checker->isGranted('ROLE_EDITOR')) {
+                $this->setStatusCode(403);
+                $this->respondWithErrors('Access Denied.');
+            }
+            $info = new JobInfo($this->om, 'job', $id);
+            $info->cancel();
+            return $this->respond('data');
+        } catch (JobManagerEntityNotFoundException $e) {
+            $this->setStatusCode(404);
+            return $this->respondWithErrors($e->getMessage());
+        }
     }
 }

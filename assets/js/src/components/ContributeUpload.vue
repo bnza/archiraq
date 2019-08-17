@@ -80,7 +80,6 @@
 <script>
 import FileSaver from 'file-saver';
 import UploadButton from 'vuetify-upload-button';
-import {REQUEST, XSRF_REQUEST} from '@/store/client/actions';
 import HttpClientMx from '@/mixins/HttpClientMx';
 import {pascalCase} from '@/utils/utils';
 import {startCase} from 'lodash';

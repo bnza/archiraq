@@ -26,6 +26,56 @@
             wrap
         >
             <v-flex
+                xs10
+                lg8
+                offset-xs1
+                offset-lg2
+            >
+                <v-dialog
+                    v-model="cancelDialog"
+                    max-width="290"
+                >
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            v-if="job.status.isRunning"
+                            flat
+                            color="red darken-1"
+                            v-on="on"
+                        >
+                            Cancel job
+                        </v-btn>
+                    </template>
+                    <v-card>
+                        <v-card-title class="headline">
+                            Cancel job?
+                        </v-card-title>
+                        <v-card-text>Are you sure you want to cancel this job?</v-card-text>
+                        <v-card-actions>
+                            <v-spacer />
+                            <v-btn
+                                color="green darken-1"
+                                flat
+                                @click="cancelDialog = false"
+                            >
+                                No
+                            </v-btn>
+                            <v-btn
+                                color="red darken-1"
+                                flat
+                                @click="$emit('cancelJob'); cancelDialog = false"
+                            >
+                                Cancel job
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-flex>
+        </v-layout>
+        <v-layout
+            row
+            wrap
+        >
+            <v-flex
                 xs3
                 offset-xs1
                 offset-lg2
@@ -167,6 +217,11 @@ export default {
             type: Object,
             required: true
         }
+    },
+    data() {
+        return {
+            cancelDialog: false
+        };
     },
     computed: {
         statusText() {

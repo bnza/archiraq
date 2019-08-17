@@ -29,6 +29,13 @@ job_get_status:
     requirements:
         id: '[a-f0-9]{40}'
 
+job_cancel:
+    path:       /job/{id}/cancel
+    controller: App\Controller\JobController::cancelJob
+    methods:    [PUT]
+    requirements:
+        id: '[a-f0-9]{40}'
+
 job_contribute_import_full_survey_zip_shapefile:
     path:       /job/contribute/import/fullSurveyZipShapefile/{id}
     controller: App\Controller\JobController::fullImportPublishedSitesZipShapefile
