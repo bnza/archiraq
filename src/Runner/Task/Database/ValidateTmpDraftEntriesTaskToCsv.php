@@ -26,10 +26,10 @@ class ValidateTmpDraftEntriesTaskToCsv extends AbstractValidateTmpDraftEntriesTa
      */
     private $spreadsheet;
 
-    /**
-     * @var Serializer
-     */
-    private $serializer;
+//    /**
+//     * @var Serializer
+//     */
+//    private $serializer;
 
     /**
      * @var Inflector
@@ -87,20 +87,21 @@ class ValidateTmpDraftEntriesTaskToCsv extends AbstractValidateTmpDraftEntriesTa
         }
     }
 
-    protected function getSerializer(): Serializer
+/*    protected function getSerializer(): Serializer
     {
         if (!$this->serializer) {
             $this->serializer = new Serializer([new TmpDraftEntityNormalizer()]);
         }
 
         return $this->serializer;
-    }
+    }*/
 
     /**
      * @throws JobManagerNonCriticalErrorException
      */
     public function terminate(): void
     {
+        parent::terminate();
         if ($this->draftContainsErrors) {
             $this->writeCurrentWorksheet($this->getSpreadsheet());
             $entry = new ErrorEntry($this, 'Draft validation failed');

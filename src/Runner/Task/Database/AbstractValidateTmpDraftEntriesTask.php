@@ -6,9 +6,13 @@ use App\Entity\Tmp\DraftEntity;
 use App\Repository\Tmp\DraftRepository;
 use App\Runner\Task\TaskEntityManagerTrait;
 use App\Runner\Task\ValidatorTrait;
+use App\Serializer\Normalizer\TmpDraftEntityNormalizer;
 use App\Serializer\TmpDraftToSiteConverter;
 use Bnza\JobManagerBundle\Runner\Task\AbstractTask;
 use App\Entity\ContributeEntity;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\ConstraintViolationList;
 
 abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
 {
@@ -26,9 +30,19 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
     protected $contribute;
 
     /**
+     * @var Serializer
+     */
+    private $serializer;
+
+    /**
      * @var TmpDraftToSiteConverter
      */
     protected $converter;
+
+    /**
+     * @var array
+     */
+    protected $validationErrors = [];
 
     /**
      * Persists constraint validation errors.
@@ -75,7 +89,38 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
      */
     protected function terminate(): void
     {
+        if ($this->validationErrors) {
+            $this->getJob()->pushError('draft_validation', $this->validationErrors, null);
+        }
         $this->updateContributeStatus();
+    }
+
+    protected function pushValidationErrors(DraftEntity $draft, ConstraintViolationList $list)
+    {
+        $errors = [];
+        /** @var ConstraintViolation $error */
+        foreach ($list as $error) {
+            \array_push($errors,
+                [
+                    'path' => $error->getPropertyPath(),
+                    'message' => $error->getMessage(),
+                    'value' => $error->getInvalidValue(),
+                ]);
+        }
+        $entry = $this->getSerializer()->normalize($draft);
+
+        $ids = array_column($this->validationErrors, 'id');
+        $found_key = array_search($entry['id'], $ids);
+
+        //if (\array_key_exists($entry['id'], $this->validationErrors)) {
+        if (false === $found_key) {
+            $entry['errors'] = $errors;
+            \array_push($this->validationErrors, $entry);
+        } else {
+            foreach ($errors as $error) {
+                \array_push($this->validationErrors[$found_key]['errors'], $error);
+            }
+        }
     }
 
     /**
@@ -123,6 +168,7 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
     {
         $errors = $this->getValidator()->validate($draft);
         if (count($errors) > 0) {
+            $this->pushValidationErrors($draft, $errors);
             $this->persistErrors($draft, $errors);
         }
     }
@@ -137,6 +183,7 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
         $site = $this->getConverter()->convert($draft);
         $errors = $this->getValidator()->validate($site);
         if (count($errors) > 0) {
+            $this->pushValidationErrors($draft, $errors);
             $this->persistErrors($draft, $errors);
         }
     }
@@ -183,5 +230,14 @@ abstract class AbstractValidateTmpDraftEntriesTask extends AbstractTask
     public function isDraftValid(): bool
     {
         return !$this->draftContainsErrors;
+    }
+
+    protected function getSerializer(): Serializer
+    {
+        if (!$this->serializer) {
+            $this->serializer = new Serializer([new TmpDraftEntityNormalizer()]);
+        }
+
+        return $this->serializer;
     }
 }

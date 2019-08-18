@@ -54,6 +54,7 @@ class ValidateTmpDraftEntriesTaskToDb extends AbstractValidateTmpDraftEntriesTas
      */
     protected function terminate(): void
     {
+        parent::terminate();
         $this->getEntityManager()->flush();
         parent::terminate();
     }

@@ -52,6 +52,7 @@ class ValidateTmpDraftEntriesTaskToSpreadsheet extends AbstractValidateTmpDraftE
      */
     public function terminate(): void
     {
+        parent::terminate();
         if ($this->draftContainsErrors) {
             $this->writeCurrentWorksheet($this->getSpreadsheet(), self::ERROR_COLUMN);
             $entry = new ErrorEntry($this, 'Draft validation failed');

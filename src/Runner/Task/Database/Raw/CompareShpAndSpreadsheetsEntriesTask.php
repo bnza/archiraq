@@ -110,6 +110,7 @@ EOT;
             $diffs['shapefile'] = $shpDiff;
         }
         if ($diffs) {
+            $this->getJob()->pushError('entry_mismatch', $diffs);
             $entry = new ErrorEntry($this, 'Shapefile and Spreadsheet entries does not match', $diffs);
             $event = new SummaryEntryEvent($entry);
             $this->getJob()->getDispatcher()->dispatch($event, SummaryEntryEvent::NAME);

@@ -6,9 +6,7 @@
         >
             <v-flex
                 xs10
-                lg8
                 offset-xs1
-                offset-lg2
             >
                 <v-progress-circular
                     :rotate="360"
@@ -27,9 +25,7 @@
         >
             <v-flex
                 xs10
-                lg8
                 offset-xs1
-                offset-lg2
             >
                 <v-dialog
                     v-model="cancelDialog"
@@ -78,7 +74,6 @@
             <v-flex
                 xs3
                 offset-xs1
-                offset-lg2
             >
                 <p class="text-xs-right">
                     <strong>
@@ -88,7 +83,6 @@
             </v-flex>
             <v-flex
                 xs7
-                lg4
             >
                 <p class="text-xs-left">
                     {{ job.description }}
@@ -102,7 +96,6 @@
             <v-flex
                 xs3
                 offset-xs1
-                offset-lg2
             >
                 <p class="text-xs-right">
                     <strong>
@@ -112,7 +105,6 @@
             </v-flex>
             <v-flex
                 xs7
-                lg4
             >
                 <p class="text-xs-left">
                     <v-icon
@@ -132,7 +124,6 @@
             <v-flex
                 xs3
                 offset-xs1
-                offset-lg2
             >
                 <p class="text-xs-right">
                     <strong>
@@ -142,9 +133,15 @@
             </v-flex>
             <v-flex
                 xs7
-                lg4
             >
-                <p class="text-xs-left">
+                <job-errors-display
+                    v-if="job.status.isError"
+                    :errors="JSON.parse(job.message)"
+                />
+                <p
+                    v-else
+                    class="text-xs-left"
+                >
                     {{ job.message }}
                 </p>
             </v-flex>
@@ -157,7 +154,6 @@
             <v-flex
                 xs3
                 offset-xs1
-                offset-lg2
             >
                 <p class="text-xs-right">
                     <strong>
@@ -167,7 +163,6 @@
             </v-flex>
             <v-flex
                 xs7
-                lg4
             >
                 <p class="text-xs-left">
                     {{ job.error }}
@@ -181,7 +176,6 @@
             <v-flex
                 xs3
                 offset-xs1
-                offset-lg2
             >
                 <p class="text-xs-right">
                     <strong>
@@ -191,7 +185,6 @@
             </v-flex>
             <v-flex
                 xs7
-                lg4
             >
                 <task-progress
                     v-for="task in job.tasks"
@@ -205,12 +198,14 @@
 
 <script>
 import TaskProgress from '@/components/TaskProgress';
+import JobErrorsDisplay from '@/components/JobErrorsDisplay';
 import {getStatusText, getStatusColor, getStatusIcon, getJobProgressPercentage} from '@/utils/utils';
 
 export default {
     name: 'JobStatus',
     components: {
-        TaskProgress
+        TaskProgress,
+        JobErrorsDisplay
     },
     props: {
         job: {
