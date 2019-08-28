@@ -15,7 +15,21 @@
                     {{ startCase(type) }} {{ startCase(format) }} contribute upload
                 </h3>
             </v-flex>
-        </v-layout><v-layout
+        </v-layout>
+        <v-layout
+            row
+            wrap
+        >
+            <v-switch
+                v-model="isContributeBundled"
+                label="Contribute data inside zip file"
+            />
+        </v-layout>
+        <contribute-upload-form
+            v-if="!isContributeBundled"
+            :contribute.sync="contribute"
+        />
+        <v-layout
             row
             wrap
         >
@@ -65,7 +79,7 @@
                 <v-btn
                     flat
                     color="blue darken-1"
-                    :disabled="!file || isRequestPending"
+                    :disabled="!isValid || isRequestPending"
                     data-test="v-btn--submit"
                     @click.native="upload"
                 >
@@ -80,6 +94,7 @@
 <script>
 import FileSaver from 'file-saver';
 import UploadButton from 'vuetify-upload-button';
+import ContributeUploadForm from '@/components/ContributeUploadForm';
 import HttpClientMx from '@/mixins/HttpClientMx';
 import {pascalCase} from '@/utils/utils';
 import {startCase} from 'lodash';
@@ -87,7 +102,8 @@ import {startCase} from 'lodash';
 export default {
     name: 'ContributeUpload',
     components: {
-        'upload-btn': UploadButton
+        'upload-btn': UploadButton,
+        ContributeUploadForm
     },
     mixins: [
         HttpClientMx
@@ -106,6 +122,8 @@ export default {
         return {
             file: null,
             contributeId: '',
+            isContributeBundled: false,
+            contribute: {},
             isRequestPending: false,
             uploadProgress: 0
         };
@@ -116,6 +134,16 @@ export default {
             let format = pascalCase(this.format);
             return `/job/contribute/import/full${type}${format}/${this.contributeId}`;
         },
+        isContributeValid() {
+            let isContributeValid = true;
+            if (!this.isContributeBundled) {
+                isContributeValid = !!Object.keys(this.contribute).length;
+            }
+            return isContributeValid;
+        },
+        isValid() {
+            return this.isContributeValid & !!this.file;
+        }
     },
     mounted() {
         this.getContributeId();
@@ -152,7 +180,10 @@ export default {
         upload() {
             const vm = this;
             const formData = new FormData();
-            formData.append('contribute', this.file);
+            if (!this.isContributeBundled) {
+                formData.append('contributeData', JSON.stringify(this.contribute));
+            }
+            formData.append('contributeFile', this.file);
             this.isRequestPending = true;
             let axiosRequestConfig = {
                 method: 'post',

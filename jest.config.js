@@ -15,7 +15,7 @@ module.exports= {
         '^.+\\.jsx?$': 'babel-jest'
     },
     'transformIgnorePatterns': [
-        'node_modules/(?!(ol|ol-tilecache|vuelayers|@babel|rxjs)/)'
+        'node_modules/(?!(ol|ol-tilecache|vuelayers|@babel|rxjs|vee-validate)/)'
     ],
     'roots': [
         '<rootDir>/assets/js/tests/unit/'
