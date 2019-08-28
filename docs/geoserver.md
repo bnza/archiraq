@@ -1,5 +1,86 @@
 # GeoServer
 
+## Workspaces
+
+Add ```archiraq``` workspace with the following information:
+
+Name: ```archiraq```  
+Namespace URI: ```http://archiraq.orientlab.net```  
+Check it as **Default Workspace**
+
+## Stores
+
+Add ```main_geo_db``` store using ```PostGIS Database``` Vector Data Source
+
+Workspace: ```archiraq```  
+Data Source Name: ```main_geo_db```  
+Check it as **Enabled**
+
+Fill the right connection parameters (host, port, database, username e password). Set ```geom``` as default schema.
+Check **Expose primary keys**
+
+## Layers
+
+Add following layers from ```main_geo_db```:
+
+### Admin boundaries
+#### Admbnd0
+
+Name: ```admbnd0```  
+Enabled: ```true```  
+Advertised : ```true```
+Title: ```admbnd0```  
+Abstract: ```Administrative boundaries (level 0 -> nations)```
+
+#### Admbnd1
+
+Name: ```admbnd1```  
+Enabled: ```true```  
+Advertised : ```true```
+Title: ```admbnd1```  
+Abstract: ```Administrative boundaries (level 1 -> governorates)```
+
+#### Admbnd2
+
+Name: ```admbnd2```  
+Enabled: ```true```  
+Advertised : ```true```
+Title: ```admbnd2```  
+Abstract: ```Administrative boundaries (level 2 -> districts)```
+
+### Archaeological data
+#### Remote sensing sites (point)
+
+Name: ```vw_site_rs_point```  
+Enabled: ```true```  
+Advertised : ```true```
+Title: ```Remote sensing (point)```  
+Abstract: ```Iraqi archaeological remote sensing sites (points)```
+
+#### Remote sensing sites (polygon)
+
+Name: ```vw_site_rs_poly```  
+Enabled: ```true```  
+Advertised : ```true```
+Title: ```Remote sensing (polygon)```  
+Abstract: ```Iraqi archaeological remote sensing sites (polygon)```
+
+#### Survey sites (point)
+
+Name: ```vw_site_survey_point```  
+Enabled: ```true```  
+Advertised : ```true```
+Title: ```Survey (point)```  
+Abstract: ```Iraqi archaeological survey sites (points)```
+
+#### Survey sites (polygon)
+
+Name: ```vw_site_survey_poly```  
+Enabled: ```true```  
+Advertised : ```true```
+Title: ```Survey (polygon)```  
+Abstract: ```Iraqi archaeological survey sites (polygon)```
+
 ## Security
 ### Users, Groups, and Roles
 
@@ -9,7 +90,22 @@ Add [new](https://docs.geoserver.org/stable/en/user/security/webadmin/ugr.html#a
 
 Add [new](https://docs.geoserver.org/stable/en/user/security/webadmin/ugr.html#add-new-jdbc-role-service) JDBC user/group service ```archiraq_user_group_service```. The connection URL must be in the form ```jdbc:postgresql://[host]:[port]/[dbname]?currentSchema=admin``` pointing to archiraq db.
 
+### Security Settings
+
+Change **Active role service** to ```archiraq_role_service```
+
+### Authentication
+#### Authentication Providers
+
 Change the ```default``` [authentication provider](https://docs.geoserver.org/stable/en/user/security/webadmin/auth.html#authentication-providers) to point to the ```archiraq_user_group_service``` created in the previous point.
+
+### Services
+
+Add new Service access rule 
+
+Service: ```wfs```  
+Method: ```getFeature```  
+Roles: ```ROLE_GUEST```
 
 ## Jetty
 
