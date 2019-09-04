@@ -16,7 +16,7 @@
         <env name="BING_API_KEY" value="BingApiKey" />
         <env name="GEOSERVER_BASE_URL" value="http://localhost:8080" />
         <env name="GEOSERVER_GUEST_AUTH" value="some:auth" />
-        <!--<env name="JOB_OWNER" value=":www-data" />-->
+        <env name="JOB_OWNER" value=":" />
         <!--<env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />-->
     </php>
 
