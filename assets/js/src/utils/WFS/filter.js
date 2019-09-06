@@ -130,10 +130,24 @@ const isInsensitiveLikeFilter = /*@__PURE__*/(expressions, negate) => {
     return maybeNegate(filter, negate);
 };
 
+/**
+ *
+ * @param {CQLBinaryExpressions} expressions
+ * @param {boolean} negate
+ */
+const stringContainsFilter = /*@__PURE__*/(expressions, negate) => {
+    if (!binaryPredicateIsValid(expressions)) {
+        return null;
+    }
+    const filter = likeFilter([expressions[0], wildcardWrap(expressions[1])], false);
+    return maybeNegate(filter, negate);
+};
+
 const wfsFilters = {
     equalToFilter,
     isInsensitiveLikeFilter,
     isLikeFilter,
+    stringContainsFilter,
     multipleEqualToFilter,
     multipleIsInsensitiveLikeFilter
 };

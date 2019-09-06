@@ -20,6 +20,12 @@ describe('getWfsFilter', () => {
         const filter = like(attribute, expression, '%', null, null, false);
         expect(getWfsFilter('isInsensitiveLikeFilter', [attribute, expression])).toEqual(filter);
     });
+    it('stringContainsFilter', () => {
+        const attribute = 'propertyName';
+        const expression = 'propertyValue';
+        const filter = like(attribute, wildcardWrap(expression), '%', null, null, false);
+        expect(getWfsFilter('stringContainsFilter', [attribute, expression])).toEqual(filter);
+    });
     describe('multipleEqualToFilter', () => {
         it('with single value', () => {
             const attribute = 'propertyName';

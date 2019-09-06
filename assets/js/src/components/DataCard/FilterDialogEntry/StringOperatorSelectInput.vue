@@ -32,6 +32,10 @@ export default {
                     value: 'EqualToFilter'
                 },
                 {
+                    text: 'contains',
+                    value: 'stringContainsFilter'
+                },
+                {
                     text: 'ILIKE',
                     value: 'IsInsensitiveLikeFilter'
                 },
@@ -42,6 +46,7 @@ export default {
             ],
             hints: {
                 'EqualToFilter': 'Equals',
+                'stringContainsFilter': 'Case insensitive substring pattern',
                 'IsInsensitiveLikeFilter': 'Case insensitive string pattern. Use % as wildcard',
                 'IsLikeFilter': 'Case sensitive string pattern. Use % as wildcard',
             }
