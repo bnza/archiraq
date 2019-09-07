@@ -22,7 +22,7 @@
                     data-test="clear"
                     flat
                     color="primary"
-                    @click="$emit('action', {method: 'clear'})"
+                    @click="clear()"
                 >
                     Clear
                 </v-btn>
@@ -30,15 +30,16 @@
                     data-test="submit"
                     flat
                     color="primary"
-                    @click="$emit('action', {method: 'submit'})"
+                    @click="submit()"
                 >
                     Submit
                 </v-btn>
+                <v-spacer />
                 <v-btn
                     data-test="close"
                     flat
                     color="primary"
-                    @click="isDialogActive = false"
+                    @click="close()"
                 >
                     Close
                 </v-btn>
@@ -53,7 +54,19 @@ export default {
     name: 'DataCardFilterDialog',
     mixins: [
         DataCardDialogMx
-    ]
+    ],
+    methods: {
+        clear() {
+            this.$emit('action', {method: 'clear'});
+        },
+        close() {
+            this.isDialogActive = false;
+        },
+        submit() {
+            this.$emit('action', {method: 'submit'});
+            this.close();
+        }
+    }
 };
 </script>
 
