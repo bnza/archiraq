@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Controller;
 use App\Controller\DataCrudController;
 use App\Repository\Geom\DistrictBoundaryRepository;
 use App\Repository\Voc\ChronologyRepository;
+use App\Repository\Voc\SurveyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -77,5 +78,25 @@ class DataCrudControllerTest extends \PHPUnit\Framework\TestCase
         $repo->expects($this->once())->method('getEntries');
         $this->em->method('getRepository')->willReturn($repo);
         $this->controller->getChronologyNames();
+    }
+
+    public function testGetSurveyCodesStartingWithWillReturnsExpectedValues()
+    {
+        /** @var  SurveyRepository|MockObject $repo */
+        $repo = $this->getMockBuilder(SurveyRepository::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['filterByCodeStartWith'])
+            ->getMock();
+        $repo->expects($this->once())->method('filterByCodeStartWith')->willReturn([
+            ['id' => 2, 'code' => 'ADAMS1972', 'name' => null, 'remarks' => null],
+            ['id' => 3, 'code' => 'ADDER1973', 'name' => null, 'remarks' => null],
+            ['id' => 4, 'code' => 'ADONIS1985', 'name' => null, 'remarks' => null],
+        ]);
+        $this->em->method('getRepository')->willReturn($repo);
+        $response = $this->controller->getSurveyCodesStartingWith('AD');
+        $this->assertJsonStringEqualsJsonString(
+            '["ADAMS1972","ADDER1973","ADONIS1985"]',
+            $response->getContent()
+        );
     }
 }

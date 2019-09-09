@@ -43,6 +43,15 @@
             predicate-key="chronology"
             @change="setCondition"
         />
+        <vw-site-survey-predicate-row
+            v-if="rowPredicateIsVisible('survey')"
+            predicate-attribute-label="Survey"
+            class="predicate-row"
+            data-test="survey"
+            :predicate-p="conditions.survey"
+            predicate-key="survey"
+            @change="setCondition"
+        />
         <string-multiple-predicate-row
             v-if="rowPredicateIsVisible('features')"
             class="predicate-row"
@@ -69,6 +78,7 @@
 <script>
 import StringPredicateRow from '@/components/DataCard/FilterDialogEntry/StringPredicateRow';
 import StringMultiplePredicateRow from '@/components/DataCard/FilterDialogEntry/StringMultiplePredicateRow';
+import VwSiteSurveyPredicateRow from '@/components/DataCard/FilterDialogEntry/VwSiteSurveyPredicateRow';
 import VwSiteChronologyPredicateRow from '@/components/DataCard/FilterDialogEntry/VwSiteChronologyPredicateRow';
 import VwSiteDistrictPredicateRow from '@/components/DataCard/FilterDialogEntry/VwSiteDistrictPredicateRow';
 import ConditionMx from '@/mixins/CQL/ConditionMx';
@@ -81,6 +91,7 @@ const predicateRowsVisibility = {
     modernName: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
     ancientName: [QUERY_TYPENAME_VW_SITES_SURVEY],
     nearestCity: [QUERY_TYPENAME_VW_SITES_SURVEY],
+    survey: [QUERY_TYPENAME_VW_SITES_SURVEY],
     threats: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
     features: [QUERY_TYPENAME_VW_SITES_SURVEY],
 };
@@ -112,6 +123,11 @@ const defaultConditions = () => {
             expressions: ['nearest_city'],
             operator: ''
         },
+        survey: {
+            negate: false,
+            expressions: ['survey_refs'],
+            operator: 'surveyRefsMatchFilter'
+        },
         features: {
             negate: false,
             expressions: ['features'],
@@ -131,6 +147,7 @@ export default {
         StringMultiplePredicateRow,
         VwSiteChronologyPredicateRow,
         VwSiteDistrictPredicateRow,
+        VwSiteSurveyPredicateRow,
         StringPredicateRow,
     },
     mixins: [

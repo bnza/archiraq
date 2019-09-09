@@ -143,11 +143,32 @@ const stringContainsFilter = /*@__PURE__*/(expressions, negate) => {
     return maybeNegate(filter, negate);
 };
 
+const surveyRefsMatchFilter = /*@__PURE__*/(expressions, negate) => {
+    let pattern = '';
+    if (!expressions[1] && !expressions[2]) {
+        return null;
+    }
+    if (expressions[1]) {
+        pattern = `${expressions[1]}.`.toUpperCase();
+    } else {
+        pattern += '%.';
+    }
+    if (expressions[2]) {
+        pattern += `${expressions[2]}%`;
+    } else {
+        pattern += '%';
+    }
+
+    const filter = likeFilter([expressions[0], pattern], false);
+    return maybeNegate(filter, negate);
+};
+
 const wfsFilters = {
     equalToFilter,
     isInsensitiveLikeFilter,
     isLikeFilter,
     stringContainsFilter,
+    surveyRefsMatchFilter,
     multipleEqualToFilter,
     multipleIsInsensitiveLikeFilter
 };

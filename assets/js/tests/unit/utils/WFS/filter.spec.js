@@ -26,6 +26,26 @@ describe('getWfsFilter', () => {
         const filter = like(attribute, wildcardWrap(expression), '%', null, null, false);
         expect(getWfsFilter('stringContainsFilter', [attribute, expression])).toEqual(filter);
     });
+    describe('surveyRefsMatchFilter', () => {
+        it('with survey code', () => {
+            const attribute = 'propertyName';
+            const expression = ['propertyValue'];
+            const filter = like(attribute, 'PROPERTYVALUE.%','%', null, null, false);
+            expect(getWfsFilter('surveyRefsMatchFilter', [attribute, expression])).toEqual(filter);
+        });
+        it('with survey ref', () => {
+            const attribute = 'propertyName';
+            const expressions = ['', 'propertyValue2'];
+            const filter = like(attribute, '%.propertyValue2%','%', null, null, false);
+            expect(getWfsFilter('surveyRefsMatchFilter', [attribute, ...expressions])).toEqual(filter);
+        });
+        it('with survey both', () => {
+            const attribute = 'propertyName';
+            const expressions = ['propertyValue', 'propertyValue2'];
+            const filter = like(attribute, 'PROPERTYVALUE.propertyValue2%','%', null, null, false);
+            expect(getWfsFilter('surveyRefsMatchFilter', [attribute, ...expressions])).toEqual(filter);
+        });
+    });
     describe('multipleEqualToFilter', () => {
         it('with single value', () => {
             const attribute = 'propertyName';

@@ -12,12 +12,12 @@
                 :predicate-attribute-label="predicateAttributeLabel"
             />
         </v-flex>
-        <v-flex xs4>
+        <v-flex xs2>
             <string-operator-select-input
                 :value.sync="predicate.operator"
             />
         </v-flex>
-        <v-flex xs4>
+        <v-flex xs6>
             <string-literal-text-field
                 :value="predicate.expressions[1]"
                 @update:value="setPredicateExpression"

@@ -2,7 +2,7 @@
     <v-text-field
         ref="field"
         :value="value"
-        label="Value"
+        :label="label"
         clearable
         @input="emitInputValue"
     />
@@ -12,6 +12,10 @@
 export default {
     name: 'StringLiteralTextField',
     props: {
+        label: {
+            type: String,
+            default: 'Value'
+        },
         value: {
             type: String,
             default: ''

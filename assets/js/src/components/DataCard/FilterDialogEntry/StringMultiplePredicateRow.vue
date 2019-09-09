@@ -12,14 +12,14 @@
                 :predicate-attribute-label="predicateAttributeLabel"
             />
         </v-flex>
-        <v-flex xs4>
+        <v-flex xs2>
             <v-text-field
                 value="="
                 label="Operator"
                 readonly
             />
         </v-flex>
-        <v-flex xs4>
+        <v-flex xs6>
             <slot name="select">
                 <v-autocomplete
                     ref="select"
