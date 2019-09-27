@@ -6,6 +6,7 @@
         <vw-site-read-data-card-toolbar
             slot="toolbar"
             :layer-id="baseTypename"
+            @edit="navigateToEditForm"
         />
         <vw-site-read-data-card-form
             v-if="item"
@@ -20,8 +21,9 @@ import {CID_VW_SITE_READ_DATA_CARD as CID} from '@/utils/cids';
 import DataCard from './DataCard';
 import VwSiteReadDataCardToolbar from './VwSiteReadDataCardToolbar';
 import VwSiteReadDataCardForm from './VwSiteReadDataCardForm';
-import VwSiteActionDataCardMx from '@/mixins/DataCard/VwSiteActionDataCardMx';
-import HttpClientMx from '@/mixins/HttpClientMx';
+import VwSiteItemActionDataCardMx from '@/mixins/DataCard/VwSiteItemActionDataCardMx';
+import {getMapDataItemEditFullPath} from '@/utils/spaRouteQuery';
+
 export default {
     name: CID,
     components: {
@@ -30,32 +32,12 @@ export default {
         VwSiteReadDataCardForm
     },
     mixins: [
-        HttpClientMx,
-        VwSiteActionDataCardMx
+        VwSiteItemActionDataCardMx
     ],
-    data() {
-        return {
-            item: null
-        };
-    },
-    watch: {
-        itemId() {
-            this.fetchItem();
-        }
-    },
-    mounted() {
-        this.fetchItem();
-    },
     methods: {
-        fetchItem() {
-            let vm = this;
-            let axiosRequestConfig = {
-                method: 'get',
-                url: `/data/site/${this.itemId}`,
-            };
-            this.clientRequest(axiosRequestConfig).then((response) => {
-                vm.item = response.data;
-            });
+        navigateToEditForm() {
+            const path = getMapDataItemEditFullPath(this.queryTypename, this.itemId);
+            this.$router.push(path);
         }
     }
 };

@@ -79,7 +79,7 @@ export default {
         fetchSurveys(pattern) {
             return this.clientRequest({
                 method:'get',
-                url: `/data/voc-survey/codes/${pattern}`
+                url: `/data/voc-survey/codes/${pattern}?code-only=1`
             }).then(
                 response => this.surveys = response.data
             );

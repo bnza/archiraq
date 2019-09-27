@@ -38,7 +38,7 @@
 import DataCard from '@/components/DataCard/DataCard';
 import VwSiteSurveyPopupItemDataCard from '@/components/DataCard/Interaction/VwSiteSurveyPopupItemDataCard';
 import VwSiteRsPopupItemDataCard from '@/components/DataCard/Interaction/VwSiteRsPopupItemDataCard';
-import {getMapDataItemFullPath} from '@/utils/spaRouteQuery';
+import {getMapDataItemReadFullPath} from '@/utils/spaRouteQuery';
 import {
     QUERY_TYPENAME_VW_SITES_RS,
     QUERY_TYPENAME_VW_SITES_SURVEY,
@@ -62,7 +62,7 @@ export default {
     },
     computed: {
         dataItemRoute() {
-            return getMapDataItemFullPath(this.queryTypename, this.feature.properties.id);
+            return getMapDataItemReadFullPath(this.queryTypename, this.feature.properties.id);
             //return `/map/data/${this.queryTypename}/${this.feature.properties.id}/read#item-form`;
         },
         queryTypename() {

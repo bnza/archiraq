@@ -74,7 +74,7 @@ describe('VwSiteDistrictPredicateRow', () => {
             expect(clientRequest).toHaveBeenCalledTimes(1);
             expect(clientRequest).toHaveBeenCalledWith({
                 method:'get',
-                url: '/data/voc-survey/codes/somePattern'
+                url: '/data/voc-survey/codes/somePattern?code-only=1'
             });
 
         });

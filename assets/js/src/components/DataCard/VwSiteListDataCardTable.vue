@@ -25,7 +25,7 @@
 
 import VwSiteListDataCardTableRow from '@/components/DataCard/VwSiteListDataCardTableRow';
 import DataCardTableMx from '../../mixins/DataCardTableMx';
-import {getMapDataItemFullPath} from '@/utils/spaRouteQuery';
+import {getMapDataItemReadFullPath} from '@/utils/spaRouteQuery';
 
 export default {
     name: 'VwSiteDataCardTable',
@@ -37,7 +37,7 @@ export default {
     ],
     methods: {
         navigateToItemForm(itemId) {
-            this.$router.push(getMapDataItemFullPath(this.queryTypename, itemId));
+            this.$router.push(getMapDataItemReadFullPath(this.queryTypename, itemId));
         }
     }
 };

@@ -51,7 +51,16 @@ export const dataTableRoutes = [
             default: true
         }
     },
-
+    {
+        path: `:queryTypename(${QUERY_TYPENAME_VW_SITES_SURVEY}|${QUERY_TYPENAME_VW_SITES_RS})/:itemId(\\d+)/:action(edit)`,
+        name: 'map_data_vw-site_edit',
+        components: {
+            default: DataCardContainer
+        },
+        props: {
+            default: true
+        }
+    },
 ];
 
 export const contributeRoutes = {

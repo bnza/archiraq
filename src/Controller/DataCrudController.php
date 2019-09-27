@@ -2,6 +2,14 @@
 
 namespace App\Controller;
 
+
+
+use App\Entity\SiteEntity;
+use App\Service\HttpDataSiteUpdater;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
 class DataCrudController extends AbstractCrudController
 {
     private $entitiesMap = [
@@ -28,6 +36,14 @@ class DataCrudController extends AbstractCrudController
         throw new \InvalidArgumentException("\"$entityName\" is not mapped in this controller");
     }
 
+    public function updateSite(Request $request, $id)
+    {
+        $updater = new HttpDataSiteUpdater($this->getEntityManager());
+        $updater->update($request->getContent());
+        $this->setStatusCode(204);
+        return $this->respond(null);
+    }
+
     public function getDistrictNames()
     {
         $data = $this->getRepository('geom-district')->getEntries();
@@ -42,13 +58,15 @@ class DataCrudController extends AbstractCrudController
         return $this->respond($data);
     }
 
-    public function getSurveyCodesStartingWith(string $pattern)
+    public function getSurveyCodesStartingWith(Request $request, string $pattern)
     {
         $data = $this->getRepository('voc-survey')->filterByCodeStartWith($pattern);
-        $data = array_map(function ($entity) {
-            return $entity['code'];
-        },
-        $data);
+        if ($request->query->has('code-only') && $request->query->get('code-only') === '1') {
+            $data = array_map(function ($entity) {
+                return $entity['code'];
+            },
+                $data);
+        }
         return $this->respond($data);
     }
 }

@@ -19,6 +19,7 @@ class SiteRepository extends AbstractCrudRepository
     public function addQueryBuilderLeftJoins(QueryBuilder $qb): AbstractCrudRepository
     {
         $qb->leftJoin('e.chronologies', 'chronologies');
+        $qb->leftJoin('e.contribute', 'contribute');
         $qb->leftJoin('chronologies.chronology', 'voc_chronology');
         $qb->leftJoin('e.surveys', 'surveys');
         $qb->leftJoin('surveys.survey', 'voc_survey');
@@ -36,6 +37,7 @@ class SiteRepository extends AbstractCrudRepository
         $qb->addSelect('surveys');
         $qb->addSelect('voc_survey');
         $qb->addSelect('district');
+        $qb->addSelect('contribute');
         return $this;
     }
 }

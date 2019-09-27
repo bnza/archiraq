@@ -9,6 +9,8 @@ use App\Repository\Voc\ChronologyRepository;
 use App\Repository\Voc\SurveyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class DataCrudControllerTest extends \PHPUnit\Framework\TestCase
@@ -80,6 +82,9 @@ class DataCrudControllerTest extends \PHPUnit\Framework\TestCase
         $this->controller->getChronologyNames();
     }
 
+    /**
+     * @
+     */
     public function testGetSurveyCodesStartingWithWillReturnsExpectedValues()
     {
         /** @var  SurveyRepository|MockObject $repo */
@@ -92,8 +97,10 @@ class DataCrudControllerTest extends \PHPUnit\Framework\TestCase
             ['id' => 3, 'code' => 'ADDER1973', 'name' => null, 'remarks' => null],
             ['id' => 4, 'code' => 'ADONIS1985', 'name' => null, 'remarks' => null],
         ]);
+        $request = $this->createMock(Request::class);
+        $request->query = new ParameterBag(['code-only' => '1']);
         $this->em->method('getRepository')->willReturn($repo);
-        $response = $this->controller->getSurveyCodesStartingWith('AD');
+        $response = $this->controller->getSurveyCodesStartingWith($request, 'AD');
         $this->assertJsonStringEqualsJsonString(
             '["ADAMS1972","ADDER1973","ADONIS1985"]',
             $response->getContent()

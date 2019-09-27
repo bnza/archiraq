@@ -2,7 +2,21 @@
     <list-row-actions-menu
         tooltip-text="Menu"
     >
-        <v-list data-test="vw-site-table--action-menu">
+        <v-list data-test="vw-site-form--action-menu">
+            <v-list-tile
+                v-if="authHasRoleEditor"
+                data-test="edit-tile"
+                @click="$emit('edit')"
+            >
+                <v-list-tile-action>
+                    <v-icon>
+                        edit
+                    </v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Edit</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
             <v-list-tile
                 @click="$router.back()"
             >
@@ -11,7 +25,6 @@
                         arrow_back
                     </v-icon>
                 </v-list-tile-action>
-
                 <v-list-tile-content>
                     <v-list-tile-title>Back</v-list-tile-title>
                 </v-list-tile-content>

@@ -47,9 +47,9 @@
                 wrap
             >
                 <v-text-field
-                    readonly
                     label="Nearest city"
                     :value="item.nearest_city"
+                    @change="updateItemProp('nearest_city', $event)"
                 />
             </v-flex>
         </v-layout>
@@ -81,9 +81,9 @@
                 wrap
             >
                 <v-text-field
-                    readonly
                     label="SBAH number"
                     :value="item.sbah_no"
+                    @change="updateItemProp('sbah_no', $event)"
                 />
             </v-flex>
             <v-flex
@@ -91,9 +91,9 @@
                 wrap
             >
                 <v-text-field
-                    readonly
                     label="Cadastre"
                     :value="item.cadastre"
+                    @change="updateItemProp('cadastre', $event)"
                 />
             </v-flex>
             <v-flex
@@ -116,9 +116,9 @@
                 wrap
             >
                 <v-text-field
-                    readonly
                     label="Modern name"
                     :value="item.modern_name"
+                    @change="updateItemProp('modern_name', $event)"
                 />
             </v-flex>
             <v-flex
@@ -126,9 +126,9 @@
                 wrap
             >
                 <v-text-field
-                    readonly
                     label="Ancient name"
                     :value="item.ancient_name"
+                    @change="updateItemProp('ancient_name', $event)"
                 />
             </v-flex>
             <v-flex
@@ -136,9 +136,9 @@
                 wrap
             >
                 <v-checkbox
-                    readonly
                     label="Ancient name uncertain"
                     :input-value="item.ancient_name_uncertain"
+                    @change="updateItemProp('ancient_name_uncertain', $event)"
                 />
             </v-flex>
         </v-layout>
@@ -147,7 +147,22 @@
             wrap
         >
             <v-flex xs12>
-                <h4>Chronology</h4>
+                <h4>
+                    Chronology
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                            <v-icon
+                                color="indigo"
+                                dark
+                                v-on="on"
+                                @click="openChronologiesNewDialog"
+                            >
+                                add_circle_outline
+                            </v-icon>
+                        </template>
+                        <span>Add chronology</span>
+                    </v-tooltip>
+                </h4>
             </v-flex>
         </v-layout>
         <v-layout
@@ -158,8 +173,11 @@
                 xs12
                 wrap
             >
-                <vw-site-chronologies-read-data-card-table
+                <vw-site-chronologies-edit-data-card-table
+                    ref="chronologiesTable"
                     :items="item.chronologies || []"
+                    type="chronology"
+                    @change="updateItemProp('chronologies', $event)"
                 />
             </v-flex>
         </v-layout>
@@ -168,7 +186,22 @@
             wrap
         >
             <v-flex xs12>
-                <h4>Surveys</h4>
+                <h4>
+                    Surveys
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                            <v-icon
+                                color="indigo"
+                                dark
+                                v-on="on"
+                                @click="openSurveysNewDialog"
+                            >
+                                add_circle_outline
+                            </v-icon>
+                        </template>
+                        <span>Add survey</span>
+                    </v-tooltip>
+                </h4>
             </v-flex>
         </v-layout>
         <v-layout
@@ -179,8 +212,11 @@
                 xs12
                 wrap
             >
-                <vw-site-surveys-read-data-card-table
+                <vw-site-surveys-edit-data-card-table
+                    ref="surveysTable"
                     :items="item.surveys || []"
+                    type="survey"
+                    @change="updateItemProp('surveys', $event)"
                 />
             </v-flex>
         </v-layout>
@@ -201,9 +237,9 @@
                 wrap
             >
                 <v-checkbox
-                    readonly
                     label="Ancient structures"
                     :input-value="item.features_ancient_structures"
+                    @change="updateItemProp('features_ancient_structures', $event)"
                 />
             </v-flex>
             <v-flex
@@ -211,9 +247,9 @@
                 wrap
             >
                 <v-checkbox
-                    readonly
                     label="Epigraphic"
                     :input-value="item.features_epigraphic"
+                    @change="updateItemProp('features_epigraphic', $event)"
                 />
             </v-flex>
             <v-flex
@@ -221,9 +257,9 @@
                 wrap
             >
                 <v-checkbox
-                    readonly
                     label="Paleochannels"
                     :input-value="item.features_paleochannels"
+                    @change="updateItemProp('features_paleochannels', $event)"
                 />
             </v-flex>
         </v-layout>
@@ -236,9 +272,9 @@
                 wrap
             >
                 <v-textarea
-                    readonly
                     label="Features remarks"
                     :value="item.features_remarks"
+                    @change="updateItemProp('features_remarks', $event)"
                 />
             </v-flex>
         </v-layout>
@@ -259,9 +295,9 @@
                 wrap
             >
                 <v-checkbox
-                    readonly
                     label="Bulldozer"
                     :input-value="item.threats_bulldozer"
+                    @change="updateItemProp('threats_bulldozer', $event)"
                 />
             </v-flex>
             <v-flex
@@ -269,9 +305,9 @@
                 wrap
             >
                 <v-checkbox
-                    readonly
                     label="Cultivation trenches"
                     :input-value="item.threats_cultivation_threnches"
+                    @change="updateItemProp('threats_cultivation_threnches', $event)"
                 />
             </v-flex>
             <v-flex
@@ -279,9 +315,9 @@
                 wrap
             >
                 <v-checkbox
-                    readonly
                     label="Looting"
                     :input-value="item.threats_looting"
+                    @change="updateItemProp('threats_looting', $event)"
                 />
             </v-flex>
         </v-layout>
@@ -294,9 +330,9 @@
                 wrap
             >
                 <v-checkbox
-                    readonly
-                    label="Modern canals"
                     :input-value="item.threats_modern_canals"
+                    label="Modern canals"
+                    @change="updateItemProp('threats_modern_canals', $event)"
                 />
             </v-flex>
             <v-flex
@@ -304,9 +340,9 @@
                 wrap
             >
                 <v-checkbox
-                    readonly
                     label="Modern structures"
-                    :input-value="item.threats_structures"
+                    :value="item.threats_structures"
+                    @change="updateItemProp('threats_structures', $event)"
                 />
             </v-flex>
             <v-flex
@@ -314,9 +350,9 @@
                 wrap
             >
                 <v-checkbox
-                    readonly
                     label="Natural dunes"
-                    :input-value="item.threats_natural_dunes"
+                    :value="item.threats_natural_dunes"
+                    @change="updateItemProp('threats_natural_dunes', $event)"
                 />
             </v-flex>
         </v-layout>
@@ -337,9 +373,9 @@
                 wrap
             >
                 <v-textarea
-                    readonly
                     label="Remarks"
                     :value="item.remarks"
+                    @change="updateItemProp('remarks', $event)"
                 />
             </v-flex>
         </v-layout>
@@ -370,9 +406,9 @@
                 wrap
             >
                 <v-text-field
-                    readonly
                     label="Compiler"
                     :value="item.compiler"
+                    @change="updateItemProp('compiler', $event)"
                 />
             </v-flex>
             <v-flex
@@ -380,9 +416,9 @@
                 wrap
             >
                 <v-text-field
-                    readonly
                     label="Credits"
                     :value="item.credits"
+                    @change="updateItemProp('credits', $event)"
                 />
             </v-flex>
         </v-layout>
@@ -390,22 +426,28 @@
 </template>
 
 <script>
-import VwSiteChronologiesReadDataCardTable from '@/components/DataCard/VwSiteChronologiesReadDataCardTable';
-import VwSiteSurveysReadDataCardTable from '@/components/DataCard/VwSiteSurveysReadDataCardTable';
+import VwSiteChronologiesEditDataCardTable from '@/components/DataCard/VwSiteChronologiesEditDataCardTable';
+import VwSiteSurveysEditDataCardTable from '@/components/DataCard/VwSiteSurveysEditDataCardTable';
 import {GET_DISTRICT_GOVERNORATE_NAME, GET_DISTRICT_NATION_NAME} from '@/store/vocabulary/getters';
 import {mapGetters} from 'vuex';
+import {cloneDeep} from 'lodash';
 
 export default {
-    name: 'VwSiteReadDataCardForm',
+    name: 'VwSiteEditDataCardForm',
     components: {
-        VwSiteChronologiesReadDataCardTable,
-        VwSiteSurveysReadDataCardTable
+        VwSiteChronologiesEditDataCardTable,
+        VwSiteSurveysEditDataCardTable
     },
     props: {
         item: {
             type: Object,
             required: true
         }
+    },
+    data() {
+        return {
+            modal: ''
+        };
     },
     computed: {
         ...mapGetters({
@@ -419,6 +461,20 @@ export default {
             return this.getDistrictNationName(this.item.district.name);
         }
     },
+    methods: {
+        updateItemProp(prop, value) {
+            //const item = merge({}, this.item, {[prop]: value});
+            const _item = cloneDeep(this.item);
+            _item[prop] = value;
+            this.$emit('update:item', _item);
+        },
+        openChronologiesNewDialog() {
+            this.$refs.chronologiesTable.openNewDialog();
+        },
+        openSurveysNewDialog() {
+            this.$refs.surveysTable.openNewDialog();
+        }
+    }
 };
 </script>
 

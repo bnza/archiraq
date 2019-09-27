@@ -17,6 +17,13 @@ data__crud__read:
         entityName: '[\w\-?]+'
         id: '\d+'
 
+data__site__crud__update:
+    path:       /data/site/{id}
+    controller: App\Controller\DataCrudController::updateSite
+    methods:    [PUT]
+    requirements:
+        id: '\d+'
+
 job_generate_id:
     path:       /job/id/generate
     controller: App\Controller\JobController::generateId

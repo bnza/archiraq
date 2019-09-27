@@ -19,6 +19,14 @@ export default {
             /* webpackChunkName: "VwSiteListDataCard" */
             './VwSiteListDataCard'
         ),
+        VwSiteSurveyEditDataCard: () => import(
+            /* webpackChunkName: "VwSiteEditDataCard" */
+            './VwSiteEditDataCard'
+        ),
+        VwSiteRsEditDataCard: () => import(
+            /* webpackChunkName: "VwSiteEditDataCard" */
+            './VwSiteEditDataCard'
+        ),
         VwSiteSurveyListDataCard: () => import(
             /* webpackChunkName: "VwSiteListDataCard" */
             './VwSiteListDataCard'

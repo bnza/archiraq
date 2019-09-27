@@ -1,6 +1,9 @@
 <template>
     <v-fragment>
-        <vw-site-form-action-menu />
+        <vw-site-form-action-menu
+            data-test="action-menu"
+            @edit="$emit('edit')"
+        />
 
         <v-toolbar-title>{{ title }}</v-toolbar-title>
     </v-fragment>
@@ -13,7 +16,7 @@ import VwSiteActionDataCardToolbarMx from '@/mixins/DataCard/VwSiteActionDataCar
 import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 
 export default {
-    name: 'VwSiteDataCardToolbar',
+    name: 'VwSiteReadDataCardToolbar',
     components: {
         VFragment,
         VwSiteFormActionMenu

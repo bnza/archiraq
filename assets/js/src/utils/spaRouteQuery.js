@@ -63,6 +63,18 @@ export const navigateToQuery = (router, route) => {
     router.push(getFullPathFromRoute(route));
 };
 
-export const getMapDataItemFullPath = (queryTypename, itemId) => {
-    return `/map/data/${queryTypename}/${itemId}/read#item-form`;
+const getMapDataBasePath = (queryTypename) => {
+    return `/map/data/${queryTypename}`;
+};
+
+const getMapDataItemBasePath = (queryTypename, itemId) => {
+    return `${getMapDataBasePath(queryTypename)}/${itemId}`;
+};
+
+export const getMapDataItemEditFullPath = (queryTypename, itemId) => {
+    return `${getMapDataItemBasePath(queryTypename, itemId)}/edit#item-form`;
+};
+
+export const getMapDataItemReadFullPath = (queryTypename, itemId) => {
+    return `${getMapDataItemBasePath(queryTypename, itemId)}/read#item-form`;
 };

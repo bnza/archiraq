@@ -106,7 +106,7 @@ class SurveyEntity implements EntityInterface
      * @param mixed $name
      * @return SurveyEntity
      */
-    public function setName(string $name)
+    public function setName(?string $name)
     {
         $this->name = $name;
         return $this;
@@ -124,7 +124,7 @@ class SurveyEntity implements EntityInterface
      * @param mixed $remarks
      * @return SurveyEntity
      */
-    public function setRemarks(string $remarks)
+    public function setRemarks(?string $remarks)
     {
         $this->remarks = $remarks;
         return $this;

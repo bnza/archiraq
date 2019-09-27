@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SiteRepository")
@@ -321,7 +322,7 @@ class SiteEntity implements EntityInterface
      *
      * @return SiteEntity
      */
-    public function setNearestCity(string $nearest_city): SiteEntity
+    public function setNearestCity(?string $nearest_city): SiteEntity
     {
         $this->nearest_city = $nearest_city;
 
@@ -431,7 +432,7 @@ class SiteEntity implements EntityInterface
     /**
      * @return ArrayCollection
      */
-    public function getChronologies(): ArrayCollection
+    public function getChronologies(): Collection
     {
         return $this->chronologies;
     }
@@ -448,7 +449,7 @@ class SiteEntity implements EntityInterface
     /**
      * @return ArrayCollection
      */
-    public function getSurveys(): ArrayCollection
+    public function getSurveys(): Collection
     {
         return $this->surveys;
     }
