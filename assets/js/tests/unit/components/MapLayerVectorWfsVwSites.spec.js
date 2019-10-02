@@ -31,7 +31,13 @@ beforeEach(() => {
                     return () => true;
                 },
                 set() {}
-            }
+            },
+            refresh: {
+                get() {
+                    return () => false;
+                },
+                set() {}
+            },
         },
         plugins: [
             VueLayers

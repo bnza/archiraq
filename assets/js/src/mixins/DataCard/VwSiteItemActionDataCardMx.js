@@ -20,14 +20,15 @@ export default {
         this.fetchItem();
     },
     methods: {
+        fetchCallback() {},
         fetchItem() {
-            let vm = this;
             let axiosRequestConfig = {
                 method: 'get',
                 url: `/data/site/${this.itemId}`,
             };
-            this.clientRequest(axiosRequestConfig).then((response) => {
-                vm.item = response.data;
+            return this.clientRequest(axiosRequestConfig).then((response) => {
+                this.item = response.data;
+                this.fetchCallback();
             });
         },
     }

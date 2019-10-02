@@ -4,7 +4,9 @@ export const CID_MAP_LAYER_SETTINGS_DIALOG = 'MapLayerSettingsDialog';
 export const CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0 = 'MapLayerVectorWfsAdminBounds0';
 export const CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1 = 'MapLayerVectorWfsAdminBounds1';
 export const CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2 = 'MapLayerVectorWfsAdminBounds2';
-export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES = 'MapLayerVectorWfsVwSites';
+export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES = 'MapLayerVectorWfsVwSite';
+export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS = 'MapLayerVectorWfsVwSiteRs';
+export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY = 'MapLayerVectorWfsVwSiteSurvey';
 export const CID_THE_MAIN_NAVIGATION_DRAWER = 'TheMainNavigationDrawer';
 export const CID_THE_MAP_CONTAINER = 'TheMapContainer';
 export const CID_THE_MAIN_TOOLBAR = 'TheMainToolbar';
@@ -15,12 +17,14 @@ export const CID_THE_SNACKBAR = 'TheSnackbar';
 export const CID_VW_SITE_LIST_DATA_CARD = 'VwSiteListDataCard';
 export const CID_VW_SITE_READ_DATA_CARD = 'VwSiteReadDataCard';
 export const CID_VW_SITE_EDIT_DATA_CARD = 'VwSiteEditDataCard';
+export const CID_VW_SITE_INTERACTION_MODIFY = 'VwSiteInteractionModify';
 export const CID_VW_SITE_SURVEY_LIST_DATA_CARD = 'VwSiteSurveyListDataCard';
 export const CID_VW_SITE_RS_LIST_DATA_CARD = 'VwSiteRsListDataCard';
 
 export const QUERY_TYPENAME_VW_SITES = 'vw-site';
 export const QUERY_TYPENAME_VW_SITES_SURVEY = 'vw-site-survey';
 export const QUERY_TYPENAME_VW_SITES_RS = 'vw-site-rs';
+export const QUERY_TYPENAME_VW_SITES_EDIT = 'vw-site-edit';
 
 export const WFS_TYPENAME_VW_SITES_SURVEY = 'vw_site_survey';
 export const WFS_TYPENAME_VW_SITES_RS = 'vw_site_rs';

@@ -44,7 +44,7 @@ export default {
     },
     methods: {
         zoomToItemFeature() {
-            this.mapContainerCallMethod('zoomToItemGeometry', this.item);
+            this.mapContainerCallMethod('zoomToItemGeometry', this.item.geom);
             this.$vuetify.goTo('#map');
         },
     }

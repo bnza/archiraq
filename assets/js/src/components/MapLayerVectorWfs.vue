@@ -65,6 +65,10 @@ export default {
         filter: {
             type: Object,
             default: null
+        },
+        refresh: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {
@@ -75,16 +79,26 @@ export default {
     },
     watch: {
         typename() {
-            this.$refs.source.refresh();
+            this.refreshSource();
         },
         filter() {
-            this.$refs.source.refresh();
+            this.refreshSource();
+        },
+        refresh(flag) {
+            if (flag) {
+                this.refreshSource().then(() => {
+                    this.$emit('update:refresh', false);
+                });
+            }
         }
     },
     created() {
         this.visible = this.visibleP;
     },
     methods: {
+        refreshSource() {
+            return this.$refs.source.refresh();
+        },
         urlFunction (extent, resolution, projection) {
             return this.$store.state.geoserver.baseUrl + 'wfs';
         },

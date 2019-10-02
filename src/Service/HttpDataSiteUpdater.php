@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Geom\SiteBoundaryEntity;
 use App\Entity\SiteChronologyEntity;
 use App\Entity\SiteSurveyEntity;
 use App\Serializer\Denormalizer\HttpDataSiteEntityDenormalizer;
@@ -34,7 +35,7 @@ class HttpDataSiteUpdater extends AbstractHttpDataUpdater
 
     public function getChildrenUpdater(string $type): HttpDataSiteChildrenUpdater
     {
-        if (\array_key_exists($type, $this->childrenUpdaters)) {
+        if (!\array_key_exists($type, $this->childrenUpdaters)) {
             $this->childrenUpdaters[$type] = new HttpDataSiteChildrenUpdater($this->em, $type);
         }
 
@@ -56,7 +57,10 @@ class HttpDataSiteUpdater extends AbstractHttpDataUpdater
         $this->em->beginTransaction();
 
         try {
+            $geomData = $data['geom'];
+            unset($data['geom']);
             $site = $this->mergeSite($data);
+            $this->updateGeom($geomData, $site);
             $this->updateChildren($site, $data);
             $this->em->flush();
             $this->em->commit();
@@ -70,6 +74,14 @@ class HttpDataSiteUpdater extends AbstractHttpDataUpdater
     {
         $site = $this->getDenormalizer()->denormalize($data, SiteEntity::class);
         return $this->em->merge($site);
+    }
+
+    private function updateGeom(array $geomData, SiteEntity $site)
+    {
+        $geom = new SiteBoundaryEntity();
+        $geom->setSite($site);
+        $geom->setGeom($geomData['geom']);
+        $this->em->merge($geom);
     }
 
     private function updateChildren(SiteEntity $site, array &$data)

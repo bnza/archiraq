@@ -11,9 +11,9 @@ import DataCardContainer from '@/components/DataCard/DataCardContainer';
 import MapToolbarButtons from '@/components/MapToolbarButtons';
 import MapFooterData from '@/components/MapFooterData';
 import MapDrawerEntries from '@/components/MapDrawerEntries';
-import {QUERY_TYPENAME_VW_SITES, QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS} from '@/utils/cids';
+import VwSiteInteractionModify from '@/components/DataCard/Interaction/VwSiteInteractionModify';
+import {QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS} from '@/utils/cids';
 import {displaySnackbarFn} from '@/mixins/SnackbarComponentStoreMx';
-import {ROLE_GUEST, ROLE_USER, ROLE_EDITOR, ROLE_ADMIN} from '@/store/auth';
 import {isAuthenticated} from '@/store/auth/getters';
 import ContributeUploadStatus from '@/components/ContributeUploadStatus';
 
@@ -55,7 +55,7 @@ export const dataTableRoutes = [
         path: `:queryTypename(${QUERY_TYPENAME_VW_SITES_SURVEY}|${QUERY_TYPENAME_VW_SITES_RS})/:itemId(\\d+)/:action(edit)`,
         name: 'map_data_vw-site_edit',
         components: {
-            default: DataCardContainer
+            default: DataCardContainer,
         },
         props: {
             default: true

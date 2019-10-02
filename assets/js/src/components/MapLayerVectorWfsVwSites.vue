@@ -5,6 +5,7 @@
             :typename="typename"
             :visible-p="true"
             :filter="filter"
+            :refresh.sync="refresh"
         >
             <vl-style-box slot="style">
                 <vl-style-circle :radius="3">
@@ -67,11 +68,6 @@ export default {
             required: true
         }
     },
-    data() {
-        return {
-            cid: CID,
-        };
-    },
     computed: {
         queryTypename() {
             return kebabCase(this.baseTypename);
@@ -92,10 +88,19 @@ export default {
                     filter
                 });
             }
+        },
+        refresh: {
+            get() {
+                return this.getProp('refresh');
+            },
+            set(value) {
+                this.setProp('refresh', value);
+            }
         }
     },
     created() {
         this.filter = null;
+        this.refresh = false;
     }
 };
 </script>

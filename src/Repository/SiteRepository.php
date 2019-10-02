@@ -24,6 +24,7 @@ class SiteRepository extends AbstractCrudRepository
         $qb->leftJoin('e.surveys', 'surveys');
         $qb->leftJoin('surveys.survey', 'voc_survey');
         $qb->leftJoin('e.district', 'district');
+        $qb->leftJoin('e.geom', 'geometry');
         return $this;
     }
 
@@ -38,6 +39,7 @@ class SiteRepository extends AbstractCrudRepository
         $qb->addSelect('voc_survey');
         $qb->addSelect('district');
         $qb->addSelect('contribute');
+        $qb->addSelect('geometry');
         return $this;
     }
 }

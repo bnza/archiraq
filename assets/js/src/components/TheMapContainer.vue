@@ -43,17 +43,22 @@
             <map-layer-group-admin-bounds />
             <map-layer-vector-wfs-vw-sites
                 ref="layerVwSite"
-                :cid-p="WFS_TYPENAME_VW_SITES_SURVEY"
+                :cid-p="CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY"
                 :base-typename="WFS_TYPENAME_VW_SITES_SURVEY"
                 feature-color="#EF6C00"
                 :zoom="zoom"
             />
             <map-layer-vector-wfs-vw-sites
                 ref="layerVwSiteRs"
-                :cid-p="WFS_TYPENAME_VW_SITES_RS"
+                :cid-p="CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS"
                 :base-typename="WFS_TYPENAME_VW_SITES_RS"
                 feature-color="#8E24AA"
                 :zoom="zoom"
+            />
+            <component
+                :is="mapContainerDynamicEditComponent"
+                v-if="mapContainerDynamicEditComponent"
+                name="editVectorLayer"
             />
             <the-map-layers-drawer />
         </vl-map>
@@ -73,6 +78,8 @@ import VlSourceEsri from './VlSourceEsri';
 import {
     CID_THE_MAP_CONTAINER as CID,
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
+    CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS,
+    CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
     WFS_TYPENAME_VW_SITES_SURVEY,
     WFS_TYPENAME_VW_SITES_RS,
 } from '../utils/cids';
@@ -87,7 +94,11 @@ export default {
         TheMapLayersDrawer,
         MapLayerVectorWfsVwSites,
         MapLayerGroupAdminBounds,
-        VlSourceEsri
+        VlSourceEsri,
+        VwSiteInteractionModify: () => import(
+            /* webpackChunkName: "VwSiteInteractionModify" */
+            '@/components/DataCard/Interaction/VwSiteInteractionModify'
+        ),
     },
     mixins: [
         ComponentStoreVisibleMx,
@@ -102,6 +113,8 @@ export default {
         };
     },
     computed: {
+        CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS,
+        CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
         WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY,
         WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
         bingApiKey() {
@@ -134,6 +147,7 @@ export default {
         this.mapContainerBaseMap = 'bing';
         this.mapContainerBingImagerySet = 'AerialWithLabels';
         this.mapContainerCallee = null;
+        this.mapContainerDynamicEditComponent = '';
     },
     mounted() {
         window.addEventListener('resize', this.resizeMap);
@@ -158,8 +172,8 @@ export default {
             }, this), 100);
             storeCoords(pixel);
         },
-        zoomToItemGeometry(item) {
-            this.$refs.view.fit(item.geom);
+        zoomToItemGeometry(geom) {
+            this.$refs.view.fit(geom);
         },
         zoomToLayer(layerId) {
             const layer = this.$refs.map.getLayerById(layerId);

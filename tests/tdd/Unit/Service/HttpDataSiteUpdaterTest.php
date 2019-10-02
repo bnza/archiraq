@@ -3,10 +3,7 @@
 
 namespace App\Tests\Unit\Service;
 
-use App\Entity\Geom\DistrictBoundaryEntity;
 use App\Entity\SiteEntity;
-use App\Entity\Voc\ChronologyEntity;
-use App\Serializer\Denormalizer\HttpDataSiteEntityDenormalizer;
 use App\Service\HttpDataSiteChildrenUpdater;
 use App\Service\HttpDataSiteUpdater;
 use Doctrine\ORM\EntityManagerInterface;

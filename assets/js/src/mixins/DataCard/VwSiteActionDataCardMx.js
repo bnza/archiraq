@@ -1,4 +1,4 @@
-import {snakeCase} from 'lodash';
+import {snakeCase, camelCase, upperFirst} from 'lodash';
 
 export default {
     data() {
@@ -23,6 +23,9 @@ export default {
          */
         baseTypename() {
             return snakeCase(this.queryTypename);
+        },
+        wfsComponentCid() {
+            return `MapLayerVectorWfs${upperFirst(camelCase(this.baseTypename))}`;
         },
         typename() {
             return `archiraq:${this.baseTypename}_poly`;

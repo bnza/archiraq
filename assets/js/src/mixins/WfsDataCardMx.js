@@ -6,9 +6,19 @@ export default {
     mixins: [
         DataCardMx
     ],
+    computed: {
+        geoserver() {
+            return {
+                auth: {
+                    guest: this.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`]
+                },
+                baseUrl: this.$store.state.geoserver.baseUrl
+            };
+        }
+    },
     methods: {
         getUrl() {
-            return this.$store.state.geoserver.baseUrl + 'wfs?' +
+            return  this.geoserver.baseUrl + 'wfs?' +
                 getFeatureQueryString({
                     typename: this.typename,
                     filter: this.filter,
@@ -20,7 +30,7 @@ export default {
             let axiosRequestConfig = {
                 method: 'get',
                 url: this.getUrl(),
-                headers: setWfsGetFeatureRequestHeaders({}, this.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`])
+                headers: setWfsGetFeatureRequestHeaders({}, this.geoserver.auth.guest)
             };
             try {
                 this.isRequestPending = true;

@@ -122,6 +122,18 @@ export default {
                 });
             }
         },
+        mapContainerDynamicEditComponent: {
+            get() {
+                return this.componentsGetComponentProp(CID_THE_MAP_CONTAINER, 'dynamicEditComponent');
+            },
+            set(value) {
+                this.componentsSetComponentProp({
+                    cid: CID_THE_MAP_CONTAINER,
+                    prop: 'dynamicEditComponent',
+                    value: value
+                });
+            }
+        },
     },
     methods: {
         /**

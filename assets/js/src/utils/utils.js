@@ -187,3 +187,11 @@ export const yearToCanonicalString = (year) => {
     year = Math.round(year);
     return year < 0 ? `${Math.abs(year)} b.C.` : `${year} a.D.`;
 };
+
+export const featureFromGeometryString = (geometryString) => {
+    return {
+        'id': Math.floor(Math.random() * 10000),
+        'type': 'Feature',
+        'geometry': JSON.parse(geometryString)
+    };
+};

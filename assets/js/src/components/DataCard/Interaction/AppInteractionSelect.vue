@@ -5,7 +5,7 @@
         :toggle-condition="toggleCondition"
     >
         <vl-overlay
-            v-if="currentFeature"
+            v-if="currentFeature && currentFeature.properties"
             :position="pointOnSurface(currentFeature.geometry)"
             :positioning="positioning"
             :auto-pan="true"

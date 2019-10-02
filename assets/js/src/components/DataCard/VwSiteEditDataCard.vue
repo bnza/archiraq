@@ -11,6 +11,7 @@
             v-if="item"
             slot="data"
             :item.sync="item"
+            :interaction-modify-ready="interactionModifyReady"
         />
         <template slot="actions">
             <v-spacer />
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 import {CID_VW_SITE_EDIT_DATA_CARD as CID} from '@/utils/cids';
 import DataCard from './DataCard';
 import VwSiteEditDataCardToolbar from '@/components/DataCard/VwSiteEditDataCardToolbar';
@@ -51,9 +53,38 @@ export default {
         VwSiteEditDataCardForm
     },
     mixins: [
+        MapContainerComponentStoreMx,
         VwSiteItemActionDataCardMx
     ],
+    data() {
+        return {
+            cid: CID,
+        };
+    },
+    computed: {
+        interactionModifyReady: {
+            get() {
+                return this.getProp('interactionModifyReady');
+            },
+            set(value) {
+                this.setProp('interactionModifyReady', value);
+            }
+        }
+    },
+    created() {
+        this.interactionModifyReady = false;
+    },
     methods: {
+        fetchCallback() {
+            this.mapContainerCallMethod('zoomToItemGeometry', JSON.parse(this.item.geom.geom));
+        },
+        refreshMapLayerSource() {
+            this.componentsSetComponentProp({
+                cid: this.wfsComponentCid,
+                prop: 'refresh',
+                value: true
+            });
+        },
         submit() {
             this.isRequestPending = true;
             let axiosRequestConfig = {
@@ -62,6 +93,7 @@ export default {
                 data: this.item
             };
             this.clientXsrfRequest(axiosRequestConfig).then(() => {
+                this.refreshMapLayerSource();
                 this.$router.back();
             }).finally(() => {
                 this.isRequestPending = false;

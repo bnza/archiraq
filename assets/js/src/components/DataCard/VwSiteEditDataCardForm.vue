@@ -426,6 +426,8 @@
 </template>
 
 <script>
+import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
+import {CID_VW_SITE_INTERACTION_MODIFY, CID_VW_SITE_EDIT_DATA_CARD, QUERY_TYPENAME_VW_SITES_EDIT} from '@/utils/cids';
 import VwSiteChronologiesEditDataCardTable from '@/components/DataCard/VwSiteChronologiesEditDataCardTable';
 import VwSiteSurveysEditDataCardTable from '@/components/DataCard/VwSiteSurveysEditDataCardTable';
 import {GET_DISTRICT_GOVERNORATE_NAME, GET_DISTRICT_NATION_NAME} from '@/store/vocabulary/getters';
@@ -438,15 +440,23 @@ export default {
         VwSiteChronologiesEditDataCardTable,
         VwSiteSurveysEditDataCardTable
     },
+    mixins: [
+        MapContainerComponentStoreMx
+    ],
     props: {
         item: {
             type: Object,
+            required: true
+        },
+        interactionModifyReady: {
+            type: Boolean,
             required: true
         }
     },
     data() {
         return {
-            modal: ''
+            modal: '',
+            activeLayer: ''
         };
     },
     computed: {
@@ -459,11 +469,47 @@ export default {
         },
         nationName() {
             return this.getDistrictNationName(this.item.district.name);
+        },
+        geometryString: {
+            get() {
+                return this.componentsGetComponentProp(
+                    CID_VW_SITE_EDIT_DATA_CARD,
+                    'geometryString'
+                );
+            },
+            set(value) {
+                this.componentsSetComponentProp({
+                    cid: CID_VW_SITE_EDIT_DATA_CARD,
+                    prop: 'geometryString',
+                    value
+                });
+            }
+        },
+
+    },
+    watch: {
+        interactionModifyReady(flag) {
+            if (flag) {
+                this.geometryString = this.item.geom.geom;
+                this.activeLayer = this.mapContainerCurrentLayer;
+                this.mapContainerCurrentLayer = QUERY_TYPENAME_VW_SITES_EDIT;
+            }
+        },
+        geometryString(value) {
+            const _geom = cloneDeep(this.item.geom);
+            _geom.geom = value;
+            this.updateItemProp('geom', _geom);
         }
+    },
+    created() {
+        this.mapContainerDynamicEditComponent = CID_VW_SITE_INTERACTION_MODIFY;
+    },
+    destroyed() {
+        this.mapContainerCurrentLayer = this.activeLayer;
+        this.mapContainerDynamicEditComponent = '';
     },
     methods: {
         updateItemProp(prop, value) {
-            //const item = merge({}, this.item, {[prop]: value});
             const _item = cloneDeep(this.item);
             _item[prop] = value;
             this.$emit('update:item', _item);

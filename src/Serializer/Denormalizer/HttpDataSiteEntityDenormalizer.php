@@ -5,6 +5,7 @@ namespace App\Serializer\Denormalizer;
 
 use App\Entity\ContributeEntity;
 use App\Entity\Geom\DistrictBoundaryEntity;
+use App\Entity\Geom\SiteBoundaryEntity;
 use App\Entity\SiteEntity;
 use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,6 +18,7 @@ use Symfony\Component\Serializer\Exception\LogicException;
 use Symfony\Component\Serializer\Exception\RuntimeException;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 class HttpDataSiteEntityDenormalizer implements DenormalizerInterface
 {
@@ -150,5 +152,11 @@ class HttpDataSiteEntityDenormalizer implements DenormalizerInterface
         $date = $data['compilation_date']['date'];
         $date = substr($date,0, 10).'T00:00:00+00:00';
         $data['compilation_date'] = \DateTime::createFromFormat(DATE_ATOM, $date);
+    }
+
+    private function setGeom(array &$data)
+    {
+        $geom = (new GetSetMethodNormalizer())->denormalize($data['geom'], SiteBoundaryEntity::class);
+        $data['geom'] = $this->em->merge($geom);
     }
 }

@@ -22,7 +22,7 @@ describe('VwSiteTableActionMenu', () => {
         it('item default value', () => {
             const mapContainerCallMethod = jest.fn();
             const goTo = jest.fn();
-            const item = { some: 'value'};
+            const item = {geom: 'value'};
             wrapper = getVuetifyWrapper('shallowMount', VwSiteListRowActionMenu, {
                 propsData: {
                     item
@@ -36,7 +36,7 @@ describe('VwSiteTableActionMenu', () => {
             wrapper.vm.$vuetify.goTo = goTo;
             wrapper.vm.zoomToItemFeature();
             wrapper.vm.$vuetify.goTo = $goTo;
-            expect(mapContainerCallMethod).toHaveBeenCalledWith('zoomToItemGeometry', item);
+            expect(mapContainerCallMethod).toHaveBeenCalledWith('zoomToItemGeometry', item.geom);
             expect(goTo).toHaveBeenCalledWith('#map');
         });
     });
