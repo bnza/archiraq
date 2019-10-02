@@ -140,7 +140,7 @@ class SiteSurveyEntity implements EntityInterface
     /**
      * @param int $year_low
      */
-    public function setYearLow(int $year_low): void
+    public function setYearLow(?int $year_low): void
     {
         $this->year_low = $year_low;
     }
@@ -156,7 +156,7 @@ class SiteSurveyEntity implements EntityInterface
     /**
      * @param int $year_high
      */
-    public function setYearHigh(int $year_high): void
+    public function setYearHigh(?int $year_high): void
     {
         $this->year_high = $year_high;
     }

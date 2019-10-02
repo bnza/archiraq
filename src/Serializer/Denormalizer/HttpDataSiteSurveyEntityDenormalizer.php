@@ -6,6 +6,7 @@ namespace App\Serializer\Denormalizer;
 
 use App\Entity\SiteSurveyEntity;
 use App\Entity\Voc\SurveyEntity;
+use Doctrine\Common\Inflector\Inflector;
 use Symfony\Component\Serializer\Exception\BadMethodCallException;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Exception\ExtraAttributesException;
@@ -50,7 +51,15 @@ class HttpDataSiteSurveyEntityDenormalizer extends GetSetMethodNormalizer
             $data['survey'] = $context['em']->find(SurveyEntity::class, $data['survey']['id']);
         } else {
             $data['survey'] = $this->getGetSetMethodDenormalizer()->denormalize($data['survey'], SurveyEntity::class);
+        }
 
+        /**
+         * year_low -> yearLow (setYearLow in denormalizer)
+         */
+        foreach (['year_low','year_high'] as $snakeKey) {
+            $camelKey = Inflector::camelize($snakeKey);
+            $data[$camelKey] = $data[$snakeKey];
+            unset($snakeKey);
         }
         return parent::denormalize($data, SiteSurveyEntity::class);
     }

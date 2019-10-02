@@ -54,6 +54,8 @@ class HttpDataSiteEntityDenormalizerTest extends \PHPUnit\Framework\TestCase
             true
         );
 
+        unset($data['geom']);
+
         $site = $denormalizer->denormalize($data, SiteEntity::class);
 
         \array_walk(

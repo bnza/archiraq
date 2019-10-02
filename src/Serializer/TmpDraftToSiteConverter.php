@@ -9,7 +9,7 @@ use App\Entity\Voc\ChronologyEntity;
 use App\Entity\Geom\DistrictBoundaryEntity;
 use App\Entity\Geom\SiteBoundaryEntity;
 use App\Entity\SiteEntity;
-use App\Entity\Tmp\DraftErrorEntity;
+use App\Entity\Tmp\DraftEntity;
 use App\Serializer\Denormalizer\SiteEntityDenormalizer;
 use App\Serializer\Normalizer\TmpDraftEntityNormalizer;
 use Doctrine\ORM\EntityManagerInterface;

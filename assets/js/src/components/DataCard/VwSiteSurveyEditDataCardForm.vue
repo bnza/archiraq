@@ -44,9 +44,10 @@
                     wrap
                 >
                     <v-text-field
-                        v-model="localItem.year_low"
+                        :value="localItem.year_low"
                         type="number"
                         label="Year (low)"
+                        @input="localItem.year_low = $event || null"
                     />
                 </v-flex>
                 <v-flex
@@ -54,9 +55,10 @@
                     wrap
                 >
                     <v-text-field
-                        v-model="localItem.year_high"
+                        :value="localItem.year_high"
                         type="number"
                         label="Year (high)"
+                        @input="localItem.year_high = $event || null"
                     />
                 </v-flex>
             </v-layout>
@@ -118,8 +120,7 @@ export default {
         this.surveys.push(this.item.survey);
     },
     methods: {
-        doChange()
-        {
+        doChange() {
             this.$emit('change', this.localItem);
             this.$emit('close');
         },
