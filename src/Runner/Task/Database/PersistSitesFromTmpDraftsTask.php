@@ -13,6 +13,8 @@ class PersistSitesFromTmpDraftsTask extends AbstractTask
     use TaskEntityManagerTrait;
     use ContributeTrait;
 
+    const PERSIST_CHUNK_SIZE = 50;
+
     /**
      * @var TmpDraftToSiteConverter
      */
@@ -40,6 +42,9 @@ class PersistSitesFromTmpDraftsTask extends AbstractTask
     protected function executeStep(array $arguments): void
     {
         $this->persistSite(...$arguments);
+        if ($this->getCurrentStepNum() % self::PERSIST_CHUNK_SIZE === 0) {
+            $this->flush();
+        }
     }
 
     /**
@@ -59,12 +64,19 @@ class PersistSitesFromTmpDraftsTask extends AbstractTask
         return $generator();
     }
 
+    protected function flush()
+    {
+        $this->setMessage('Flushing data to db. This may take a while...');
+        $this->getEntityManager()->flush();
+        $this->setMessage('');
+    }
+
     /**
      * {@inheritdoc}
      */
     protected function terminate(): void
     {
-        $this->getEntityManager()->flush();
+        $this->flush();
     }
 
     /**

@@ -11,6 +11,7 @@ namespace App\Tests\Unit\Serializer\Normalizer;
 use App\Entity\ContributeEntity;
 use App\Entity\Tmp\DraftEntity;
 use App\Serializer\Normalizer\TmpDraftEntityNormalizer;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -40,7 +41,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'cadastre' => null,
                     'remarks' => null,
                     'credits' => null,
-                    'errors' => [],
+                    'errors' => new ArrayCollection(),
                     'siteChronology' => null,
                     'district' => null,
                     'featuresEpigraphic' => null,
@@ -82,7 +83,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'cadastre' => null,
                     'remarks' => null,
                     'credits' => null,
-                    'errors' => [],
+                    'errors' => new ArrayCollection(),
                     'siteChronology' => null,
                     'district' => null,
                     'featuresEpigraphic' => null,
@@ -125,7 +126,7 @@ class TmpDraftEntityNormalizerTest extends \PHPUnit\Framework\TestCase
                     'cadastre' => null,
                     'remarks' => null,
                     'credits' => null,
-                    'errors' => [],
+                    'errors' => new ArrayCollection(),
                     'siteChronology' => null,
                     'district' => null,
                     'featuresEpigraphic' => null,

@@ -660,7 +660,7 @@ class DraftEntity implements EntityInterface
     /**
      * @param string $compiler
      */
-    public function setCompiler(string $compiler): void
+    public function setCompiler(?string $compiler): void
     {
         $this->compiler = $compiler;
     }

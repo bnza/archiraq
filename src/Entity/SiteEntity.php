@@ -658,7 +658,7 @@ class SiteEntity implements EntityInterface
      *
      * @return SiteEntity
      */
-    public function setCompiler(string $compiler): SiteEntity
+    public function setCompiler(?string $compiler): SiteEntity
     {
         $this->compiler = $compiler;
 
