@@ -3,6 +3,7 @@
 namespace App\Entity\Admin;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -23,7 +24,13 @@ class UserEntity implements UserInterface
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="UserRolesEntity", mappedBy="user", cascade={"persist", "remove"})
      */
-    private $roles;
+    private $dbRoles;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="GroupMembersEntity", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $groups;
 
     /**
      * @var string The hashed password
@@ -33,7 +40,7 @@ class UserEntity implements UserInterface
 
     public function __construct()
     {
-        $this->roles = new ArrayCollection();
+        $this->dbRoles = new ArrayCollection();
     }
 
 
@@ -64,7 +71,26 @@ class UserEntity implements UserInterface
      */
     public function getRoles(): array
     {
-        return array_map([$this, 'extractUserRole'], $this->roles->getValues());
+        $userRoles = array_map([$this, 'extractRoleName'], $this->dbRoles->getValues());
+        $groupRoles = $this->extractUserGroupRoles();
+        $roles = array_merge($userRoles, $groupRoles);
+        return array_unique($roles);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDbRoles(): Collection
+    {
+        return $this->dbRoles;
+    }
+
+    /**
+     * @param ArrayCollection $dbRoles
+     */
+    public function setDbRoles(ArrayCollection $dbRoles): void
+    {
+        $this->dbRoles = $dbRoles;
     }
 
     /**
@@ -80,6 +106,22 @@ class UserEntity implements UserInterface
         $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getGroups(): Collection
+    {
+        return $this->groups;
+    }
+
+    /**
+     * @param GroupEntity $group
+     */
+    public function addGroups(GroupEntity $group): void
+    {
+        $this->groups->add($group);
     }
 
     /**
@@ -99,8 +141,21 @@ class UserEntity implements UserInterface
         // $this->plainPassword = null;
     }
 
-    private function extractUserRole(UserRolesEntity $userRoles)
+    private function extractRoleName(ItemRolesInteface $itemRoles): string
     {
-        return $userRoles->getRole()->getName();
+        return $itemRoles->getRole()->getName();
+    }
+
+    private function extractUserGroupRoles(): iterable
+    {
+        $roles = [];
+        foreach ($this->getGroups() as $groupMember) {
+            foreach ($groupMember->getGroup()->getRoles() as $roleMember) {
+                $roles[] = $this->extractRoleName($roleMember);
+            }
+        }
+
+
+        return $roles;
     }
 }

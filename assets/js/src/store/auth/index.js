@@ -3,7 +3,7 @@ import getters from './getters';
 
 export const ROLE_GUEST = 'ROLE_GUEST';
 export const ROLE_USER = 'ROLE_USER';
-export const ROLE_EDITOR = 'ROLE_USER';
+export const ROLE_EDITOR = 'ROLE_EDITOR';
 export const ROLE_ADMIN= 'ROLE_ADMIN';
 
 export const ROLES_HIERARCHY = [

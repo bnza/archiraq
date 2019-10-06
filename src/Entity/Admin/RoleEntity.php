@@ -3,6 +3,7 @@
 namespace App\Entity\Admin;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,9 +32,16 @@ class RoleEntity
      */
     private $users;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="GroupRolesEntity", mappedBy="role", cascade={"persist", "remove"})
+     */
+    private $groups;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -71,9 +79,35 @@ class RoleEntity
     /**
      * @return ArrayCollection
      */
-    public function getUsers(): ArrayCollection
+    public function getUsers(): Collection
     {
         return $this->users;
+    }
+
+    /**
+     * GroupEntity $group
+     * @param UserEntity $user
+     */
+    public function addUser(UserEntity $user): void
+    {
+        $this->users->add($user);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getGroups(): Collection
+    {
+        return $this->groups;
+    }
+
+    /**
+     * GroupEntity $group
+     * @param GroupEntity $group
+     */
+    public function addGroup(GroupEntity $group): void
+    {
+        $this->groups->add($group);
     }
 
 }

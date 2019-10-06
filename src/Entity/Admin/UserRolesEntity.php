@@ -2,19 +2,18 @@
 
 
 namespace App\Entity\Admin;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user_roles", schema="admin")
  */
-class UserRolesEntity
+class UserRolesEntity implements ItemRolesInteface
 {
     /**
      * @var UserEntity
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="UserEntity", inversedBy="roles")
+     * @ORM\ManyToOne(targetEntity="UserEntity", inversedBy="dbRoles")
      * @ORM\JoinColumn(name="username", referencedColumnName="name", nullable=false, onDelete="CASCADE")
      */
     private $user;
