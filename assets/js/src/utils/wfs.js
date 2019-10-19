@@ -1,4 +1,5 @@
 import {WFS} from 'ol/format.js';
+import {bbox, and} from 'ol/format/filter';
 import {headers as headersUtil} from '@/utils/http';
 import {getFilterString} from '@/utils/WFS/cql';
 
@@ -122,6 +123,20 @@ export const getFeatureQueryString = (config) => {
         query +=  getCqlFilterQueryFragment(config.filter);
     }
     return query;
+};
+
+/**
+ * @param {HttpGetWFSGetFeatureConfig} config
+ * @return {string}
+ */
+export const getFeatureBboxQueryString = (config, {geometryName = 'geom', extent, opt_srsName}) => {
+    const bboxFilter = bbox(geometryName, extent, opt_srsName);
+    if (config.filter) {
+        config.filter = and(config.filter, bboxFilter);
+    } else {
+        config.filter = bboxFilter;
+    }
+    return getFeatureQueryString(config);
 };
 
 export const mapWfsFeatureToTableItem = (feature) =>{

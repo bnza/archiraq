@@ -1,5 +1,5 @@
 import {getFilterString} from '@/utils/WFS/cql';
-import {and, not, like, equalTo, or} from 'ol/format/filter';
+import {and, not, like, equalTo, or, bbox} from 'ol/format/filter';
 
 describe('getFilterString', () => {
     it('And', () => {
@@ -30,5 +30,9 @@ describe('getFilterString', () => {
         const like1 = equalTo('propertyName', 'value');
         const filter = or(equalTo1, like1);
         expect(getFilterString(filter)).toEqual('propertyName = \'value\' OR propertyName = \'value\'');
+    });
+    it('Bbox', () => {
+        const filter = bbox('geomName', [-90,40,-60,50]);
+        expect(getFilterString(filter)).toEqual('BBOX(geomName,-90,40,-60,50,\'EPSG:4326\')');
     });
 });

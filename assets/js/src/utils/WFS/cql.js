@@ -46,12 +46,18 @@ const getPropertyIsLikeFilterString = (filter) => {
     return `${filter.propertyName} ${operator} '${filter.pattern}'`;
 };
 
+const getBBOXFilterString = (filter) => {
+    const extent = filter.extent.join(',');
+    return `BBOX(${filter.geometryName},${extent},'EPSG:4326')`;
+};
+
 const functions = {
     getAndFilterString,
     getNotFilterString,
     getOrFilterString,
     getPropertyIsEqualToFilterString,
-    getPropertyIsLikeFilterString
+    getPropertyIsLikeFilterString,
+    getBBOXFilterString
 };
 
 export const getFilterString = (filter) => {

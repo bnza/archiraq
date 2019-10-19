@@ -31,7 +31,7 @@
 <script>
 
 import {loadingBBox} from 'vuelayers/lib/ol-ext';
-import {getBboxFeatureRequestXmlBody} from '../utils/wfs';
+import {getFeatureBboxQueryString} from '../utils/wfs';
 import {headers} from '@/utils/http';
 import {SET_OFF} from '@/store/geoserver/mutations';
 import {GET_GUEST_AUTH} from '@/store/geoserver/auth/getters';
@@ -100,7 +100,9 @@ export default {
             return this.$refs.source.refresh();
         },
         urlFunction (extent, resolution, projection) {
-            return this.$store.state.geoserver.baseUrl + 'wfs';
+            return this.$store.state.geoserver.baseUrl + 'wfs?' + getFeatureBboxQueryString({
+                typename:this.typename, filter: this.filter
+            }, {extent});
         },
         loadingStrategyFactory () {
             // VueLayers.olExt available only in UMD build
@@ -117,9 +119,8 @@ export default {
                 };
 
                 let axiosRequestConfig = {
-                    method: 'post',
+                    method: 'get',
                     url: vm.$source.getUrl()(extent, resolution, projection),
-                    data: getBboxFeatureRequestXmlBody(extent, resolution, projection, vm.$attrs.typename, vm.$attrs.filter),
                     headers: setHeaders(vm.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`])
                 };
 
