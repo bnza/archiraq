@@ -1,3 +1,7 @@
+const getEscapedSingledQuotedString = (string) => {
+    return `'${string.replace('\'','\'\'')}'`;
+}
+
 /**
  *
  * @param {And} filter
@@ -33,7 +37,7 @@ const getNotFilterString = (filter) => {
  * @return {string}
  */
 const getPropertyIsEqualToFilterString = (filter) => {
-    return `${filter.propertyName} = '${filter.expression}'`;
+    return `${filter.propertyName} = ${getEscapedSingledQuotedString(filter.expression)}`;
 };
 
 /**
@@ -43,7 +47,7 @@ const getPropertyIsEqualToFilterString = (filter) => {
  */
 const getPropertyIsLikeFilterString = (filter) => {
     const operator = filter.matchCase ? 'LIKE' : 'ILIKE';
-    return `${filter.propertyName} ${operator} '${filter.pattern}'`;
+    return `${filter.propertyName} ${operator} ${getEscapedSingledQuotedString(filter.pattern)}`;
 };
 
 const getBBOXFilterString = (filter) => {

@@ -17,6 +17,10 @@ describe('getFilterString', () => {
         const filter = equalTo('propertyName', 'value');
         expect(getFilterString(filter)).toEqual('propertyName = \'value\'');
     });
+    it('EqualTo escapes \'', () => {
+        const filter = equalTo('propertyName', 'Rifa\'i');
+        expect(getFilterString(filter)).toEqual('propertyName = \'Rifa\'\'i\'');
+    });
     it('PropertyIsLike (sensitive)', () => {
         const filter = like('propertyName', 'value', null, null, null, true);
         expect(getFilterString(filter)).toEqual('propertyName LIKE \'value\'');
@@ -24,6 +28,10 @@ describe('getFilterString', () => {
     it('PropertyIsLike (case insensitive)', () => {
         const filter = like('propertyName', 'value', null, null, null, false);
         expect(getFilterString(filter)).toEqual('propertyName ILIKE \'value\'');
+    });
+    it('PropertyIsLike escapes \'', () => {
+        const filter = like('propertyName', 'Rifa\'i', null, null, null, false);
+        expect(getFilterString(filter)).toEqual('propertyName ILIKE \'Rifa\'\'i\'');
     });
     it('Or', () => {
         const equalTo1 = equalTo('propertyName', 'value');
