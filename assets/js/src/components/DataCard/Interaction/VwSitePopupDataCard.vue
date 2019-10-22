@@ -24,6 +24,25 @@
                 </template>
                 <span>Show more</span>
             </v-tooltip>
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                        flat
+                        icon
+                        :disabled="!fullFeature.geometry"
+                        @click="zoomToItemFeature(fullFeature.geometry)"
+                    >
+                        <v-icon
+                            color="primary"
+                            dark
+                            v-on="on"
+                        >
+                            place
+                        </v-icon>
+                    </v-btn>
+                </template>
+                <span>Zoom to feature</span>
+            </v-tooltip>
         </template>
         <component
             :is="dataComponent"
@@ -31,11 +50,13 @@
             slot="data"
             :feature="feature"
             :typename="typename"
+            @fetched="fullFeature=$event"
         />
     </data-card>
 </template>
 
 <script>
+import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 import DataCard from '@/components/DataCard/DataCard';
 import VwSiteSurveyPopupItemDataCard from '@/components/DataCard/Interaction/VwSiteSurveyPopupItemDataCard';
 import VwSiteRsPopupItemDataCard from '@/components/DataCard/Interaction/VwSiteRsPopupItemDataCard';
@@ -55,6 +76,9 @@ export default {
         VwSiteSurveyPopupItemDataCard,
         VwSiteRsPopupItemDataCard
     },
+    mixins: [
+        MapContainerComponentStoreMx
+    ],
     props: {
         feature: {
             type: Object,
@@ -64,6 +88,11 @@ export default {
             type: String,
             required: true
         }
+    },
+    data() {
+        return {
+            fullFeature: {}
+        };
     },
     computed: {
         dataItemRoute() {

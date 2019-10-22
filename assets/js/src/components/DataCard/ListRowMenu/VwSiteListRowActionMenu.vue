@@ -1,7 +1,7 @@
 <template>
     <list-row-actions-menu>
         <v-list>
-            <v-list-tile @click="zoomToItemFeature">
+            <v-list-tile @click="zoomToItemFeature(item.geom)">
                 <v-list-tile-action>
                     <v-icon>place</v-icon>
                 </v-list-tile-action>
@@ -41,12 +41,6 @@ export default {
                 return {};
             }
         }
-    },
-    methods: {
-        zoomToItemFeature() {
-            this.mapContainerCallMethod('zoomToItemGeometry', this.item.geom);
-            this.$vuetify.goTo('#map');
-        },
     }
 };
 </script>

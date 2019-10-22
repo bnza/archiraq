@@ -18,6 +18,18 @@
                 </v-list-tile-content>
             </v-list-tile>
             <v-list-tile
+                @click="$emit('zoom')"
+            >
+                <v-list-tile-action>
+                    <v-icon>
+                        place
+                    </v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Zoom to feature</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile
                 @click="$router.back()"
             >
                 <v-list-tile-action>

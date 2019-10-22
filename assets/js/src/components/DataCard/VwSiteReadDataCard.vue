@@ -7,6 +7,7 @@
             slot="toolbar"
             :layer-id="baseTypename"
             @edit="navigateToEditForm"
+            @zoom="zoomToItemFeature(JSON.parse(item.geom.geom))"
         />
         <vw-site-read-data-card-form
             v-if="item"
@@ -22,6 +23,7 @@ import DataCard from './DataCard';
 import VwSiteReadDataCardToolbar from './VwSiteReadDataCardToolbar';
 import VwSiteReadDataCardForm from './VwSiteReadDataCardForm';
 import VwSiteItemActionDataCardMx from '@/mixins/DataCard/VwSiteItemActionDataCardMx';
+import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 import {getMapDataItemEditFullPath} from '@/utils/spaRouteQuery';
 
 export default {
@@ -32,7 +34,8 @@ export default {
         VwSiteReadDataCardForm
     },
     mixins: [
-        VwSiteItemActionDataCardMx
+        VwSiteItemActionDataCardMx,
+        MapContainerComponentStoreMx
     ],
     methods: {
         navigateToEditForm() {

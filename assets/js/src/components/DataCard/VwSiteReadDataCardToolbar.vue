@@ -3,6 +3,7 @@
         <vw-site-form-action-menu
             data-test="action-menu"
             @edit="$emit('edit')"
+            @zoom="$emit('zoom')"
         />
 
         <v-toolbar-title>{{ title }}</v-toolbar-title>

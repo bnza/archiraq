@@ -47,6 +47,9 @@ export default {
             this.performWfsGetFeatureRequest(config).then(
                 response => {
                     this.fullFeature = response.data.features[0];
+                    if (this.fullFeature) {
+                        this.$emit('fetched', this.fullFeature);
+                    }
                 }
             );
         }

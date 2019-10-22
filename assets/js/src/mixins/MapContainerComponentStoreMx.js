@@ -146,6 +146,10 @@ export default {
                 method: method,
                 args: args
             };
-        }
+        },
+        zoomToItemFeature(geom) {
+            this.mapContainerCallMethod('zoomToItemGeometry', geom);
+            this.$vuetify.goTo('#map');
+        },
     }
 };
