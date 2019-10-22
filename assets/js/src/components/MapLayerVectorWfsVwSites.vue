@@ -25,7 +25,10 @@
                 slot="select"
                 slot-scope="props"
             >
-                <vw-site-popup-data-card :feature="props.feature" />
+                <vw-site-popup-data-card
+                    :typename="typename"
+                    :feature="props.feature"
+                />
             </template>
         </map-layer-vector-wfs>
     </div>

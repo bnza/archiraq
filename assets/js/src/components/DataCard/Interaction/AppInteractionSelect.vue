@@ -1,8 +1,7 @@
 <template>
     <vl-interaction-select
         :features.sync="selectedFeatures"
-        :condition="selectCondition"
-        :toggle-condition="toggleCondition"
+        :filter="filterFeature"
     >
         <vl-overlay
             v-if="currentFeature && currentFeature.properties"
@@ -18,7 +17,6 @@
 
 <script>
 import {findPointOnSurface, OVERLAY_POSITIONING} from 'vuelayers/lib/ol-ext';
-import { shiftKeyOnly, singleClick } from 'ol/events/condition';
 import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 
 export default {
@@ -77,20 +75,15 @@ export default {
     },
     methods: {
         pointOnSurface: findPointOnSurface,
-        selectCondition(olMapBrowserEvent)  {
-            return this.isCurrentLayer
-                && singleClick(olMapBrowserEvent);
-        },
-        toggleCondition(olMapBrowserEvent)  {
-            return this.isCurrentLayer
-                && shiftKeyOnly(olMapBrowserEvent);
-        },
         toggleSelectedFeatures(flag) {
             if (flag) {
                 this.selectedFeatures = this.componentsGetComponentProp(this.layerCid, 'selectedFeatures');
             } else {
                 this.selectedFeatures = [];
             }
+        },
+        filterFeature(feature, layer) {
+            return layer.get('id') === this.layerCid;
         }
     },
 };

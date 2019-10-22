@@ -20,6 +20,8 @@ import {getFilterString} from '@/utils/WFS/cql';
  * @property {string} typename - The name of the feature type
  * @property {string} [projection] - The EPSG projection code. Default 'EPSG:4326'
  * @property {String} [format] - The output format. Default 'application/json'
+ * @property {String} [propertyName] - Restrict a GetFeature request by attribute rather than feature
+ * @property {String} [featureID] - Restrict the GetFeature request to a single feature
  * @property {String} [contentDisposition] - Set it to 'attachment' if you want that response will downloaded and saved locally.
  * @property {String} [exceptions] - The exceptions output format. Default 'application/json'
  * @property {QueryPaginationConfig} [pagination]
@@ -92,7 +94,8 @@ const getPaginationQueryFragment = (pagination) => {
  * @return {string}
  */
 const getFeatureBaseQueryString = ({
-    typename, projection='EPSG:4326',
+    typename,
+    projection='EPSG:4326',
     format='application/json',
     exceptions='application/json',
     contentDisposition=''
@@ -121,6 +124,12 @@ export const getFeatureQueryString = (config) => {
     }
     if (config.filter) {
         query +=  getCqlFilterQueryFragment(config.filter);
+    }
+    if (config.propertyName) {
+        query += `&propertyName=${config.propertyName}`;
+    }
+    if (config.featureID) {
+        query += `&featureID=${config.featureID}`;
     }
     return query;
 };

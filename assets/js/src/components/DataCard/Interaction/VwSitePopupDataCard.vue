@@ -30,6 +30,7 @@
             id="data-table"
             slot="data"
             :feature="feature"
+            :typename="typename"
         />
     </data-card>
 </template>
@@ -57,6 +58,10 @@ export default {
     props: {
         feature: {
             type: Object,
+            required: true
+        },
+        typename: {
+            type: String,
             required: true
         }
     },

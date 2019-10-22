@@ -37,7 +37,11 @@ const getNotFilterString = (filter) => {
  * @return {string}
  */
 const getPropertyIsEqualToFilterString = (filter) => {
-    return `${filter.propertyName} = ${getEscapedSingledQuotedString(filter.expression)}`;
+    let expression = filter.expression;
+    if (typeof expression === 'string') {
+        expression = getEscapedSingledQuotedString(expression);
+    }
+    return `${filter.propertyName} = ${expression}`;
 };
 
 /**

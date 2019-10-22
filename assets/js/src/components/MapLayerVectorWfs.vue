@@ -14,6 +14,7 @@
         />
         <slot name="style" />
         <app-interaction-select
+            v-if="isCurrentLayer"
             :layer-cid="cid"
         >
             <template
@@ -101,7 +102,7 @@ export default {
         },
         urlFunction (extent, resolution, projection) {
             return this.$store.state.geoserver.baseUrl + 'wfs?' + getFeatureBboxQueryString({
-                typename:this.typename, filter: this.filter
+                typename:this.typename, filter: this.filter, propertyName: 'id,geom'
             }, {extent});
         },
         loadingStrategyFactory () {
