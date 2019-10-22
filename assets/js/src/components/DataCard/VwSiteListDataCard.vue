@@ -52,7 +52,7 @@ export default {
         VwSiteListDataCardToolbar,
         VwSiteListDataCardTable,
         DataCardExportDialog: () => import(
-            /* webpackChunkName: "DataCardFilterDialog" */
+            /* webpackChunkName: "DataCardExportDialog" */
             './DataCardExportDialog'
         ),
         DataCardFilterDialog: () => import(

@@ -199,12 +199,18 @@ export default {
             ];
         }
     },
-    created() {
-        // Retrieve from store
-        let conditions = Object.assign(defaultConditions(), this.getQueryConditions(this.queryTypename));
-        this.conditions = conditions;
+    watch: {
+        queryTypename: {
+            handler: 'setConditionsFromStore',
+            immediate: true
+        }
     },
     methods: {
+        setConditionsFromStore() {
+            // Retrieve from store
+            let conditions = Object.assign(defaultConditions(), this.getQueryConditions(this.queryTypename));
+            this.conditions = conditions;
+        },
         rowPredicateIsVisible(key) {
             return predicateRowsVisibility[key].indexOf(this.queryTypename) > -1;
         },
