@@ -72,6 +72,15 @@
             predicate-attribute-label="Threats"
             @change="setCondition"
         />
+        <string-predicate-row
+            v-if="rowPredicateIsVisible('remarks')"
+            class="predicate-row"
+            data-test="remarks"
+            :predicate-p="conditions.remarks"
+            predicate-key="remarks"
+            predicate-attribute-label="Remarks"
+            @change="setCondition"
+        />
     </div>
 </template>
 
@@ -86,14 +95,15 @@ import QueryMx from '@/mixins/QueryMx';
 import {QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS} from '@/utils/cids';
 
 const predicateRowsVisibility = {
-    chronology: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
+    chronology: [QUERY_TYPENAME_VW_SITES_SURVEY],
     district: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
     modernName: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
-    ancientName: [QUERY_TYPENAME_VW_SITES_SURVEY],
+    ancientName: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
     nearestCity: [QUERY_TYPENAME_VW_SITES_SURVEY],
     survey: [QUERY_TYPENAME_VW_SITES_SURVEY],
     threats: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
     features: [QUERY_TYPENAME_VW_SITES_SURVEY],
+    remarks: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
 };
 
 const defaultConditions = () => {
@@ -137,7 +147,12 @@ const defaultConditions = () => {
             negate: false,
             expressions: ['threats'],
             operator: 'MultipleIsInsensitiveLikeFilter'
-        }
+        },
+        remarks: {
+            negate: false,
+            expressions: ['remarks'],
+            operator: ''
+        },
     };
 };
 
