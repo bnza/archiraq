@@ -2,7 +2,7 @@
     <v-fragment>
         <vw-site-table-action-menu
             @openModal="$emit('openModal', $event)"
-            @zoomToLayer="zoomToLayer"
+            @zoomToLayer="zoomToLayerExtent(layerId)"
         />
 
         <v-toolbar-title>{{ title }}</v-toolbar-title>
@@ -24,12 +24,7 @@ export default {
     mixins: [
         VwSiteActionDataCardToolbarMx,
         MapContainerComponentStoreMx
-    ],
-    methods: {
-        zoomToLayer() {
-            this.mapContainerCallMethod('zoomToLayer', this.layerId);
-        }
-    }
+    ]
 };
 </script>
 

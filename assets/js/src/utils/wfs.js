@@ -1,4 +1,3 @@
-import {WFS} from 'ol/format.js';
 import {bbox, and} from 'ol/format/filter';
 import {headers as headersUtil} from '@/utils/http';
 import {getFilterString} from '@/utils/WFS/cql';

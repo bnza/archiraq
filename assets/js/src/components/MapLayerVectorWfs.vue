@@ -28,7 +28,7 @@
 </template>
 
 <script>
-
+import {getExtentFromWfsGetFeatures} from '@/utils/ol';
 import {loadingBBox} from 'vuelayers/lib/ol-ext';
 import {addBboxFilter} from '../utils/wfs';
 import {headers} from '@/utils/http';
@@ -73,6 +73,22 @@ export default {
             return !!this.cid
                     && this.mapContainerCurrentLayer === this.cid;
         },
+        extent: {
+            get() {
+                return this.getProp('extent');
+            },
+            set(value) {
+                this.setProp('extent', value);
+            }
+        },
+        unfilteredTotalFeatureNumber: {
+            get() {
+                return this.getProp('unfiltered-total-feature-number');
+            },
+            set(value) {
+                this.setProp('unfiltered-total-feature-number', value);
+            }
+        }
     },
     watch: {
         typename() {
@@ -80,6 +96,7 @@ export default {
         },
         filter() {
             this.refreshSource();
+            this.setExtent();
         },
         refresh(flag) {
             if (flag) {
@@ -92,9 +109,13 @@ export default {
     created() {
         this.visible = this.visibleP;
     },
+    mounted() {
+        this.setTotalFeatureNumber();
+        this.setExtent();
+    },
     methods: {
         refreshSource() {
-            this.$refs.source.scheduleRecreate();
+            return this.$refs.source.scheduleRecreate();
         },
         loadingStrategyFactory () {
             // VueLayers.olExt available only in UMD build
@@ -127,6 +148,30 @@ export default {
                     vectorLayerComponent.displaySnackbar(text, color);
                 });
             };
+        },
+        setTotalFeatureNumber() {
+            let config = {
+                typename: this.typename,
+                filter: this.filter,
+                propertyName: 'id'
+            };
+            return this.performWfsGetFeatureRequest(config).then(
+                (response) => {
+                    this.unfilteredTotalFeatureNumber = response.data.totalFeatures;
+                }
+            );
+        },
+        setExtent() {
+            let config = {
+                typename: this.typename,
+                filter: this.filter,
+                propertyName: 'geom'
+            };
+            return this.performWfsGetFeatureRequest(config).then(
+                (response) => {
+                    this.extent = getExtentFromWfsGetFeatures(response.data);
+                }
+            );
         }
     }
 };

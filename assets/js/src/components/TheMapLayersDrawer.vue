@@ -31,6 +31,7 @@
                         <wv-site-layer-action-menu
                             slot="action"
                             :typename="WFS_TYPENAME_VW_SITES_SURVEY"
+                            @zoomToLayer="zoomToLayerExtent('vw_site_survey')"
                         />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
@@ -46,6 +47,7 @@
                         <wv-site-layer-action-menu
                             slot="action"
                             :typename="WFS_TYPENAME_VW_SITES_RS"
+                            @zoomToLayer="zoomToLayerExtent('vw_site_rs')"
                         />
                     </map-legend-layer-list-tile>
                 </map-legend-list-group>

@@ -1,7 +1,9 @@
 <template>
-    <v-card flat>
+    <v-card
+        id="map"
+        flat
+    >
         <vl-map
-            id="map"
             ref="map"
             data-test="the-map-container"
             :load-tiles-while-animating="true"
@@ -12,6 +14,7 @@
         >
             <vl-view
                 ref="view"
+                :max-zoom="19"
                 :zoom.sync="zoom"
                 :center.sync="center"
                 :rotation.sync="rotation"
@@ -175,9 +178,7 @@ export default {
         zoomToItemGeometry(geom) {
             this.$refs.view.fit(geom);
         },
-        zoomToLayer(layerId) {
-            const layer = this.$refs.map.getLayerById(layerId);
-            const extent = layer.getSource().getExtent();
+        fitExtent(extent) {
             this.$refs.view.fit(extent);
         },
         resizeMap(force = false) {

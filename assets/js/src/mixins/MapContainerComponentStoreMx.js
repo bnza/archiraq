@@ -151,5 +151,10 @@ export default {
             this.mapContainerCallMethod('zoomToItemGeometry', geom);
             this.$vuetify.goTo('#map');
         },
+        zoomToLayerExtent(cid) {
+            const extent = this.componentsGetComponentProp(cid, 'extent');
+            this.mapContainerCallMethod('fitExtent', [extent]);
+            this.$vuetify.goTo('#map');
+        }
     }
 };
