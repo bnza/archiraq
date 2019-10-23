@@ -28,7 +28,7 @@
                 :is="modalSlotComponent"
                 ref="modalSlot"
                 :slot="modalComponentType"
-                :is-request-pending.sync="isModalRequestPending"
+                :is-modal-request-pending.sync="isModalRequestPending"
                 :modal-props="modalProps"
             />
         </component>

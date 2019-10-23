@@ -85,7 +85,7 @@ export default {
                 return value.hasOwnProperty('typename') && value.hasOwnProperty('queryTypename');
             }
         },
-        isRequestPending: {
+        isModalRequestPending: {
             type: Boolean,
             required: true
         }
@@ -127,7 +127,7 @@ export default {
                 headers: setWfsGetFeatureRequestHeaders({}, this.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`])
             };
             try {
-                this.$emit('update:isRequestPending', true);
+                this.$emit('update:isModalRequestPending', true);
                 const response = await this.clientRequest(axiosRequestConfig);
                 FileSaver.saveAs(
                     new Blob([response.data]),
@@ -135,7 +135,7 @@ export default {
                     {type: `${response.data.type}`}
                 );
             } finally {
-                this.$emit('update:isRequestPending', false);
+                this.$emit('update:isModalRequestPending', false);
             }
         }
     }

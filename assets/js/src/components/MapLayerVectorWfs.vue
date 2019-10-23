@@ -5,6 +5,7 @@
     >
         <vl-source-vector
             ref="source"
+            url="no"
             :strategy-factory="loadingStrategyFactory"
             :loader-factory="loaderFactory"
             :typename="typename"
@@ -115,14 +116,15 @@ export default {
     },
     methods: {
         refreshSource() {
-            return this.$refs.source.scheduleRecreate();
+            this.$refs.source.refresh();
+            //return this.$refs.source.scheduleRecreate(); //vuelayers >0.11.4
         },
         loadingStrategyFactory () {
             // VueLayers.olExt available only in UMD build
             // in ES build it should be imported explicitly from 'vuelayers/lib/ol-ext'
             return loadingBBox;
         },
-        loaderFactory() {
+        loaderFactory(vectorSourceComponent) {
             const vectorLayerComponent = this;
             return function (extent, resolution, projection) {
 
@@ -136,7 +138,11 @@ export default {
 
                 return vectorLayerComponent.performWfsGetFeatureRequest(config, reqHeaders).then(
                     (response) => {
-                        return response.data;
+                        return vectorSourceComponent.$source.getFormat().readFeatures(response.data, {
+                            featureProjection: vectorSourceComponent.viewProjection,
+                            dataProjection: vectorSourceComponent.resolvedDataProjection
+                        });
+                        //return response.data; //vuelayers >0.11.4
                     }
                 ).catch((error) => {
                     const color = 'error';

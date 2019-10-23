@@ -44,7 +44,7 @@ const getMountOptions = () => {
                 typename: 'test:typename',
                 queryTypename: 'test-query-typename'
             },
-            isRequestPending: false
+            isModalRequestPending: false
         }
     };
 };
@@ -130,7 +130,7 @@ describe('VwSiteExportDialogContent', () => {
                 expect(FileSaver.saveAs).toHaveBeenCalledWith(new Blob(), 'archiraq_export.json', {'type': 'mocked/type'});
             });
             it('$emits update:isRequestPending twice', () => {
-                let $emits = wrapper.emitted('update:isRequestPending');
+                let $emits = wrapper.emitted('update:isModalRequestPending');
                 expect($emits).toHaveLength(2);
                 expect($emits[0]).toEqual([true]);
                 expect($emits[1]).toEqual([false]);

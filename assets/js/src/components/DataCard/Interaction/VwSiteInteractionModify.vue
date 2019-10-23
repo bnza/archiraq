@@ -2,6 +2,7 @@
     <div>
         <vl-layer-vector>
             <vl-source-vector
+                ref="source"
                 ident="editedVector"
                 :features.sync="features"
             />
@@ -58,9 +59,10 @@ const methods = {
         let features = [];
         if (this.geometryString) {
             features.push(featureFromGeometryString(geometryString));
-            this.$emit('ready', features[0].geometry);
         }
         this.features = features;
+        this.$refs.source.refresh();
+        this.$refs.source.scheduleRecreate();
     },
     setStoreInteractionReady(flag) {
         this.componentsSetComponentProp({
