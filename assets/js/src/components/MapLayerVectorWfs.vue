@@ -5,7 +5,7 @@
     >
         <vl-source-vector
             ref="source"
-            :url="urlFunction"
+            url="no-need"
             :strategy-factory="loadingStrategyFactory"
             :loader-factory="loaderFactory"
             :typename="typename"
@@ -32,13 +32,11 @@
 <script>
 
 import {loadingBBox} from 'vuelayers/lib/ol-ext';
-import {getFeatureBboxQueryString} from '../utils/wfs';
+import {addBboxFilter} from '../utils/wfs';
 import {headers} from '@/utils/http';
 import {SET_OFF} from '@/store/geoserver/mutations';
-import {GET_GUEST_AUTH} from '@/store/geoserver/auth/getters';
-import {REQUEST} from '@/store/client/actions';
 import AppInteractionSelect from '@/components/DataCard/Interaction/AppInteractionSelect';
-import HttpClientMx from '@/mixins/HttpClientMx';
+import WfsGetFeatureMx from '@/mixins/WfsGetFeatureMx';
 import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 import ComponentStoreVisibleMx from '@/mixins/ComponentStoreVisibleMx';
 import SnackbarComponentStoreMx from '@/mixins/SnackbarComponentStoreMx';
@@ -51,7 +49,7 @@ export default {
     mixins: [
         MapContainerComponentStoreMx,
         ComponentStoreVisibleMx,
-        HttpClientMx,
+        WfsGetFeatureMx,
         SnackbarComponentStoreMx
     ],
     props: {
@@ -100,45 +98,32 @@ export default {
         refreshSource() {
             return this.$refs.source.refresh();
         },
-        urlFunction (extent, resolution, projection) {
-            return this.$store.state.geoserver.baseUrl + 'wfs?' + getFeatureBboxQueryString({
-                typename:this.typename, filter: this.filter, propertyName: 'id,geom'
-            }, {extent});
-        },
         loadingStrategyFactory () {
             // VueLayers.olExt available only in UMD build
             // in ES build it should be imported explicitly from 'vuelayers/lib/ol-ext'
             return loadingBBox;
         },
         loaderFactory(vm) {
+            const typename = this.typename;
+            const performWfsGetFeatureRequest = this.performWfsGetFeatureRequest;
             return function (extent, resolution, projection) {
 
-                const setHeaders = (auth) => {
-                    const reqHeaders = headers.setAuthorizationBasic(auth);
-                    headers.setContentType('text/xml', reqHeaders);
-                    return reqHeaders;
+                let reqHeaders = headers.setContentType('application/json');
+                let filter = addBboxFilter({extent}, vm.filter);
+                let config = {
+                    typename,
+                    filter,
+                    propertyName: 'id,geom'
                 };
 
-                let axiosRequestConfig = {
-                    method: 'get',
-                    url: vm.$source.getUrl()(extent, resolution, projection),
-                    headers: setHeaders(vm.$store.getters[`geoserver/auth/${GET_GUEST_AUTH}`])
-                };
-
-                return vm.$store.dispatch(
-                    `client/${REQUEST}`,
-                    axiosRequestConfig
-                ).then((response) => {
-                    return response.data;
-                }).then(function (data) {
-                    if (!vm.$source) {
-                        return [];
+                return performWfsGetFeatureRequest(config, reqHeaders).then(
+                    (response) => {
+                        return vm.$source.getFormat().readFeatures(response.data, {
+                            featureProjection: vm.viewProjection,
+                            dataProjection: vm.resolvedDataProjection
+                        });
                     }
-                    return vm.$source.getFormat().readFeatures(data, {
-                        featureProjection: vm.viewProjection,
-                        dataProjection: vm.resolvedDataProjection
-                    });
-                }).catch((error) => {
+                ).catch((error) => {
                     const color = 'error';
                     let text = 'Error: ';
                     if (!error.response && error.request) {

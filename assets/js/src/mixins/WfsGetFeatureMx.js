@@ -27,12 +27,13 @@ export default {
         },
         /**
          * @param {HttpGetWFSGetFeatureConfig} config
+         * @param {Object} headers
          */
-        performWfsGetFeatureRequest(config) {
+        performWfsGetFeatureRequest(config, headers = {}) {
             let axiosRequestConfig = {
                 method: 'get',
                 url: this.getUrl(config),
-                headers: setWfsGetFeatureRequestHeaders({}, this.geoserver.auth.guest)
+                headers: setWfsGetFeatureRequestHeaders(headers, this.geoserver.auth.guest)
             };
             return this.clientRequest(axiosRequestConfig).finally(
                 () => {

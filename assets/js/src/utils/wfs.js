@@ -34,34 +34,6 @@ import {getFilterString} from '@/utils/WFS/cql';
  */
 const getFeatureBaseQueryFragment = 'service=WFS&version=1.1.0&request=GetFeature';
 
-/**
- *
- * @param {float[]} extent the request extension
- * @param {float} resolution
- * @param {string} projection
- * @param {string} typename
- * @param {Filter} filter
- * @return {{filter: Filter, srsName: string, geometryName: string, featureNS: string, bbox: float[], featureTypes: string[], featurePrefix: string, outputFormat: string}}
- */
-const getBboxWriteGetFeatureOptions = /*@__PURE__*/ (extent, resolution, projection, typename, filter) => {
-    return {
-        featureNS: 'http://archiraq.orientlab.net',
-        featurePrefix: 'archiraq',
-        srsName: projection,
-        featureTypes: [typename],
-        outputFormat: 'application/json',
-        geometryName: 'geom',
-        bbox: extent,
-        filter: filter,
-    };
-};
-
-export const getBboxFeatureRequestXmlBody = (extent, resolution, projection, typename, filter) => {
-    const options = getBboxWriteGetFeatureOptions(extent, resolution, projection, typename, filter);
-    const featureRequest =  new WFS().writeGetFeature(options);
-    return new XMLSerializer().serializeToString(featureRequest);
-};
-
 export const setWfsGetFeatureRequestHeaders = (headers = {}, auth) => {
     headers = headersUtil.setAuthorizationBasic(auth, headers);
     headers = headersUtil.setContentType('text/xml', headers);
@@ -135,17 +107,18 @@ export const getFeatureQueryString = (config) => {
 };
 
 /**
- * @param {HttpGetWFSGetFeatureConfig} config
- * @return {string}
+ *
+ * @param geometryName
+ * @param extent
+ * @param opt_srsName
+ * @param {import('ol/format/filter/Filter')} [filter]
  */
-export const getFeatureBboxQueryString = (config, {geometryName = 'geom', extent, opt_srsName}) => {
-    const bboxFilter = bbox(geometryName, extent, opt_srsName);
-    if (config.filter) {
-        config.filter = and(config.filter, bboxFilter);
-    } else {
-        config.filter = bboxFilter;
+export const addBboxFilter = ({geometryName = 'geom', extent, opt_srsName}, filter = null) => {
+    let bboxFilter = bbox(geometryName, extent, opt_srsName);
+    if (filter) {
+        bboxFilter = and(filter, bboxFilter);
     }
-    return getFeatureQueryString(config);
+    return bboxFilter;
 };
 
 export const mapWfsFeatureToTableItem = (feature) =>{

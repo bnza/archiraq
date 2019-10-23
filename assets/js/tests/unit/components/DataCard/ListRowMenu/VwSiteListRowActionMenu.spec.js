@@ -18,8 +18,8 @@ describe('VwSiteTableActionMenu', () => {
             expect(wrapper.vm.item).toEqual({});
         });
     });
-    describe('props', () => {
-        it('item default value', () => {
+    describe('methods', () => {
+        it('zoomToItemGeometry', () => {
             const mapContainerCallMethod = jest.fn();
             const goTo = jest.fn();
             const item = {geom: 'value'};
@@ -34,7 +34,7 @@ describe('VwSiteTableActionMenu', () => {
             //TODO is $vuetify global?
             const $goTo = wrapper.vm.$vuetify.goTo;
             wrapper.vm.$vuetify.goTo = goTo;
-            wrapper.vm.zoomToItemFeature();
+            wrapper.vm.zoomToItemFeature(item.geom);
             wrapper.vm.$vuetify.goTo = $goTo;
             expect(mapContainerCallMethod).toHaveBeenCalledWith('zoomToItemGeometry', item.geom);
             expect(goTo).toHaveBeenCalledWith('#map');
