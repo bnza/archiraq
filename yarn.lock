@@ -9964,10 +9964,10 @@ vue@^2.6:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
 
-vuelayers@=0.11.4:
-  version "0.11.4"
-  resolved "https://registry.yarnpkg.com/vuelayers/-/vuelayers-0.11.4.tgz#1459d0b00f82fac13f528cd00822eaac40054d1e"
-  integrity sha512-6asCq2vDCPM4mS60NGeEBGKiVVJZ/GACYtu7UUVPkhtdmvI7bSzKjKuv0cTQkwcgh6YRtqzAIzML0l9fwb4AQw==
+vuelayers@=0.11.9:
+  version "0.11.9"
+  resolved "https://registry.yarnpkg.com/vuelayers/-/vuelayers-0.11.9.tgz#65aa6165a386ec03177b9fdc167d40e1d81eeac9"
+  integrity sha512-Tp0x2IBukMH/Z/KqJPy4YWEH4+G+3bbmA81R+gEGnJg9DQ96RQ0HLzH/OfITMeNyZHou7gWzpjlHUwXqZbUq/g==
   dependencies:
     "@babel/runtime-corejs2" "^7.1.2"
     "@turf/point-on-feature" "^5.1.5"
@@ -9978,7 +9978,6 @@ vuelayers@=0.11.4:
     parse-color "^1.0.0"
     rxjs "^6.3.3"
     uuid "^3.3.2"
-    whatwg-fetch "^3.0.0"
 
 vuelidate@^0.7:
   version "0.7.4"
@@ -10227,11 +10226,6 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3, whatwg-encoding@^1.0.5:
   integrity sha512-b5lim54JOPN9HtzvK9HFXvBma/rnfFeqsic0hSpjtDbVxR3dJKLc+KB4V6GgiGOvl7CY/KNh8rxSo9DKQrnUEw==
   dependencies:
     iconv-lite "0.4.24"
-
-whatwg-fetch@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
-  integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
 
 whatwg-mimetype@^2.1.0, whatwg-mimetype@^2.2.0, whatwg-mimetype@^2.3.0:
   version "2.3.0"

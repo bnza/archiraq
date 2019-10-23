@@ -5,12 +5,10 @@
     >
         <vl-source-vector
             ref="source"
-            url="no-need"
             :strategy-factory="loadingStrategyFactory"
             :loader-factory="loaderFactory"
             :typename="typename"
             :filter="filter"
-            @fetchError="displaySnackbar"
         />
         <slot name="style" />
         <app-interaction-select
@@ -96,41 +94,37 @@ export default {
     },
     methods: {
         refreshSource() {
-            return this.$refs.source.refresh();
+            this.$refs.source.scheduleRecreate();
         },
         loadingStrategyFactory () {
             // VueLayers.olExt available only in UMD build
             // in ES build it should be imported explicitly from 'vuelayers/lib/ol-ext'
             return loadingBBox;
         },
-        loaderFactory(vm) {
-            const typename = this.typename;
-            const performWfsGetFeatureRequest = this.performWfsGetFeatureRequest;
+        loaderFactory() {
+            const vectorLayerComponent = this;
             return function (extent, resolution, projection) {
 
                 let reqHeaders = headers.setContentType('application/json');
-                let filter = addBboxFilter({extent}, vm.filter);
+                let filter = addBboxFilter({extent}, vectorLayerComponent.filter);
                 let config = {
-                    typename,
+                    typename: vectorLayerComponent.typename,
                     filter,
                     propertyName: 'id,geom'
                 };
 
-                return performWfsGetFeatureRequest(config, reqHeaders).then(
+                return vectorLayerComponent.performWfsGetFeatureRequest(config, reqHeaders).then(
                     (response) => {
-                        return vm.$source.getFormat().readFeatures(response.data, {
-                            featureProjection: vm.viewProjection,
-                            dataProjection: vm.resolvedDataProjection
-                        });
+                        return response.data;
                     }
                 ).catch((error) => {
                     const color = 'error';
                     let text = 'Error: ';
                     if (!error.response && error.request) {
-                        vm.$store.commit(`geoserver/${SET_OFF}`);
+                        vectorLayerComponent.$store.commit(`geoserver/${SET_OFF}`);
                         text += 'GeoServer does not respond. \n Please contact server administrator';
                     }
-                    vm.$emit('fetchError', text, color);
+                    vectorLayerComponent.displaySnackbar(text, color);
                 });
             };
         }
