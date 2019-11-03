@@ -70,6 +70,12 @@ class DraftEntity implements EntityInterface
      * @var string
      * @ORM\Column(type="string")
      */
+    private $nearest_city;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
     private $ancient_name;
 
     /**
@@ -320,6 +326,24 @@ class DraftEntity implements EntityInterface
     {
         $this->modern_name = $modern_name;
     }
+
+    /**
+     * @return string
+     */
+    public function getNearestCity(): string
+    {
+        return $this->nearest_city;
+    }
+
+    /**
+     * @param string $nearest_city
+     */
+    public function setNearestCity(string $nearest_city): void
+    {
+        $this->nearest_city = $nearest_city;
+    }
+
+
 
     /**
      * @return string
