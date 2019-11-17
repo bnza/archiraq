@@ -8,7 +8,7 @@ use App\Repository\Tmp\DraftRepository;
 use App\Runner\Task\ContributeTrait;
 use App\Runner\Task\TaskEntityManagerTrait;
 use App\Service\SQLPersister\InsertGeomSiteSQLPersiter;
-use App\Service\SQLPersister\InsertPublicSiteChronologySQLPersiter;
+use App\Service\SQLPersister\InsertPublicSiteChronologySQLPersister;
 use App\Service\SQLPersister\InsertPublicSiteSurveySQLPersiter;
 use App\Service\SQLPersister\InsertPublicSiteSQLPersiter;
 use Bnza\JobManagerBundle\Runner\Task\AbstractTask;
@@ -31,7 +31,7 @@ class PersistSitesFromTmpDraftTaskSQL extends AbstractTask
     private $siteGeomPersiter;
 
     /**
-     * @var InsertPublicSiteChronologySQLPersiter
+     * @var InsertPublicSiteChronologySQLPersister
      */
     private $siteChronologyPersister;
 
@@ -113,10 +113,10 @@ class PersistSitesFromTmpDraftTaskSQL extends AbstractTask
         return $this->siteGeomPersiter;
     }
 
-    private function getSiteChronologyPersister(): InsertPublicSiteChronologySQLPersiter
+    private function getSiteChronologyPersister(): InsertPublicSiteChronologySQLPersister
     {
         if (!$this->siteChronologyPersister) {
-            $this->siteChronologyPersister = new InsertPublicSiteChronologySQLPersiter($this->getEntityManager());
+            $this->siteChronologyPersister = new InsertPublicSiteChronologySQLPersister($this->getEntityManager());
         }
         return $this->siteChronologyPersister;
     }
@@ -127,5 +127,13 @@ class PersistSitesFromTmpDraftTaskSQL extends AbstractTask
             $this->siteSurveyPersister = new InsertPublicSiteSurveySQLPersiter($this->getEntityManager());
         }
         return $this->siteSurveyPersister;
+    }
+
+    //TODO Move draft deletion to a proper task
+    public function terminate(): void
+    {
+        $conn = $this->em->getConnection();
+        $sql = 'DELETE FROM "tmp"."draft" WHERE "contribute_id" = :id';
+        $conn->prepare($sql)->execute(['id' => $this->getContribute()->getId()]);
     }
 }

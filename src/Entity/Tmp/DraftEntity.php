@@ -94,6 +94,7 @@ class DraftEntity implements EntityInterface
      * @var string
      * @ORM\Column(type="string")
      * @AppAssert\ContainsValidChronologyCodes
+     * @AppAssert\ChronologyCodesAreUnique
      */
     private $site_chronology;
 
@@ -166,7 +167,7 @@ class DraftEntity implements EntityInterface
 
     /**
      * @var string
-     * @Assert\Regex("/^(\d{4}(-\d{4};?)?)+$/")
+     * @Assert\Regex("/^((\d{4})(-\d{4})?;?)+$/")
      * @ORM\Column(type="string")
      */
     private $survey_visit_date;

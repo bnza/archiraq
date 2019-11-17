@@ -52,6 +52,7 @@ class JobController
 
             return $contribute;
         }
+        return null;
     }
 
     protected function setUpJob(Request $request, ImportFileJobFactory $factory, string $className, string $id)

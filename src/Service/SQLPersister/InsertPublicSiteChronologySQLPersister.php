@@ -8,7 +8,7 @@ use App\Service\ParametersConverter\TmpDraftArrayToPublicSiteChronologyParameter
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\ORM\EntityManagerInterface;
 
-class InsertPublicSiteChronologySQLPersiter
+class InsertPublicSiteChronologySQLPersister
 {
     /**
      * @var EntityManagerInterface
@@ -36,7 +36,13 @@ class InsertPublicSiteChronologySQLPersiter
         $params = ['site_id' => $paramsList['site_id']];
         foreach ($paramsList['site_chronologies'] as $chronologyId) {
             $params['chronology_id'] = $chronologyId;
-            $this->getInsertIntoSiteStatement()->execute($params);
+            try {
+                $this->getInsertIntoSiteStatement()->execute($params);
+            } catch (\PDOException $e) {
+                $refs = $draft['entry_id'];
+                throw new \RuntimeException($e->getMessage().': '.$refs);
+            }
+
         }
         return $paramsList['site_id'];
     }

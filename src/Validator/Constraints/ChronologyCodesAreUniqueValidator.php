@@ -7,15 +7,15 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
-class ContainsValidChronologyCodesValidator extends AbstractEntityManagerRelatedValidator
+class ChronologyCodesAreUniqueValidator extends AbstractEntityManagerRelatedValidator
 {
     /**
      * {@inheritdoc}
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof ContainsValidChronologyCodes) {
-            throw new UnexpectedTypeException($constraint, ContainsValidChronologyCodes::class);
+        if (!$constraint instanceof ChronologyCodesAreUnique) {
+            throw new UnexpectedTypeException($constraint, ChronologyCodesAreUnique::class);
         }
 
         // custom constraints should ignore null and empty values to allow
@@ -30,14 +30,20 @@ class ContainsValidChronologyCodesValidator extends AbstractEntityManagerRelated
             // separate multiple types using pipes
             // throw new UnexpectedValueException($value, 'string|int');
         }
-        $repo = $this->getEntityManager()->getRepository(ChronologyEntity::class);
-        foreach (\explode(';', $value) as $code) {
-            $code = \strtoupper(\trim($code));
-            if (!$repo->codeExists($code)) {
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ string }}', $code)
-                    ->addViolation();
+
+        //$repo = $this->getEntityManager()->getRepository(ChronologyEntity::class);
+        $codes = \explode(';', $value);
+        $count = \array_count_values($codes);
+        $duplicates = [];
+        foreach ($count as $code => $num) {
+            if ($count[$code] > 1) {
+                $duplicates[] = $code;
             }
+        }
+        if ($duplicates) {
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ string }}', \implode(';',$duplicates))
+                ->addViolation();
         }
     }
 }
