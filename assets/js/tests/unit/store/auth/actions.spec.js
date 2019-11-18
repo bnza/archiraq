@@ -1,6 +1,7 @@
-import actions, * as consts from '../../../../src/store/auth/actions';
-import {SET_USER_TOKEN} from '../../../../src/store/geoserver/auth/mutations';
-import {XSRF_REQUEST} from '../../../../src/store/client/actions';
+import actions, * as consts from '@/store/auth/actions';
+import {SET_USER_TOKEN} from '@/store/geoserver/auth/mutations';
+import {XSRF_REQUEST} from '@/store/client/actions';
+import {SET_XSRF_TOKEN} from '@/store/mutations';
 
 let commit;
 let dispatch;
@@ -35,15 +36,20 @@ describe('store/auth actions', () => {
     });
     describe(`${consts.LOGOUT}`, () => {
         it(`dispatch "client/${XSRF_REQUEST}" action`, async () => {
-            dispatch.mockResolvedValue('User logged out');
+            dispatch.mockResolvedValue({data: {xsrfToken: 'aToken'}});
             const axiosRequestConfig = {method: 'post', url: 'logout'};
             await actions[consts.LOGOUT]({dispatch, commit});
             expect(dispatch).toHaveBeenCalledWith(`client/${XSRF_REQUEST}`, axiosRequestConfig, {root: true});
         });
         it(`commit "geoserver/auth/${SET_USER_TOKEN}" mutation (clean auth)`, async () => {
-            dispatch.mockResolvedValue('User logged out');
-            await await actions[consts.LOGOUT]({dispatch, commit});
+            dispatch.mockResolvedValue({data: {xsrfToken: 'aToken'}});
+            await actions[consts.LOGOUT]({dispatch, commit});
             expect(commit).toHaveBeenCalledWith(`geoserver/auth/${SET_USER_TOKEN}`, {}, {'root': true});
+        });
+        it(`commit "${SET_XSRF_TOKEN}" mutation`, async () => {
+            dispatch.mockResolvedValue({data: {xsrfToken: 'aToken'}});
+            await actions[consts.LOGOUT]({dispatch, commit});
+            expect(commit).toHaveBeenCalledWith(`${SET_XSRF_TOKEN}`, 'aToken', {'root': true});
         });
     });
 });

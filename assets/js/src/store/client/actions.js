@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as mutations from './mutations';
-import {headers} from '../../utils/http';
+import {REFRESH_SESSION} from '@/store/auth/actions';
+import {headers} from '@/utils/http';
 
 export const REQUEST = 'request';
 export const XSRF_REQUEST = 'xsrfRequest';
@@ -12,6 +13,20 @@ const getAxiosError = (error) => {
         // Something happened in setting up the request that triggered an Error
         return error.message;
     }
+};
+const refreshSession = ({dispatch, rootState}, axiosRequestConfig) => {
+    return dispatch(`auth/${REFRESH_SESSION}`, null, {root: true}).then(
+        doLogin => {
+            if (doLogin) {
+                let error =  new Error();
+                error.errorMessages = 'Your session has expired';
+                throw error;
+            } else {
+                axiosRequestConfig.headers = headers.setXsrfToken(rootState.xsrfToken, axiosRequestConfig.headers);
+                return dispatch(REQUEST, axiosRequestConfig);
+            }
+        }
+    );
 };
 
 export default {
@@ -28,19 +43,34 @@ export default {
             }
         ).catch(
             (error) => {
+                let setError = true;
                 commit(mutations.SET_REQUEST_TERMINATED, index);
                 if (error.response) {
                     commit(mutations.SET_RESPONSE, {index: index, response: error.response});
+                    if (error.response.status === 412) {
+                        setError = false;
+                    }
                 }
-                const errorMessages = getAxiosError(error);
-                commit(mutations.SET_ERROR, {index: index, error: errorMessages});
-                error.errorMessages = errorMessages.errors;
+
+                if (setError) {
+                    const errorMessages = getAxiosError(error);
+                    commit(mutations.SET_ERROR, {index: index, error: errorMessages});
+                    error.errorMessages = errorMessages.errors;
+                }
+
                 throw error;
             }
         );
     },
-    [XSRF_REQUEST] ({dispatch, rootState}, axiosRequestConfig) {
+    [XSRF_REQUEST] ({dispatch, commit, state, rootState}, axiosRequestConfig) {
         axiosRequestConfig.headers = headers.setXsrfToken(rootState.xsrfToken, axiosRequestConfig.headers);
-        return dispatch(REQUEST, axiosRequestConfig);
+        return dispatch(REQUEST, axiosRequestConfig).catch(
+            error => {
+                if (error.response && error.response.status === 412) {
+                    return refreshSession({dispatch, commit, state, rootState}, axiosRequestConfig);
+                }
+            }).then(
+            response => response
+        );
     }
 };

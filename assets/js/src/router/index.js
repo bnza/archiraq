@@ -11,7 +11,6 @@ import DataCardContainer from '@/components/DataCard/DataCardContainer';
 import MapToolbarButtons from '@/components/MapToolbarButtons';
 import MapFooterData from '@/components/MapFooterData';
 import MapDrawerEntries from '@/components/MapDrawerEntries';
-import VwSiteInteractionModify from '@/components/DataCard/Interaction/VwSiteInteractionModify';
 import {QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS} from '@/utils/cids';
 import {displaySnackbarFn} from '@/mixins/SnackbarComponentStoreMx';
 import {isAuthenticated} from '@/store/auth/getters';
@@ -59,6 +58,9 @@ export const dataTableRoutes = [
         },
         props: {
             default: true
+        },
+        meta: {
+            requiresRole: 'editor',
         }
     },
 ];
@@ -81,6 +83,9 @@ export const contributeRoutes = {
             },
             props: {
                 default: true
+            },
+            meta: {
+                requiresRole: 'editor',
             }
         },
         {

@@ -82,7 +82,11 @@ export default {
             login: `auth/${LOGIN}`
         }),
         closeDialog() {
-            this.$router.push(this.$store.state.route.from.fullPath);
+            const route = this.$store.state.route;
+            const requiresAuth = route.meta.hasOwnProperty('requiresAuthenticated') || route.meta.hasOwnProperty('requiresRole');
+            const to = (route.from.path === '/logout' || requiresAuth) ? '/' : route.from.fullPath;
+
+            this.$router.push(to);
         },
         performLoginRequest() {
             performLoginRequest(this);

@@ -6,6 +6,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
@@ -48,9 +49,14 @@ class XsrfListenerEventSubscriber implements EventSubscriberInterface
             );
     }
 
+    protected function isLogoutRequest(KernelEvent $e): bool
+    {
+        return $e->getRequest()->isMethod('POST') && $e->getRequest()->getPathInfo() === '/logout';
+    }
+
     public function onKernelRequest(RequestEvent $e)
     {
-        if (in_array($e->getRequest()->getMethod(), array('POST', 'PUT', 'DELETE', 'PATCH'))) {
+        if (!$this->isLogoutRequest($e) && in_array($e->getRequest()->getMethod(), array('POST', 'PUT', 'DELETE', 'PATCH'))) {
             $token = $this->manager->getToken('archiraq');
             if (
                 $token
@@ -58,7 +64,6 @@ class XsrfListenerEventSubscriber implements EventSubscriberInterface
                 || $token->getValue() !== $e->getRequest()->headers->get('x-xsrf-token')
             ) {
                 $e->setResponse(new Response('The XSRF token is invalid', 412));
-
                 return;
             }
         }
@@ -68,7 +73,7 @@ class XsrfListenerEventSubscriber implements EventSubscriberInterface
     {
         if (
             $e->getRequest()->isMethod('GET') && '/' === $e->getRequest()->getPathInfo()
-            || $e->getRequest()->isMethod('POST') && '/logout' === $e->getRequest()->getPathInfo()
+            || $this->isLogoutRequest($e)
         ) {
             $this->refreshToken($e);
         }

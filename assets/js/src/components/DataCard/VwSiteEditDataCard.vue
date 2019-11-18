@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import SnackbarComponentStoreMx from '@/mixins/SnackbarComponentStoreMx';
 import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 import {CID_VW_SITE_EDIT_DATA_CARD as CID} from '@/utils/cids';
 import DataCard from './DataCard';
@@ -53,6 +54,7 @@ export default {
         VwSiteEditDataCardForm
     },
     mixins: [
+        SnackbarComponentStoreMx,
         MapContainerComponentStoreMx,
         VwSiteItemActionDataCardMx
     ],
@@ -95,6 +97,9 @@ export default {
             this.clientXsrfRequest(axiosRequestConfig).then(() => {
                 this.refreshMapLayerSource();
                 this.$router.back();
+            }).catch((error) => {
+                this.displaySnackbar(error.errorMessages, 'error');
+                this.$router.push('/login');
             }).finally(() => {
                 this.isRequestPending = false;
             });
