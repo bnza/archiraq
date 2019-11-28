@@ -41,7 +41,7 @@ class ContributeEntityTest extends AbstractPgTestIsolation
         $entity->setSha1(sha1('A'));
         $entity->setStatus(1);
         $this->getEntityManager()->persist($entity);
-        $this->getEntityManager()->flush($entity);
+        $this->getEntityManager()->flush();
         $this->assertEquals(1, $entity->getId());
     }
 

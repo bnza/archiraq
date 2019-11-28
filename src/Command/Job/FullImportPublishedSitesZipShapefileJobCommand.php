@@ -67,5 +67,6 @@ EOT;
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getJob()->run();
+        return 0;
     }
 }

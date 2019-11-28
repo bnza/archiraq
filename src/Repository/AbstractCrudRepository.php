@@ -7,7 +7,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 abstract class AbstractCrudRepository extends ServiceEntityRepository
 {
@@ -38,7 +38,7 @@ abstract class AbstractCrudRepository extends ServiceEntityRepository
      */
     private $idField = 'id';
 
-    public function __construct(RegistryInterface $registry, string $className)
+    public function __construct(ManagerRegistry $registry, string $className)
     {
         parent::__construct($registry, $className);
     }

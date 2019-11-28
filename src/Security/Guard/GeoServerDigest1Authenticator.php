@@ -3,7 +3,7 @@
 namespace App\Security\Guard;
 
 use App\Security\Guard\Token\GeoserverDigest1PostAuthenticationGuardToken;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,7 +46,7 @@ class GeoServerDigest1Authenticator extends AbstractGuardAuthenticator
      */
     private $password;
 
-    public function __construct(RouterInterface $router, UserPasswordEncoderInterface $encoder, ObjectManager $em)
+    public function __construct(RouterInterface $router, UserPasswordEncoderInterface $encoder, EntityManagerInterface $em)
     {
         $this->router = $router;
         $this->encoder = $encoder;

@@ -4,12 +4,12 @@ namespace App\Repository\View;
 
 use App\Entity\View\SiteEntity as VwSiteEntity;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use App\Repository\AbstractCrudRepository;
 
 class SiteRepository extends AbstractCrudRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, VwSiteEntity::class);
     }

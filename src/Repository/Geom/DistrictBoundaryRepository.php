@@ -4,11 +4,11 @@ namespace App\Repository\Geom;
 
 use App\Entity\Geom\DistrictBoundaryEntity;
 use App\Repository\AbstractCrudRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 class DistrictBoundaryRepository extends AbstractCrudRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, DistrictBoundaryEntity::class);
     }

@@ -4,11 +4,11 @@ namespace App\Repository\Voc;
 
 use App\Entity\Voc\ChronologyEntity;
 use App\Repository\AbstractCrudRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 class ChronologyRepository extends AbstractCrudRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ChronologyEntity::class);
     }

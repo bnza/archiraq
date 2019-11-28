@@ -48,7 +48,7 @@ class TmpDraftToSiteSerializerTest extends AbstractPgTestIsolation
         $this->assertInstanceOf(SiteEntity::class, $site);
         $this->assertCount(3, $site->getChronologies());
         $this->getEntityManager()->persist($site);
-        $this->getEntityManager()->flush($site);
+        $this->getEntityManager()->flush();
     }
 
     public function testConverterWillSetSurvey()
@@ -62,7 +62,7 @@ class TmpDraftToSiteSerializerTest extends AbstractPgTestIsolation
         $this->assertInstanceOf(SiteEntity::class, $site);
         $this->assertCount(2, $site->getSurveys());
         $this->getEntityManager()->persist($site);
-        $this->getEntityManager()->flush($site);
+        $this->getEntityManager()->flush();
     }
 
     public function testConverterWillSetRemoteSensing()
@@ -76,7 +76,7 @@ class TmpDraftToSiteSerializerTest extends AbstractPgTestIsolation
         $this->assertInstanceOf(SiteEntity::class, $site);
         $this->assertCount(2, $site->getSurveys());
         $this->getEntityManager()->persist($site);
-        $this->getEntityManager()->flush($site);
+        $this->getEntityManager()->flush();
     }
 
     private function getConverter(): TmpDraftToSiteConverter
