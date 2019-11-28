@@ -98,6 +98,9 @@ class FullImportPublishedSitesZipShapefileJob extends AbstractImportPublishedSit
                 'parameters' => [
                     ['setEntityManager', 'getEntityManager'],
                 ],
+                'setters' => [
+                    ['setDraftValid', 'isDraftValid'],
+                ],
             ],
             [
                 'class' => InsertDraftAndShpIntoTmpDraftTask::class,

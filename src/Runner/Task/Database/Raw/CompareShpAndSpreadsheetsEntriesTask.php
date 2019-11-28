@@ -117,4 +117,9 @@ EOT;
             throw new JobManagerNonCriticalErrorException($entry->getMessage());
         }
     }
+
+    public function isDraftValid(): bool
+    {
+        return !((bool) $this->shapefileDiff || (bool) $this->spreadsheetDiff);
+    }
 }

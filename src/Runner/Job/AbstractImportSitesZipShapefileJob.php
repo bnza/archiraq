@@ -83,6 +83,7 @@ abstract class AbstractImportSitesZipShapefileJob extends AbstractDatabaseJob
 
     public function setDraftValid(bool $isValid)
     {
-        return $this->getParameters()->set(self::KEY_IS_DRAFT_VALID, $isValid);
+        $isDraftValid = $this->getParameters()->has(self::KEY_IS_DRAFT_VALID) ? $this->isDraftValid() : true;
+        return $this->getParameters()->set(self::KEY_IS_DRAFT_VALID, $isDraftValid && $isValid);
     }
 }

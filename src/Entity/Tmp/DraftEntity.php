@@ -167,7 +167,10 @@ class DraftEntity implements EntityInterface
 
     /**
      * @var string
-     * @Assert\Regex("/^((\d{4})(-\d{4})?;?)+$/")
+     * @Assert\Regex(
+     *     pattern = "/^((\s?\d{4})(-\s?\d{4})?;?)+$/",
+     *     message = "Invalid visit date: {{ value }}"
+     * )
      * @ORM\Column(type="string")
      */
     private $survey_visit_date;
@@ -179,15 +182,18 @@ class DraftEntity implements EntityInterface
     private $survey_verified_on_field;
 
     /**
-     * Validates against string like ADAMS1972.001;BLAKE1954.a
      * @var string
-     * @Assert\Regex("/^(\w+((\.\w+)?;)?)+$/")
      * @ORM\Column(type="string")
      */
     private $survey_type;
 
     /**
+     * Validates against string like ADAMS1972.001;BLAKE1954.a
      * @var string
+     * @Assert\Regex(
+     *     pattern = "/^(\s*[\w-]+((\.\w+)?);?)+$/",
+     *     message = "Surveys previous references should contain only alphanumeric values or hypen (-) eventually separated by a dot (.). No space allowed"
+     * )
      * @ORM\Column(type="string")
      */
     private $survey_prev_refs;
