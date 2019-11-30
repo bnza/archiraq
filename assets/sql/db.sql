@@ -191,7 +191,7 @@ ALTER TABLE "geom"."mat_site" OWNER TO "archiraq_admin";
 
 CREATE FUNCTION "geom"."select_vw_site_by_index"("site_id" integer) RETURNS "geom"."mat_site"
     LANGUAGE "sql"
-    AS $$SELECT ws.*, st_centroid(gs.geom) AS centroid, gs.geom FROM public.vw_site ws
+    AS $$SELECT ws.*, public.st_centroid(gs.geom) AS centroid, gs.geom FROM public.vw_site ws
      LEFT JOIN geom.site gs ON ws.id = gs.id WHERE ws.id=site_id;$$;
 
 
@@ -321,8 +321,7 @@ ALTER FUNCTION "public"."orientedenvelope"("g" "public"."geometry") OWNER TO "ar
 
 CREATE FUNCTION "public"."orientedenvelopesides"("g" "public"."geometry") RETURNS double precision[]
     LANGUAGE "plpgsql" IMMUTABLE
-    AS $$
-declare
+    AS $$declare
 	l geometry(linestring);
     p1 geometry(point);
     p2 geometry(point);
@@ -330,7 +329,7 @@ declare
     length1 float;
     length2 float;
 begin
-	l := ST_ExteriorRing(OrientedEnvelope(g));
+	l := ST_ExteriorRing(ST_OrientedEnvelope(g));
 	p1 = ST_PointN(l, 1)::geography;
 	p2 = ST_PointN(l, 2)::geography;
 	p3 = ST_PointN(l, 3)::geography;
@@ -561,6 +560,9 @@ CREATE TABLE "geom"."site" (
 
 
 ALTER TABLE "geom"."site" OWNER TO "archiraq_admin";
+
+ALTER TABLE "public"."vw_site" OWNER TO "archiraq_admin";
+
 
 CREATE VIEW "geom"."vw_site_point" AS
  SELECT "ws"."id",
@@ -1345,6 +1347,13 @@ ALTER TABLE ONLY "tmp"."draft_error"
 
 
 GRANT ALL ON SCHEMA "public" TO PUBLIC;
+
+
+
+REVOKE ALL ON TABLE "public"."spatial_ref_sys" FROM "postgres";
+REVOKE SELECT ON TABLE "public"."spatial_ref_sys" FROM PUBLIC;
+GRANT ALL ON TABLE "public"."spatial_ref_sys" TO "archiraq_admin";
+GRANT SELECT ON TABLE "public"."spatial_ref_sys" TO PUBLIC;
 
 
 
