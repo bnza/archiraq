@@ -57,11 +57,14 @@ describe('JobStatusRefresher', () => {
 
         describe('"id"', () => {
             beforeEach(baseSetup);
-            it('"job" property is refreshed', () => {
+            it('"job" property is refreshed', done => {
                 const data = {data: require('../../cypress/fixtures/archiraq/job/status/e6243678_1')};
                 clientRequest.mockResolvedValueOnce(data);
                 wrapper.setProps({id: 'new-id'});
-                expect(clientRequest).toHaveBeenLastCalledWith({'method': 'get', 'url': '/job/new-id/status'});
+                wrapper.vm.$nextTick(() => {
+                    expect(clientRequest).toHaveBeenLastCalledWith({'method': 'get', 'url': '/job/new-id/status'});
+                    done();
+                });
             });
         });
         describe('"job"', () => {

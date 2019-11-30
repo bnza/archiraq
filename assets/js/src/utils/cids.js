@@ -28,6 +28,8 @@ export const QUERY_TYPENAME_VW_SITES_EDIT = 'vw-site-edit';
 
 export const WFS_TYPENAME_VW_SITES_SURVEY = 'vw_site_survey';
 export const WFS_TYPENAME_VW_SITES_RS = 'vw_site_rs';
+export const WMTS_TYPENAME_CORONA_DA = 'corona_da';
+export const WMTS_TYPENAME_CORONA_AF = 'corona_af';
 
 export const TITLE_TYPENAME_VW_SITES = 'Sites';
 export const TITLE_TYPENAME_VW_SITES_SURVEY = 'Sites (survey)';

@@ -66,10 +66,13 @@ describe('PredicateMx', () => {
     describe('methods', () => {
         describe('setNegatePredicate', () => {
             let wrapper;
-            beforeEach(() => {
+            beforeEach(done => {
                 wrapper = getWrapper('shallowMount', componentOptions, mountOptions);
                 expect(wrapper.vm.predicate.negate).toEqual(false);
-                wrapper.vm.setNegatePredicate(true);
+                wrapper.vm.$nextTick(() => {
+                    wrapper.vm.setNegatePredicate(true);
+                    done();
+                });
             });
             it('set predicate "negate" property', () => {
                 let wrapper = getWrapper('shallowMount', componentOptions, mountOptions);
@@ -87,10 +90,13 @@ describe('PredicateMx', () => {
         });
         describe('setPredicateOperator', () => {
             let wrapper;
-            beforeEach(() => {
+            beforeEach(done => {
                 wrapper = getWrapper('shallowMount', componentOptions, mountOptions);
                 expect(wrapper.vm.predicate.operator).toEqual('');
-                wrapper.vm.setPredicateOperator('aPredicateOperator');
+                wrapper.vm.$nextTick(() => {
+                    wrapper.vm.setPredicateOperator('aPredicateOperator');
+                    done();
+                });
             });
             it('set predicate "operator" property', () => {
                 expect(wrapper.vm.predicate.operator).toEqual('aPredicateOperator');
@@ -146,7 +152,7 @@ describe('PredicateMx', () => {
                 wrapper.setData({predicate});
                 wrapper.vm.$nextTick(() => {
                     const emittedChanges = wrapper.emitted().change;
-                    expect(emittedChanges.length).toEqual(2);
+                    expect(emittedChanges.length).toEqual(1);
                     expect(emittedChanges.pop()).toEqual([{
                         key: 'pKey',
                         predicate: {isValid: true, ...predicate}
@@ -163,14 +169,17 @@ describe('PredicateMx', () => {
                     done();
                 });
             });
-            it('set "predicate" property', () => {
+            it('set "predicate" property', done => {
                 expect(wrapper.vm.predicate).toEqual({
                     'expressions': [],
                     'negate': false,
                     'operator': ''
                 });
                 wrapper.setProps({predicateP: predicate});
-                expect(wrapper.vm.predicate).toEqual(predicate);
+                wrapper.vm.$nextTick(() => {
+                    expect(wrapper.vm.predicate).toEqual(predicate);
+                    done();
+                });
             });
         });
     });

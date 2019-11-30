@@ -2,7 +2,9 @@ import ComponentsStoreMx from './ComponentsStoreMx';
 import {
     CID_THE_MAP_CONTAINER,
     WFS_TYPENAME_VW_SITES_RS,
-    WFS_TYPENAME_VW_SITES_SURVEY
+    WFS_TYPENAME_VW_SITES_SURVEY,
+    WMTS_TYPENAME_CORONA_AF,
+    WMTS_TYPENAME_CORONA_DA
 } from '../utils/cids';
 
 export default {
@@ -106,6 +108,28 @@ export default {
             set() {
                 this.componentsToggleComponentProp({
                     cid: WFS_TYPENAME_VW_SITES_RS,
+                    prop: 'visible'
+                });
+            }
+        },
+        mapContainerWmtsCoronaAfVisible: {
+            get() {
+                return this.componentsGetComponentProp(WMTS_TYPENAME_CORONA_AF, 'visible');
+            },
+            set() {
+                this.componentsToggleComponentProp({
+                    cid: WMTS_TYPENAME_CORONA_AF,
+                    prop: 'visible'
+                });
+            }
+        },
+        mapContainerWmtsCoronaDaVisible: {
+            get() {
+                return this.componentsGetComponentProp(WMTS_TYPENAME_CORONA_DA, 'visible');
+            },
+            set() {
+                this.componentsToggleComponentProp({
+                    cid: WMTS_TYPENAME_CORONA_DA,
                     prop: 'visible'
                 });
             }

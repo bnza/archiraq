@@ -92,6 +92,29 @@
                     </map-legend-layer-list-tile>
                 </map-legend-list-group>
                 <map-legend-list-group
+                    icon="border_all"
+                    title="Corona"
+                >
+                    <map-legend-layer-list-tile
+                        title="AF set"
+                        :layer-cid="WMTS_TYPENAME_CORONA_AF"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsCoronaAfVisible"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="DA set"
+                        :layer-cid="WMTS_TYPENAME_CORONA_DA"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsCoronaDaVisible"
+                        />
+                    </map-legend-layer-list-tile>
+                </map-legend-list-group>
+                <map-legend-list-group
                     icon="map"
                     title="Base Maps"
                 >
@@ -154,7 +177,9 @@ import {
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
     CID_THE_MAP_LAYERS_DRAWER as CID,
     WFS_TYPENAME_VW_SITES_RS,
-    WFS_TYPENAME_VW_SITES_SURVEY
+    WFS_TYPENAME_VW_SITES_SURVEY,
+    WMTS_TYPENAME_CORONA_AF,
+    WMTS_TYPENAME_CORONA_DA
 } from '../utils/cids';
 
 export default {
@@ -180,7 +205,9 @@ export default {
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
         WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
-        WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY
+        WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY,
+        WMTS_TYPENAME_CORONA_AF: () => WMTS_TYPENAME_CORONA_AF,
+        WMTS_TYPENAME_CORONA_DA: () => WMTS_TYPENAME_CORONA_DA
     }
 };
 </script>

@@ -1,3 +1,11 @@
+const importTransforms = {
+    'rxjs/observable': {
+        transform: 'rxjs/_esm5/internal/observable/${member}',
+        preventFullImport: true,
+        skipDefaultConversion: true,
+    },
+};
+
 module.exports = function (api) {
 
     const presets = [
@@ -8,7 +16,12 @@ module.exports = function (api) {
         }]
     ];
 
-    const plugins = [];
+    const plugins = [
+        ['@babel/plugin-proposal-function-bind'],
+        ['@babel/plugin-proposal-class-properties', { loose: false }],
+        '@babel/plugin-proposal-export-default-from',
+        ['transform-imports', importTransforms],
+    ];
 
     if (api.env('test')) {
         plugins.push(['dynamic-import-node']);
@@ -16,7 +29,6 @@ module.exports = function (api) {
         plugins.push(['@babel/plugin-transform-runtime']);
     }
 
-    api.cache(false);
 
     return {
         presets,

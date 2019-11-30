@@ -60,10 +60,13 @@ describe('NestedSlotPredicateMx', () => {
             wrapper = getWrapper('shallowMount', componentOptions, mountOptions);
         });
         describe('"predicateP"', () => {
-            it('change "value" property', () => {
+            it('change "value" property', done => {
                 expect(wrapper.vm.value).toEqual([]);
                 wrapper.setProps({predicateP: {expressions: [undefined, 'aValue']}});
-                expect(wrapper.vm.value).toEqual('aValue');
+                wrapper.vm.$nextTick(() => {
+                    expect(wrapper.vm.value).toEqual('aValue');
+                    done();
+                });
             });
         });
     });

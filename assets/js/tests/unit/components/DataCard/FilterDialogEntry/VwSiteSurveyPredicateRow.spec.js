@@ -44,12 +44,15 @@ describe('VwSiteDistrictPredicateRow', () => {
         wrapper = getVuetifyWrapper('shallowMount', VwSiteSurveyPredicateRow, mountOptions());
     });
     describe('watch', () => {
-        it('"search"', () => {
+        it('"search"', done => {
             const fetchSurveys = jest.fn();
             wrapper.setMethods({fetchSurveys});
             wrapper.setData({search:'searchPattern'});
-            expect(fetchSurveys).toHaveBeenCalledTimes(1);
-            expect(fetchSurveys).toHaveBeenCalledWith('searchPattern');
+            wrapper.vm.$nextTick(() => {
+                expect(fetchSurveys).toHaveBeenCalledTimes(1);
+                expect(fetchSurveys).toHaveBeenCalledWith('searchPattern');
+                done();
+            });
         });
     });
     describe('lifecycle', () => {

@@ -25,9 +25,12 @@ describe('StringLiteralTextField', () => {
         child = wrapper.find({ref: 'select'});
     });
     describe('parent props children propagation', () => {
-        it('"value" prop', () => {
+        it('"value" prop', done => {
             wrapper.setProps({value: 'aValue'});
-            expect(child.vm.$attrs.value).toEqual('aValue');
+            wrapper.vm.$nextTick(() => {
+                expect(child.vm.$attrs.value).toEqual('aValue');
+                done();
+            });
         });
     });
     describe('children event handling', () => {

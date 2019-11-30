@@ -57,7 +57,9 @@ Encore
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
     //.addEntry('admin', './assets/js/admin.js')
-    .enableVueLoader()
+    .enableVueLoader().configureBabel(null, {
+        includeNodeModules: ['vuelayers'],
+})
 ;
 
 let config = Encore.getWebpackConfig();
@@ -65,4 +67,6 @@ let config = Encore.getWebpackConfig();
 //config.resolve.alias['vue$'] = 'vue/dist/vue.js';
 config.resolve.alias['@'] = path.resolve(__dirname, 'assets/js/src');
 config.resolve.alias['@tests'] = path.resolve(__dirname, 'assets/js/tests');
+
+
 module.exports = config;

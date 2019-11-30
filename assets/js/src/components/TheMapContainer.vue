@@ -43,6 +43,22 @@
             >
                 <vl-source-esri />
             </vl-layer-tile>
+            <vl-layer-tile
+                :visible="mapContainerWmtsCoronaAfVisible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_CORONA_AF"
+                    :typename="WMTS_TYPENAME_CORONA_AF"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
+                :visible="mapContainerWmtsCoronaDaVisible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_CORONA_DA"
+                    :typename="WMTS_TYPENAME_CORONA_DA"
+                />
+            </vl-layer-tile>
             <map-layer-group-admin-bounds />
             <map-layer-vector-wfs-vw-sites
                 ref="layerVwSite"
@@ -74,6 +90,7 @@ import {getMapPixelHeight} from '@/utils/utils';
 import ComponentStoreVisibleMx from '@/mixins/ComponentStoreVisibleMx';
 import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 import TheMapLayersDrawer from './TheMapLayersDrawer';
+import MapLayerWmts from '@/components/MapLayerWmts';
 import MapLayerGroupAdminBounds from './MapLayerGroupAdminBounds';
 import MapLayerVectorWfsVwSites from './MapLayerVectorWfsVwSites';
 import VlSourceEsri from './VlSourceEsri';
@@ -85,6 +102,8 @@ import {
     CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
     WFS_TYPENAME_VW_SITES_SURVEY,
     WFS_TYPENAME_VW_SITES_RS,
+    WMTS_TYPENAME_CORONA_DA,
+    WMTS_TYPENAME_CORONA_AF
 } from '../utils/cids';
 import {callObjectMethod} from '../utils/utils';
 
@@ -96,6 +115,7 @@ export default {
     components: {
         TheMapLayersDrawer,
         MapLayerVectorWfsVwSites,
+        MapLayerWmts,
         MapLayerGroupAdminBounds,
         VlSourceEsri,
         VwSiteInteractionModify: () => import(
@@ -120,6 +140,8 @@ export default {
         CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
         WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY,
         WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
+        WMTS_TYPENAME_CORONA_DA: () => WMTS_TYPENAME_CORONA_DA,
+        WMTS_TYPENAME_CORONA_AF: () => WMTS_TYPENAME_CORONA_AF,
         bingApiKey() {
             return this.$store.state.bingApiKey;
         }
