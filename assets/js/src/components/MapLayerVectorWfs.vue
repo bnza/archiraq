@@ -52,6 +52,10 @@ export default {
         SnackbarComponentStoreMx
     ],
     props: {
+        keyField: {
+            type: String,
+            default: 'id'
+        },
         typename: {
             type: String,
             required: true
@@ -133,11 +137,16 @@ export default {
                 let config = {
                     typename: vectorLayerComponent.typename,
                     filter,
-                    propertyName: 'id,geom'
+                    propertyName: `${vectorLayerComponent.keyField},geom`
                 };
 
                 return vectorLayerComponent.performWfsGetFeatureRequest(config, reqHeaders).then(
                     (response) => {
+                        if (response.data && response.data.exceptions) {
+                            const error = new Error();
+                            error.errorMessages = response.data.exceptions.map(e => e.text).join(';');
+                            throw error;
+                        }
                         return vectorSourceComponent.$source.getFormat().readFeatures(response.data, {
                             featureProjection: vectorSourceComponent.viewProjection,
                             dataProjection: vectorSourceComponent.resolvedDataProjection
@@ -150,6 +159,8 @@ export default {
                     if (!error.response && error.request) {
                         vectorLayerComponent.$store.commit(`geoserver/${SET_OFF}`);
                         text += 'GeoServer does not respond. \n Please contact server administrator';
+                    } else if (error.errorMessages) {
+                        text += error.errorMessages;
                     }
                     vectorLayerComponent.displaySnackbar(text, color);
                 });

@@ -1,6 +1,7 @@
 <template>
     <div>
         <map-layer-vector-wfs-admin-bounds
+            key-field="code"
             :cid-p="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0"
             typename="archiraq:admbnd0"
             :visible-p="false"
