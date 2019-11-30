@@ -146,6 +146,10 @@ class TmpDraftArrayToPublicSiteParametersArrayConverter
 
     private function castBoolean($subject)
     {
+        if (is_bool($subject)) {
+            return $subject;
+        }
+
         if (is_null($subject)) {
             return $subject;
         }

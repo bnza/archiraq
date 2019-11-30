@@ -9,6 +9,7 @@
 namespace App\Tests\Functional\Runner\Task\Database;
 
 use App\Entity\ContributeEntity;
+use App\Entity\Tmp\DraftEntity;
 use App\Runner\Task\Database\PersistSitesFromTmpDraftTaskSQL;
 use App\Tests\Functional\AbstractPgTestIsolation;
 use App\Tests\Functional\Runner\Task\AbstractMockTrait;

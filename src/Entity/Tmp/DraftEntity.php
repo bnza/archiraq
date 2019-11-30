@@ -176,8 +176,8 @@ class DraftEntity implements EntityInterface
     private $survey_visit_date;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
+     * @var string
+     * @ORM\Column(type="string")
      */
     private $survey_verified_on_field;
 
