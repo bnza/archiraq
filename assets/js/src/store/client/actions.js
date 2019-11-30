@@ -69,6 +69,7 @@ export default {
                 if (error.response && error.response.status === 412) {
                     return refreshSession({dispatch, commit, state, rootState}, axiosRequestConfig);
                 }
+                throw error;
             }).then(
             response => response
         );
