@@ -2,6 +2,7 @@
     <v-form data-test="v-form--login">
         <v-text-field
             v-model="item.username"
+            tabindex="1"
             data-test="v-text-field--username"
             label="Username"
             :disabled="isDisabled"
@@ -9,6 +10,7 @@
         />
         <v-text-field
             v-model="item.password"
+            tabindex="2"
             data-test="v-text-field--password"
             label="Password"
             type="password"
