@@ -18,7 +18,7 @@ class DisableMaterializedSiteUpdateTriggerTask extends AbstractTask
 
     public function getDefaultDescription(): string
     {
-        return 'Disable geom.mat_site update triggers';
+        return 'Disable "geom"."mat_site" update triggers';
     }
 
     protected function executeStep(array $arguments): void

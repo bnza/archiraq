@@ -5,7 +5,9 @@ namespace App\Runner\Job;
 use App\Runner\Task\Database\DoctrineTransactionTask;
 use App\Runner\Task\Database\PersistContributeTask;
 use App\Runner\Task\Database\PersistSitesFromTmpDraftTaskSQL;
+use App\Runner\Task\Database\Raw\DisableMaterializedSiteUpdateTriggerTask;
 use App\Runner\Task\Database\Raw\InsertRemoteSensingShpIntoTmpDraftTask;
+use App\Runner\Task\Database\Raw\UpdateMaterializedSiteViewTask;
 use App\Runner\Task\Database\ValidateTmpDraftEntriesTaskToCsv;
 use App\Runner\Task\GetContributeMetadataFromTextFileTask;
 use App\Runner\Task\Process\ImportShpToTmpTableTask;
@@ -106,7 +108,22 @@ class FullImportRemoteSensingZipShapefileJob extends AbstractImportRemoteSensing
                 ],
             ],
             [
+                'class' => DisableMaterializedSiteUpdateTriggerTask::class,
+                'condition' => 'isDraftValid',
+                'parameters' => [
+                    ['setEntityManager', 'getEntityManager'],
+                ],
+            ],
+            [
                 'class' => PersistSitesFromTmpDraftTaskSQL::class,
+                'condition' => 'isDraftValid',
+                'parameters' => [
+                    ['setEntityManager', 'getEntityManager'],
+                    ['setContribute', 'getContribute'],
+                ],
+            ],
+            [
+                'class' => UpdateMaterializedSiteViewTask::class,
                 'condition' => 'isDraftValid',
                 'parameters' => [
                     ['setEntityManager', 'getEntityManager'],
