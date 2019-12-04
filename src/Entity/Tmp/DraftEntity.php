@@ -191,8 +191,8 @@ class DraftEntity implements EntityInterface
      * Validates against string like ADAMS1972.001;BLAKE1954.a
      * @var string
      * @Assert\Regex(
-     *     pattern = "/^(\s*[\w-]+((\.\w+)?);?)+$/",
-     *     message = "Surveys previous references should contain only alphanumeric values or hypen (-) eventually separated by a dot (.). No space allowed"
+     *     pattern = "/^(\s*[\w-,]+((\.[\.\w]+\??)?);?\s*)+$/",
+     *     message = "Surveys previous references must be in the form SURVEYID.REF.\n SURVEYID should contain only alphanumeric values or hypens (-) or commas (,). \n REF should contains only alphanumeric charachters with an ending question marks (?) when uncertain. Multiple entries must be separated by a semicolon (;). No space allowed"
      * )
      * @ORM\Column(type="string")
      */
