@@ -41,7 +41,7 @@ trait TypeConverterTrait
     protected function castStringToBoolean(string $subject, $options)
     {
         $subject = strtolower(\trim($subject));
-        if ($subject = "") {
+        if ($subject === "") {
             return null;
         }
 
