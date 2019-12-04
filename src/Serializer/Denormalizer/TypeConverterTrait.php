@@ -41,6 +41,10 @@ trait TypeConverterTrait
     protected function castStringToBoolean(string $subject, $options)
     {
         $subject = strtolower(\trim($subject));
+        if ($subject = "") {
+            return null;
+        }
+
         if (\in_array($subject, ['y', '1', 't', 'true'])) {
             return true;
         }
