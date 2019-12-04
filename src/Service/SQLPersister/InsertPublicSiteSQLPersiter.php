@@ -37,6 +37,7 @@ class InsertPublicSiteSQLPersiter
         return $this->em->getConnection()->lastInsertId();
     }
 
+    //TODO use TmpDraftArrayToPublicSiteParametersArrayConverter field list for generate statement string
     private function prepareInsertIntoSiteStatement(): Statement
     {
         $conn = $this->em->getConnection();
@@ -69,7 +70,8 @@ class InsertPublicSiteSQLPersiter
 	 "remote_sensing",
 	 "survey_verified_on_field",
 	 "excavations_whom_when",
-	 "excavations_bibliography"
+	 "excavations_bibliography",
+	 "survey_type"
 	 )
 	VALUES (
 	        :contribute_id, 
@@ -98,7 +100,8 @@ class InsertPublicSiteSQLPersiter
 	        :remote_sensing, 
 	        :survey_verified_on_field,
 	        :excavations_whom_when,
-	        :excavations_bibliography
+	        :excavations_bibliography,
+	        :survey_type
 	        )
 	RETURNING "id";
 EOF;

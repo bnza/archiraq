@@ -901,7 +901,8 @@ CREATE TABLE "public"."site" (
     "remote_sensing" boolean NOT NULL,
     "survey_verified_on_field" boolean,
     "excavations_whom_when" character varying,
-    "excavations_bibliography" character varying
+    "excavations_bibliography" character varying,
+    "survey_type" character varying
 );
 
 

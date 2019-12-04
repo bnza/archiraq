@@ -80,6 +80,12 @@ class SiteEntity implements EntityInterface
     private $remote_sensing;
 
     /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $survey_type;
+
+    /**
      * @var bool
      * @ORM\Column(type="boolean", nullable=true)
      */
@@ -767,6 +773,22 @@ class SiteEntity implements EntityInterface
         $this->credits = $credits;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSurveyType(): ?string
+    {
+        return $this->survey_type;
+    }
+
+    /**
+     * @param string $survey_type
+     */
+    public function setSurveyType(?string $survey_type): void
+    {
+        $this->survey_type = $survey_type;
     }
 
     /**

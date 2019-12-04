@@ -40,7 +40,8 @@ class TmpDraftArrayToPublicSiteParametersArrayConverter
         "remote_sensing",
         "survey_verified_on_field",
         "excavations_whom_when",
-        "excavations_bibliography"
+        "excavations_bibliography",
+        "survey_type"
     ];
 
     private $booleanFields = [
