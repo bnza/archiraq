@@ -60,34 +60,6 @@ class FullImportPublishedSitesZipShapefileJobCommandTest extends AbstractPgTestI
         $this->assertEquals(0, $tester->getStatusCode());
     }
 
-//    /**
-//     * @expectedException \Bnza\JobManagerBundle\Exception\JobManagerNonCriticalErrorException
-//     * @expectedExceptionMessage Shapefile and Spreadsheet entries does not match
-//     */
-//    public function testHeaderMismatchCommand()
-//    {
-//        $this->executeSqlAssetFile('tdd/sql/admbnd0.sql');
-//        $this->executeSqlAssetFile('tdd/sql/admbnd1.sql');
-//        $this->executeSqlAssetFile('tdd/sql/admbnd2.sql');
-//        $this->executeSqlAssetFile('tdd/sql/chronology.sql');
-//        $this->setUpAssets('tdd/shp/zip/full_import_job/mismatch.shp.zip');
-//        $tester = $this->executeCommandTester(SutCommand::getDefaultName(), ['path' => $this->zipPath]);
-//    }
-//
-//    /**
-//     * @expectedException \Bnza\JobManagerBundle\Exception\JobManagerNonCriticalErrorException
-//     * @expectedExceptionMessage Draft validation failed
-//     */
-//    public function testValidationFailCommand()
-//    {
-//        $this->executeSqlAssetFile('tdd/sql/admbnd0.sql');
-//        $this->executeSqlAssetFile('tdd/sql/admbnd1.sql');
-//        $this->executeSqlAssetFile('tdd/sql/admbnd2.sql');
-//        $this->executeSqlAssetFile('tdd/sql/chronology.sql');
-//        $this->setUpAssets('tdd/shp/zip/full_import_job/validation_fail.shp.zip');
-//        $tester = $this->executeCommandTester(SutCommand::getDefaultName(), ['path' => $this->zipPath]);
-//    }
-
     public function setCommandParameters(Command $command)
     {
         $command->setEntityManager($this->getEntityManager());

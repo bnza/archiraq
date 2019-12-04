@@ -8,6 +8,7 @@ use App\Entity\Geom\SiteBoundaryEntity;
 use App\Entity\SiteEntity;
 use App\Entity\Tmp\DraftEntity;
 use App\Repository\Geom\DistrictBoundaryRepository;
+use App\Repository\Voc\SurveyRepository;
 use App\Serializer\TmpDraftToSiteConverter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Serializer;
@@ -28,6 +29,7 @@ class TmpDraftToSiteConverterTest extends \PHPUnit\Framework\TestCase
                     'compilationDate' => '2018-11-28',
                     'ancientName' => '?Ancient Name',
                     'district' => 'District',
+                    //'surveyPrevRefs' => 'ADAMS1966.01.90?',
                     'geom' => <<<EOF
                     { 
                         "type": "MultiPolygon",
@@ -119,14 +121,17 @@ EOF
         $expected = $serializer->denormalize($expected, SiteEntity::class);
 
         $district = new DistrictBoundaryEntity();
-        $repo = $this->createMock(DistrictBoundaryRepository::class);
-        $repo->method('findByName')->willReturn($district);
+        $districtRepo = $this->createMock(DistrictBoundaryRepository::class);
+        $districtRepo->method('findByName')->willReturn($district);
+        $surveyRepo = $this->createMock(SurveyRepository::class);
+        $surveyRepo->method('findOneBy')->willReturn(false);
         $em = $this->createMock(EntityManagerInterface::class);
-        $em->method('getRepository')->willReturn($repo);
+        $em->method('getRepository')->will($this->onConsecutiveCalls($districtRepo, $surveyRepo));
 
         $contribute = $serializer->denormalize($contribute, ContributeEntity::class);
         $draft->setContribute($contribute);
         $expected->setContribute($contribute);
+
         $converter = new TmpDraftToSiteConverter($em);
 
         $actual = $converter->convert($draft);

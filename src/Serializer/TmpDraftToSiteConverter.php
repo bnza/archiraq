@@ -129,7 +129,7 @@ class TmpDraftToSiteConverter extends AbstractEntityConverter
         ) {
             foreach (\explode(';', $object['surveyPrevRefs']) as $i => $ref) {
                 $ref = explode('.', $ref);
-                $ksurvey = strtoupper(trim($ref[0]));
+                $ksurvey = strtoupper(trim(\array_shift($ref)));
 
                 /**
                  * survey code adams1972.009 -> ADAMS1972
@@ -153,9 +153,10 @@ class TmpDraftToSiteConverter extends AbstractEntityConverter
                 /**
                  * survey refs
                  * e.g. ADAMS1972.001 -> 001
+                 * e.g. SOMEONE2001.09.89? -> 09.89?
                  */
-                if (array_key_exists(1, $ref)) {
-                    $siteSurvey->setRef($ref[1]);
+                if (count($ref)) {
+                    $siteSurvey->setRef(\implode('.', $ref));
                 }
 
                 /**

@@ -74,6 +74,7 @@ class TmpDraftArrayToPublicSiteSurveyParametersArrayConverter
         return $params;
     }
 
+    //TODO duplicate code @see TmpDraftToSiteConverter
     private function normalizeSurveyPreviousReference(int $siteId, string $surveyRef, ?string $surveyVisit): array
     {
         $params = [
@@ -87,7 +88,7 @@ class TmpDraftArrayToPublicSiteSurveyParametersArrayConverter
          * survey code adams1972.009 -> ADAMS1972
          */
         $refs = explode('.', $surveyRef);
-        $surveyCode = strtoupper(trim($refs[0]));
+        $surveyCode = strtoupper(trim(array_shift($refs)));
 
 
         if (!\array_key_exists($surveyCode, $this->surveys)) {
@@ -101,7 +102,7 @@ class TmpDraftArrayToPublicSiteSurveyParametersArrayConverter
          * survey refs
          * e.g. ADAMS1972.001 -> 001
          */
-        $params['ref'] = array_key_exists(1, $refs) ? trim($refs[1]) : null;
+        $params['ref'] = count($refs) ? implode('.', $refs) : null;
 
         if ($surveyVisit) {
             $years = explode('-', $surveyVisit);

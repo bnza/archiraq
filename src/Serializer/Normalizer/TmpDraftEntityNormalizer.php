@@ -55,8 +55,6 @@ class TmpDraftEntityNormalizer extends AbstractEntityNormalizer
      */
     public function normalize($object, $format = null, array $context = array())
     {
-        //$normalizer = $this->getNormalizer();
-        //$data = $normalizer->normalize($object, DraftEntity::class, $context);
         $data = $this->_normalize($object);
         if ($data['ancientName']) {
             $name = $data['ancientName'];
