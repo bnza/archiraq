@@ -10,6 +10,7 @@ use App\Runner\Task\Database\Raw\DisableMaterializedSiteUpdateTriggerTask;
 use App\Runner\Task\Database\Raw\InsertDraftAndShpIntoTmpDraftTask;
 use App\Runner\Task\Database\Raw\UpdateMaterializedSiteViewTask;
 use App\Runner\Task\Database\ValidateTmpDraftEntriesTaskToSpreadsheet;
+use App\Runner\Task\GetContributeMetadataFromTextFileTask;
 use App\Runner\Task\Process\ImportShpToTmpTableTask;
 use App\Runner\Task\Spreadsheet\GetContributeFromSpreadsheetMetadataTask;
 use App\Runner\Task\Spreadsheet\ImportPublishedSitesSpreadsheetToTmpTableTask;
@@ -60,6 +61,16 @@ class FullImportPublishedSitesZipShapefileJob extends AbstractImportPublishedSit
                 'arguments' => [
                     [$this, 'getTargetZipShapefilePath'],
                     [$this, 'getWorkDir'],
+                ],
+            ],
+            [
+                'class' => GetContributeMetadataFromTextFileTask::class,
+                'condition' => 'shouldUseTextMetadataContribute',
+                'parameters' => [
+                    ['setTextMetadataFilePath', 'getTextMetadataFilePath'],
+                ],
+                'setters' => [
+                    ['setContribute', 'getContribute'],
                 ],
             ],
             [

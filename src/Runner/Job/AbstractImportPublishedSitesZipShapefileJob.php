@@ -2,7 +2,7 @@
 
 namespace App\Runner\Job;
 
-abstract class AbstractImportPublishedSitesZipShapefileJob extends AbstractImportSitesZipShapefileJob
+abstract class AbstractImportPublishedSitesZipShapefileJob extends AbstractImportRemoteSensingSitesZipShapefileJob
 {
     const KEY_XLS_PATH = 'xls-path';
 
@@ -29,5 +29,10 @@ abstract class AbstractImportPublishedSitesZipShapefileJob extends AbstractImpor
         }
 
         return $this->getParameter(self::KEY_XLS_PATH);
+    }
+
+    protected function shouldUseTextMetadataContribute(): bool
+    {
+        return !$this->hasContribute() && $this->hasTextMetadataFilePath();
     }
 }
