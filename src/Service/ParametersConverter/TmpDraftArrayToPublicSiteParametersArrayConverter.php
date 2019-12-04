@@ -38,7 +38,9 @@ class TmpDraftArrayToPublicSiteParametersArrayConverter
         "district_id",
         "threats_bulldozer",
         "remote_sensing",
-        "survey_verified_on_field"
+        "survey_verified_on_field",
+        "excavations_whom_when",
+        "excavations_bibliography"
     ];
 
     private $booleanFields = [

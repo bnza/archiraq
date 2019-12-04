@@ -890,7 +890,9 @@ CREATE TABLE "public"."site" (
     "district_id" smallint NOT NULL,
     "threats_bulldozer" boolean,
     "remote_sensing" boolean NOT NULL,
-    "survey_verified_on_field" boolean
+    "survey_verified_on_field" boolean,
+    "excavations_whom_when" character varying,
+    "excavations_bibliography" character varying
 );
 
 

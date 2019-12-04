@@ -202,6 +202,18 @@ class DraftEntity implements EntityInterface
      * @var string
      * @ORM\Column(type="string")
      */
+    private $excavations_whom_when;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $excavations_bibliography;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
     private $compiler;
 
     /**
@@ -350,7 +362,37 @@ class DraftEntity implements EntityInterface
         $this->nearest_city = $nearest_city;
     }
 
+    /**
+     * @return string
+     */
+    public function getExcavationsWhomWhen(): ?string
+    {
+        return $this->excavations_whom_when;
+    }
 
+    /**
+     * @param string $excavations_whom_when
+     */
+    public function setExcavationsWhomWhen(string $excavations_whom_when): void
+    {
+        $this->excavations_whom_when = $excavations_whom_when;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExcavationsBibliography(): ?string
+    {
+        return $this->excavations_bibliography;
+    }
+
+    /**
+     * @param string $excavations_bibliography
+     */
+    public function setExcavationsBibliography(string $excavations_bibliography): void
+    {
+        $this->excavations_bibliography = $excavations_bibliography;
+    }
 
     /**
      * @return string

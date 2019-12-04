@@ -67,7 +67,9 @@ class InsertPublicSiteSQLPersiter
 	 "district_id",
 	 "threats_bulldozer",
 	 "remote_sensing",
-	 "survey_verified_on_field"
+	 "survey_verified_on_field",
+	 "excavations_whom_when",
+	 "excavations_bibliography"
 	 )
 	VALUES (
 	        :contribute_id, 
@@ -94,7 +96,9 @@ class InsertPublicSiteSQLPersiter
 	        :district_id, 
 	        :threats_bulldozer, 
 	        :remote_sensing, 
-	        :survey_verified_on_field
+	        :survey_verified_on_field,
+	        :excavations_whom_when,
+	        :excavations_bibliography
 	        )
 	RETURNING "id";
 EOF;

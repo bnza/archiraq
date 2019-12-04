@@ -19,7 +19,9 @@ SET row_security = off;
 -- Data for Name: contribute; Type: TABLE DATA; Schema: public; Owner: archiraq_admin
 --
 
-INSERT INTO public.contribute VALUES (default, 'mail@example.com', 'J. Smith', 'Adams 1952 surveys', 0, 'f71816d1474635145e488fd56f6f14d1d0bc6508', 'University of Bologna');
+INSERT INTO public.contribute
+VALUES (default, 'mail@example.com', 'J. Smith', 'Adams 1952 surveys', 0, 'f71816d1474635145e488fd56f6f14d1d0bc6508',
+        'University of Bologna');
 
 --
 -- TOC entry 3616 (class 0 OID 66750)
@@ -27,7 +29,37 @@ INSERT INTO public.contribute VALUES (default, 'mail@example.com', 'J. Smith', '
 -- Data for Name: draft; Type: TABLE DATA; Schema: tmp; Owner: archiraq_admin
 --
 
-INSERT INTO tmp.draft
+INSERT INTO tmp.draft(id,
+                      contribute_id,
+                      entry_id,
+                      modern_name,
+                      ancient_name,
+                      district,
+                      nearest_city,
+                      cadastre,
+                      sbah_no,
+                      survey_visit_date,
+                      survey_verified_on_field,
+                      survey_type, survey_prev_refs,
+                      features_epigraphic,
+                      features_ancient_structures,
+                      features_paleochannels,
+                      features_remarks,
+                      site_chronology,
+                      excavations_whom_when,
+                      excavations_bibliography,
+                      threats_natural_dunes,
+                      threats_looting,
+                      threats_cultivation_trenches,
+                      threats_modern_structures,
+                      threats_modern_canals,
+                      remarks, compiler,
+                      compilation_date,
+                      credits,
+                      geom,
+                      remote_sensing,
+                      threats_bulldozer
+                      )
 VALUES (
         default,
         1,
@@ -47,8 +79,8 @@ VALUES (
         'n',
         NULL,
         'EDA;AKK;SAS;ISL1',
-        NULL,
-        NULL,
+        'Some excavations',
+        'SOMEONE1987',
         NULL,
         NULL,
         NULL,
@@ -59,8 +91,8 @@ VALUES (
         '2018-11-29',
         NULL,
         '0106000020E6100000010000000103000000010000000600000048E17A14AE074640EC51B81E850B4140295C8FC2F5E84640EC51B81E850B41400AD7A3703DEA46405C8FC2F5285C404048E17A14AE0746401F85EB51B85E404048E17A14AE0746401F85EB51B85E404048E17A14AE074640EC51B81E850B4140',
-        'n'
-        );
+        'n',
+        'y');
 
 
 -- Completed on 2019-02-05 16:55:09 CET
