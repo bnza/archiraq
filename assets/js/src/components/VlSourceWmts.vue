@@ -28,7 +28,8 @@ export default {
                 resolutions: resolutions,
                 tileSize: this.tileSize,
                 minZoom: this.minZoom,
-                matrixIds: matrixIds
+                matrixIds: matrixIds,
+                tranparent: true
             });
         },
     }

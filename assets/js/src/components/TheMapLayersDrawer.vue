@@ -86,6 +86,7 @@
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerAdminBounds"
+                            :hide-details="true"
                             data-test="the-map-layers-drawer--checkbox-admin-bounds-2-visibility"
                             :value="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2"
                         />
@@ -93,30 +94,127 @@
                 </map-legend-list-group>
                 <map-legend-list-group
                     icon="border_all"
-                    title="Corona"
+                    title="Survey basemaps"
                 >
                     <map-legend-layer-list-tile
-                        title="AF set"
-                        :layer-cid="WMTS_TYPENAME_CORONA_AF"
+                        title="Akkad survey"
+                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD"
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsCoronaAfVisible"
+                            v-model="mapContainerWmtsTopo01Visible"
+                            :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
-                        title="DA set"
-                        :layer-cid="WMTS_TYPENAME_CORONA_DA"
+                        title="Land Beyond Baghdad survey"
+                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_02_LBB"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsTopo02Visible"
+                            :hide-details="true"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="Heartland of Cities"
+                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_03_HOC"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsTopo03Visible"
+                            :hide-details="true"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="Ur survey"
+                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_07_UR"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsTopo07Visible"
+                            :hide-details="true"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="Hammar lake survey"
+                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsTopo10Visible"
+                            :hide-details="true"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="Mandali survey"
+                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsTopo11Visible"
+                            :hide-details="true"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="Myinab plain survey"
+                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsTopo12Visible"
+                            :hide-details="true"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="South West Iran survey"
+                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsTopo13Visible"
+                            :hide-details="true"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="Ras Hormuz survey"
+                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsTopo14Visible"
+                            :hide-details="true"
+                        />
+                    </map-legend-layer-list-tile>
+                </map-legend-list-group>
+                <map-legend-list-group
+                    icon="border_all"
+                    title="Topographic and satellite basemaps"
+                >
+                    <map-legend-layer-list-tile
+                        title="Corona FORE set"
+                        :layer-cid="WMTS_TYPENAME_CORONA_FORE"
                     >
                         <v-checkbox
                             slot="visibility"
                             v-model="mapContainerWmtsCoronaDaVisible"
+                            :hide-details="true"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="Corona AFT set"
+                        :layer-cid="WMTS_TYPENAME_CORONA_AFT"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsCoronaAfVisible"
+                            :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
                 </map-legend-list-group>
                 <map-legend-list-group
                     icon="map"
-                    title="Base Maps"
+                    title="Online basemaps"
                 >
                     <map-legend-layer-list-tile
                         title="Esri Basemap"
@@ -178,8 +276,18 @@ import {
     CID_THE_MAP_LAYERS_DRAWER as CID,
     WFS_TYPENAME_VW_SITES_RS,
     WFS_TYPENAME_VW_SITES_SURVEY,
-    WMTS_TYPENAME_CORONA_AF,
-    WMTS_TYPENAME_CORONA_DA
+    WMTS_TYPENAME_CORONA_AFT,
+    WMTS_TYPENAME_CORONA_FORE,
+    WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD,
+    WMTS_TYPENAME_SURVEY_TOPO_02_LBB,
+    WMTS_TYPENAME_SURVEY_TOPO_03_HOC,
+    WMTS_TYPENAME_SURVEY_TOPO_07_UR,
+    WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR,
+    WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
+    WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
+    WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
+    WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ
+
 } from '../utils/cids';
 
 export default {
@@ -206,8 +314,17 @@ export default {
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
         WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
         WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY,
-        WMTS_TYPENAME_CORONA_AF: () => WMTS_TYPENAME_CORONA_AF,
-        WMTS_TYPENAME_CORONA_DA: () => WMTS_TYPENAME_CORONA_DA
+        WMTS_TYPENAME_CORONA_AFT: () => WMTS_TYPENAME_CORONA_AFT,
+        WMTS_TYPENAME_CORONA_FORE: () => WMTS_TYPENAME_CORONA_FORE,
+        WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD: () => WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD,
+        WMTS_TYPENAME_SURVEY_TOPO_02_LBB: () => WMTS_TYPENAME_SURVEY_TOPO_02_LBB,
+        WMTS_TYPENAME_SURVEY_TOPO_03_HOC: () => WMTS_TYPENAME_SURVEY_TOPO_03_HOC,
+        WMTS_TYPENAME_SURVEY_TOPO_07_UR: () => WMTS_TYPENAME_SURVEY_TOPO_07_UR,
+        WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR: () => WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR,
+        WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI: () => WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
+        WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB: () => WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
+        WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN: () => WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
+        WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ: () => WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
     }
 };
 </script>

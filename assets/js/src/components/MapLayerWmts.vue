@@ -1,10 +1,10 @@
 <template>
     <vl-source-wmts
         :url="url"
-        format="image/png"
+        :format="format"
         :layer-name="layerName"
         matrix-set="EPSG:900913"
-        style-name="default"
+        :style-name="styleName"
     />
 </template>
 
@@ -23,7 +23,15 @@ export default {
         typename: {
             type: String,
             required: true,
-        }
+        },
+        styleName: {
+            type: String,
+            default: 'default',
+        },
+        format: {
+            type: String,
+            default: 'image/png',
+        },
     },
     computed: {
         geoserverBaseUrl() {

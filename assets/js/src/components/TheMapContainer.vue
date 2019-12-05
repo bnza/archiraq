@@ -15,6 +15,7 @@
             <vl-view
                 ref="view"
                 :max-zoom="19"
+                :min-zoom="6"
                 :zoom.sync="zoom"
                 :center.sync="center"
                 :rotation.sync="rotation"
@@ -44,19 +45,100 @@
                 <vl-source-esri />
             </vl-layer-tile>
             <vl-layer-tile
+                :visible="mapContainerWmtsTopo01Visible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD"
+                    :typename="WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD"
+                    style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
+                :visible="mapContainerWmtsTopo02Visible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_02_LBB"
+                    :typename="WMTS_TYPENAME_SURVEY_TOPO_02_LBB"
+                    style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
+                :visible="mapContainerWmtsTopo03Visible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_03_HOC"
+                    :typename="WMTS_TYPENAME_SURVEY_TOPO_03_HOC"
+                    style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
+                :visible="mapContainerWmtsTopo07Visible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_07_UR"
+                    :typename="WMTS_TYPENAME_SURVEY_TOPO_07_UR"
+                    style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
+                :visible="mapContainerWmtsTopo10Visible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR"
+                    :typename="WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR"
+                    style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
+                :visible="mapContainerWmtsTopo11Visible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI"
+                    :typename="WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI"
+                    style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
+                :visible="mapContainerWmtsTopo12Visible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB"
+                    :typename="WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB"
+                    style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
+                :visible="mapContainerWmtsTopo13Visible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN"
+                    :typename="WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN"
+                    style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
+                    :visible="mapContainerWmtsTopo14Visible"
+            >
+                <map-layer-wmts
+                        :cid-p="WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ"
+                        :typename="WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ"
+                        style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
                 :visible="mapContainerWmtsCoronaAfVisible"
             >
                 <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_CORONA_AF"
-                    :typename="WMTS_TYPENAME_CORONA_AF"
+                    :cid-p="WMTS_TYPENAME_CORONA_AFT"
+                    :typename="WMTS_TYPENAME_CORONA_AFT"
                 />
             </vl-layer-tile>
             <vl-layer-tile
                 :visible="mapContainerWmtsCoronaDaVisible"
             >
                 <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_CORONA_DA"
-                    :typename="WMTS_TYPENAME_CORONA_DA"
+                    :cid-p="WMTS_TYPENAME_CORONA_FORE"
+                    :typename="WMTS_TYPENAME_CORONA_FORE"
                 />
             </vl-layer-tile>
             <map-layer-group-admin-bounds />
@@ -102,8 +184,17 @@ import {
     CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
     WFS_TYPENAME_VW_SITES_SURVEY,
     WFS_TYPENAME_VW_SITES_RS,
-    WMTS_TYPENAME_CORONA_DA,
-    WMTS_TYPENAME_CORONA_AF
+    WMTS_TYPENAME_CORONA_FORE,
+    WMTS_TYPENAME_CORONA_AFT,
+    WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD,
+    WMTS_TYPENAME_SURVEY_TOPO_02_LBB,
+    WMTS_TYPENAME_SURVEY_TOPO_03_HOC,
+    WMTS_TYPENAME_SURVEY_TOPO_07_UR,
+    WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR,
+    WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
+    WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
+    WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
+    WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ
 } from '../utils/cids';
 import {callObjectMethod} from '../utils/utils';
 
@@ -140,8 +231,17 @@ export default {
         CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
         WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY,
         WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
-        WMTS_TYPENAME_CORONA_DA: () => WMTS_TYPENAME_CORONA_DA,
-        WMTS_TYPENAME_CORONA_AF: () => WMTS_TYPENAME_CORONA_AF,
+        WMTS_TYPENAME_CORONA_FORE: () => WMTS_TYPENAME_CORONA_FORE,
+        WMTS_TYPENAME_CORONA_AFT: () => WMTS_TYPENAME_CORONA_AFT,
+        WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD: () => WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD,
+        WMTS_TYPENAME_SURVEY_TOPO_02_LBB: () => WMTS_TYPENAME_SURVEY_TOPO_02_LBB,
+        WMTS_TYPENAME_SURVEY_TOPO_03_HOC: () => WMTS_TYPENAME_SURVEY_TOPO_03_HOC,
+        WMTS_TYPENAME_SURVEY_TOPO_07_UR: () => WMTS_TYPENAME_SURVEY_TOPO_07_UR,
+        WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR: () => WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR,
+        WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI: () => WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
+        WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB: () => WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
+        WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN: () => WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
+        WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ: () => WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
         bingApiKey() {
             return this.$store.state.bingApiKey;
         }
