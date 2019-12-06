@@ -150,7 +150,6 @@
                         <v-checkbox
                             slot="visibility"
                             :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_US_ARMY_TOPO_2)"
-                            disabled
                             :hide-details="true"
                             @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_US_ARMY_TOPO_2)"
                         />
