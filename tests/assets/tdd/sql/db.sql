@@ -47,7 +47,12 @@ SELECT
     NULL::numeric AS "n",
     NULL::numeric AS "area",
     NULL::numeric AS "length",
-    NULL::numeric AS "width";
+    NULL::numeric AS "width",
+    NULL::character varying AS "survey_type",
+    NULL::"text" AS "features_remarks",
+    NULL::character varying AS "excavations_whom_when",
+    NULL::character varying AS "excavations_bibliography",
+    NULL::character varying AS "entry_id";
 ALTER TABLE IF EXISTS ONLY "voc"."survey" DROP CONSTRAINT IF EXISTS "uq___voc__survey__name";
 ALTER TABLE IF EXISTS ONLY "voc"."chronology" DROP CONSTRAINT IF EXISTS "uq___voc__chronology___name";
 ALTER TABLE IF EXISTS ONLY "voc"."chronology" DROP CONSTRAINT IF EXISTS "uq___voc__chronology___code";
@@ -177,7 +182,12 @@ CREATE TABLE "geom"."mat_site" (
     "length" numeric,
     "width" numeric,
     "centroid" "public"."geometry"(Point,4326),
-    "geom" "public"."geometry"(MultiPolygon,4326)
+    "geom" "public"."geometry"(MultiPolygon,4326),
+    "survey_type" character varying,
+    "features_remarks" "text",
+    "excavations_whom_when" character varying,
+    "excavations_bibliography" character varying,
+    "entry_id" character varying
 );
 
 
@@ -186,8 +196,41 @@ ALTER TABLE "geom"."mat_site" OWNER TO "test_archiraq_admin";
 
 CREATE FUNCTION "geom"."select_vw_site_by_index"("site_id" integer) RETURNS "geom"."mat_site"
     LANGUAGE "sql"
-    AS $$SELECT ws.*, public.st_centroid(gs.geom) AS centroid, gs.geom FROM public.vw_site ws
-     LEFT JOIN geom.site gs ON ws.id = gs.id WHERE ws.id=site_id;$$;
+    AS $$SELECT
+ws.id,
+ws.contribute_id,
+ws.sbah_no,
+ws.cadastre,
+ws.modern_name,
+ws.nearest_city,
+ws.ancient_name,
+ws.district_id,
+ws.district,
+ws.governorate,
+ws.nation,
+ws.chronology,
+ws.surveys,
+ws.survey_refs,
+ws.features,
+ws.threats,
+ws.remote_sensing,
+ws.survey_verified_on_field,
+ws.remarks,
+ws.e,
+ws.n,
+ws.area,
+ws.length,
+ws.width,
+public.st_centroid(gs.geom) AS centroid,
+gs.geom,
+ws.survey_type,
+ws.features_remarks,
+ws.excavations_whom_when,
+ws.excavations_bibliography,
+ws.entry_id
+FROM public.vw_site ws
+LEFT JOIN geom.site gs ON ws.id = gs.id
+WHERE ws.id=site_id;$$;
 
 
 ALTER FUNCTION "geom"."select_vw_site_by_index"("site_id" integer) OWNER TO "test_archiraq_admin";
@@ -554,11 +597,10 @@ CREATE TABLE "geom"."site" (
 ALTER TABLE "geom"."site" OWNER TO "test_archiraq_admin";
 
 
-
 ALTER TABLE "public"."vw_site" OWNER TO "test_archiraq_admin";
 
 
-CREATE VIEW "geom"."vw_site_point" AS
+CREATE VIEW "geom"."vw_site_point" WITH ("security_barrier"='false') AS
  SELECT "ws"."id",
     "ws"."contribute_id",
     "ws"."sbah_no",
@@ -583,7 +625,12 @@ CREATE VIEW "geom"."vw_site_point" AS
     "ws"."area",
     "ws"."length",
     "ws"."width",
-    "public"."st_centroid"("gs"."geom") AS "geom"
+    "public"."st_centroid"("gs"."geom") AS "geom",
+    "ws"."survey_type",
+    "ws"."excavations_whom_when",
+    "ws"."excavations_bibliography",
+    "ws"."features_remarks",
+    "ws"."entry_id"
    FROM ("public"."vw_site" "ws"
      LEFT JOIN "geom"."site" "gs" ON (("ws"."id" = "gs"."id")));
 
@@ -591,7 +638,7 @@ CREATE VIEW "geom"."vw_site_point" AS
 ALTER TABLE "geom"."vw_site_point" OWNER TO "test_archiraq_admin";
 
 
-CREATE VIEW "geom"."vw_site_poly" AS
+CREATE VIEW "geom"."vw_site_poly" WITH ("security_barrier"='false') AS
  SELECT "ws"."id",
     "ws"."contribute_id",
     "ws"."sbah_no",
@@ -616,7 +663,12 @@ CREATE VIEW "geom"."vw_site_poly" AS
     "ws"."area",
     "ws"."length",
     "ws"."width",
-    "gs"."geom"
+    "gs"."geom",
+    "ws"."survey_type",
+    "ws"."excavations_whom_when",
+    "ws"."excavations_bibliography",
+    "ws"."features_remarks",
+    "ws"."entry_id"
    FROM ("public"."vw_site" "ws"
      LEFT JOIN "geom"."site" "gs" ON (("ws"."id" = "gs"."id")));
 
@@ -624,9 +676,10 @@ CREATE VIEW "geom"."vw_site_poly" AS
 ALTER TABLE "geom"."vw_site_poly" OWNER TO "test_archiraq_admin";
 
 
-CREATE VIEW "geom"."vw_site_rs_point" AS
+CREATE VIEW "geom"."vw_site_rs_point" WITH ("security_barrier"='false') AS
  SELECT "ms"."id",
     "ms"."contribute_id",
+    "ms"."entry_id",
     "ms"."sbah_no",
     "ms"."cadastre",
     "ms"."modern_name",
@@ -637,12 +690,16 @@ CREATE VIEW "geom"."vw_site_rs_point" AS
     "ms"."governorate",
     "ms"."nation",
     "ms"."chronology",
+    "ms"."survey_type",
     "ms"."surveys",
     "ms"."survey_refs",
     "ms"."features",
+    "ms"."features_remarks",
     "ms"."threats",
     "ms"."remote_sensing",
     "ms"."survey_verified_on_field",
+    "ms"."excavations_whom_when",
+    "ms"."excavations_bibliography",
     "ms"."remarks",
     "ms"."e",
     "ms"."n",
@@ -660,6 +717,7 @@ ALTER TABLE "geom"."vw_site_rs_point" OWNER TO "test_archiraq_admin";
 CREATE VIEW "geom"."vw_site_rs_poly" AS
  SELECT "ms"."id",
     "ms"."contribute_id",
+    "ms"."entry_id",
     "ms"."sbah_no",
     "ms"."cadastre",
     "ms"."modern_name",
@@ -670,12 +728,16 @@ CREATE VIEW "geom"."vw_site_rs_poly" AS
     "ms"."governorate",
     "ms"."nation",
     "ms"."chronology",
+    "ms"."survey_type",
     "ms"."surveys",
     "ms"."survey_refs",
     "ms"."features",
+    "ms"."features_remarks",
     "ms"."threats",
     "ms"."remote_sensing",
     "ms"."survey_verified_on_field",
+    "ms"."excavations_whom_when",
+    "ms"."excavations_bibliography",
     "ms"."remarks",
     "ms"."e",
     "ms"."n",
@@ -690,9 +752,10 @@ CREATE VIEW "geom"."vw_site_rs_poly" AS
 ALTER TABLE "geom"."vw_site_rs_poly" OWNER TO "test_archiraq_admin";
 
 
-CREATE VIEW "geom"."vw_site_survey_point" WITH ("security_barrier"='false') AS
+CREATE VIEW "geom"."vw_site_survey_point" AS
  SELECT "ms"."id",
     "ms"."contribute_id",
+    "ms"."entry_id",
     "ms"."sbah_no",
     "ms"."cadastre",
     "ms"."modern_name",
@@ -703,12 +766,16 @@ CREATE VIEW "geom"."vw_site_survey_point" WITH ("security_barrier"='false') AS
     "ms"."governorate",
     "ms"."nation",
     "ms"."chronology",
+    "ms"."survey_type",
     "ms"."surveys",
     "ms"."survey_refs",
     "ms"."features",
+    "ms"."features_remarks",
     "ms"."threats",
     "ms"."remote_sensing",
     "ms"."survey_verified_on_field",
+    "ms"."excavations_whom_when",
+    "ms"."excavations_bibliography",
     "ms"."remarks",
     "ms"."e",
     "ms"."n",
@@ -726,6 +793,7 @@ ALTER TABLE "geom"."vw_site_survey_point" OWNER TO "test_archiraq_admin";
 CREATE VIEW "geom"."vw_site_survey_poly" AS
  SELECT "ms"."id",
     "ms"."contribute_id",
+    "ms"."entry_id",
     "ms"."sbah_no",
     "ms"."cadastre",
     "ms"."modern_name",
@@ -736,12 +804,16 @@ CREATE VIEW "geom"."vw_site_survey_poly" AS
     "ms"."governorate",
     "ms"."nation",
     "ms"."chronology",
+    "ms"."survey_type",
     "ms"."surveys",
     "ms"."survey_refs",
     "ms"."features",
+    "ms"."features_remarks",
     "ms"."threats",
     "ms"."remote_sensing",
     "ms"."survey_verified_on_field",
+    "ms"."excavations_whom_when",
+    "ms"."excavations_bibliography",
     "ms"."remarks",
     "ms"."e",
     "ms"."n",
@@ -1210,11 +1282,6 @@ CREATE INDEX "idx___geom__mat_site___remote_sensing" ON "geom"."mat_site" USING 
 
 
 CREATE OR REPLACE VIEW "public"."vw_site" WITH ("security_barrier"='false') AS
- WITH "oriented_envelop_sides" AS (
-         SELECT "site"."id",
-            "public"."orientedenvelopesides"("site"."geom") AS "sides"
-           FROM "geom"."site"
-        )
  SELECT "s"."id",
     "s"."contribute_id",
     "s"."sbah_no",
@@ -1230,7 +1297,11 @@ CREATE OR REPLACE VIEW "public"."vw_site" WITH ("security_barrier"='false') AS
     "ab2"."name" AS "district",
     "ab1"."name" AS "governorate",
     "ab0"."name" AS "nation",
-    "string_agg"(DISTINCT ("vc"."code")::"text", ';'::"text") AS "chronology",
+    "array_to_string"(ARRAY( SELECT ("vc"."code")::"text" AS "code"
+           FROM ("public"."site_chronology" "sc"
+             LEFT JOIN "voc"."chronology" "vc" ON (("sc"."chronology_id" = "vc"."id")))
+          WHERE ("sc"."site_id" = "s"."id")
+          ORDER BY "vc"."date_low", "vc"."date_high"), ';'::"text") AS "chronology",
     "string_agg"(DISTINCT ("vs"."code")::"text", ';'::"text") AS "surveys",
     "array_to_string"("array_agg"(DISTINCT "concat_ws"('.'::"text", "vs"."code", "ss"."ref")), ';'::"text") AS "survey_refs",
     "public"."site_features_to_string"("s"."features_epigraphic", "s"."features_ancient_structures", "s"."features_paleochannels") AS "features",
@@ -1241,19 +1312,21 @@ CREATE OR REPLACE VIEW "public"."vw_site" WITH ("security_barrier"='false') AS
     "round"(("public"."st_x"("public"."st_centroid"("gs"."geom")))::numeric, 7) AS "e",
     "round"(("public"."st_y"("public"."st_centroid"("gs"."geom")))::numeric, 7) AS "n",
     "round"((("public"."st_area"(("gs"."geom")::"public"."geography") / (10000)::double precision))::numeric, 3) AS "area",
-    "round"(("oes"."sides"[1])::numeric, 2) AS "length",
-    "round"(("oes"."sides"[2])::numeric, 2) AS "width"
-   FROM ((((((((("public"."site" "s"
+    "round"((("public"."orientedenvelopesides"("gs"."geom"))[1])::numeric, 2) AS "length",
+    "round"((("public"."orientedenvelopesides"("gs"."geom"))[2])::numeric, 2) AS "width",
+    "s"."survey_type",
+    "s"."features_remarks",
+    "s"."excavations_whom_when",
+    "s"."excavations_bibliography",
+    "s"."entry_id"
+   FROM (((((("public"."site" "s"
      LEFT JOIN "geom"."admbnd2" "ab2" ON (("s"."district_id" = "ab2"."id")))
      LEFT JOIN "geom"."admbnd1" "ab1" ON (("ab2"."admbnd1_id" = "ab1"."id")))
      LEFT JOIN "geom"."admbnd0" "ab0" ON (("ab1"."admbnd0_code" = "ab0"."code")))
-     LEFT JOIN "public"."site_chronology" "sc" ON (("s"."id" = "sc"."site_id")))
-     LEFT JOIN "voc"."chronology" "vc" ON (("sc"."chronology_id" = "vc"."id")))
      LEFT JOIN "public"."site_survey" "ss" ON (("s"."id" = "ss"."site_id")))
      LEFT JOIN "voc"."survey" "vs" ON (("ss"."survey_id" = "vs"."id")))
      LEFT JOIN "geom"."site" "gs" ON (("s"."id" = "gs"."id")))
-     LEFT JOIN "oriented_envelop_sides" "oes" ON (("s"."id" = "oes"."id")))
-  GROUP BY "s"."id", "ab2"."id", "ab2"."name", "ab1"."name", "ab0"."name", "gs"."geom", "oes"."sides";
+  GROUP BY "s"."id", "ab2"."id", "ab2"."name", "ab1"."name", "ab0"."name", "gs"."geom";
 
 
 
