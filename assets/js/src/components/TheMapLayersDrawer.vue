@@ -93,106 +93,38 @@
                     </map-legend-layer-list-tile>
                 </map-legend-list-group>
                 <map-legend-list-group
-                    icon="border_all"
+                    icon="map"
+                    title="Survey areas"
+                >
+                    <map-legend-layer-list-tile
+                        v-for="layer in WFS_TYPENAME_SURVEY_AREAS"
+                        :key="layer.typename"
+                        :title="layer.title"
+                        :layer-cid="layer.typename"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            :value="mapContainerWmtsMapIsVisible(layer.typename)"
+                            :hide-details="true"
+                            @change="mapContainerWmtsMapToggleVisible(layer.typename)"
+                        />
+                    </map-legend-layer-list-tile>
+                </map-legend-list-group>
+                <map-legend-list-group
+                    icon="map"
                     title="Survey basemaps"
                 >
                     <map-legend-layer-list-tile
-                        title="Akkad survey"
-                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD"
+                        v-for="layer in WMTS_TYPENAME_SURVEY_TOPOS"
+                        :key="layer.typename"
+                        :title="layer.title"
+                        :layer-cid="layer.typename"
                     >
                         <v-checkbox
                             slot="visibility"
-                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD)"
+                            :value="mapContainerWmtsMapIsVisible(layer.typename)"
                             :hide-details="true"
-                        />
-                    </map-legend-layer-list-tile>
-                    <map-legend-layer-list-tile
-                        title="Land Beyond Baghdad survey"
-                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_02_LBB"
-                    >
-                        <v-checkbox
-                            slot="visibility"
-                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_02_LBB)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_02_LBB)"
-                            :hide-details="true"
-                        />
-                    </map-legend-layer-list-tile>
-                    <map-legend-layer-list-tile
-                        title="Heartland of Cities"
-                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_03_HOC"
-                    >
-                        <v-checkbox
-                            slot="visibility"
-                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_03_HOC)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_03_HOC)"
-                            :hide-details="true"
-                        />
-                    </map-legend-layer-list-tile>
-                    <map-legend-layer-list-tile
-                        title="Ur survey"
-                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_07_UR"
-                    >
-                        <v-checkbox
-                            slot="visibility"
-                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_07_UR)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_07_UR)"
-                            :hide-details="true"
-                        />
-                    </map-legend-layer-list-tile>
-                    <map-legend-layer-list-tile
-                        title="Hammar lake survey"
-                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR"
-                    >
-                        <v-checkbox
-                            slot="visibility"
-                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR)"
-                            :hide-details="true"
-                        />
-                    </map-legend-layer-list-tile>
-                    <map-legend-layer-list-tile
-                        title="Mandali survey"
-                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI"
-                    >
-                        <v-checkbox
-                            slot="visibility"
-                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI)"
-                            :hide-details="true"
-                        />
-                    </map-legend-layer-list-tile>
-                    <map-legend-layer-list-tile
-                        title="Myinab plain survey"
-                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB"
-                    >
-                        <v-checkbox
-                            slot="visibility"
-                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB)"
-                            :hide-details="true"
-                        />
-                    </map-legend-layer-list-tile>
-                    <map-legend-layer-list-tile
-                        title="South West Iran survey"
-                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN"
-                    >
-                        <v-checkbox
-                            slot="visibility"
-                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN)"
-                            :hide-details="true"
-                        />
-                    </map-legend-layer-list-tile>
-                    <map-legend-layer-list-tile
-                        title="Ras Hormuz survey"
-                        :layer-cid="WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ"
-                    >
-                        <v-checkbox
-                            slot="visibility"
-                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ)"
-                            :hide-details="true"
+                            @change="mapContainerWmtsMapToggleVisible(layer.typename)"
                         />
                     </map-legend-layer-list-tile>
                 </map-legend-list-group>
@@ -207,8 +139,8 @@
                         <v-checkbox
                             slot="visibility"
                             :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_US_ARMY_TOPO_1)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_US_ARMY_TOPO_1)"
                             :hide-details="true"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_US_ARMY_TOPO_1)"
                         />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
@@ -218,9 +150,9 @@
                         <v-checkbox
                             slot="visibility"
                             :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_US_ARMY_TOPO_2)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_US_ARMY_TOPO_2)"
                             disabled
                             :hide-details="true"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_US_ARMY_TOPO_2)"
                         />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
@@ -230,8 +162,8 @@
                         <v-checkbox
                             slot="visibility"
                             :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_CORONA_FORE)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_CORONA_FORE)"
                             :hide-details="true"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_CORONA_FORE)"
                         />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
@@ -241,13 +173,13 @@
                         <v-checkbox
                             slot="visibility"
                             :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_CORONA_AFT)"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_CORONA_AFT)"
                             :hide-details="true"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_CORONA_AFT)"
                         />
                     </map-legend-layer-list-tile>
                 </map-legend-list-group>
                 <map-legend-list-group
-                    icon="map"
+                    icon="grid_on"
                     title="Online basemaps"
                 >
                     <map-legend-layer-list-tile
@@ -322,7 +254,9 @@ import {
     WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
     WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
     WMTS_TYPENAME_US_ARMY_TOPO_1,
-    WMTS_TYPENAME_US_ARMY_TOPO_2
+    WMTS_TYPENAME_US_ARMY_TOPO_2,
+    WMTS_TYPENAME_SURVEY_TOPOS,
+    WFS_TYPENAME_SURVEY_AREAS
 
 } from '../utils/cids';
 
@@ -363,6 +297,9 @@ export default {
         WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ: () => WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
         WMTS_TYPENAME_US_ARMY_TOPO_1: () => WMTS_TYPENAME_US_ARMY_TOPO_1,
         WMTS_TYPENAME_US_ARMY_TOPO_2: () => WMTS_TYPENAME_US_ARMY_TOPO_2,
+        WFS_TYPENAME_SURVEY_AREAS: () => WFS_TYPENAME_SURVEY_AREAS,
+        WMTS_TYPENAME_SURVEY_TOPOS: () => WMTS_TYPENAME_SURVEY_TOPOS
+
     }
 };
 </script>

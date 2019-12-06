@@ -28,6 +28,20 @@ export const QUERY_TYPENAME_VW_SITES_EDIT = 'vw-site-edit';
 
 export const WFS_TYPENAME_VW_SITES_SURVEY = 'vw_site_survey';
 export const WFS_TYPENAME_VW_SITES_RS = 'vw_site_rs';
+export const WFS_TYPENAME_SURVEY_AREA_01_AKKAD = 'survey_area_01_akkad';
+export const WFS_TYPENAME_SURVEY_AREA_02_LBB = 'survey_area_02_lbb';
+export const WFS_TYPENAME_SURVEY_AREA_03_HOC = 'survey_area_03_hoc';
+export const WFS_TYPENAME_SURVEY_AREA_04_XXX = 'survey_area_04_xxx';
+export const WFS_TYPENAME_SURVEY_AREA_05_QADIS = 'survey_area_05_qadis';
+export const WFS_TYPENAME_SURVEY_AREA_06_TULUL = 'survey_area_06_tulul';
+export const WFS_TYPENAME_SURVEY_AREA_07_UR = 'survey_area_07_ur';
+export const WFS_TYPENAME_SURVEY_AREA_08_HADITHA = 'survey_area_08_haditha';
+export const WFS_TYPENAME_SURVEY_AREA_09_SAMARRA = 'survey_area_09_samarra';
+export const WFS_TYPENAME_SURVEY_AREA_10_HAMMAR = 'survey_area_10_hammar';
+export const WFS_TYPENAME_SURVEY_AREA_11_MANDALI = 'survey_area_11_mandali';
+export const WFS_TYPENAME_SURVEY_AREA_12_FARSUP = 'survey_area_12_farsup';
+
+
 export const WMTS_TYPENAME_CORONA_FORE = 'corona_fore';
 export const WMTS_TYPENAME_CORONA_AFT = 'corona_aft';
 export const WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD = 'cv_survey_topo_01_akkad';
@@ -45,6 +59,92 @@ export const WMTS_TYPENAME_US_ARMY_TOPO_2 = 'cv_us_army_topo_2';
 export const TITLE_TYPENAME_VW_SITES = 'Sites';
 export const TITLE_TYPENAME_VW_SITES_SURVEY = 'Sites (survey)';
 export const TITLE_TYPENAME_VW_SITES_RS = 'Sites (remote sensing)';
+
+export const WMTS_TYPENAME_SURVEY_TOPOS = [
+    {
+        typename: WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD,
+        title: 'Akkad survey'
+    },
+    {
+        typename: WMTS_TYPENAME_SURVEY_TOPO_02_LBB,
+        title: 'Land Beyond Baghdad survey'
+    },
+    {
+        typename: WMTS_TYPENAME_SURVEY_TOPO_03_HOC,
+        title: 'Heartland of Cities survey'
+    },
+    {
+        typename: WMTS_TYPENAME_SURVEY_TOPO_07_UR,
+        title: 'Ur survey'
+    },
+    {
+        typename: WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR,
+        title: 'Hammar lake survey'
+    },
+    {
+        typename: WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
+        title: 'Mandali survey'
+    },
+    {
+        typename: WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
+        title: 'Myinab plain survey'
+    },
+    {
+        typename: WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
+        title: 'South West Iran survey'
+    },
+    {
+        typename: WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
+        title: 'Ras Hormuz survey'
+    },
+];
+
+export const WFS_TYPENAME_SURVEY_AREAS = [
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_01_AKKAD,
+        title: 'Akkad survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_02_LBB,
+        title: 'Land Beyond Baghdad survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_03_HOC,
+        title: 'Heartland of Cities survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_05_QADIS,
+        title: 'QADIS survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_06_TULUL,
+        title: 'Tulul Al-Baharat survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_07_UR,
+        title: 'Ur survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_08_HADITHA,
+        title: 'Haditha dam survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_09_SAMARRA,
+        title: 'Samarra survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_10_HAMMAR,
+        title: 'Hammar lake survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_11_MANDALI,
+        title: 'Mandali survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_12_FARSUP,
+        title: 'FARSUP survey'
+    },
+];
 
 export const HEADERS_VW_SITE_LIST_DATA_CARD_TABLE = {
     [QUERY_TYPENAME_VW_SITES_SURVEY]: [

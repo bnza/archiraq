@@ -45,86 +45,24 @@
                 <vl-source-esri />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD)"
+                v-for="layer in WMTS_TYPENAME_SURVEY_TOPOS"
+                :key="layer.typename"
+                :visible="mapContainerWmtsMapIsVisible(layer.typename)"
             >
                 <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD"
-                    :typename="WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD"
+                    :cid-p="layer.typename"
+                    :typename="layer.typename"
                     style-name="raster"
                 />
             </vl-layer-tile>
-            <vl-layer-tile
-                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_02_LBB)"
-            >
-                <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_02_LBB"
-                    :typename="WMTS_TYPENAME_SURVEY_TOPO_02_LBB"
-                    style-name="raster"
-                />
-            </vl-layer-tile>
-            <vl-layer-tile
-                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_03_HOC)"
-            >
-                <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_03_HOC"
-                    :typename="WMTS_TYPENAME_SURVEY_TOPO_03_HOC"
-                    style-name="raster"
-                />
-            </vl-layer-tile>
-            <vl-layer-tile
-                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_07_UR)"
-            >
-                <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_07_UR"
-                    :typename="WMTS_TYPENAME_SURVEY_TOPO_07_UR"
-                    style-name="raster"
-                />
-            </vl-layer-tile>
-            <vl-layer-tile
-                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR)"
-            >
-                <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR"
-                    :typename="WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR"
-                    style-name="raster"
-                />
-            </vl-layer-tile>
-            <vl-layer-tile
-                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI)"
-            >
-                <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI"
-                    :typename="WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI"
-                    style-name="raster"
-                />
-            </vl-layer-tile>
-            <vl-layer-tile
-                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB)"
-            >
-                <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB"
-                    :typename="WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB"
-                    style-name="raster"
-                />
-            </vl-layer-tile>
-            <vl-layer-tile
-                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN)"
-            >
-                <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN"
-                    :typename="WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN"
-                    style-name="raster"
-                />
-            </vl-layer-tile>
-            <vl-layer-tile
-                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ)"
-            >
-                <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ"
-                    :typename="WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ"
-                    style-name="raster"
-                />
-            </vl-layer-tile>
+            <map-layer-vector-wfs
+                v-for="layer in WFS_TYPENAME_SURVEY_AREAS"
+                :key="layer.typename"
+                :cid-p="layer.typename"
+                :visible-p="false"
+                :typename="layer.typename"
+                geom-field="the_geom"
+            />
             <vl-layer-tile
                 :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_US_ARMY_TOPO_1)"
             >
@@ -191,6 +129,7 @@ import ComponentStoreVisibleMx from '@/mixins/ComponentStoreVisibleMx';
 import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 import TheMapLayersDrawer from './TheMapLayersDrawer';
 import MapLayerWmts from '@/components/MapLayerWmts';
+import MapLayerVectorWfs from '@/components/MapLayerVectorWfs';
 import MapLayerGroupAdminBounds from './MapLayerGroupAdminBounds';
 import MapLayerVectorWfsVwSites from './MapLayerVectorWfsVwSites';
 import VlSourceEsri from './VlSourceEsri';
@@ -214,7 +153,9 @@ import {
     WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
     WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
     WMTS_TYPENAME_US_ARMY_TOPO_1,
-    WMTS_TYPENAME_US_ARMY_TOPO_2
+    WMTS_TYPENAME_US_ARMY_TOPO_2,
+    WMTS_TYPENAME_SURVEY_TOPOS,
+    WFS_TYPENAME_SURVEY_AREAS
 } from '../utils/cids';
 import {callObjectMethod} from '../utils/utils';
 
@@ -229,6 +170,7 @@ export default {
         MapLayerWmts,
         MapLayerGroupAdminBounds,
         VlSourceEsri,
+        MapLayerVectorWfs,
         VwSiteInteractionModify: () => import(
             /* webpackChunkName: "VwSiteInteractionModify" */
             '@/components/DataCard/Interaction/VwSiteInteractionModify'
@@ -264,6 +206,8 @@ export default {
         WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ: () => WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
         WMTS_TYPENAME_US_ARMY_TOPO_1: () => WMTS_TYPENAME_US_ARMY_TOPO_1,
         WMTS_TYPENAME_US_ARMY_TOPO_2: () => WMTS_TYPENAME_US_ARMY_TOPO_2,
+        WFS_TYPENAME_SURVEY_AREAS: () => WFS_TYPENAME_SURVEY_AREAS,
+        WMTS_TYPENAME_SURVEY_TOPOS: () => WMTS_TYPENAME_SURVEY_TOPOS,
         bingApiKey() {
             return this.$store.state.bingApiKey;
         }

@@ -56,6 +56,10 @@ export default {
             type: String,
             default: 'id'
         },
+        geomField: {
+            type: String,
+            default: 'geom'
+        },
         typename: {
             type: String,
             required: true
@@ -133,12 +137,13 @@ export default {
             return function (extent, resolution, projection) {
 
                 let reqHeaders = headers.setContentType('application/json');
-                let filter = addBboxFilter({extent}, vectorLayerComponent.filter);
+                let filter = addBboxFilter({extent, geometryName: vectorLayerComponent.geomField}, vectorLayerComponent.filter);
                 let config = {
                     typename: vectorLayerComponent.typename,
                     filter,
-                    propertyName: `${vectorLayerComponent.keyField},geom`
+                    propertyName: `${vectorLayerComponent.keyField},${vectorLayerComponent.geomField}`
                 };
+
 
                 return vectorLayerComponent.performWfsGetFeatureRequest(config, reqHeaders).then(
                     (response) => {
@@ -182,8 +187,9 @@ export default {
             let config = {
                 typename: this.typename,
                 filter: this.filter,
-                propertyName: 'geom'
+                propertyName: this.geomField
             };
+
             return this.performWfsGetFeatureRequest(config).then(
                 (response) => {
                     this.extent = getExtentFromWfsGetFeatures(response.data);
