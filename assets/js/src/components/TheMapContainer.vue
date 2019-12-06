@@ -45,7 +45,7 @@
                 <vl-source-esri />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsTopo01Visible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD"
@@ -54,7 +54,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsTopo02Visible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_02_LBB)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_SURVEY_TOPO_02_LBB"
@@ -63,7 +63,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsTopo03Visible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_03_HOC)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_SURVEY_TOPO_03_HOC"
@@ -72,7 +72,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsTopo07Visible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_07_UR)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_SURVEY_TOPO_07_UR"
@@ -81,7 +81,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsTopo10Visible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR"
@@ -90,7 +90,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsTopo11Visible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI"
@@ -99,7 +99,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsTopo12Visible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB"
@@ -108,7 +108,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsTopo13Visible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN"
@@ -117,7 +117,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsTopo14Visible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ"
@@ -126,7 +126,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsUsTopo1Visible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_US_ARMY_TOPO_1)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_US_ARMY_TOPO_1"
@@ -135,7 +135,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsUsTopo2Visible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_US_ARMY_TOPO_2)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_US_ARMY_TOPO_2"
@@ -144,7 +144,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsCoronaAfVisible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_CORONA_AFT)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_CORONA_AFT"
@@ -152,7 +152,7 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsCoronaDaVisible"
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_CORONA_FORE)"
             >
                 <map-layer-wmts
                     :cid-p="WMTS_TYPENAME_CORONA_FORE"

@@ -123,145 +123,13 @@ export default {
                 });
             }
         },
-        mapContainerWmtsCoronaAfVisible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_CORONA_AFT, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_CORONA_AFT,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsCoronaDaVisible: {
+        mapContainerWmtsCoronaForeVisible: {
             get() {
                 return this.componentsGetComponentProp(WMTS_TYPENAME_CORONA_FORE, 'visible');
             },
             set() {
                 this.componentsToggleComponentProp({
                     cid: WMTS_TYPENAME_CORONA_FORE,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsTopo01Visible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsTopo02Visible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_SURVEY_TOPO_02_LBB, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_SURVEY_TOPO_02_LBB,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsTopo03Visible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_SURVEY_TOPO_03_HOC, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_SURVEY_TOPO_03_HOC,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsTopo07Visible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_SURVEY_TOPO_07_UR, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_SURVEY_TOPO_07_UR,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsTopo10Visible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsTopo11Visible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsTopo12Visible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsTopo13Visible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsTopo14Visible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsUsTopo1Visible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_US_ARMY_TOPO_1, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_US_ARMY_TOPO_1,
-                    prop: 'visible'
-                });
-            }
-        },
-        mapContainerWmtsUsTopo2Visible: {
-            get() {
-                return this.componentsGetComponentProp(WMTS_TYPENAME_US_ARMY_TOPO_2, 'visible');
-            },
-            set() {
-                this.componentsToggleComponentProp({
-                    cid: WMTS_TYPENAME_US_ARMY_TOPO_2,
                     prop: 'visible'
                 });
             }
@@ -311,6 +179,15 @@ export default {
             const extent = this.componentsGetComponentProp(cid, 'extent');
             this.mapContainerCallMethod('fitExtent', [extent]);
             this.$vuetify.goTo('#map');
-        }
+        },
+        mapContainerWmtsMapIsVisible(cid) {
+            return this.componentsGetComponentProp(cid, 'visible');
+        },
+        mapContainerWmtsMapToggleVisible(cid) {
+            this.componentsToggleComponentProp({
+                cid: cid,
+                prop: 'visible'
+            });
+        },
     }
 };

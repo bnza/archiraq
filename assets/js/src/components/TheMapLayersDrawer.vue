@@ -102,7 +102,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsTopo01Visible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
@@ -112,7 +113,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsTopo02Visible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_02_LBB)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_02_LBB)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
@@ -122,7 +124,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsTopo03Visible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_03_HOC)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_03_HOC)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
@@ -132,7 +135,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsTopo07Visible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_07_UR)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_07_UR)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
@@ -142,7 +146,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsTopo10Visible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
@@ -152,7 +157,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsTopo11Visible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
@@ -162,7 +168,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsTopo12Visible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
@@ -172,7 +179,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsTopo13Visible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
@@ -182,7 +190,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsTopo14Visible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
@@ -197,7 +206,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsUsTopo1Visible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_US_ARMY_TOPO_1)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_US_ARMY_TOPO_1)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
@@ -207,7 +217,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsUsTopo2Visible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_US_ARMY_TOPO_2)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_US_ARMY_TOPO_2)"
                             disabled
                             :hide-details="true"
                         />
@@ -218,7 +229,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsCoronaDaVisible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_CORONA_FORE)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_CORONA_FORE)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
@@ -228,7 +240,8 @@
                     >
                         <v-checkbox
                             slot="visibility"
-                            v-model="mapContainerWmtsCoronaAfVisible"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_CORONA_AFT)"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_CORONA_AFT)"
                             :hide-details="true"
                         />
                     </map-legend-layer-list-tile>
