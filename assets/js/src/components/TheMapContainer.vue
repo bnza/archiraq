@@ -117,12 +117,30 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                    :visible="mapContainerWmtsTopo14Visible"
+                :visible="mapContainerWmtsTopo14Visible"
             >
                 <map-layer-wmts
-                        :cid-p="WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ"
-                        :typename="WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ"
-                        style-name="raster"
+                    :cid-p="WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ"
+                    :typename="WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ"
+                    style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
+                :visible="mapContainerWmtsUsTopo1Visible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_US_ARMY_TOPO_1"
+                    :typename="WMTS_TYPENAME_US_ARMY_TOPO_1"
+                    style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
+                :visible="mapContainerWmtsUsTopo2Visible"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_US_ARMY_TOPO_2"
+                    :typename="WMTS_TYPENAME_US_ARMY_TOPO_2"
+                    style-name="raster"
                 />
             </vl-layer-tile>
             <vl-layer-tile
@@ -194,7 +212,9 @@ import {
     WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
     WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
     WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
-    WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ
+    WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
+    WMTS_TYPENAME_US_ARMY_TOPO_1,
+    WMTS_TYPENAME_US_ARMY_TOPO_2
 } from '../utils/cids';
 import {callObjectMethod} from '../utils/utils';
 
@@ -242,6 +262,8 @@ export default {
         WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB: () => WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
         WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN: () => WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
         WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ: () => WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
+        WMTS_TYPENAME_US_ARMY_TOPO_1: () => WMTS_TYPENAME_US_ARMY_TOPO_1,
+        WMTS_TYPENAME_US_ARMY_TOPO_2: () => WMTS_TYPENAME_US_ARMY_TOPO_2,
         bingApiKey() {
             return this.$store.state.bingApiKey;
         }

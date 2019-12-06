@@ -192,6 +192,27 @@
                     title="Topographic and satellite basemaps"
                 >
                     <map-legend-layer-list-tile
+                        title="US Army map (1942) 1"
+                        :layer-cid="WMTS_TYPENAME_US_ARMY_TOPO_1"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsUsTopo1Visible"
+                            :hide-details="true"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="US Army map (1942) 2"
+                        :layer-cid="WMTS_TYPENAME_US_ARMY_TOPO_2"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerWmtsUsTopo2Visible"
+                            disabled
+                            :hide-details="true"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
                         title="Corona FORE set"
                         :layer-cid="WMTS_TYPENAME_CORONA_FORE"
                     >
@@ -286,7 +307,9 @@ import {
     WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
     WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
     WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
-    WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ
+    WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
+    WMTS_TYPENAME_US_ARMY_TOPO_1,
+    WMTS_TYPENAME_US_ARMY_TOPO_2
 
 } from '../utils/cids';
 
@@ -325,6 +348,8 @@ export default {
         WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB: () => WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
         WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN: () => WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
         WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ: () => WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
+        WMTS_TYPENAME_US_ARMY_TOPO_1: () => WMTS_TYPENAME_US_ARMY_TOPO_1,
+        WMTS_TYPENAME_US_ARMY_TOPO_2: () => WMTS_TYPENAME_US_ARMY_TOPO_2,
     }
 };
 </script>

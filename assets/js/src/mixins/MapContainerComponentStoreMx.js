@@ -13,7 +13,9 @@ import {
     WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
     WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
     WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
-    WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ
+    WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
+    WMTS_TYPENAME_US_ARMY_TOPO_1,
+    WMTS_TYPENAME_US_ARMY_TOPO_2
 } from '../utils/cids';
 
 export default {
@@ -238,6 +240,28 @@ export default {
             set() {
                 this.componentsToggleComponentProp({
                     cid: WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
+                    prop: 'visible'
+                });
+            }
+        },
+        mapContainerWmtsUsTopo1Visible: {
+            get() {
+                return this.componentsGetComponentProp(WMTS_TYPENAME_US_ARMY_TOPO_1, 'visible');
+            },
+            set() {
+                this.componentsToggleComponentProp({
+                    cid: WMTS_TYPENAME_US_ARMY_TOPO_1,
+                    prop: 'visible'
+                });
+            }
+        },
+        mapContainerWmtsUsTopo2Visible: {
+            get() {
+                return this.componentsGetComponentProp(WMTS_TYPENAME_US_ARMY_TOPO_2, 'visible');
+            },
+            set() {
+                this.componentsToggleComponentProp({
+                    cid: WMTS_TYPENAME_US_ARMY_TOPO_2,
                     prop: 'visible'
                 });
             }
