@@ -67,7 +67,7 @@ export const WMTS_TYPENAME_SURVEY_TOPOS = [
     },
     {
         typename: WMTS_TYPENAME_SURVEY_TOPO_02_LBB,
-        title: 'Land Beyond Baghdad survey'
+        title: 'Land Behind Baghdad survey'
     },
     {
         typename: WMTS_TYPENAME_SURVEY_TOPO_03_HOC,
@@ -106,7 +106,7 @@ export const WFS_TYPENAME_SURVEY_AREAS = [
     },
     {
         typename: WFS_TYPENAME_SURVEY_AREA_02_LBB,
-        title: 'Land Beyond Baghdad survey'
+        title: 'Land Behind Baghdad survey'
     },
     {
         typename: WFS_TYPENAME_SURVEY_AREA_03_HOC,

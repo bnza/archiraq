@@ -1,5 +1,5 @@
 <template>
-    <div data-test="vw-site-table--condition-rows">
+    <div data-test="vw-site-table--condition-rows" class="predicate-rows">
         <string-predicate-row
             v-if="rowPredicateIsVisible('modernName')"
             class="predicate-row"
@@ -228,6 +228,9 @@ export default {
 </script>
 
 <style scoped>
+    .predicate-rows {
+        overflow-y: scroll;
+    }
     >>> .predicate-row {
         margin: -0.75rem auto !important;
     }

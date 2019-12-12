@@ -89,9 +89,9 @@ describe('"getJobProgressPercentage"', () => {
 
 describe('"yearToCanonicalString"', () => {
     it.each([
-        [-120, '120 b.C.'],
-        [200, '200 a.D.'],
-        [150.2, '150 a.D.']
+        [-120, '120 B.C.'],
+        [200, '200 A.D.'],
+        [150.2, '150 A.D.']
     ])('yearToCanonicalString(%i) returns \'%s\'' , (year, expected) => {
         expect(yearToCanonicalString(year)).toEqual(expected);
     });

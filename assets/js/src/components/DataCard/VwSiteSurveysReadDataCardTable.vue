@@ -12,7 +12,7 @@
                 {{ props.item.year_low }}
             </td>
             <td class="text-xs-right">
-                {{ props.item.year_high}}
+                {{ props.item.year_high }}
             </td>
             <td>
                 {{ props.item.remarks }}
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import {yearToCanonicalString} from '@/utils/utils';
+
 export default {
     name: 'VwSiteSurveysReadDataCardTable',
     props: {
@@ -59,9 +61,7 @@ export default {
         };
     },
     methods: {
-        yearToCanonicalString(year) {
-            return year < 0 ? `${Math.abs(year)} b.C.` : `${year} a.D.`;
-        }
+        yearToCanonicalString
     }
 };
 </script>
