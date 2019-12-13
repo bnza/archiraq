@@ -224,6 +224,74 @@
             row
             wrap
         >
+            <v-flex
+                xs4
+                wrap
+            >
+                <v-checkbox
+                    label="Remote sensing"
+                    :input-value="item.remote_sensing"
+                    @change="updateItemProp('remote_sensing', $event)"
+                />
+            </v-flex>
+            <v-flex
+                xs4
+                wrap
+            >
+                <v-checkbox
+                    label="Verified on field"
+                    :input-value="item.survey_verified_on_field"
+                    @change="updateItemProp('survey_verified_on_field', $event)"
+                />
+            </v-flex>
+            <v-flex
+                xs4
+                wrap
+            >
+                <v-text-field
+                    label="Survey type"
+                    :value="item.survey_type"
+                    @change="updateItemProp('survey_type', $event)"
+                />
+            </v-flex>
+        </v-layout>
+        <v-layout
+            row
+            wrap
+        >
+            <v-flex xs12>
+                <h4>Excavations</h4>
+            </v-flex>
+        </v-layout>
+        <v-layout
+            row
+            wrap
+        >
+            <v-flex
+                xs6
+                wrap
+            >
+                <v-text-field
+                    label="Campaigns"
+                    :value="item.excavations_whom_when"
+                    @change="updateItemProp('excavations_whom_when', $event)"
+                />
+            </v-flex>
+            <v-flex
+                xs6
+                wrap
+            >
+                <v-text-field
+                    label="Bibliography"
+                    :value="item.excavations_bibliography"
+                    @change="updateItemProp('excavations_bibliography', $event)"
+                />
+            </v-flex>
+        </v-layout>
+        <v-layout
+            row
+            wrap
+        >
             <v-flex xs12>
                 <h4>Features</h4>
             </v-flex>
