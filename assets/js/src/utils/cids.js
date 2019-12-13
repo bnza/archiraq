@@ -118,7 +118,7 @@ export const WFS_TYPENAME_SURVEY_AREAS = [
     },
     {
         typename: WFS_TYPENAME_SURVEY_AREA_06_TULUL,
-        title: 'Tulul Al-Baharat survey'
+        title: 'Tulul al Baqarat survey'
     },
     {
         typename: WFS_TYPENAME_SURVEY_AREA_07_UR,
