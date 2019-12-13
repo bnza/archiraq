@@ -31,7 +31,6 @@ export const WFS_TYPENAME_VW_SITES_RS = 'vw_site_rs';
 export const WFS_TYPENAME_SURVEY_AREA_01_AKKAD = 'survey_area_01_akkad';
 export const WFS_TYPENAME_SURVEY_AREA_02_LBB = 'survey_area_02_lbb';
 export const WFS_TYPENAME_SURVEY_AREA_03_HOC = 'survey_area_03_hoc';
-export const WFS_TYPENAME_SURVEY_AREA_04_XXX = 'survey_area_04_xxx';
 export const WFS_TYPENAME_SURVEY_AREA_05_QADIS = 'survey_area_05_qadis';
 export const WFS_TYPENAME_SURVEY_AREA_06_TULUL = 'survey_area_06_tulul';
 export const WFS_TYPENAME_SURVEY_AREA_07_UR = 'survey_area_07_ur';
@@ -44,6 +43,15 @@ export const WFS_TYPENAME_SURVEY_AREA_12_FARSUP = 'survey_area_12_farsup';
 
 export const WMTS_TYPENAME_CORONA_FORE = 'corona_fore';
 export const WMTS_TYPENAME_CORONA_AFT = 'corona_aft';
+export const WMTS_TYPENAME_CORONA_1045_2182_AFT = 'cv_corona_1045_2182_aft';
+export const WMTS_TYPENAME_CORONA_1045_2182_FORE = 'cv_corona_1045_2182_fore';
+export const WMTS_TYPENAME_CORONA_1102_1025_AFT = 'cv_corona_1102_1025_aft';
+export const WMTS_TYPENAME_CORONA_1102_1025_FORE = 'cv_corona_1102_1025_fore';
+export const WMTS_TYPENAME_CORONA_1103_1041_AFT = 'cv_corona_1103_1041_aft';
+export const WMTS_TYPENAME_CORONA_1103_1041_FORE = 'cv_corona_1103_1041_fore';
+export const WMTS_TYPENAME_CORONA_1104_2138_AFT = 'cv_corona_1104_2138_aft';
+export const WMTS_TYPENAME_CORONA_1104_2138_FORE = 'cv_corona_1104_2138_fore';
+export const WMTS_TYPENAME_CORONA_1107_2170_AFT = 'cv_corona_1107_2170_aft';
 export const WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD = 'cv_survey_topo_01_akkad';
 export const WMTS_TYPENAME_SURVEY_TOPO_02_LBB = 'cv_survey_topo_02_lbb';
 export const WMTS_TYPENAME_SURVEY_TOPO_03_HOC = 'cv_survey_topo_03_hoc';
@@ -60,6 +68,44 @@ export const TITLE_TYPENAME_VW_SITES = 'Sites';
 export const TITLE_TYPENAME_VW_SITES_SURVEY = 'Sites (survey)';
 export const TITLE_TYPENAME_VW_SITES_RS = 'Sites (remote sensing)';
 
+export const WMTS_TYPENAME_CORONA = [
+    {
+        typename: WMTS_TYPENAME_CORONA_1102_1025_AFT,
+        title: 'Corona 1102-1025 AFT set'
+    },
+    {
+        typename: WMTS_TYPENAME_CORONA_1103_1041_AFT,
+        title: 'Corona 1103-1041 AFT set'
+    },
+    {
+        typename: WMTS_TYPENAME_CORONA_1104_2138_AFT,
+        title: 'Corona 1104-2138 AFT set'
+    },
+    {
+        typename: WMTS_TYPENAME_CORONA_1107_2170_AFT,
+        title: 'Corona 1107-2170 AFT set'
+    },
+    {
+        typename: WMTS_TYPENAME_CORONA_1045_2182_AFT,
+        title: 'Corona 1045-2182 AFT set'
+    },
+    {
+        typename: WMTS_TYPENAME_CORONA_1102_1025_FORE,
+        title: 'Corona 1102-1025 FORE set'
+    },
+    {
+        typename: WMTS_TYPENAME_CORONA_1103_1041_FORE,
+        title: 'Corona 1103-1041 FORE set'
+    },
+    {
+        typename: WMTS_TYPENAME_CORONA_1104_2138_FORE,
+        title: 'Corona 1104-2138 FORE set'
+    },
+    {
+        typename: WMTS_TYPENAME_CORONA_1045_2182_FORE,
+        title: 'Corona 1045-2182 FORE set'
+    },
+];
 export const WMTS_TYPENAME_SURVEY_TOPOS = [
     {
         typename: WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD,

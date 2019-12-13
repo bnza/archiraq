@@ -82,19 +82,14 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
-                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_CORONA_AFT)"
+                v-for="layer in WMTS_TYPENAME_CORONA"
+                :key="layer.typename"
+                :visible="mapContainerWmtsMapIsVisible(layer.typename)"
             >
                 <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_CORONA_AFT"
-                    :typename="WMTS_TYPENAME_CORONA_AFT"
-                />
-            </vl-layer-tile>
-            <vl-layer-tile
-                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_CORONA_FORE)"
-            >
-                <map-layer-wmts
-                    :cid-p="WMTS_TYPENAME_CORONA_FORE"
-                    :typename="WMTS_TYPENAME_CORONA_FORE"
+                    :cid-p="layer.typename"
+                    :typename="layer.typename"
+                    style-name="raster"
                 />
             </vl-layer-tile>
             <map-layer-group-admin-bounds />
@@ -137,21 +132,11 @@ import VlSourceEsri from './VlSourceEsri';
 import {
     CID_THE_MAP_CONTAINER as CID,
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
-    CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS,
-    CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
     WFS_TYPENAME_VW_SITES_SURVEY,
     WFS_TYPENAME_VW_SITES_RS,
+    WMTS_TYPENAME_CORONA,
     WMTS_TYPENAME_CORONA_FORE,
     WMTS_TYPENAME_CORONA_AFT,
-    WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD,
-    WMTS_TYPENAME_SURVEY_TOPO_02_LBB,
-    WMTS_TYPENAME_SURVEY_TOPO_03_HOC,
-    WMTS_TYPENAME_SURVEY_TOPO_07_UR,
-    WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR,
-    WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
-    WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
-    WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
-    WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
     WMTS_TYPENAME_US_ARMY_TOPO_1,
     WMTS_TYPENAME_US_ARMY_TOPO_2,
     WMTS_TYPENAME_SURVEY_TOPOS,
@@ -189,21 +174,11 @@ export default {
         };
     },
     computed: {
-        CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS,
-        CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
         WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY,
         WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
+        WMTS_TYPENAME_CORONA: () => WMTS_TYPENAME_CORONA,
         WMTS_TYPENAME_CORONA_FORE: () => WMTS_TYPENAME_CORONA_FORE,
         WMTS_TYPENAME_CORONA_AFT: () => WMTS_TYPENAME_CORONA_AFT,
-        WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD: () => WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD,
-        WMTS_TYPENAME_SURVEY_TOPO_02_LBB: () => WMTS_TYPENAME_SURVEY_TOPO_02_LBB,
-        WMTS_TYPENAME_SURVEY_TOPO_03_HOC: () => WMTS_TYPENAME_SURVEY_TOPO_03_HOC,
-        WMTS_TYPENAME_SURVEY_TOPO_07_UR: () => WMTS_TYPENAME_SURVEY_TOPO_07_UR,
-        WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR: () => WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR,
-        WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI: () => WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
-        WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB: () => WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
-        WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN: () => WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
-        WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ: () => WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
         WMTS_TYPENAME_US_ARMY_TOPO_1: () => WMTS_TYPENAME_US_ARMY_TOPO_1,
         WMTS_TYPENAME_US_ARMY_TOPO_2: () => WMTS_TYPENAME_US_ARMY_TOPO_2,
         WFS_TYPENAME_SURVEY_AREAS: () => WFS_TYPENAME_SURVEY_AREAS,

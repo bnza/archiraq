@@ -155,25 +155,16 @@
                         />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
-                        title="Corona FORE set"
-                        :layer-cid="WMTS_TYPENAME_CORONA_FORE"
+                        v-for="layer in WMTS_TYPENAME_CORONA"
+                        :key="layer.typename"
+                        :title="layer.title"
+                        :layer-cid="layer.typename"
                     >
                         <v-checkbox
                             slot="visibility"
-                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_CORONA_FORE)"
+                            :value="mapContainerWmtsMapIsVisible(layer.typename)"
                             :hide-details="true"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_CORONA_FORE)"
-                        />
-                    </map-legend-layer-list-tile>
-                    <map-legend-layer-list-tile
-                        title="Corona AFT set"
-                        :layer-cid="WMTS_TYPENAME_CORONA_AFT"
-                    >
-                        <v-checkbox
-                            slot="visibility"
-                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_CORONA_AFT)"
-                            :hide-details="true"
-                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_CORONA_AFT)"
+                            @change="mapContainerWmtsMapToggleVisible(layer.typename)"
                         />
                     </map-legend-layer-list-tile>
                 </map-legend-list-group>
@@ -243,19 +234,11 @@ import {
     WFS_TYPENAME_VW_SITES_SURVEY,
     WMTS_TYPENAME_CORONA_AFT,
     WMTS_TYPENAME_CORONA_FORE,
-    WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD,
-    WMTS_TYPENAME_SURVEY_TOPO_02_LBB,
-    WMTS_TYPENAME_SURVEY_TOPO_03_HOC,
-    WMTS_TYPENAME_SURVEY_TOPO_07_UR,
-    WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR,
-    WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
-    WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
-    WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
-    WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
     WMTS_TYPENAME_US_ARMY_TOPO_1,
     WMTS_TYPENAME_US_ARMY_TOPO_2,
     WMTS_TYPENAME_SURVEY_TOPOS,
-    WFS_TYPENAME_SURVEY_AREAS
+    WFS_TYPENAME_SURVEY_AREAS,
+    WMTS_TYPENAME_CORONA
 
 } from '../utils/cids';
 
@@ -283,17 +266,9 @@ export default {
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
         WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
         WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY,
+        WMTS_TYPENAME_CORONA: () => WMTS_TYPENAME_CORONA,
         WMTS_TYPENAME_CORONA_AFT: () => WMTS_TYPENAME_CORONA_AFT,
         WMTS_TYPENAME_CORONA_FORE: () => WMTS_TYPENAME_CORONA_FORE,
-        WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD: () => WMTS_TYPENAME_SURVEY_TOPO_01_AKKAD,
-        WMTS_TYPENAME_SURVEY_TOPO_02_LBB: () => WMTS_TYPENAME_SURVEY_TOPO_02_LBB,
-        WMTS_TYPENAME_SURVEY_TOPO_03_HOC: () => WMTS_TYPENAME_SURVEY_TOPO_03_HOC,
-        WMTS_TYPENAME_SURVEY_TOPO_07_UR: () => WMTS_TYPENAME_SURVEY_TOPO_07_UR,
-        WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR: () => WMTS_TYPENAME_SURVEY_TOPO_10_HAMMAR,
-        WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI: () => WMTS_TYPENAME_SURVEY_TOPO_11_MANDALI,
-        WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB: () => WMTS_TYPENAME_SURVEY_TOPO_12_MYINAB,
-        WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN: () => WMTS_TYPENAME_SURVEY_TOPO_13_SWIRAN,
-        WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ: () => WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ,
         WMTS_TYPENAME_US_ARMY_TOPO_1: () => WMTS_TYPENAME_US_ARMY_TOPO_1,
         WMTS_TYPENAME_US_ARMY_TOPO_2: () => WMTS_TYPENAME_US_ARMY_TOPO_2,
         WFS_TYPENAME_SURVEY_AREAS: () => WFS_TYPENAME_SURVEY_AREAS,
