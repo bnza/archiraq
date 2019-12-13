@@ -42,6 +42,11 @@ class GeoServerDigest1Authenticator extends AbstractGuardAuthenticator
     private $em;
 
     /**
+     * @var string
+     */
+    private $geoserverGuestUsername;
+
+    /**
      * @var $password
      */
     private $password;
@@ -51,6 +56,13 @@ class GeoServerDigest1Authenticator extends AbstractGuardAuthenticator
         $this->router = $router;
         $this->encoder = $encoder;
         $this->em = $em;
+
+    }
+
+    public function setGeoserverGuestAuth(string $auth)
+    {
+        //geoserver service guest username cannot login
+        $this->geoserverGuestUsername = explode(':',$auth)[0];
     }
 
     public function supports(Request $request)
@@ -72,10 +84,12 @@ class GeoServerDigest1Authenticator extends AbstractGuardAuthenticator
             throw new BadCredentialsException(self::NO_USERNAME_SUPPLIED);
         }
 
-        try {
-            $user = $userProvider->loadUserByUsername($credentials['username']);
+        if ($this->geoserverGuestUsername && $credentials['username'] == $this->geoserverGuestUsername) {
+            throw new BadCredentialsException(self::WRONG_CREDENTIALS);
+        }
 
-            return $user;
+        try {
+            return $userProvider->loadUserByUsername($credentials['username']);
         } catch (UsernameNotFoundException $e) {
             throw new BadCredentialsException(self::WRONG_CREDENTIALS);
         }
@@ -96,9 +110,6 @@ class GeoServerDigest1Authenticator extends AbstractGuardAuthenticator
             return true;
         }
 
-        /*        $user->setAttempts($user->getAttempts() + 1);
-                $this->em->persist($user);
-                $this->em->flush();*/
         throw new BadCredentialsException(self::WRONG_CREDENTIALS);
     }
 
