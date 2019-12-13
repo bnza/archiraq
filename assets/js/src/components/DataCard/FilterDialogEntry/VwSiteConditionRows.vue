@@ -1,5 +1,17 @@
 <template>
-    <div data-test="vw-site-table--condition-rows" class="predicate-rows">
+    <div
+        data-test="vw-site-table--condition-rows"
+        class="predicate-rows"
+    >
+        <string-predicate-row
+            v-if="rowPredicateIsVisible('entryId')"
+            class="predicate-row"
+            data-test="entryId"
+            :predicate-p="conditions.entryId"
+            predicate-key="entryId"
+            predicate-attribute-label="Entry ID"
+            @change="setCondition"
+        />
         <string-predicate-row
             v-if="rowPredicateIsVisible('modernName')"
             class="predicate-row"
@@ -95,6 +107,7 @@ import QueryMx from '@/mixins/QueryMx';
 import {QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS} from '@/utils/cids';
 
 const predicateRowsVisibility = {
+    entryId: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
     chronology: [QUERY_TYPENAME_VW_SITES_SURVEY],
     district: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
     modernName: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
@@ -117,6 +130,11 @@ const defaultConditions = () => {
             negate: false,
             expressions: ['district', []],
             operator: 'MultipleEqualToFilter'
+        },
+        entryId: {
+            negate: false,
+            expressions: ['entry_id'],
+            operator: ''
         },
         modernName: {
             negate: false,
@@ -228,9 +246,9 @@ export default {
 </script>
 
 <style scoped>
-    .predicate-rows {
+/*    .predicate-rows {
         overflow-y: scroll;
-    }
+    }*/
     >>> .predicate-row {
         margin: -0.75rem auto !important;
     }

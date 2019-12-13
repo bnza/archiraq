@@ -2,6 +2,7 @@
     <v-dialog
         v-model="isDialogActive"
         fullscreen
+        scrollable
     >
         <v-toolbar>
             <v-toolbar-title flat>
@@ -71,7 +72,7 @@ export default {
 </script>
 
 <style scoped>
-    >>> .v-dialog {
+/*    >>> .v-dialog {
         overflow-y: inherit;
-    }
+    }*/
 </style>
