@@ -188,6 +188,74 @@
             row
             wrap
         >
+            <v-flex
+                xs4
+                wrap
+            >
+                <v-checkbox
+                    readonly
+                    label="Remote sensing"
+                    :input-value="item.remote_sensing"
+                />
+            </v-flex>
+            <v-flex
+                xs4
+                wrap
+            >
+                <v-checkbox
+                    readonly
+                    label="Verified on field"
+                    :input-value="item.survey_verified_on_field"
+                />
+            </v-flex>
+            <v-flex
+                xs4
+                wrap
+            >
+                <v-text-field
+                    readonly
+                    label="Survey type"
+                    :value="item.survey_type"
+                />
+            </v-flex>
+        </v-layout>
+        <v-layout
+            row
+            wrap
+        >
+            <v-flex xs12>
+                <h4>Excavations</h4>
+            </v-flex>
+        </v-layout>
+        <v-layout
+            row
+            wrap
+        >
+            <v-flex
+                xs6
+                wrap
+            >
+                <v-text-field
+                    readonly
+                    label="Campaigns"
+                    :value="item.excavations_whom_when"
+                />
+            </v-flex>
+            <v-flex
+                xs6
+                wrap
+            >
+                <v-text-field
+                    readonly
+                    label="Bibliography"
+                    :value="item.excavations_bibliography"
+                />
+            </v-flex>
+        </v-layout>
+        <v-layout
+            row
+            wrap
+        >
             <v-flex xs12>
                 <h4>Features</h4>
             </v-flex>
