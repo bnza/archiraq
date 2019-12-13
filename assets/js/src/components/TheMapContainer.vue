@@ -94,17 +94,17 @@
             </vl-layer-tile>
             <map-layer-group-admin-bounds />
             <map-layer-vector-wfs-vw-sites
-                ref="layerVwSite"
-                :cid-p="CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY"
-                :base-typename="WFS_TYPENAME_VW_SITES_SURVEY"
-                feature-color="#EF6C00"
-                :zoom="zoom"
-            />
-            <map-layer-vector-wfs-vw-sites
                 ref="layerVwSiteRs"
                 :cid-p="CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS"
                 :base-typename="WFS_TYPENAME_VW_SITES_RS"
                 feature-color="#8E24AA"
+                :zoom="zoom"
+            />
+            <map-layer-vector-wfs-vw-sites
+                ref="layerVwSite"
+                :cid-p="CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY"
+                :base-typename="WFS_TYPENAME_VW_SITES_SURVEY"
+                feature-color="#EF6C00"
                 :zoom="zoom"
             />
             <component
