@@ -5,13 +5,13 @@
     >
         <template v-slot:items="props">
             <td>{{ props.item.survey.code }}</td>
-            <td class="text-xs-right">
+            <td>
                 {{ props.item.ref }}
             </td>
-            <td class="text-xs-right">
+            <td>
                 {{ props.item.year_low }}
             </td>
-            <td class="text-xs-right">
+            <td>
                 {{ props.item.year_high }}
             </td>
             <td>

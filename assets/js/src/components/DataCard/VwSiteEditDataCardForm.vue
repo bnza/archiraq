@@ -58,7 +58,7 @@
             wrap
         >
             <v-flex xs12>
-                <h4>Identify</h4>
+                <h4>Identifier</h4>
             </v-flex>
         </v-layout>
         <v-layout

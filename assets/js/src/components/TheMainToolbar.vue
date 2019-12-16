@@ -10,7 +10,7 @@
             @click.stop="toggleMainNavigationDrawerVisibility"
         />
         <router-link id="toolbarHomeLink" to="/">
-            <v-toolbar-title>Archiraq</v-toolbar-title>
+            <v-toolbar-title>FloodPlains</v-toolbar-title>
         </router-link>
         <v-spacer />
         <v-toolbar-items class="hidden-xs-only">

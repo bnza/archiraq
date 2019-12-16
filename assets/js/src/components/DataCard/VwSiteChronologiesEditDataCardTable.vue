@@ -45,13 +45,13 @@
                     </v-tooltip>
                 </td>
                 <td>{{ props.item.chronology.code }}</td>
-                <td class="text-xs-right">
+                <td>
                     {{ props.item.chronology.name }}
                 </td>
-                <td class="text-xs-right">
+                <td>
                     {{ yearToCanonicalString(props.item.chronology.date_low) }}
                 </td>
-                <td class="text-xs-right">
+                <td>
                     {{ yearToCanonicalString(props.item.chronology.date_high) }}
                 </td>
             </template>
