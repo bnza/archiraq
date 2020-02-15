@@ -139,7 +139,18 @@
             data-test="td--remarks"
             class="text-xs-right"
         >
-            {{ item.remarks }}
+            <v-tooltip
+                v-if="typeof(item.remarks) === 'string' && item.remarks.length > 50"
+                left
+            >
+                <template v-slot:activator="{ on }">
+                    <span v-on="on">{{ `${item.remarks.substring(0, 50)}...` }}</span>
+                </template>
+                <span>{{ item.remarks }}</span>
+            </v-tooltip>
+            <span v-else>
+                {{ item.remarks }}
+            </span>
         </td>
     </tr>
 </template>
