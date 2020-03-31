@@ -674,7 +674,7 @@ class SiteEntity implements EntityInterface
     /**
      * @param string $excavations_whom_when
      */
-    public function setExcavationsWhomWhen(string $excavations_whom_when): void
+    public function setExcavationsWhomWhen(?string $excavations_whom_when): void
     {
         $this->excavations_whom_when = $excavations_whom_when;
     }
@@ -690,7 +690,7 @@ class SiteEntity implements EntityInterface
     /**
      * @param string $excavations_bibliography
      */
-    public function setExcavationsBibliography(string $excavations_bibliography): void
+    public function setExcavationsBibliography(?string $excavations_bibliography): void
     {
         $this->excavations_bibliography = $excavations_bibliography;
     }

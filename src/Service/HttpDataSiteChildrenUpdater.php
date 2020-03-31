@@ -73,13 +73,18 @@ class HttpDataSiteChildrenUpdater extends AbstractHttpDataUpdater
 
     public function removeDeletedChildren(SiteEntity $site, $data)
     {
-        $ids = $this->getDataChildrenIds($data);
-        $criteria = Criteria::create()
-            ->where(
-                Criteria::expr()->notIn('id',$ids)
-            );
+
+
         $method = $this->getChildrenMethod();
-        $deleted = $this->findSite($site->getId())->$method()->matching($criteria);
+        $deleted = $this->findSite($site->getId())->$method();
+        $ids = $this->getDataChildrenIds($data);
+        if ($ids) {
+            $criteria = Criteria::create()
+                ->where(
+                    Criteria::expr()->notIn('id',$ids)
+                );
+            $deleted = $deleted->matching($criteria);
+        }
         foreach ($deleted as $child) {
             $this->em->remove($child);
         }
