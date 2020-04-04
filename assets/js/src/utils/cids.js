@@ -39,6 +39,12 @@ export const WFS_TYPENAME_SURVEY_AREA_09_SAMARRA = 'survey_area_09_samarra';
 export const WFS_TYPENAME_SURVEY_AREA_10_HAMMAR = 'survey_area_10_hammar';
 export const WFS_TYPENAME_SURVEY_AREA_11_MANDALI = 'survey_area_11_mandali';
 export const WFS_TYPENAME_SURVEY_AREA_12_FARSUP = 'survey_area_12_farsup';
+export const WFS_TYPENAME_SURVEY_AREA_13_SWIRAN = 'survey_area_13_sw_iran';
+export const WFS_TYPENAME_SURVEY_AREA_14_HORMUZ = 'survey_area_14_hormuz';
+export const WFS_TYPENAME_SURVEY_AREA_15_MYINAB = 'survey_area_15_myinab';
+export const WFS_TYPENAME_SURVEY_AREA_16_ARAHTUM = 'survey_area_16_arahtum';
+export const WFS_TYPENAME_SURVEY_AREA_17_KUFA = 'survey_area_17_kufa';
+export const WFS_TYPENAME_SURVEY_AREA_18_KISH = 'survey_area_18_kish';
 
 
 export const WMTS_TYPENAME_CORONA_FORE = 'corona_fore';
@@ -190,6 +196,30 @@ export const WFS_TYPENAME_SURVEY_AREAS = [
     {
         typename: WFS_TYPENAME_SURVEY_AREA_12_FARSUP,
         title: 'FARSUP survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_13_SWIRAN,
+        title: 'South West Iran survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_14_HORMUZ,
+        title: 'Ras Hormuz survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_15_MYINAB,
+        title: 'Myinab plain survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_16_ARAHTUM,
+        title: 'Mi-Enlil-Arahtum survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_17_KUFA,
+        title: 'Kufa survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_18_KISH,
+        title: 'Kish survey'
     },
 ];
 
