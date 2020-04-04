@@ -64,6 +64,15 @@
                 geom-field="the_geom"
             />
             <vl-layer-tile
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_GEOMORPHOLOGICAL)"
+            >
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_GEOMORPHOLOGICAL"
+                    :typename="WMTS_TYPENAME_GEOMORPHOLOGICAL"
+                    style-name="raster"
+                />
+            </vl-layer-tile>
+            <vl-layer-tile
                 :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_US_ARMY_TOPO_1)"
             >
                 <map-layer-wmts
@@ -139,8 +148,11 @@ import {
     WMTS_TYPENAME_CORONA_AFT,
     WMTS_TYPENAME_US_ARMY_TOPO_1,
     WMTS_TYPENAME_US_ARMY_TOPO_2,
+    WMTS_TYPENAME_GEOMORPHOLOGICAL,
     WMTS_TYPENAME_SURVEY_TOPOS,
-    WFS_TYPENAME_SURVEY_AREAS
+    WFS_TYPENAME_SURVEY_AREAS,
+    CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS,
+    CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
 } from '../utils/cids';
 import {callObjectMethod} from '../utils/utils';
 
@@ -181,8 +193,11 @@ export default {
         WMTS_TYPENAME_CORONA_AFT: () => WMTS_TYPENAME_CORONA_AFT,
         WMTS_TYPENAME_US_ARMY_TOPO_1: () => WMTS_TYPENAME_US_ARMY_TOPO_1,
         WMTS_TYPENAME_US_ARMY_TOPO_2: () => WMTS_TYPENAME_US_ARMY_TOPO_2,
+        WMTS_TYPENAME_GEOMORPHOLOGICAL: () => WMTS_TYPENAME_GEOMORPHOLOGICAL,
         WFS_TYPENAME_SURVEY_AREAS: () => WFS_TYPENAME_SURVEY_AREAS,
         WMTS_TYPENAME_SURVEY_TOPOS: () => WMTS_TYPENAME_SURVEY_TOPOS,
+        CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS,
+        CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
         bingApiKey() {
             return this.$store.state.bingApiKey;
         }
@@ -198,7 +213,7 @@ export default {
             handler: function () {
                 if (this.$refs.map.$map) {
                     const map = this.$refs.map;
-                    map.render().then((e) => {
+                    map.render().then(() => {
                         map.$map.updateSize();
                     });
                 }

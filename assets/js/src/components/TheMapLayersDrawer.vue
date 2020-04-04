@@ -133,6 +133,17 @@
                     title="Topographic and satellite basemaps"
                 >
                     <map-legend-layer-list-tile
+                        title="Geomorphological"
+                        :layer-cid="WMTS_TYPENAME_GEOMORPHOLOGICAL"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_GEOMORPHOLOGICAL)"
+                            :hide-details="true"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_GEOMORPHOLOGICAL)"
+                        />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
                         title="US Army map (1942) 1"
                         :layer-cid="WMTS_TYPENAME_US_ARMY_TOPO_1"
                     >
@@ -236,6 +247,7 @@ import {
     WMTS_TYPENAME_CORONA_FORE,
     WMTS_TYPENAME_US_ARMY_TOPO_1,
     WMTS_TYPENAME_US_ARMY_TOPO_2,
+    WMTS_TYPENAME_GEOMORPHOLOGICAL,
     WMTS_TYPENAME_SURVEY_TOPOS,
     WFS_TYPENAME_SURVEY_AREAS,
     WMTS_TYPENAME_CORONA
@@ -271,6 +283,7 @@ export default {
         WMTS_TYPENAME_CORONA_FORE: () => WMTS_TYPENAME_CORONA_FORE,
         WMTS_TYPENAME_US_ARMY_TOPO_1: () => WMTS_TYPENAME_US_ARMY_TOPO_1,
         WMTS_TYPENAME_US_ARMY_TOPO_2: () => WMTS_TYPENAME_US_ARMY_TOPO_2,
+        WMTS_TYPENAME_GEOMORPHOLOGICAL: () => WMTS_TYPENAME_GEOMORPHOLOGICAL,
         WFS_TYPENAME_SURVEY_AREAS: () => WFS_TYPENAME_SURVEY_AREAS,
         WMTS_TYPENAME_SURVEY_TOPOS: () => WMTS_TYPENAME_SURVEY_TOPOS
 
