@@ -124,7 +124,7 @@ class SiteSurveyEntity implements EntityInterface
     /**
      * @param string $ref
      */
-    public function setRef(string $ref): void
+    public function setRef(?string $ref): void
     {
         $this->ref = $ref;
     }
