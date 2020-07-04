@@ -5,6 +5,10 @@
         </div>
         <div v-else>
             <popup-text-field
+                    label="Entry ID"
+                    :value="properties.entry_id"
+            />
+            <popup-text-field
                 label="District"
                 :value="properties.district"
             />
