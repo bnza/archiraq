@@ -149,12 +149,12 @@ const surveyRefsMatchFilter = /*@__PURE__*/(expressions, negate) => {
         return null;
     }
     if (expressions[1]) {
-        pattern = `${expressions[1]}.`.toUpperCase();
+        pattern = `${expressions[1]}`.toUpperCase();
     } else {
-        pattern += '%.';
+        pattern += '%';
     }
     if (expressions[2]) {
-        pattern += `${expressions[2]}%`;
+        pattern += `.${expressions[2]}%`;
     } else {
         pattern += '%';
     }
