@@ -30,7 +30,7 @@ describe('getWfsFilter', () => {
         it('with survey code', () => {
             const attribute = 'propertyName';
             const expression = ['propertyValue'];
-            const filter = like(attribute, 'PROPERTYVALUE.%','%', null, null, false);
+            const filter = like(attribute, 'PROPERTYVALUE%','%', null, null, false);
             expect(getWfsFilter('surveyRefsMatchFilter', [attribute, expression])).toEqual(filter);
         });
         it('with survey ref', () => {
