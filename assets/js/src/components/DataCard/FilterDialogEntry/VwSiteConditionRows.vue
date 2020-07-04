@@ -84,15 +84,6 @@
             predicate-attribute-label="Threats"
             @change="setCondition"
         />
-        <string-predicate-row
-            v-if="rowPredicateIsVisible('remarks')"
-            class="predicate-row"
-            data-test="remarks"
-            :predicate-p="conditions.remarks"
-            predicate-key="remarks"
-            predicate-attribute-label="Remarks"
-            @change="setCondition"
-        />
     </div>
 </template>
 
@@ -116,7 +107,6 @@ const predicateRowsVisibility = {
     survey: [QUERY_TYPENAME_VW_SITES_SURVEY],
     threats: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
     features: [QUERY_TYPENAME_VW_SITES_SURVEY],
-    remarks: [QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS],
 };
 
 const defaultConditions = () => {
