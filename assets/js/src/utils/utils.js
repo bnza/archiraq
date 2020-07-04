@@ -185,7 +185,7 @@ export const getJobProgressPercentage = (job, precision = 2) => {
  */
 export const yearToCanonicalString = (year) => {
     year = Math.round(year);
-    return year < 0 ? `${Math.abs(year)} B.C.` : `${year} A.D.`;
+    return year < 0 ? `${Math.abs(year)} BCE` : `${year} CE`;
 };
 
 export const featureFromGeometryString = (geometryString) => {
