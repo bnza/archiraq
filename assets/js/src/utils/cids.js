@@ -70,6 +70,7 @@ export const WMTS_TYPENAME_SURVEY_TOPO_14_HORMUZ = 'cv_survey_topo_14_hormuz';
 export const WMTS_TYPENAME_US_ARMY_TOPO_1 = 'cv_us_army_topo_1';
 export const WMTS_TYPENAME_US_ARMY_TOPO_2 = 'cv_us_army_topo_2';
 export const WMTS_TYPENAME_GEOMORPHOLOGICAL = 'cv_geomorphological';
+export const WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES = 'gm_shore';
 
 export const TITLE_TYPENAME_VW_SITES = 'Sites';
 export const TITLE_TYPENAME_VW_SITES_SURVEY = 'Sites (survey)';

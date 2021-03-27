@@ -73,6 +73,15 @@
                 />
             </vl-layer-tile>
             <vl-layer-tile
+                :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES)"
+            >
+              <map-layer-wmts
+                  :cid-p="WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES"
+                  :typename="WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES"
+                  style-name="raster"
+              />
+            </vl-layer-tile>
+            <vl-layer-tile
                 :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_US_ARMY_TOPO_1)"
             >
                 <map-layer-wmts
@@ -149,6 +158,7 @@ import {
     WMTS_TYPENAME_US_ARMY_TOPO_1,
     WMTS_TYPENAME_US_ARMY_TOPO_2,
     WMTS_TYPENAME_GEOMORPHOLOGICAL,
+    WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES,
     WMTS_TYPENAME_SURVEY_TOPOS,
     WFS_TYPENAME_SURVEY_AREAS,
     CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS,
@@ -194,6 +204,7 @@ export default {
         WMTS_TYPENAME_US_ARMY_TOPO_1: () => WMTS_TYPENAME_US_ARMY_TOPO_1,
         WMTS_TYPENAME_US_ARMY_TOPO_2: () => WMTS_TYPENAME_US_ARMY_TOPO_2,
         WMTS_TYPENAME_GEOMORPHOLOGICAL: () => WMTS_TYPENAME_GEOMORPHOLOGICAL,
+        WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES: () => WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES,
         WFS_TYPENAME_SURVEY_AREAS: () => WFS_TYPENAME_SURVEY_AREAS,
         WMTS_TYPENAME_SURVEY_TOPOS: () => WMTS_TYPENAME_SURVEY_TOPOS,
         CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS,

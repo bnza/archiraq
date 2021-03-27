@@ -133,6 +133,17 @@
                     title="Topographic and satellite basemaps"
                 >
                     <map-legend-layer-list-tile
+                        title="Geomorphological (boundaries)"
+                        :layer-cid="WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES"
+                    >
+                      <v-checkbox
+                          slot="visibility"
+                          :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES)"
+                          :hide-details="true"
+                          @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES)"
+                      />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
                         title="Geomorphological"
                         :layer-cid="WMTS_TYPENAME_GEOMORPHOLOGICAL"
                     >
@@ -248,6 +259,7 @@ import {
     WMTS_TYPENAME_US_ARMY_TOPO_1,
     WMTS_TYPENAME_US_ARMY_TOPO_2,
     WMTS_TYPENAME_GEOMORPHOLOGICAL,
+    WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES,
     WMTS_TYPENAME_SURVEY_TOPOS,
     WFS_TYPENAME_SURVEY_AREAS,
     WMTS_TYPENAME_CORONA
@@ -284,6 +296,7 @@ export default {
         WMTS_TYPENAME_US_ARMY_TOPO_1: () => WMTS_TYPENAME_US_ARMY_TOPO_1,
         WMTS_TYPENAME_US_ARMY_TOPO_2: () => WMTS_TYPENAME_US_ARMY_TOPO_2,
         WMTS_TYPENAME_GEOMORPHOLOGICAL: () => WMTS_TYPENAME_GEOMORPHOLOGICAL,
+        WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES: () => WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES,
         WFS_TYPENAME_SURVEY_AREAS: () => WFS_TYPENAME_SURVEY_AREAS,
         WMTS_TYPENAME_SURVEY_TOPOS: () => WMTS_TYPENAME_SURVEY_TOPOS
 
