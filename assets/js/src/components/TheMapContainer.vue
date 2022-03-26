@@ -75,11 +75,11 @@
             <vl-layer-tile
                 :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES)"
             >
-              <map-layer-wmts
-                  :cid-p="WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES"
-                  :typename="WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES"
-                  style-name="raster"
-              />
+                <map-layer-wmts
+                    :cid-p="WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES"
+                    :typename="WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES"
+                    style-name="raster"
+                />
             </vl-layer-tile>
             <vl-layer-tile
                 :visible="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_US_ARMY_TOPO_1)"

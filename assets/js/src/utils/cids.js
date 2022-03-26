@@ -4,6 +4,7 @@ export const CID_MAP_LAYER_SETTINGS_DIALOG = 'MapLayerSettingsDialog';
 export const CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0 = 'MapLayerVectorWfsAdminBounds0';
 export const CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1 = 'MapLayerVectorWfsAdminBounds1';
 export const CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2 = 'MapLayerVectorWfsAdminBounds2';
+export const CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_3 = 'MapLayerVectorWfsAdminBounds3';
 export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES = 'MapLayerVectorWfsVwSite';
 export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS = 'MapLayerVectorWfsVwSiteRs';
 export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY = 'MapLayerVectorWfsVwSiteSurvey';

@@ -91,6 +91,18 @@
                             :value="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2"
                         />
                     </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="Sub-Districts"
+                        :layer-cid="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_3"
+                    >
+                        <v-checkbox
+                            slot="visibility"
+                            v-model="mapContainerAdminBounds"
+                            :hide-details="true"
+                            data-test="the-map-layers-drawer--checkbox-admin-bounds-3-visibility"
+                            :value="CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_3"
+                        />
+                    </map-legend-layer-list-tile>
                 </map-legend-list-group>
                 <map-legend-list-group
                     icon="map"
@@ -136,12 +148,12 @@
                         title="Geomorphological (boundaries)"
                         :layer-cid="WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES"
                     >
-                      <v-checkbox
-                          slot="visibility"
-                          :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES)"
-                          :hide-details="true"
-                          @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES)"
-                      />
+                        <v-checkbox
+                            slot="visibility"
+                            :value="mapContainerWmtsMapIsVisible(WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES)"
+                            :hide-details="true"
+                            @change="mapContainerWmtsMapToggleVisible(WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES)"
+                        />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
                         title="Geomorphological"
@@ -251,6 +263,7 @@ import {
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
     CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
+    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_3,
     CID_THE_MAP_LAYERS_DRAWER as CID,
     WFS_TYPENAME_VW_SITES_RS,
     WFS_TYPENAME_VW_SITES_SURVEY,
@@ -288,6 +301,7 @@ export default {
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
+        CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_3: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_3,
         WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
         WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY,
         WMTS_TYPENAME_CORONA: () => WMTS_TYPENAME_CORONA,
