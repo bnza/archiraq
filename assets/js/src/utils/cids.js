@@ -212,10 +212,6 @@ export const WFS_TYPENAME_SURVEY_AREAS = [
         title: 'Myinab plain survey'
     },
     {
-        typename: WFS_TYPENAME_SURVEY_AREA_16_ARAHTUM,
-        title: 'Mi-Enlil-Arahtum survey'
-    },
-    {
         typename: WFS_TYPENAME_SURVEY_AREA_17_KUFA,
         title: 'Kufa survey'
     },
