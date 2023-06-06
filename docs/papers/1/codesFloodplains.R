@@ -1,14 +1,14 @@
 ###################################################################################################################
 ###################################################################################################################
 #################          Log file and full codes for analyses contained in the paper              ###############
-#################                                 Marchetti et al.                                  ###############
+#################                                  Marchetti et al.                                 ###############
 #################                        'Long-term Urban and Population Trends                     ###############
 #################                       in the southern Mesopotamian Floodplains'                   ###############
 #################                                                                                   ############### 
 #################                                                                                   ###############
-#################                                 submitted to PNAS                                 ###############
 #################                                                                                   ###############
-#################                                  Januaryly 2022                                   ###############
+#################                                                                                   ###############
+#################                                  January  2023                                    ###############
 #################                                                                                   ###############
 #################                                     author:                                       ###############
 #################                                                                                   ###############
@@ -18,30 +18,33 @@
 #################                                      v.1.0                                        ###############
 #################                                                                                   ###############
 #################                                                                                   ###############
-#################                            eugenio.bortolini@imf.csic.es                          ###############
+#################                            eugenio.bortolini@unibo.it                             ###############
 #################                                                                                   ###############
 #################                                                                                   ###############
 ###################################################################################################################
 ###################################################################################################################
 
 
-# The present repository contains data and code to fully replicate the analyses contained in the paper Marchetti et al.Long-term Urban and
-# Population Trends in the southern Mesopotamian Floodplains, submitted to PNAS on January 2022. 
+# The present repository contains data and code to fully replicate the analyses contained in the paper Marchetti et al. Long-term Urban and Population Trends in the southern Mesopotamian Floodplains, submitted to the Journal of Archaeological Research.
 
-#In particular, the following codes allow readers to calculate all the probabilistic, aoristic-based proxies for demographic trends in 
-# Southern Mesopotamia presented in the results of the above mentioned paper. This work is largely based on a previous work by Lawrence D, 
-# Palmisano A, de Gruchy MW(2021) Collapse and continuity: A multi-proxy reconstruction of settlement organization and population 
-# trajectories in the Northern Fertile Crescent during the 4.2kya Rapid Climate Change event. PLoS ONE 16(1): e0244871. 
+#In particular, the following codes allow readers to calculate:
+
+# 1) all the probabilistic, aoristic-based proxies for demographic trends in Southern Mesopotamia presented in the results of the above mentioned paper. This work is largely based on a previous work by Lawrence D, Palmisano A, de Gruchy MW(2021) Collapse and continuity: A multi-proxy reconstruction of settlement organization and population trajectories in the Northern Fertile Crescent during the 4.2kya Rapid Climate Change event. PLoS ONE 16(1): e0244871.
 # https://doi.org/10.1371/journal.pone.0244871.
 
-# This choice was made to further facilitate replication and merging/exchange of data, methods, and results generated for both Northen and
-# Southern Mesopotamian contexts. Present work and results are therefore particularly indebted to Alessio Palmisano for his previous work 
-# and his valuable suggestions.
+
+# 2) correlations between selected palaeoclimatic proxies and the probabilistic, aoristic-based proxies for demographic trends in Southern Mesopotamia. This section of the work is based on previous work by Alessio Palmisano and colleagues (2021) Holocene regional population dynamics and climatic trends in the Near East: A ﬁrst comparison using archaeo-demographic proxies, Quaternary Science Reviews 252:106739.
+# Full text of the original paper by Palmisano et al. can be accessed at https://doi.org/10.1016/j.quascirev.2020.106739
+# All original codes, details on data and relevant metadata can be accessed on Zenodo at http://doi.org/10.5281/zenodo.4322979
+
+
+
+# This choice was made to further facilitate replication and merging/exchange of data, methods, and results generated for both Northen and Southern Mesopotamian contexts. Present work and results are therefore particularly indebted to Alessio Palmisano for his previous work and his invaluable suggestions.
 
 
 
 
-################## run on R version 4.1.0 (2021-05-18) ####################
+################## run on R version 4.2.2 (2022-11-01) ####################
 
 
 ## required libraries
@@ -52,9 +55,13 @@ library(tidyr) #v.1.1.3
 library(vegan) #v.2.5-7
 library(scico) #v.1.2.0
 library(ecodist) #v.2.0.7
+library(gtools) #v.3.9.4
+
 
 ## read input file "data_stacked.csv", which can be obtained in the same repository
-sites<-read.csv(file="data_stacked.csv", sep=",", header=TRUE)
+sites<-read.csv(file="data_stacked.csv", sep=",", header=TRUE) # original data generated in this work
+palaeoclimate<-read.csv(file="palaeoclimate.csv", header=TRUE, sep=",") #palaeoclimatic proxies taken by Palmisano et al. 2021
+
 
 ## transform all BCAD dates into BP
 StartBP<-(sites$StartDate)-1950
@@ -294,8 +301,130 @@ sites_no0_lowcount_norm <- ((lowcount_norm-min(lowcount_norm))/(max(lowcount_nor
 
 
 
+############## CORRELATION BETWEEN DEMOGRAPHY AND CLIMATE ##############
+########################################################################
+
+### Kuna Ba cave
+
+#generate a dataframe with values representing the chronological scope
+calBC<-data.frame(BC=-4500:0)
+calBC$Kuna<- NA #add new column
+
+#extract  Kuna Ba cave's data from the original data frame
+Kuna<-palaeoclimate[,c(41,43)]
+Kuna[,1]<-Kuna[,1]-1950
+Kuna[,1]<-Kuna[,1]*-1
+names(Kuna)<-c("BC", "Kuna")#rename columns
+
+#Perform a left outer join: Return all rows from the left table, and any rows with matching keys from the right table
+Kuna_merged<-merge(calBC,Kuna,by="BC", all.x=TRUE)
+Kuna<-Kuna_merged[,c(1,3)]#drop second column
+
+#Average the climate proxy value (z-score) within a 50 years time-slice
+Kuna_mean_100<-colMeans(matrix(Kuna$Kuna.y[1:4500],nrow=100),na.rm = TRUE)*-1
+
+# subset demographic proxies to match climatic proxies between -2038 and -253 BC, and explore their relationship to
+# calculate correlation
+plot(sites_no0_BlockSumWeights[25:43],Kuna_mean_100[25:43])
+plot(sites_no0_BlockAreaSums[25:43],Kuna_mean_100[25:43])
+
+#Correlation test between -2038 and -253 BC
+cor.test(sites_no0_BlockSumWeights[25:43],Kuna_mean_100[25:43], method="kendall")
+# tau=-0.04, p=0.8
+cor.test(sites_no0_BlockAreaSums[25:43],Kuna_mean_100[25:43], method="kendall")
+# tau=-0.04, p=0.8
+
+
+
+#Lake Zeribar
+
+#generate a dataframe with values representing the chronological scope
+calBC<-data.frame(BC=-4500:0)
+calBC$Zeribar<- NA #add new column
+
+#extract  Lake Zeribar's data from the original data frame
+Zeribar<-palaeoclimate[,c(45,47)]
+Zeribar[,1]<-Zeribar[,1]-1950
+Zeribar[,1]<-Zeribar[,1]*-1
+Zeribar[,2]<-Zeribar[,2]*-1
+names(Zeribar)<-c("BC", "Zeribar")#rename columns
+
+#Perform a left outer join: Return all rows from the left table, and any rows with matching keys from the right table
+Zeribar_merged<-merge(calBC,Zeribar,by="BC", all.x=TRUE)
+Zeribar<-Zeribar_merged[,c(1,3)]#drop second column
+
+#Average the climate proxy value (z-score) within a 500 years time-slice
+Zeribar_mean_500<-colMeans(matrix(Zeribar$Zeribar.y[1:4500],nrow=500),na.rm = TRUE)
+#-3982 -236
+
+#Sum demographic proxies within a 500 years time-slice, i.e. between -3900 and -500 BC
+mat_4Zer<-matrix(sites_no0_BlockSumWeights[6:43], nrow=5)#from 4000 BC to 200 BC
+mat_4Zer[4,8]<-NA
+mat_4Zer[5,8]<-NA
+blockWeight500_4Zer<-colSums(mat_4Zer, na.rm=T)
+
+mat2_4Zer<-matrix(sites_no0_BlockAreaSums[6:43], nrow=5)#from 4000 BC to 200 BC
+mat2_4Zer[4,8]<-NA
+mat2_4Zer[5,8]<-NA
+blockArea500_4Zer<-colSums(mat2_4Zer, na.rm=T)
+
+#Correlation test between estimated settlement counts and area, and Lake Zeribar's climate proxy between 4000BC and 200 BC
+plot(Zeribar_mean_500[2:9],blockWeight500_4Zer)
+plot(Zeribar_mean_500[2:9],blockArea500_4Zer)
+cor.test(Zeribar_mean_500[2:9],blockWeight500_4Zer, method="spearman") #rho=0.76, p=0.04 
+cor.test(Zeribar_mean_500[2:9],blockArea500_4Zer, method="spearman")# rho=0.71, p=0.06
+
+
+
+#Lake Mirabad
+
+#generate a dataframe with values representing the chronological scope
+calBC<-data.frame(BC=-4500:0)
+calBC$Mirabad<-NA #add new column #add new column
+
+#extract  Lake Mirabad's data from the original data frame
+Mirabad<-palaeoclimate[,c(49,51)]
+Mirabad[,1]<-Mirabad[,1]-1950
+Mirabad[,1]<-Mirabad[,1]*-1
+Mirabad[,2]<-Mirabad[,2]*-1
+names(Mirabad)<-c("BC", "Mirabad")#rename columns
+
+#Perform a left outer join: Return all rows from the left table, and any rows with matching keys from the right table
+Mirabad_merged<-merge(calBC,Mirabad,by="BC", all.x=TRUE)
+Mirabad<-Mirabad_merged[,c(1,3)]#drop second column
+
+#Average the climate proxy value (z-score) within a 400 years time-slice
+Mirabad_mean_500<-colMeans(matrix(Mirabad$Mirabad.y[1:4500],nrow=500),na.rm = TRUE)
+# from -4082 to -50
+# settlements from 4100 to 100 BC
+
+#Sum demographic proxies within a 500 years time-slice, i.e. between -4100 and -100 BC
+mat_4Mir<-matrix(sites_no0_BlockSumWeights[5:45], nrow=5)#from 4100 BC to 100 BC
+mat_4Mir[2,9]<-NA
+mat_4Mir[3,9]<-NA
+mat_4Mir[4,9]<-NA
+mat_4Mir[5,9]<-NA
+blockWeight500_4Mir<-colSums(mat_4Mir, na.rm=T)
+
+mat2_4Mir<-matrix(sites_no0_BlockAreaSums[5:45], nrow=5)#from 4100 BC to 100 BC
+mat2_4Mir[2,9]<-NA
+mat2_4Mir[3,9]<-NA
+mat2_4Mir[4,9]<-NA
+mat2_4Mir[5,9]<-NA
+blockArea500_4Mir<-colSums(mat2_4Mir, na.rm=T)
+
+#Correlation test between estimates for period 4100 BC-100BC with lake Mirabad
+plot(Mirabad_mean_500,blockWeight500_4Mir)
+plot(Mirabad_mean_500,blockArea500_4Mir)
+cor.test(Mirabad_mean_500,blockWeight500_4Mir, method="spearman") #rho=0.13, p=0.74 
+cor.test(Mirabad_mean_500,blockArea500_4Mir, method="spearman")# rho=-0.25, p=0.52
+
+
 ######### end of analyses #######
 #################################
+
+
+
 
 
 
@@ -356,24 +485,24 @@ rect(220,1.13,660,1.02,col=pal[17], border=NA)
 rect(650,1.13,1300,1.02,col=pal[18], border=NA)
 #rect(1500,1.13,1700,1.02,col=pal[19], border=NA)
 
-text(x=-4300, y=1.07, labels="Ubaid", font = 2, cex = 0.5, col=pal[19])
-text(x=-3800, y=1.07, labels="E-M Uruk", font = 2, cex = 0.5, col=pal[18])
-text(x=-3300, y=1.07, labels="L Uruk", font = 2, cex = 0.5, col=pal[17])
-text(x=-3010, y=1.07, labels="JN", font = 2, cex = 0.5, col=pal[16])
-text(x=-2800, y=1.07, labels="EDI-II", font = 2, cex = 0.35, col=pal[16])
-text(x=-2530, y=1.07, labels="EDIII", font = 2, cex = 0.5, col=pal[16])
-text(x=-2250, y=1.07, labels="Akk", font = 2, cex = 0.5, col=pal[16])
-text(x=-2040, y=1.07, labels="UrIII", font = 2, cex = 0.35, col=pal[16])
-text(x=-1900, y=1.07, labels="IL", font = 2, cex = 0.5, col=pal[15])
-text(x=-1700, y=1.07, labels="OB", font = 2, cex = 0.5, col=pal[15])
-text(x=-1500, y=1.07, labels="Kas", font = 2, cex = 0.5, col=pal[7])
-text(x=-1250, y=1.07, labels="MB", font = 2, cex = 0.5, col=pal[7])
-text(x=-850, y=1.07, labels="NB", font = 2, cex = 0.5, col=pal[7])
-text(x=-450, y=1.07, labels="Ach", font = 2, cex = 0.5, col=pal[6])
-text(x=-230, y=1.07, labels="Hel", font = 2, cex = 0.5, col=pal[5])
-text(x=50, y=1.07, labels="Parthian", font = 2, cex = 0.5, col=pal[4])
-text(x=430, y=1.07, labels="Sasanian", font = 2, cex = 0.5, col=pal[3])
-text(x=1000, y=1.07, labels="Islamic", font = 2, cex = 0.5, col=pal[2])
+text(x=-4300, y=1.07, labels="Ubaid", font = 2, cex = 0.7, col=pal[19])
+text(x=-3800, y=1.07, labels="E-M Uruk", font = 2, cex = 0.7, col=pal[18])
+text(x=-3300, y=1.07, labels="L Uruk", font = 2, cex = 0.7, col=pal[17])
+text(x=-3010, y=1.07, labels="JN", font = 2, cex = 0.7, col=pal[16])
+text(x=-2800, y=1.07, labels="EDI-II", font = 2, cex = 0.5, col=pal[16])
+text(x=-2530, y=1.07, labels="EDIII", font = 2, cex = 0.7, col=pal[16])
+text(x=-2250, y=1.07, labels="Akk", font = 2, cex = 0.7, col=pal[16])
+text(x=-2050, y=1.07, labels="UrIII", font = 2, cex = 0.4, col=pal[16])
+text(x=-1900, y=1.07, labels="IL", font = 2, cex = 0.7, col=pal[16])
+text(x=-1700, y=1.07, labels="OB", font = 2, cex = 0.7, col=pal[16])
+text(x=-1500, y=1.07, labels="Kas", font = 2, cex = 0.7, col=pal[16])
+text(x=-1250, y=1.07, labels="MB", font = 2, cex = 0.7, col=pal[16])
+text(x=-850, y=1.07, labels="NB", font = 2, cex = 0.7, col=pal[16])
+text(x=-450, y=1.07, labels="Ach", font = 2, cex = 0.7, col=pal[6])
+text(x=-230, y=1.07, labels="Hel", font = 2, cex = 0.7, col=pal[5])
+text(x=50, y=1.07, labels="Parthian", font = 2, cex = 0.7, col=pal[4])
+text(x=430, y=1.07, labels="Sasanian", font = 2, cex = 0.7, col=pal[3])
+text(x=1000, y=1.07, labels="Islamic", font = 2, cex = 0.7, col=pal[2])
 #text(x=1580, y=1.07, labels="Ott", font = 2, cex = 0.5, col=pal[1])
 
 ####
@@ -526,24 +655,24 @@ rect(220,1.13,660,1.02,col=pal[17], border=NA)
 rect(650,1.13,1300,1.02,col=pal[18], border=NA)
 #rect(1500,1.13,1700,1.02,col=pal[19], border=NA)
 
-text(x=-4300, y=1.07, labels="Ubaid", font = 2, cex = 0.5, col=pal[19])
-text(x=-3800, y=1.07, labels="E-M Uruk", font = 2, cex = 0.5, col=pal[18])
-text(x=-3300, y=1.07, labels="L Uruk", font = 2, cex = 0.5, col=pal[17])
-text(x=-3010, y=1.07, labels="JN", font = 2, cex = 0.5, col=pal[16])
-text(x=-2800, y=1.07, labels="EDI-II", font = 2, cex = 0.35, col=pal[16])
-text(x=-2530, y=1.07, labels="EDIII", font = 2, cex = 0.5, col=pal[16])
-text(x=-2250, y=1.07, labels="Akk", font = 2, cex = 0.5, col=pal[16])
-text(x=-2040, y=1.07, labels="UrIII", font = 2, cex = 0.35, col=pal[16])
-text(x=-1900, y=1.07, labels="IL", font = 2, cex = 0.5, col=pal[15])
-text(x=-1700, y=1.07, labels="OB", font = 2, cex = 0.5, col=pal[15])
-text(x=-1500, y=1.07, labels="Kas", font = 2, cex = 0.5, col=pal[7])
-text(x=-1250, y=1.07, labels="MB", font = 2, cex = 0.5, col=pal[7])
-text(x=-850, y=1.07, labels="NB", font = 2, cex = 0.5, col=pal[7])
-text(x=-450, y=1.07, labels="Ach", font = 2, cex = 0.5, col=pal[6])
-text(x=-230, y=1.07, labels="Hel", font = 2, cex = 0.5, col=pal[5])
-text(x=50, y=1.07, labels="Parthian", font = 2, cex = 0.5, col=pal[4])
-text(x=430, y=1.07, labels="Sasanian", font = 2, cex = 0.5, col=pal[3])
-text(x=1000, y=1.07, labels="Islamic", font = 2, cex = 0.5, col=pal[2])
+text(x=-4300, y=1.07, labels="Ubaid", font = 2, cex = 0.7, col=pal[19])
+text(x=-3800, y=1.07, labels="E-M Uruk", font = 2, cex = 0.7, col=pal[18])
+text(x=-3300, y=1.07, labels="L Uruk", font = 2, cex = 0.7, col=pal[17])
+text(x=-3010, y=1.07, labels="JN", font = 2, cex = 0.7, col=pal[16])
+text(x=-2800, y=1.07, labels="EDI-II", font = 2, cex = 0.5, col=pal[16])
+text(x=-2530, y=1.07, labels="EDIII", font = 2, cex = 0.7, col=pal[16])
+text(x=-2250, y=1.07, labels="Akk", font = 2, cex = 0.7, col=pal[16])
+text(x=-2050, y=1.07, labels="UrIII", font = 2, cex = 0.4, col=pal[16])
+text(x=-1900, y=1.07, labels="IL", font = 2, cex = 0.7, col=pal[16])
+text(x=-1700, y=1.07, labels="OB", font = 2, cex = 0.7, col=pal[16])
+text(x=-1500, y=1.07, labels="Kas", font = 2, cex = 0.7, col=pal[16])
+text(x=-1250, y=1.07, labels="MB", font = 2, cex = 0.7, col=pal[16])
+text(x=-850, y=1.07, labels="NB", font = 2, cex = 0.7, col=pal[16])
+text(x=-450, y=1.07, labels="Ach", font = 2, cex = 0.7, col=pal[6])
+text(x=-230, y=1.07, labels="Hel", font = 2, cex = 0.7, col=pal[5])
+text(x=50, y=1.07, labels="Parthian", font = 2, cex = 0.7, col=pal[4])
+text(x=430, y=1.07, labels="Sasanian", font = 2, cex = 0.7, col=pal[3])
+text(x=1000, y=1.07, labels="Islamic", font = 2, cex = 0.7, col=pal[2])
 #text(x=1580, y=1.07, labels="Ott", font = 2, cex = 0.5, col=pal[1])
 
 ####
@@ -754,6 +883,175 @@ axis(side=1, at=xticks, labels=xticks, las=2, cex.axis=0.8)
 mtext("BCE/CE",1, 2.9, at=-1700, adj=0, font=2, cex=0.6, las=1)
 
 dev.off()
+
+
+
+
+
+
+
+
+
+
+###### FIG. S2 PALEOCLIMATIC PROXIES #########
+##############################################
+
+
+# create additional ad hoc palettes for the following figures
+pal<-scico(19, alpha = NULL, begin = 0, end = 1, direction = 1, palette = "bamako")
+pal2<-scico(19, alpha = NULL, begin = 0, end = 1, direction = 1, palette = "vik")
+palNorm<-scico(20, alpha = 0.8, begin = 0, end = 1, direction = 1, palette = "oleron")
+
+pdf(file="FigS2.pdf", width=12, height=9) 
+layout(matrix(c(1,2), 2, 1, byrow=TRUE), widths=8.5, heights=c(1.9,2.5))
+
+#first block
+par(mar=c(0, 6, 0.3, 0.5)) #c(bottom, left, top, right)
+xticks <- seq(-4100,-100,200)
+
+
+#panel 1 , yaxt="n"
+plot(Kuna$Kuna.y~Kuna$BC, lty="solid", col="black", cex.axis=0.9, xaxt="n",type="l", xlab="",  xlim=c(-4100,-100), ylim=c(2.5,-2.5), ylab=expression(paste(sigma^18,"O","(z-score)")), cex.lab=1.3)
+rect(-2350,-2.5,-1950,2.5,col=rgb(192,192,192,alpha=120, maxColorValue=255), border=NA)
+rect(-2300,-2.5,-2200,2.5,col="gray77", border=NA)
+rect(-3300,-2.5,-3100,2.5,col=rgb(192,192,192,alpha=120, maxColorValue=255), border=NA)
+#rect(-3250,-1,-3150,2,col="gray77", border=NA)
+rect(-1250,-2.5,-950,2.5, col=rgb(192,192,192,alpha=120, maxColorValue=255), border=NA)
+
+lines(Kuna_merged$Kuna.y[which(!is.na(Kuna_merged$Kuna.y))]~Kuna_merged$BC[which(!is.na(Kuna_merged$Kuna.y))], type="l", col=pal2[3], lwd=3)
+lines(-Mirabad_merged$Mirabad.y[which(!is.na(Mirabad_merged$Mirabad.y))]~Mirabad_merged$BC[which(!is.na(Mirabad_merged$Mirabad.y))], type="l", col=pal2[7], lwd=3)
+lines(-Zeribar_merged$Zeribar.y[which(!is.na(Zeribar_merged$Zeribar.y))]~Zeribar_merged$BC[which(!is.na(Zeribar_merged$Zeribar.y))], type="l", col=pal2[16], lwd=3)
+
+abline(v=seq(-4500,1300,200), lwd=0.8, lty="dotted", col="grey70")
+abline(h=seq(2.5,-2.5, -0.25), lwd=0.8, lty="dotted", col="grey80")
+
+legend(x=-4100, y=-2.3, legend=c("Kuna Ba Cave","Lake Mirabad","Lake Zeribar"),lty=c("solid","solid","solid"), lwd=c(4,4,4), col=c(pal2[3], pal2[7], pal2[16]), cex=1.1, bg="transparent", bty="n")
+text(x=-4200, y=-2.5, labels="a", font = 2, cex = 1.2)
+
+# panel 2
+box()
+par(mar=c(6, 6, 0.3, 0.5))
+
+plot(Kuna$Kuna.y~Kuna$BC, lty="solid", col="black", cex.axis=0.9, xaxt="n", type="l", xlab="",  xlim=c(-4100,-100), ylim=c(0,1), ylab="Normalised demographic proxies", cex.lab=1.3)
+
+rect(-2350,-2.5,-1950,2.5,col=rgb(192,192,192,alpha=120, maxColorValue=255), border=NA)
+rect(-2300,-2.5,-2200,2.5,col="gray77", border=NA)
+rect(-3300,-2.5,-3100,2.5,col=rgb(192,192,192,alpha=120, maxColorValue=255), border=NA)
+#rect(-3250,-1,-3150,2,col="gray77", border=NA)
+rect(-1250,-2.5,-950,2.5, col=rgb(192,192,192,alpha=120, maxColorValue=255), border=NA)
+
+lines(mids[5:44],sites_no0_BlockSumWeights_norm[5:44], lty="solid", col=pal[17], lwd=3.5)
+lines(mids[5:44],sites_no0_BlockAreaSums_norm[5:44], lty="solid", col=palNorm[5], lwd=3.5)
+
+abline(v=seq(-4500,1300,200), lwd=0.8, lty="dotted", col="grey70")
+abline(h=seq(0,1, 0.1), lwd=0.8, lty="dotted", col="grey80")
+
+axis(side=1, at=xticks, labels=xticks, las=2, cex.axis=0.9)
+mtext("BCE/CE",1, 4.4, at=-2300, adj=0, font=2, cex=1.2, las=1)
+
+legend(x=-4100, y=0.9, legend=c("Aoristic sum","Minimum area (Ha)"),lty=c("solid","solid"), lwd=c(4,4), col=c(pal[17], palNorm[5]), cex=1.1, bg="transparent", bty="n")
+text(x=-4200, y=1, labels="b", font = 2, cex = 1.2)
+
+
+dev.off()
+
+
+
+
+
+
+
+
+######### FIG S3 -  CORRELATION BETWEEN DEMOGRAPHY AND PALAEOCLIMATE ############
+#################################################################################
+
+# create additional ad hoc palettes for the following figures
+pal<-scico(19, alpha = NULL, begin = 0, end = 1, direction = 1, palette = "bamako")
+pal2<-scico(19, alpha = NULL, begin = 0, end = 1, direction = 1, palette = "vik")
+palNorm<-scico(20, alpha = 0.8, begin = 0, end = 1, direction = 1, palette = "oleron")
+
+pdf(file="FigS3.pdf", width=12, height=9) 
+layout(matrix(c(1,2,3), 3, 1, byrow=TRUE), widths=8.5, heights=c(2, 2, 2.3))
+
+#first block
+par(mar=c(4, 6, 0.3, 0.5)) #c(bottom, left, top, right)
+xticks <- seq(-2100,-300,100)
+
+Kuna_mean_100_norm<-(Kuna_mean_100[25:43]-min(Kuna_mean_100[25:43]))/(max(Kuna_mean_100[25:43])-min(Kuna_mean_100[25:43]))
+Kuna_aor_norm<-(sites_no0_BlockSumWeights[25:43]-min(sites_no0_BlockSumWeights[25:43]))/(max(sites_no0_BlockSumWeights[25:43])-min(sites_no0_BlockSumWeights[25:43]))
+Kuna_area_norm<-(sites_no0_BlockAreaSums[25:43]-min(sites_no0_BlockAreaSums[25:43]))/(max(sites_no0_BlockAreaSums[25:43])-min(sites_no0_BlockAreaSums[25:43]))
+
+plot(Kuna_mean_100_norm, lty="solid", col="black", cex.axis=0.9, xaxt="n",type="l", xlab="",  xlim=c(-2100,-300), ylim=c(0,1), ylab="Normalised values", cex.lab=1.4)
+
+lines(seq(-2100,-300, 100),Kuna_mean_100_norm,col=pal2[3], type="l", lwd=3)
+lines(seq(-2100,-300, 100),Kuna_aor_norm, col=pal[17], lwd=3.5)
+lines(seq(-2100,-300, 100),Kuna_area_norm,col=palNorm[5], lwd=3.5)
+
+abline(v=seq(-2100,-300,100), lwd=0.8, lty="dotted", col="grey70")
+abline(h=seq(0,1,0.2), lwd=0.8, lty="dotted", col="grey80")
+
+axis(side=1, at=xticks, labels=xticks, las=2, cex.axis=1.1)
+
+legend(x=-2100, y=0.4, legend=c("Kuna Ba Cave","Aoristic sum","Minimum area (Ha)"),lty=c("solid","solid","solid"), lwd=c(4,4,4), col=c(pal2[3], pal[17], palNorm[5]), cex=1.3, bg="transparent", bty="n")
+text(x=-2125, y=0.9, labels="a", font = 2, cex = 1.25)
+
+
+
+# second block
+box()
+par(mar=c(4, 6, 0.3, 0.5)) #c(bottom, left, top, right)
+xticks <- seq(-4000,-500,500)
+
+Zer_mean_500_norm<-(Zeribar_mean_500[2:9]-min(Zeribar_mean_500[2:9]))/(max(Zeribar_mean_500[2:9])-min(Zeribar_mean_500[2:9]))
+Zer_aor_norm<-(blockWeight500_4Zer-min(blockWeight500_4Zer))/(max(blockWeight500_4Zer)-min(blockWeight500_4Zer))
+Zer_area_norm<-(blockArea500_4Zer-min(blockArea500_4Zer))/(max(blockArea500_4Zer)-min(blockArea500_4Zer))
+
+plot(Zer_mean_500_norm, lty="solid", col="black", cex.axis=0.9, xaxt="n",type="l", xlab="",  xlim=c(-4000,-500), ylim=c(0,1), ylab="Normalised values", cex.lab=1.4)
+
+lines(seq(-4000,-500, 500),Zer_mean_500_norm,col=pal2[16], type="l", lwd=3)
+lines(seq(-4000,-500, 500),Zer_aor_norm, col=pal[17], lwd=3.5)
+lines(seq(-4000,-500, 500),Zer_area_norm,col=palNorm[5], lwd=3.5)
+
+abline(v=seq(-4000,-500,500), lwd=0.8, lty="dotted", col="grey70")
+abline(h=seq(0,1,0.2), lwd=0.8, lty="dotted", col="grey80")
+
+axis(side=1, at=xticks, labels=xticks, las=2, cex.axis=1.1)
+
+
+legend(x=-4000, y=0.8, legend=c("Lake Zeribar","Aoristic sum","Minimum area (Ha)"),lty=c("solid","solid","solid"), lwd=c(4,4,4), col=c(pal2[16], pal[17], palNorm[5]), cex=1.3, bg="transparent", bty="n")
+text(x=-4050, y=0.9, labels="b", font = 2, cex = 1.2)
+
+
+# third block
+box()
+par(mar=c(8, 6, 0.3, 0.5)) #c(bottom, left, top, right)
+xticks <- seq(-4100,-100,500)
+
+Mir_mean_500_norm<-(Mirabad_mean_500-min(Mirabad_mean_500))/(max(Mirabad_mean_500)-min(Mirabad_mean_500))
+Mir_aor_norm<-(blockWeight500_4Mir-min(blockWeight500_4Mir))/(max(blockWeight500_4Mir)-min(blockWeight500_4Mir))
+Mir_area_norm<-(blockArea500_4Mir-min(blockArea500_4Mir))/(max(blockArea500_4Mir)-min(blockArea500_4Mir))
+
+plot(Mir_mean_500_norm, lty="solid", col="white", cex.axis=0.9, xaxt="n",type="l", xlab="",  xlim=c(-4100,-100), ylim=c(0,1), ylab="Normalised values", cex.lab=1.4)
+
+lines(seq(-4100,-100, 500),Mir_mean_500_norm,col=pal2[7], type="l", lty=2, lwd=3)
+lines(seq(-4100,-100, 500),Mir_aor_norm, col=pal[17], lwd=3.5)
+lines(seq(-4100,-100, 500),Mir_area_norm,col=palNorm[5], lwd=3.5)
+
+abline(v=seq(-4000,-500,500), lwd=0.8, lty="dotted", col="grey70")
+abline(h=seq(0,1,0.2), lwd=0.8, lty="dotted", col="grey80")
+
+axis(side=1, at=xticks, labels=xticks, las=2, cex.axis=1.1)
+
+legend(x=-3600, y=1, legend=c("Lake Mirabad","Aoristic sum","Minimum area (Ha)"),lty=c(2,1,1), lwd=c(4,4,4), col=c(pal2[7], pal[17], palNorm[5]), cex=1.3, bg="transparent", bty="n")
+text(x=-4150, y=0.9, labels="c", font = 2, cex = 1.2)
+
+mtext("BCE/CE",1, 5.3, at=-2200, adj=0, font=2, cex=1.12, las=1)
+
+dev.off()
+
+
+
+
 
 
 
