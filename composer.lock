@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "535dce252005074803776fa019205530",
+    "content-hash": "79dcad20294ab5b6a9c969a8b684609b",
     "packages": [
         {
             "name": "bnza/job-manager",
@@ -6875,5 +6875,6 @@
         "ext-iconv": "*",
         "ext-pgsql": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
