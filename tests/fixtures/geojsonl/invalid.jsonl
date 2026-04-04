@@ -1,0 +1,3 @@
+{"type":"Feature","properties":{"entry_id":"INVALID001","chronology":"NON_EXISTENT_CODE"},"geometry":null}
+{"type":"Feature","properties":{"entry_id":"INVALID002","district_i":999999,"district":null},"geometry":null}
+{"type":"Feature","properties":{"entry_id":"INVALID001","chronology":"NON_EXISTENT_CODE"},"geometry":null}

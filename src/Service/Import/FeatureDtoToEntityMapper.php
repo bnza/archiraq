@@ -31,6 +31,15 @@ class FeatureDtoToEntityMapper
         $this->districtResolver = $districtResolver;
     }
 
+    public function resetEntityManager(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+        // Also need to reset resolvers if they hold EM
+        $this->chronologyResolver->resetEntityManager($em);
+        $this->surveyResolver->resetEntityManager($em);
+        $this->districtResolver->resetEntityManager($em);
+    }
+
     /**
      * @param object $dto One of the DTO classes
      * @param ContributeEntity $contribute
@@ -52,7 +61,8 @@ class FeatureDtoToEntityMapper
         $site->setSurveyVerifiedOnField($dto->survey_ver === 'T' || $dto->survey_ver === true);
         
         // District
-        $district = $this->districtResolver->resolve((int)$dto->district_i);
+        $districtId = $dto->district_i === null ? null : (int)$dto->district_i;
+        $district = $this->districtResolver->resolve($districtId, $dto->district ?? null);
         if ($district) {
             $site->setDistrict($district);
         }
@@ -74,9 +84,9 @@ class FeatureDtoToEntityMapper
         if ($dto->geometry) {
             $boundary = new SiteBoundaryEntity();
             $boundary->setSite($site);
-            // Convert GeoJSON array to WKT for Doctrine
-            $wkt = $this->geoJsonToWkt($dto->geometry);
-            $boundary->setGeom($wkt);
+            // Convert GeoJSON array to JSON string for Doctrine (GeometryType uses ST_GeomFromGeoJSON)
+            $geoJson = $this->geoJsonToGeoJson($dto->geometry);
+            $boundary->setGeom($geoJson);
             $site->setGeom($boundary);
         }
 
@@ -138,28 +148,8 @@ class FeatureDtoToEntityMapper
         }
     }
 
-    private function geoJsonToWkt(array $geometry): string
+    private function geoJsonToGeoJson(array $geometry): string
     {
-        $type = strtoupper($geometry['type']);
-        $coords = $geometry['coordinates'];
-
-        switch ($type) {
-            case 'MULTIPOLYGON':
-                $polygons = [];
-                foreach ($coords as $polygon) {
-                    $rings = [];
-                    foreach ($polygon as $ring) {
-                        $points = [];
-                        foreach ($ring as $pt) {
-                            $points[] = $pt[0] . ' ' . $pt[1];
-                        }
-                        $rings[] = '(' . implode(',', $points) . ')';
-                    }
-                    $polygons[] = '(' . implode(',', $rings) . ')';
-                }
-                return 'SRID=4326;MULTIPOLYGON(' . implode(',', $polygons) . ')';
-            default:
-                throw new \InvalidArgumentException("Unsupported geometry type: $type");
-        }
+        return json_encode($geometry);
     }
 }

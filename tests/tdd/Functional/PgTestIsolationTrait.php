@@ -49,7 +49,9 @@ trait PgTestIsolationTrait
     protected static function rollbackMainTransaction(string $em = 'default'): Connection
     {
         $connection = self::getContainerEntityManager($em)->getConnection();
-        $connection->rollBack();
+        if ($connection->isTransactionActive()) {
+            $connection->rollBack();
+        }
         $connection->setAutoCommit(true);
         return $connection;
     }

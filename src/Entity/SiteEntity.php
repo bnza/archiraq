@@ -67,6 +67,7 @@ class SiteEntity implements EntityInterface
     private $surveys;
 
     /**
+     * @Assert\NotBlank
      * @var string
      * @ORM\Column(type="string", length=255)
      */

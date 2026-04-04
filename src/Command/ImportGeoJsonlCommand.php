@@ -2,35 +2,28 @@
 
 namespace App\Command;
 
-use App\Entity\ContributeEntity;
-use App\Service\Import\FeatureDtoToEntityMapper;
-use App\Service\Import\GeoJsonlParser;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Import\GeoJsonlImporter;
+use App\Event\ImportProgressEvent;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ImportGeoJsonlCommand extends Command
 {
     protected static $defaultName = 'app:import:geojsonl';
 
-    private $em;
-    private $parser;
-    private $mapper;
+    private $importer;
+    private $dispatcher;
 
-    public function __construct(
-        EntityManagerInterface $em,
-        GeoJsonlParser $parser,
-        FeatureDtoToEntityMapper $mapper
-    ) {
+    public function __construct(GeoJsonlImporter $importer, EventDispatcherInterface $dispatcher)
+    {
         parent::__construct();
-        $this->em = $em;
-        $this->parser = $parser;
-        $this->mapper = $mapper;
+        $this->importer = $importer;
+        $this->dispatcher = $dispatcher;
     }
 
     protected function configure()
@@ -73,67 +66,56 @@ class ImportGeoJsonlCommand extends Command
         $institution = $input->getOption('institution') ?: $io->ask('Institution');
         $description = $input->getOption('description') ?: $io->ask('Description');
 
+        $metadata = [
+            'email' => $email,
+            'contributor' => $contributor,
+            'institution' => $institution,
+            'description' => $description,
+        ];
+
         $io->title("Starting Import from $file");
         if ($dryRun) {
             $io->note("Dry-run mode: no changes will be saved.");
         }
 
-        $this->em->getConnection()->beginTransaction();
+        $this->dispatcher->addListener(ImportProgressEvent::REFRESH_STARTED, function (ImportProgressEvent $event) use ($io) {
+            $io->newLine();
+            $io->section($event->getMessage());
+        });
+
+        $this->dispatcher->addListener(ImportProgressEvent::REFRESH_FINISHED, function (ImportProgressEvent $event) use ($io) {
+            $io->success($event->getMessage());
+        });
 
         try {
-            $contribute = new ContributeEntity();
-            $contribute->setEmail($email);
-            if ($contributor) $contribute->setContributor($contributor);
-            if ($institution) $contribute->setInstitution($institution);
-            if ($description) $contribute->setDescription($description);
-            $contribute->setStatus(1); // Assuming 1 means validated/imported
-            $contribute->setSha1(sha1_file($file));
-
-            if (!$dryRun) {
-                $this->em->persist($contribute);
-            }
-
-            $count = 0;
-            foreach ($this->parser->parse($file, $type) as $dto) {
-                $count++;
-                $site = $this->mapper->map($dto, $contribute);
-                
-                if (!$dryRun) {
-                    $this->em->persist($site);
-                    if ($count % $batchSize === 0) {
-                        $this->em->flush();
-                        $this->em->clear(App\Entity\SiteEntity::class);
-                        $this->em->clear(App\Entity\SiteChronologyEntity::class);
-                        $this->em->clear(App\Entity\SiteSurveyEntity::class);
-                        $this->em->clear(App\Entity\Geom\SiteBoundaryEntity::class);
-                        // Re-fetch or re-merge contribute if cleared
-                        $contribute = $this->em->merge($contribute);
-                    }
-                }
-
-                if ($count % 100 === 0) {
+            $result = $this->importer->import(
+                $file,
+                $type,
+                $metadata,
+                $dryRun,
+                $batchSize,
+                function() use ($io) {
                     $io->write(".");
                 }
-            }
+            );
 
-            if (!$dryRun) {
-                $this->em->flush();
-                $this->em->getConnection()->commit();
-                
-                $io->newLine();
-                $io->section("Refreshing Materialized View");
-                $this->em->getConnection()->executeUpdate("REFRESH MATERIALIZED VIEW geom.mat_site");
-                
-                $io->success("Imported $count features successfully.");
+            $io->newLine();
+            $scanned = $result->count;
+            $errorCount = count($result->errors);
+            $io->note(sprintf('%d of %d entries scanned', $scanned, $scanned));
+            if ($result->success) {
+                if ($dryRun) {
+                    $io->success("Dry-run finished. {$scanned} features validated.");
+                } else {
+                    $io->success("Imported {$scanned} features successfully.");
+                }
+                return 0;
             } else {
-                $this->em->getConnection()->rollBack();
-                $io->newLine();
-                $io->success("Dry-run finished. $count features validated.");
+                $io->error(sprintf("Import failed with %d errors. Transaction rolled back.", $errorCount));
+                $io->table(['Record', 'Error'], $result->errors);
+                return 1;
             }
-
-            return 0;
         } catch (\Exception $e) {
-            $this->em->getConnection()->rollBack();
             $io->newLine();
             $io->error("Import failed: " . $e->getMessage());
             $io->note("Transaction rolled back.");

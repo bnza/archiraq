@@ -15,6 +15,12 @@ class SurveyResolver
         $this->em = $em;
     }
 
+    public function resetEntityManager(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+        $this->lookup = [];
+    }
+
     private function load()
     {
         if (!empty($this->lookup)) {
@@ -23,7 +29,7 @@ class SurveyResolver
 
         $entities = $this->em->getRepository(SurveyEntity::class)->findAll();
         foreach ($entities as $entity) {
-            $this->lookup[$entity->getCode()] = $entity;
+            $this->lookup[$entity->getCode()] = $entity->getId();
         }
     }
 
@@ -44,9 +50,15 @@ class SurveyResolver
 
         foreach ($codes as $code) {
             if (!isset($this->lookup[$code])) {
-                throw new \InvalidArgumentException("Unrecognized survey code: $code");
+                $survey = new SurveyEntity();
+                $survey->setCode($code);
+                $survey->setName($code);
+                $survey->setRemarks('Auto-added during import');
+                $this->em->persist($survey);
+                $this->em->flush(); // Flush to get the ID if needed, though getReference usually needs it in lookup
+                $this->lookup[$code] = $survey->getId();
             }
-            $resolved[] = $this->lookup[$code];
+            $resolved[] = $this->em->getReference(SurveyEntity::class, $this->lookup[$code]);
         }
 
         return $resolved;

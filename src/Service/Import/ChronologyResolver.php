@@ -15,6 +15,12 @@ class ChronologyResolver
         $this->em = $em;
     }
 
+    public function resetEntityManager(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+        $this->lookup = []; // Force reload if needed, although IDs shouldn't change
+    }
+
     private function load()
     {
         if (!empty($this->lookup)) {
@@ -23,7 +29,7 @@ class ChronologyResolver
 
         $entities = $this->em->getRepository(ChronologyEntity::class)->findAll();
         foreach ($entities as $entity) {
-            $this->lookup[$entity->getCode()] = $entity;
+            $this->lookup[$entity->getCode()] = $entity->getId();
         }
     }
 
@@ -46,7 +52,7 @@ class ChronologyResolver
             if (!isset($this->lookup[$code])) {
                 throw new \InvalidArgumentException("Unrecognized chronology code: $code");
             }
-            $resolved[] = $this->lookup[$code];
+            $resolved[] = $this->em->getReference(ChronologyEntity::class, $this->lookup[$code]);
         }
 
         return $resolved;
@@ -55,6 +61,9 @@ class ChronologyResolver
     public function resolveSingleCode(string $code): ?ChronologyEntity
     {
         $this->load();
-        return $this->lookup[$code] ?? null;
+        if (isset($this->lookup[$code])) {
+            return $this->em->getReference(ChronologyEntity::class, $this->lookup[$code]);
+        }
+        return null;
     }
 }

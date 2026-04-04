@@ -1,0 +1,3 @@
+{"type":"Feature","properties":{"entry_id":"NAME_FALLBACK","district_i":null,"district":"Tilkaif"},"geometry":null}
+{"type":"Feature","properties":{"entry_id":"ID_MATCH","district_i":3,"district":"WrongNameButIdWins"},"geometry":null}
+{"type":"Feature","properties":{"entry_id":"BOTH_NULL","district_i":null,"district":null},"geometry":null}
