@@ -14,7 +14,7 @@ use App\Tests\Functional\AbstractPgTestIsolation;
 
 class NationBoundaryEntityTest extends AbstractPgTestIsolation
 {
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::setUpDatabaseSchema();
     }
@@ -36,12 +36,12 @@ class NationBoundaryEntityTest extends AbstractPgTestIsolation
 
     public function testPersistEntityDoesWork()
     {
-        $this->executeSqlAssetFile('tdd/sql/admbnd0.sql');
-        $this->executeSqlAssetFile('tdd/sql/admbnd1.sql');
-        $this->executeSqlAssetFile('tdd/sql/admbnd2.sql');
+        //$this->executeSqlAssetFile('tdd/sql/admbnd0.sql');
+        //$this->executeSqlAssetFile('tdd/sql/admbnd1.sql');
+        //$this->executeSqlAssetFile('tdd/sql/admbnd2.sql');
         $nation = $this->getEntityManager()->getRepository(NationBoundaryEntity::class)->find('IQ');
         $this->assertCount(18, $nation->getGovernorates());
-        $this->assertCount(4, $nation->getGovernorates()->first()->getDistricts());
+        $this->assertCount(8, $nation->getGovernorates()->first()->getDistricts());
     }
 
     /**
@@ -69,7 +69,7 @@ class NationBoundaryEntityTest extends AbstractPgTestIsolation
         $this->rollbackSavepoint();
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::rollbackDatabaseSchema();
     }

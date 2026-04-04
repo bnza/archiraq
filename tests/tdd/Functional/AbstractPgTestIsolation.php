@@ -2,6 +2,7 @@
 
 namespace App\Tests\Functional;
 
+use App\Entity\ContributeEntity;
 use Doctrine\ORM\EntityManager;
 use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -95,6 +96,12 @@ EOF;
         $stmt = $this->getEntityManager($em)->getConnection()->prepare($query);
         $stmt->execute();
         $this->assertEquals($rows, $stmt->fetchColumn(), "Failed asserting that temporary table \"$table\" contains $rows row/s");
+    }
+
+    protected function getEntityCount(string $className): int
+    {
+        $em = $this->getEntityManager();
+        return $em->getRepository(ContributeEntity::class)->count([]);
     }
 
 }

@@ -18,7 +18,7 @@ class DraftRepositoryTest extends AbstractPgTestIsolation
     public function setUp()
     {
         $this->savepoint();
-        $this->executeSqlAssetFile('tdd/sql/test/repository/tmp_draft.sql');
+        //$this->executeSqlAssetFile('tdd/sql/test/repository/tmp_draft.sql');
     }
 
     public function tearDown()

@@ -56,8 +56,8 @@ trait PgTestIsolationTrait
 
     protected static function setUpDatabaseSchema(string $em = 'default')
     {
-        $sql = \file_get_contents(self::getAbsolutePath('tests/assets/tdd/sql/db.sql'));
-        self::beginMainTransaction($em)->exec($sql);
+        // $sql = \file_get_contents(self::getAbsolutePath('tests/assets/tdd/sql/db.sql'));
+        self::beginMainTransaction($em);
     }
 
     protected static function rollbackDatabaseSchema(string $em = 'default')

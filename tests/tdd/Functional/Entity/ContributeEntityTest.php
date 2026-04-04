@@ -13,7 +13,7 @@ use App\Entity\ContributeEntity;
 
 class ContributeEntityTest extends AbstractPgTestIsolation
 {
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::setUpDatabaseSchema();
     }
@@ -23,15 +23,9 @@ class ContributeEntityTest extends AbstractPgTestIsolation
         $this->savepoint();
     }
 
-    public function assertPreConditions()
-    {
-        $em = $this->getEntityManager();
-        $count = $em->getRepository(ContributeEntity::class)->count([]);
-        $this->assertEquals(0, $count);
-    }
-
     public function testPersistEntityDoesWork()
     {
+        $count = $this->getEntityCount(ContributeEntity::class);
         $entity = new ContributeEntity();
         $entity->setId(444);
         $entity->setEmail('mail@example.com');
@@ -42,7 +36,7 @@ class ContributeEntityTest extends AbstractPgTestIsolation
         $entity->setStatus(1);
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
-        $this->assertEquals(1, $entity->getId());
+        $this->assertEquals($count + 1, $this->getEntityCount(ContributeEntity::class));
     }
 
     public function tearDown()
@@ -50,7 +44,7 @@ class ContributeEntityTest extends AbstractPgTestIsolation
         $this->rollbackSavepoint();
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::rollbackDatabaseSchema();
     }

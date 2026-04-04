@@ -40,8 +40,8 @@ class TmpDraftToSiteSerializerTest extends AbstractPgTestIsolation
 
     public function testConverterWillSetChronology()
     {
-        $this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/admbnd.sql');
-        $this->executeSqlAssetFile('tdd/sql/chronology.sql');
+        //$this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/admbnd.sql');
+        //$this->executeSqlAssetFile('tdd/sql/chronology.sql');
         $draft = $this->getDraftEntity();
         $draft->setSiteChronology('ACH;AKK;UR3');
         $site = $this->getConverter()->convert($draft);
@@ -53,8 +53,8 @@ class TmpDraftToSiteSerializerTest extends AbstractPgTestIsolation
 
     public function testConverterWillSetSurvey()
     {
-        $this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/admbnd.sql');
-        $this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/survey.sql');
+        //$this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/admbnd.sql');
+        //$this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/survey.sql');
         $draft = $this->getDraftEntity();
         $draft->setSurveyPrevRefs('Adams1972.002;Black1995.a');
         $draft->setSurveyVisitDate('1975-1977;1995');
@@ -67,8 +67,8 @@ class TmpDraftToSiteSerializerTest extends AbstractPgTestIsolation
 
     public function testConverterWillSetRemoteSensing()
     {
-        $this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/admbnd.sql');
-        $this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/survey.sql');
+        //$this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/admbnd.sql');
+        //$this->executeSqlAssetFile('tdd/sql/test/tmp_draft_to_site_converter/survey.sql');
         $draft = $this->getDraftEntity();
         $draft->setSurveyPrevRefs('Adams1972.002;Black1995.a');
         $draft->setSurveyVisitDate('1975-1977;1995');

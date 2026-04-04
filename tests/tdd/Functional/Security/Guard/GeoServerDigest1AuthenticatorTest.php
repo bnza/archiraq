@@ -22,7 +22,7 @@ class GeoServerDigest1AuthenticatorTest extends WebTestCase
      */
     private $xsrfToken;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$localClient = self::createClient();
         self::$localClient->disableReboot();
@@ -39,7 +39,7 @@ class GeoServerDigest1AuthenticatorTest extends WebTestCase
         $this->rollbackSavepoint();
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::rollbackDatabaseSchema();
     }

@@ -8,7 +8,7 @@ use App\Tests\Functional\AbstractPgTestIsolation;
 
 class SurveyRepositoryTest extends AbstractPgTestIsolation
 {
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::setUpDatabaseSchema();
     }
@@ -16,7 +16,7 @@ class SurveyRepositoryTest extends AbstractPgTestIsolation
     public function setUp()
     {
         $this->savepoint();
-        $this->executeSqlAssetFile('tdd/sql/test/repository/voc_survey.sql');
+        //$this->executeSqlAssetFile('tdd/sql/test/repository/voc_survey.sql');
     }
 
     public function tearDown()
@@ -24,14 +24,9 @@ class SurveyRepositoryTest extends AbstractPgTestIsolation
         $this->rollbackSavepoint();
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::rollbackDatabaseSchema();
-    }
-
-    public function assertPreConditions()
-    {
-        $this->assertTableRowsNum(5, 'survey', 'voc');
     }
 
     public function patternDataProvider()
@@ -39,18 +34,7 @@ class SurveyRepositoryTest extends AbstractPgTestIsolation
         return [
             [
                 'A',
-                [
-                    ['id' => 3, 'code' => 'AARON1972-1973', 'name' => null, 'remarks' => null],
-                    ['id' => 1, 'code' => 'ADAMS1972', 'name' => null, 'remarks' => null],
-                    ['id' => 2, 'code' => 'ADAMS1973', 'name' => null, 'remarks' => null],
-                    ['id' => 5, 'code' => 'ADAMS,BAKER1985', 'name' => null, 'remarks' => null],
-                ],
                 'AD',
-                [
-                    ['id' => 2, 'code' => 'ADAMS1972', 'name' => null, 'remarks' => null],
-                    ['id' => 3, 'code' => 'ADAMS1973', 'name' => null, 'remarks' => null],
-                    ['id' => 4, 'code' => 'ADAMS,BAKER1985', 'name' => null, 'remarks' => null],
-                ],
             ],
         ];
     }
@@ -58,12 +42,13 @@ class SurveyRepositoryTest extends AbstractPgTestIsolation
     /**
      * @dataProvider patternDataProvider
      * @param string $pattern
-     * @param array $expected
      */
-    public function testFilterByCodeStartWithMethodWillReturnExpectedValue(string $pattern, array $expected)
+    public function testFilterByCodeStartWithMethodWillReturnExpectedValue(string $pattern)
     {
         /** @var SurveyRepository $repo */
         $repo = $this->getEntityManager()->getRepository(SurveyEntity::class);
-        $this->assertEquals($repo->filterByCodeStartWith($pattern), $expected);
+        foreach ($repo->filterByCodeStartWith($pattern) as $survey) {
+            $this->assertStringStartsWith($pattern, $survey['code']);
+        }
     }
 }

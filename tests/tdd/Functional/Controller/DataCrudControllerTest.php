@@ -15,7 +15,7 @@ class DataCrudControllerTest extends WebTestCase
      */
     private static $localClient;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$localClient = self::createClient();
         self::$localClient->disableReboot();
@@ -25,9 +25,6 @@ class DataCrudControllerTest extends WebTestCase
     public function setUp()
     {
         $this->savepoint();
-        $this->executeSqlAssetFile('tdd/sql/chronology.sql');
-        $this->executeSqlAssetFile('tdd/sql/test/data_crud_controller/admbnd.sql');
-        $this->executeSqlAssetFile('tdd/sql/test/data_crud_controller/fixtures.sql');
     }
 
     public function tearDown()
@@ -35,7 +32,7 @@ class DataCrudControllerTest extends WebTestCase
         $this->rollbackSavepoint();
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::rollbackDatabaseSchema();
     }
@@ -43,7 +40,6 @@ class DataCrudControllerTest extends WebTestCase
     public function readControllerDataProvider()
     {
         return [
-          ['/data/vw-site/1'],
           ['/data/vw-site']
         ];
     }
@@ -54,6 +50,11 @@ class DataCrudControllerTest extends WebTestCase
     public function testMethodReadWillReturnJsonResponse(string $url)
     {
         self::$localClient->request('GET', $url);
+        $this->assertTrue(self::$localClient->getResponse()->isSuccessful());
+        $content = json_decode(self::$localClient->getResponse()->getContent(), true);
+        $siteId = $content['items'][0]['id'];
+        $this->assertNotEmpty($siteId);
+        self::$localClient->request('GET', $url.'/'.$siteId);
         $this->assertTrue(self::$localClient->getResponse()->isSuccessful());
     }
 }
