@@ -22,6 +22,10 @@ const extendFns = {
 
 export const getExtentFromWfsGetFeatures = (data) => {
     let extent = createEmpty();
+    if (typeof data === 'string') {
+        console.error('data is not an object', data);
+        data = JSON.parse(data);
+    }
     let firstFeature = data.features[0];
     if (!firstFeature) {
         return undefined;

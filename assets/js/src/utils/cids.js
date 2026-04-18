@@ -25,11 +25,11 @@ export const CID_VW_SITE_RS_LIST_DATA_CARD = 'VwSiteRsListDataCard';
 
 export const QUERY_TYPENAME_VW_SITES = 'vw-site';
 export const QUERY_TYPENAME_VW_SITES_SURVEY = 'vw-site-survey';
+export const QUERY_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED = 'vw-site-survey-not-sampled';
 export const QUERY_TYPENAME_VW_SITES_RS = 'vw-site-rs';
 export const QUERY_TYPENAME_VW_SITES_EDIT = 'vw-site-edit';
 
 export const WFS_TYPENAME_VW_SITES_SURVEY = 'vw_site_survey';
-
 export const WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED = 'vw_site_survey_not_sampled';
 export const WFS_TYPENAME_VW_SITES_RS = 'vw_site_rs';
 export const WFS_TYPENAME_SURVEY_AREA_01_AKKAD = 'survey_area_01_akkad';
@@ -78,6 +78,8 @@ export const WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES = 'gm_shore';
 
 export const TITLE_TYPENAME_VW_SITES = 'Sites';
 export const TITLE_TYPENAME_VW_SITES_SURVEY = 'Sites (survey)';
+
+export const TITLE_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED = 'Sites (survey, not sampled)';
 export const TITLE_TYPENAME_VW_SITES_RS = 'Sites (remote sensing)';
 
 export const WMTS_TYPENAME_CORONA = [
@@ -327,6 +329,84 @@ export const HEADERS_VW_SITE_LIST_DATA_CARD_TABLE = {
         {
             text: 'nation',
             value: 'nation'
+        },
+        {
+            text: 'threats',
+            value: 'threats'
+        },
+        {
+            text: 'E',
+            value: 'e'
+        },
+        {
+            text: 'N',
+            value: 'n'
+        },
+        {
+            text: 'length (m)',
+            value: 'length'
+        },
+        {
+            text: 'width (m)',
+            value: 'width'
+        },
+        {
+            text: 'area (ha)',
+            value: 'area'
+        },
+        {
+            text: 'remarks',
+            value: 'remarks'
+        },
+    ],
+    [QUERY_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED]: [
+        {
+            text: 'id',
+            value: 'id'
+        },
+        {
+            text: 'SBAH (no)',
+            value: 'sbah_no'
+        },
+        {
+            text: 'cadastre',
+            value: 'cadastre'
+        },
+        {
+            text: 'modern name',
+            value: 'modern_name'
+        },
+        {
+            text: 'nearest city',
+            value: 'nearest_city'
+        },
+        {
+            text: 'ancient name',
+            value: 'ancient_name'
+        },
+        {
+            text: 'district',
+            value: 'district'
+        },
+        {
+            text: 'governorate',
+            value: 'governorate'
+        },
+        {
+            text: 'nation',
+            value: 'nation'
+        },
+        {
+            text: 'chronology',
+            value: 'chronology'
+        },
+        {
+            text: 'surveys',
+            value: 'survey_refs'
+        },
+        {
+            text: 'features',
+            value: 'features'
         },
         {
             text: 'threats',

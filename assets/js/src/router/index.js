@@ -11,7 +11,7 @@ import DataCardContainer from '@/components/DataCard/DataCardContainer';
 import MapToolbarButtons from '@/components/MapToolbarButtons';
 import MapFooterData from '@/components/MapFooterData';
 import MapDrawerEntries from '@/components/MapDrawerEntries';
-import {QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS} from '@/utils/cids';
+import {QUERY_TYPENAME_VW_SITES_SURVEY, QUERY_TYPENAME_VW_SITES_RS, QUERY_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED} from '@/utils/cids';
 import {displaySnackbarFn} from '@/mixins/SnackbarComponentStoreMx';
 import {isAuthenticated} from '@/store/auth/getters';
 import ContributeUploadStatus from '@/components/ContributeUploadStatus';
@@ -31,7 +31,7 @@ Vue.use(Router);
 
 export const dataTableRoutes = [
     {
-        path: `:queryTypename(${QUERY_TYPENAME_VW_SITES_SURVEY}|${QUERY_TYPENAME_VW_SITES_RS})/:action(list)`,
+        path: `:queryTypename(${QUERY_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED}|${QUERY_TYPENAME_VW_SITES_SURVEY}|${QUERY_TYPENAME_VW_SITES_RS})/:action(list)`,
         name: 'map_data_vw-site_list',
         components: {
             default: DataCardContainer
@@ -41,7 +41,7 @@ export const dataTableRoutes = [
         }
     },
     {
-        path: `:queryTypename(${QUERY_TYPENAME_VW_SITES_SURVEY}|${QUERY_TYPENAME_VW_SITES_RS})/:itemId(\\d+)/:action(read)`,
+        path: `:queryTypename(${QUERY_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED}|${QUERY_TYPENAME_VW_SITES_SURVEY}|${QUERY_TYPENAME_VW_SITES_RS})/:itemId(\\d+)/:action(read)`,
         name: 'map_data_vw-site_read',
         components: {
             default: DataCardContainer
@@ -51,7 +51,7 @@ export const dataTableRoutes = [
         }
     },
     {
-        path: `:queryTypename(${QUERY_TYPENAME_VW_SITES_SURVEY}|${QUERY_TYPENAME_VW_SITES_RS})/:itemId(\\d+)/:action(edit)`,
+        path: `:queryTypename(${QUERY_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED}|${QUERY_TYPENAME_VW_SITES_SURVEY}|${QUERY_TYPENAME_VW_SITES_RS})/:itemId(\\d+)/:action(edit)`,
         name: 'map_data_vw-site_edit',
         components: {
             default: DataCardContainer,

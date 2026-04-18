@@ -31,6 +31,10 @@ export default {
             /* webpackChunkName: "VwSiteListDataCard" */
             './VwSiteListDataCard'
         ),
+        VwSiteSurveyNotSampledListDataCard: () => import(
+          /* webpackChunkName: "VwSiteListDataCard" */
+          './VwSiteListDataCard'
+          ),
         VwSiteRsListDataCard: () => import(
             /* webpackChunkName: "VwSiteListDataCard" */
             './VwSiteListDataCard'

@@ -30,8 +30,8 @@
                         />
                         <wv-site-layer-action-menu
                             slot="action"
-                            :typename="WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED"
-                            @zoomToLayer="zoomToLayerExtent('vw_site_survey_not_sampled')"
+                            :typename="WFS_TYPENAME_VW_SITES_SURVEY"
+                            @zoomToLayer="zoomToLayerExtent('vw_site_survey')"
                         />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
@@ -47,7 +47,7 @@
                       <wv-site-layer-action-menu
                           slot="action"
                           :typename="WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED"
-                          @zoomToLayer="zoomToLayerExtent('vw_site_survey')"
+                          @zoomToLayer="zoomToLayerExtent('vw_site_survey_not_sampled')"
                       />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
