@@ -26,7 +26,7 @@ class DatabaseTruncator
         ];
 
         foreach ($tables as $table) {
-            $connection->executeStatement($platform->getTruncateTableSQL($table, true));
+            $connection->executeUpdate($platform->getTruncateTableSQL($table, true));
         }
 
         // Also truncate contribute if we want a fresh start, 
