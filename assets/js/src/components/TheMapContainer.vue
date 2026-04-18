@@ -118,6 +118,13 @@
                 feature-color="#8E24AA"
                 :zoom="zoom"
             />
+          <map-layer-vector-wfs-vw-sites
+              ref="layerVwSiteNotSampled"
+              :cid-p="CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY_NOT_SAMPLED"
+              :base-typename="WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED"
+              feature-color="#49A75F"
+              :zoom="zoom"
+          />
             <map-layer-vector-wfs-vw-sites
                 ref="layerVwSite"
                 :cid-p="CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY"
@@ -148,21 +155,23 @@ import MapLayerVectorWfsVwSites from './MapLayerVectorWfsVwSites';
 import VlSourceEsri from './VlSourceEsri';
 
 import {
-    CID_THE_MAP_CONTAINER as CID,
-    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
-    WFS_TYPENAME_VW_SITES_SURVEY,
-    WFS_TYPENAME_VW_SITES_RS,
-    WMTS_TYPENAME_CORONA,
-    WMTS_TYPENAME_CORONA_FORE,
-    WMTS_TYPENAME_CORONA_AFT,
-    WMTS_TYPENAME_US_ARMY_TOPO_1,
-    WMTS_TYPENAME_US_ARMY_TOPO_2,
-    WMTS_TYPENAME_GEOMORPHOLOGICAL,
-    WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES,
-    WMTS_TYPENAME_SURVEY_TOPOS,
-    WFS_TYPENAME_SURVEY_AREAS,
-    CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS,
-    CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
+  CID_THE_MAP_CONTAINER as CID,
+  CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
+  WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED,
+  WFS_TYPENAME_VW_SITES_SURVEY,
+  WFS_TYPENAME_VW_SITES_RS,
+  WMTS_TYPENAME_CORONA,
+  WMTS_TYPENAME_CORONA_FORE,
+  WMTS_TYPENAME_CORONA_AFT,
+  WMTS_TYPENAME_US_ARMY_TOPO_1,
+  WMTS_TYPENAME_US_ARMY_TOPO_2,
+  WMTS_TYPENAME_GEOMORPHOLOGICAL,
+  WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES,
+  WMTS_TYPENAME_SURVEY_TOPOS,
+  WFS_TYPENAME_SURVEY_AREAS,
+  CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS,
+  CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
+  CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY_NOT_SAMPLED,
 } from '../utils/cids';
 import {callObjectMethod} from '../utils/utils';
 
@@ -197,6 +206,7 @@ export default {
     },
     computed: {
         WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY,
+        WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED: () => WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED,
         WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
         WMTS_TYPENAME_CORONA: () => WMTS_TYPENAME_CORONA,
         WMTS_TYPENAME_CORONA_FORE: () => WMTS_TYPENAME_CORONA_FORE,
@@ -208,6 +218,7 @@ export default {
         WFS_TYPENAME_SURVEY_AREAS: () => WFS_TYPENAME_SURVEY_AREAS,
         WMTS_TYPENAME_SURVEY_TOPOS: () => WMTS_TYPENAME_SURVEY_TOPOS,
         CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS,
+        CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY_NOT_SAMPLED: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY_NOT_SAMPLED,
         CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY: () => CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY,
         bingApiKey() {
             return this.$store.state.bingApiKey;
@@ -236,7 +247,7 @@ export default {
         this.mapContainerAdminBounds = CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2;
         this.mapContainerCurrentLayer = WFS_TYPENAME_VW_SITES_SURVEY;
         this.mapContainerPointerCoords = center;
-        this.mapContainerBaseMap = 'bing';
+        this.mapContainerBaseMap = 'esri';
         this.mapContainerBingImagerySet = 'AerialWithLabels';
         this.mapContainerCallee = null;
         this.mapContainerDynamicEditComponent = '';

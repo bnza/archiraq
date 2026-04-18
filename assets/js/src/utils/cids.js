@@ -8,6 +8,7 @@ export const CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_3 = 'MapLayerVectorWfsAdminBo
 export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES = 'MapLayerVectorWfsVwSite';
 export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES_RS = 'MapLayerVectorWfsVwSiteRs';
 export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY = 'MapLayerVectorWfsVwSiteSurvey';
+export const CID_MAP_LAYER_VECTOR_WFS_VW_SITES_SURVEY_NOT_SAMPLED = 'MapLayerVectorWfsVwSiteSurveyNotSampled';
 export const CID_THE_MAIN_NAVIGATION_DRAWER = 'TheMainNavigationDrawer';
 export const CID_THE_MAP_CONTAINER = 'TheMapContainer';
 export const CID_THE_MAIN_TOOLBAR = 'TheMainToolbar';
@@ -28,6 +29,8 @@ export const QUERY_TYPENAME_VW_SITES_RS = 'vw-site-rs';
 export const QUERY_TYPENAME_VW_SITES_EDIT = 'vw-site-edit';
 
 export const WFS_TYPENAME_VW_SITES_SURVEY = 'vw_site_survey';
+
+export const WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED = 'vw_site_survey_not_sampled';
 export const WFS_TYPENAME_VW_SITES_RS = 'vw_site_rs';
 export const WFS_TYPENAME_SURVEY_AREA_01_AKKAD = 'survey_area_01_akkad';
 export const WFS_TYPENAME_SURVEY_AREA_02_LBB = 'survey_area_02_lbb';

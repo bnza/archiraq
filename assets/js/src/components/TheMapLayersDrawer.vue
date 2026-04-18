@@ -30,9 +30,25 @@
                         />
                         <wv-site-layer-action-menu
                             slot="action"
-                            :typename="WFS_TYPENAME_VW_SITES_SURVEY"
-                            @zoomToLayer="zoomToLayerExtent('vw_site_survey')"
+                            :typename="WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED"
+                            @zoomToLayer="zoomToLayerExtent('vw_site_survey_not_sampled')"
                         />
+                    </map-legend-layer-list-tile>
+                    <map-legend-layer-list-tile
+                        title="Survey (not sampled)"
+                        :layer-cid="WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED"
+                    >
+                      <v-checkbox
+                          slot="visibility"
+                          v-model="mapContainerVwSitesNotSampledSurveyVisible"
+                          :hide-details="true"
+                          data-test="the-map-layers-drawer--checkbox-vw-sites-not-sampled"
+                      />
+                      <wv-site-layer-action-menu
+                          slot="action"
+                          :typename="WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED"
+                          @zoomToLayer="zoomToLayerExtent('vw_site_survey')"
+                      />
                     </map-legend-layer-list-tile>
                     <map-legend-layer-list-tile
                         title="Remote Sensing"
@@ -260,22 +276,22 @@ import WvSiteLayerActionMenu from '@/components/DataCard/ListRowMenu/WvSiteLayer
 import ComponentStoreVisibleMx from '@/mixins/ComponentStoreVisibleMx';
 import MapContainerComponentStoreMx from '@/mixins/MapContainerComponentStoreMx';
 import {
-    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
-    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
-    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
-    CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_3,
-    CID_THE_MAP_LAYERS_DRAWER as CID,
-    WFS_TYPENAME_VW_SITES_RS,
-    WFS_TYPENAME_VW_SITES_SURVEY,
-    WMTS_TYPENAME_CORONA_AFT,
-    WMTS_TYPENAME_CORONA_FORE,
-    WMTS_TYPENAME_US_ARMY_TOPO_1,
-    WMTS_TYPENAME_US_ARMY_TOPO_2,
-    WMTS_TYPENAME_GEOMORPHOLOGICAL,
-    WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES,
-    WMTS_TYPENAME_SURVEY_TOPOS,
-    WFS_TYPENAME_SURVEY_AREAS,
-    WMTS_TYPENAME_CORONA
+  CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_0,
+  CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_1,
+  CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_2,
+  CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_3,
+  CID_THE_MAP_LAYERS_DRAWER as CID,
+  WFS_TYPENAME_VW_SITES_RS,
+  WFS_TYPENAME_VW_SITES_SURVEY,
+  WMTS_TYPENAME_CORONA_AFT,
+  WMTS_TYPENAME_CORONA_FORE,
+  WMTS_TYPENAME_US_ARMY_TOPO_1,
+  WMTS_TYPENAME_US_ARMY_TOPO_2,
+  WMTS_TYPENAME_GEOMORPHOLOGICAL,
+  WMTS_TYPENAME_GEOMORPHOLOGICAL_BOUNDARIES,
+  WMTS_TYPENAME_SURVEY_TOPOS,
+  WFS_TYPENAME_SURVEY_AREAS,
+  WMTS_TYPENAME_CORONA, WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED
 
 } from '../utils/cids';
 
@@ -304,6 +320,7 @@ export default {
         CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_3: () => CID_MAP_LAYER_VECTOR_WFS_ADMIN_BOUNDS_3,
         WFS_TYPENAME_VW_SITES_RS: () => WFS_TYPENAME_VW_SITES_RS,
         WFS_TYPENAME_VW_SITES_SURVEY: () => WFS_TYPENAME_VW_SITES_SURVEY,
+        WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED: () => WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED,
         WMTS_TYPENAME_CORONA: () => WMTS_TYPENAME_CORONA,
         WMTS_TYPENAME_CORONA_AFT: () => WMTS_TYPENAME_CORONA_AFT,
         WMTS_TYPENAME_CORONA_FORE: () => WMTS_TYPENAME_CORONA_FORE,

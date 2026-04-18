@@ -3,6 +3,7 @@ import {
     CID_THE_MAP_CONTAINER,
     WFS_TYPENAME_VW_SITES_RS,
     WFS_TYPENAME_VW_SITES_SURVEY,
+    WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED,
     WMTS_TYPENAME_CORONA_FORE,
 } from '../utils/cids';
 
@@ -96,6 +97,17 @@ export default {
             set() {
                 this.componentsToggleComponentProp({
                     cid: WFS_TYPENAME_VW_SITES_SURVEY,
+                    prop: 'visible'
+                });
+            }
+        },
+        mapContainerVwSitesNotSampledSurveyVisible: {
+            get() {
+                return this.componentsGetComponentProp(WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED, 'visible');
+            },
+            set() {
+                this.componentsToggleComponentProp({
+                    cid: WFS_TYPENAME_VW_SITES_SURVEY_NOT_SAMPLED,
                     prop: 'visible'
                 });
             }
