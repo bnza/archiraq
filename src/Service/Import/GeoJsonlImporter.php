@@ -8,7 +8,7 @@ use App\Entity\SiteChronologyEntity;
 use App\Entity\SiteEntity;
 use App\Entity\SiteSurveyEntity;
 use App\Event\ImportProgressEvent;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
