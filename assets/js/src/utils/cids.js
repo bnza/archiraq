@@ -49,7 +49,9 @@ export const WFS_TYPENAME_SURVEY_AREA_15_MYINAB = 'survey_area_15_myinab';
 export const WFS_TYPENAME_SURVEY_AREA_16_ARAHTUM = 'survey_area_16_arahtum';
 export const WFS_TYPENAME_SURVEY_AREA_17_KUFA = 'survey_area_17_kufa';
 export const WFS_TYPENAME_SURVEY_AREA_18_KISH = 'survey_area_18_kish';
-
+export const WFS_TYPENAME_SURVEY_AREA_19_SAMARRA_SOUTH = 'survey_area_19_samarra_south';
+export const WFS_TYPENAME_SURVEY_AREA_20_ABU_GHRAIB = 'survey_area_20_abu_ghraib';
+export const WFS_TYPENAME_SURVEY_AREA_21_AMARA_WEST = 'survey_area_21_amara_west';
 
 export const WMTS_TYPENAME_CORONA_FORE = 'corona_fore';
 export const WMTS_TYPENAME_CORONA_AFT = 'corona_aft';
@@ -188,10 +190,10 @@ export const WFS_TYPENAME_SURVEY_AREAS = [
         typename: WFS_TYPENAME_SURVEY_AREA_08_HADITHA,
         title: 'Haditha dam survey'
     },
-    {
-        typename: WFS_TYPENAME_SURVEY_AREA_09_SAMARRA,
-        title: 'Samarra survey'
-    },
+    // {
+    //     typename: WFS_TYPENAME_SURVEY_AREA_09_SAMARRA,
+    //     title: 'Samarra survey'
+    // },
     {
         typename: WFS_TYPENAME_SURVEY_AREA_10_HAMMAR,
         title: 'Hammar lake survey'
@@ -223,6 +225,18 @@ export const WFS_TYPENAME_SURVEY_AREAS = [
     {
         typename: WFS_TYPENAME_SURVEY_AREA_18_KISH,
         title: 'Kish survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_19_SAMARRA_SOUTH,
+        title: 'Samarra south survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_20_ABU_GHRAIB,
+        title: 'Abu Ghraib survey'
+    },
+    {
+        typename: WFS_TYPENAME_SURVEY_AREA_21_AMARA_WEST,
+        title: 'Amara west survey'
     },
 ];
 
